@@ -1,4 +1,5 @@
 using GalaSoft.MvvmLight;
+using System.Data.SqlClient;
 
 namespace FSBeheer.ViewModel
 {
@@ -29,6 +30,7 @@ namespace FSBeheer.ViewModel
             ////{
             ////    // Code runs "for real"
             ////}
+            ///
         }
     }
 }

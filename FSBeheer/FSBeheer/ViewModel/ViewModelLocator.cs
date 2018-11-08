@@ -52,7 +52,15 @@ namespace FSBeheer.ViewModel
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
-        
+
+        public AddCustomerViewModel AddCustomer
+        {
+            get
+            {
+                return new AddCustomerViewModel();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels
