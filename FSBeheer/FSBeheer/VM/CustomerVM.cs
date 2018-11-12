@@ -6,18 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using FSBeheer.Model;
 
-namespace FSBeheer.ViewModel
+namespace FSBeheer.VM
 {
-    public class CustomerViewModel : ViewModelBase
+    public class CustomerVM : ViewModelBase
     {
         private Customer _customer; 
 
-        public CustomerViewModel()
+        public CustomerVM()
         {
             _customer = new Customer();
         }
 
-        public CustomerViewModel(Customer customer)
+        public CustomerVM(Customer customer)
         {
             this._customer = customer;
         }
@@ -26,6 +26,11 @@ namespace FSBeheer.ViewModel
         internal Customer ToModel()
         {
             return _customer;
+        }
+
+        public void AddCustomer()
+        {
+            //CustomFSContext.Customer.add(_customer);
         }
 
         // Properties of Quiz (Database)

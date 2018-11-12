@@ -8,6 +8,9 @@ namespace FSBeheer.ViewModel
 {
     public class AddCustomerViewModel
     {
-
+        public AddCustomerViewModel()
+        {
+          // try catch
+        }
     }
 }
