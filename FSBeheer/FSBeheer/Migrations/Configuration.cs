@@ -287,6 +287,21 @@ namespace FSBeheer.Migrations
                 }
             };
             context.Answers.AddRange(answers);
+
+            var customers = new List<Customer>
+            {
+                new Customer()
+                {
+                    Name = "BermDingetje",
+                    Place = "Den Haag"
+                },
+                new Customer()
+                {
+                    Name = "Festispec",
+                    Place = "Den Bosch"
+                }
+            };
+            context.Customers.AddRange(customers);
         }
     }
 }
