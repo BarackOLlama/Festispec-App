@@ -28,8 +28,8 @@ namespace FSBeheer.ViewModel
         {
             _Context = new FSContext();
 
-            var questions = _Context.Questions.ToList().Select(q => new QuestionVM(q));
-            Questions = new ObservableCollection<QuestionVM>(questions);
+            //var questions = _Context.Questions.ToList().Select(q => new QuestionVM(q));
+            //Questions = new ObservableCollection<QuestionVM>(questions);
             ////if (IsInDesignMode)
             ////{
             ////    // Code runs in Blend --> create design time data.

@@ -8,7 +8,7 @@ namespace FSBeheer.ViewModel
 {
     public class CreateEditCustomerViewModel
     {
-        public AddCustomerViewModel()
+        public CreateEditCustomerViewModel()
         {
           // try catch
         }
