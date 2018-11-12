@@ -112,7 +112,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converter\ITestInterface.cs" />
+    <Compile Include="CustomFSContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Answer.cs" />
     <Compile Include="FSContext.cs" />
