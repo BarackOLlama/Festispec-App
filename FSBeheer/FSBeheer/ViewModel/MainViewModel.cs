@@ -1,4 +1,6 @@
+using FSBeheer.VM;
 using GalaSoft.MvvmLight;
+using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 
 namespace FSBeheer.ViewModel
@@ -31,6 +33,10 @@ namespace FSBeheer.ViewModel
             ////    // Code runs "for real"
             ////}
             ///
+
+            var context = new CustomFSContext();
+            ObservableCollection<CustomerVM> test = context.CustomerCrud.GetCustomerVMs;
+            System.Console.WriteLine("lol");
         }
     }
 }

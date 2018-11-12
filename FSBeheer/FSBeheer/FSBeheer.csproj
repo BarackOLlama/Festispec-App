@@ -112,6 +112,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Crud\CustomerCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Answer.cs" />
