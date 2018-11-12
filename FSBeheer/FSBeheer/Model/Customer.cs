@@ -14,7 +14,7 @@ namespace FSBeheer.Model
         public string Adres { get; set; }
         public string Place { get; set; }
         public string ZipCode { get; set; }
-        public DateTime StartingDate { get; set; }
-        public short ChamberOfCommerceNumber { get; set; }
+        public DateTime? StartingDate { get; set; }
+        public short? ChamberOfCommerceNumber { get; set; }
     }
 }
