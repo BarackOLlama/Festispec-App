@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         DataContext="{Binding Main, Source={StaticResource Locator}}"
         Title="Home" Height="450" Width="600">
-<Grid Background="Gray">
-    <Button Content="Klant Aanmaken" HorizontalAlignment="Left" Margin="230,281,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
+<Grid Background="WhiteSmoke">
+    <Button Content="Customer Management" HorizontalAlignment="Left" Margin="230,281,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
     </Grid>
 </Window>
