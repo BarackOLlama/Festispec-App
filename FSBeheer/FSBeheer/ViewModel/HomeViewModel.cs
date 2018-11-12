@@ -1,5 +1,8 @@
+using FSBeheer.VM;
 using GalaSoft.MvvmLight;
+using System.Collections.ObjectModel;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace FSBeheer.ViewModel
 {
@@ -15,22 +18,18 @@ namespace FSBeheer.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class MainViewModel : ViewModelBase
+    public class HomeViewModel : ViewModelBase
     {
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
-        public MainViewModel()
+        private FSContext _Context;
+
+        public ObservableCollection<QuestionVM> Questions;
+
+        public HomeViewModel()
         {
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
-            ///
+            _Context = new FSContext();
+
+            var questions = _Context.Questions.ToList().Select(q => new QuestionVM(q));
+            Questions = new ObservableCollection<QuestionVM>(questions);
         }
     }
 }
