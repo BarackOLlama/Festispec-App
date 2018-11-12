@@ -132,7 +132,6 @@
     <Compile Include="ViewModel\AddCustomerViewModel.cs" />
     <Compile Include="View\NullVisibilityConverter.cs" />
     <Compile Include="VM\AnswerVM.cs" />
-    <Compile Include="VM\CustomerVM.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="App.xaml.cs">
