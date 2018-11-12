@@ -8,20 +8,6 @@ namespace FSBeheer.ViewModel
 {
     public class AddCustomerViewModel
     {
-        // Add aanroepen
-        public void Add()
-        {
-            throw new NotImplementedException();
-        }
 
-        public void Delete()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
