@@ -37,13 +37,11 @@ namespace FSBeheer.VM
         public int Id
         {
             get { return _customer.Id; }
-            set { _customer.Id = value; RaisePropertyChanged("Id"); }
         }
 
         public string Name
         {
             get { return _customer.Name; }
-            set { _customer.Name = value; RaisePropertyChanged("Name"); }
         }
 
         // TODO - rest of the properties
