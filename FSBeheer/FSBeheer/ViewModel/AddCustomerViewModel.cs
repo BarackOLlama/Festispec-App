@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FSBeheer.Converter;
 
 namespace FSBeheer.ViewModel
 {
-    public class AddCustomerViewModel : ITestInterface
+    public class AddCustomerViewModel
     {
         // Add aanroepen
         public void Add()
