@@ -6,6 +6,7 @@ using System.Text;
 using FSBeheer.VM;
 using System.Threading.Tasks;
 using FSBeheer.Crud;
+using System.Data.Entity;
 
 namespace FSBeheer
 {
@@ -14,8 +15,20 @@ namespace FSBeheer
         public CustomerCrud CustomerCrud;
 
         public CustomFSContext() : base() {
-            CustomerCrud = new CustomerCrud(this);
 
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<CustomFSContext, Migrations.Configuration>());
+
+            CustomerCrud = new CustomerCrud(this);
+        }
+
+        public ObservableCollection<CustomerVM> GetCustomers()
+        {
+            var customer = Customers
+               .ToList()
+               .Select(c => new CustomerVM(c));
+            var _customers = new ObservableCollection<CustomerVM>(customer);
+
+            return _customers;
         }
 
     }

@@ -11,7 +11,7 @@ namespace FSBeheer
         public FSContext()
             : base("name=FSDB")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<FSContext, Migrations.Configuration>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<FSContext, Migrations.Configuration>());
         }
 
         public virtual DbSet<Answer> Answers { get; set; }
