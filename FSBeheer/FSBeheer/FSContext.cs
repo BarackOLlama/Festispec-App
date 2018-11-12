@@ -18,9 +18,11 @@ namespace FSBeheer
         public virtual DbSet<Questionnaire> Questionnaires { get; set; }
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<QuestionType> QuestionTypes { get; set; }
-        public virtual DbSet<Account> Users { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Inspection> Inspections { get; set; }
         public virtual DbSet<Inspector> Inspectors { get; set; }
+        public virtual DbSet<Account> Accounts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

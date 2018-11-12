@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.ViewModel
 {
-    public class AddCustomerViewModel
+    public class CreateEditCustomerViewModel
     {
-
+        public CreateEditCustomerViewModel()
+        {
+          // try catch
+        }
     }
 }

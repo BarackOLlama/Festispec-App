@@ -112,11 +112,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Crud\CustomerCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
+    <Compile Include="Migrations\201811121341460_Initial.cs" />
+    <Compile Include="Migrations\201811121341460_Initial.Designer.cs">
+      <DependentUpon>201811121341460_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Answer.cs" />
     <Compile Include="FSContext.cs" />
     <Compile Include="Model\Customer.cs" />
+    <Compile Include="Model\Inspection.cs" />
     <Compile Include="Model\Inspector.cs" />
     <Compile Include="Model\Question.cs" />
     <Compile Include="Model\Questionnaire.cs" />
@@ -124,23 +130,25 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="ViewModel\AddCustomerViewModel.cs" />
-    <Compile Include="ViewModel\CustomerAbstract.cs" />
-    <Compile Include="ViewModel\CustomerVM.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\NullVisibilityConverter.cs" />
+    <Compile Include="VM\AnswerVM.cs" />
+    <Compile Include="VM\CustomerVM.cs" />
+    <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\AddCustomerWindow.xaml.cs">
-      <DependentUpon>AddCustomerWindow.xaml</DependentUpon>
+    <Compile Include="View\CreateEditCustomerView.xaml.cs">
+      <DependentUpon>CreateEditCustomerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\CustomerListWindow.xaml.cs">
-      <DependentUpon>CustomerListWindow.xaml</DependentUpon>
+    <Compile Include="View\CustomerManagementView.xaml.cs">
+      <DependentUpon>CustomerManagementView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\HomeWindow.xaml.cs">
-      <DependentUpon>HomeWindow.xaml</DependentUpon>
+    <Compile Include="View\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VM\QuestionVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -156,6 +164,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\201811121341460_Initial.resx">
+      <DependentUpon>201811121341460_Initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -170,15 +181,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\AddCustomerWindow.xaml">
+    <Page Include="View\CreateEditCustomerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CustomerListWindow.xaml">
+    <Page Include="View\CustomerManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\HomeWindow.xaml">
+    <Page Include="View\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

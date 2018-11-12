@@ -10,24 +10,11 @@ namespace FSBeheer.Model
     {
         [Key]
         public int Id { get; set; }
-
-        [Required]
         public string Name { get; set; }
-
-        [Required]
         public string Adres { get; set; }
-
-        [Required]
         public string Place { get; set; }
-
-        [Required]
         public string ZipCode { get; set; }
-
-        [Required]
-        public DateTime StartingDate { get; set; }
-
-        [Required]
-        
-        public short ChamberOfCommerceNumber { get; set; }
+        public DateTime? StartingDate { get; set; }
+        public short? ChamberOfCommerceNumber { get; set; }
     }
 }
