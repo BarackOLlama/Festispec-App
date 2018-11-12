@@ -147,6 +147,7 @@
     <Compile Include="View\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VM\CustomerVM.cs" />
     <Compile Include="VM\QuestionVM.cs" />
   </ItemGroup>
   <ItemGroup>
