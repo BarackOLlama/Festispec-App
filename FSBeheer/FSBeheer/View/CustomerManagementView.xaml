@@ -19,18 +19,18 @@
 
         <Border Grid.ColumnSpan="2" Margin="0,0,-0.4,0" Background="LightGray">
             <StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Name="spBackButton" HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Name="spBackButton" Height="Auto">
                         <Button Content="Back" Template="{StaticResource InterfaceButtonTemplate}"></Button>
                     </StackPanel>
                     <TextBlock Text="Klantenbeheer" FontSize="28" FontWeight="ExtraBold" Grid.Column="1" Margin="15,6,0,0"/>
-                </Grid>
+                </StackPanel>
                 <StackPanel Margin="20">
-                    <StackPanel Name="spContent" Margin="30">
+                    <StackPanel Orientation="Horizontal" Height="30" Margin="0,0,0,2">
+                        <TextBlock Background="DarkGray" Width="650" Text="{Binding SearchText}"></TextBlock>
+                        <Button Background="WhiteSmoke" Width="105" HorizontalAlignment="Center" Content="Filter"></Button>
+                    </StackPanel>
+                    <StackPanel Name="spContent" Margin="0,0,0,2">
                         <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}" 
                       ItemsSource="{Binding Customers}" Margin="0,6,0,0" BorderBrush="#FF979494"
                       GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFF0E0E0" HeadersVisibility="Column">
@@ -50,9 +50,9 @@
                         </DataGrid>
                     </StackPanel>
                     <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                    Orientation="Horizontal" Margin="0,0,25,0">
-                        <Button Content="Edit" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                        <Button Content="New" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                    Orientation="Horizontal" Margin="15,10,25,10">
+                        <Button Content="Aanpassen" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                        <Button Content="Nieuw" Template="{StaticResource InterfaceButtonTemplate}"></Button>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
