@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        DataContext="{Binding CustomerManagement, Source={StaticResource Locator}}"
         Title="CustomerListWindow" Height="450" Width="800">
 
     <Window.Resources>
@@ -27,33 +28,24 @@
                 </Grid>
                 <StackPanel Margin="20">
                     <StackPanel Name="spBackButton" HorizontalAlignment="Left">
-                        <Button Content="Back" Command="{Binding Something}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                        <Button Content="Back" Template="{StaticResource InterfaceButtonTemplate}"></Button>
                     </StackPanel>
                     <StackPanel Name="spContent" Margin="30">
                         <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}" 
-                      ItemsSource="{Binding CustomerCollection}" Margin="0,6,0,0" BorderBrush="#FF979494"
+                      ItemsSource="{Binding Customers}" Margin="0,6,0,0" BorderBrush="#FF979494"
                       GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFF0E0E0" HeadersVisibility="Column">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Foreground="#FF1D1616" />
                                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*" />
-                                <DataGridTextColumn Header="PhoneNumber" Binding="{Binding PhoneNumber}" Width="*" />
-                                <DataGridTemplateColumn Width="70">
+                                <DataGridTextColumn Header="Adres" Binding="{Binding Adres}" Width="*" />
+                                <DataGridTemplateColumn Width="100">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button Command="{Binding DataContext.EditCustomerCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                    BorderThickness="1" BorderBrush="#FF999A9B" Foreground="White" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" Height="20" Background="#FF6F9BDA">Edit Quiz</Button>
+                                            <Button Command="{Binding DataContext.CreateEditCustomerWindow, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                    BorderThickness="1" BorderBrush="#FF999A9B" Foreground="White" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Height="20" Background="#FF6F9BDA">Add or Edit</Button>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTemplateColumn Width="70">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button Command="{Binding DataContext.DeleteCustomerCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                        BorderThickness="1" BorderBrush="#FF999A9B" Foreground="White" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="60" Height="20" Background="#FFD45134">Delete</Button>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>

@@ -31,7 +31,18 @@ namespace FSBeheer.Crud
 
         public void AddCustomer(Customer _customer)
         {
-            _customFSContext.Customers.Add(_customer);
+            var newCustomer = new CustomerVM(new Customer
+            {
+                //Name = NewNameCustomer,
+                //Adres = NewAdres,
+                //Place = NewPlace,
+                //ZipCode = NewZipCode,
+                //StartingDate = NewStartingDate,
+                //ChamberOfCommerceNumber = NewChamberOfCommerceNumber
+
+            });
+
+            //_customFSContext.Customers.Add(_customer);
         }
     }
 }

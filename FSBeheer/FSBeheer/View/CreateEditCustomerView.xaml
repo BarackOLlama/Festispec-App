@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
+        DataContext="{Binding CreateEditCustomer, Source={StaticResource Locator}}"
         Title="CreateCustomerView" Height="450" Width="800">
     <Window.Resources>
         <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
@@ -12,6 +13,7 @@
                     Content="{TemplateBinding Content}"
                     Command="{TemplateBinding Command}"/>
         </ControlTemplate>
+
     </Window.Resources>
 
     <StackPanel Margin="20">
@@ -19,9 +21,46 @@
             <Button Content="Back" Template="{StaticResource InterfaceButtonTemplate}"></Button>
         </StackPanel>
         <StackPanel Name="spContent" Margin="30">
-            <DataGrid>
-
-            </DataGrid>
+            <Grid Margin="2,2,2,2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Margin="0,0,0,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Customer" FontSize="28" Grid.Column="0" FontWeight="Bold"/>
+                    <Button Command="{Binding SaveCommand}" Grid.Column="1" CommandParameter="{Binding ElementName=EditWindows}">Save</Button>
+                    <Button Command="{Binding AddAnswerToQuestionCommand}" Grid.Column="2" CommandParameter="{Binding ElementName=EditWindows}">Add</Button>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <TextBlock Text="Name" Margin="0,5,0,0" Height="20"/>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <TextBlock Text="{Binding Customer.Name}" Height="20"/>
+                </Grid>
+                <Grid Grid.Row="3">
+                    <TextBlock Text="Else" Margin="0,5,0,0" Height="20"/>
+                </Grid>
+                <Grid Grid.Row="4">
+                    <TextBlock Text="{Binding Customer.Else}" Height="20"/>
+                </Grid>
+                <Grid Grid.Row="5">
+                    <TextBlock Text="Text:" Margin="0,5,0,0" Height="20"/>
+                </Grid>
+                <Grid Grid.Row="6">
+                    <TextBox MaxLength="50" Text="{Binding Customer.Info, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="25"/>
+                </Grid>
+            </Grid>
         </StackPanel>
         <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"
                     Orientation="Horizontal" Margin="0,0,25,0">
