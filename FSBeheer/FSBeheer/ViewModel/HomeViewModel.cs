@@ -23,7 +23,7 @@ namespace FSBeheer.ViewModel
     /// </summary>
     public class HomeViewModel : ViewModelBase
     {
-        private FSContext _Context;
+        private CustomFSContext _Context;
 
         public ObservableCollection<QuestionVM> Questions;
 
@@ -39,20 +39,6 @@ namespace FSBeheer.ViewModel
 
         public HomeViewModel()
         {
-            _Context = new FSContext();
-
-            //var questions = _Context.Questions.ToList().Select(q => new QuestionVM(q));
-            //Questions = new ObservableCollection<QuestionVM>(questions);
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
-            ///
-
             ShowCustomersViewCommand = new RelayCommand(ShowCustomersView);
             ShowInspectionViewCommand = new RelayCommand(ShowInspectionsView);
             ShowEventViewCommand = new RelayCommand(ShowEventsView);
@@ -61,10 +47,10 @@ namespace FSBeheer.ViewModel
             ShowQuestionnairesCommand = new RelayCommand(ShowQuestionnairesView);
 
             // Tests to make sure everything is working
-            var context = new CustomFSContext();
-            ObservableCollection<CustomerVM> test = context.CustomerCrud.GetGetAllCustomerVMs();
-            ObservableCollection<CustomerVM> test2 = context.CustomerCrud.GetFilteredCustomerBasedOnName("F");
-            ObservableCollection<CustomerVM> test3 = context.CustomerCrud.GetCustomerById(51);
+            _Context = new CustomFSContext();
+            ObservableCollection<CustomerVM> test = _Context.CustomerCrud.GetGetAllCustomerVMs();
+            ObservableCollection<CustomerVM> test2 = _Context.CustomerCrud.GetFilteredCustomerBasedOnName("F");
+            ObservableCollection<CustomerVM> test3 = _Context.CustomerCrud.GetCustomerById(51);
 
             // Place brakepoint here
             Console.WriteLine("");
