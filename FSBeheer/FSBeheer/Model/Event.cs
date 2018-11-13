@@ -15,6 +15,6 @@ namespace FSBeheer.Model
         public string Address { get; set; }
         public string City { get; set; }
         public int? CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

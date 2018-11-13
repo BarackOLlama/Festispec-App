@@ -61,6 +61,14 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public EventManagementViewModel EventManagement
+        {
+            get
+            {
+                return new EventManagementViewModel();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

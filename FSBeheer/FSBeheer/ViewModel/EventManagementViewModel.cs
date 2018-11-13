@@ -17,7 +17,15 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<EventVM> Events { get; set; }
         public EventVM SelectedEvent { get; set; }
 
-        public RelayCommand EditCreateEventCommand { get; set; }
-        public RelayCommand 
+        public RelayCommand EditEventCommand { get; set; }
+        public RelayCommand NewEventCommand { get; set; }
+
+        public EventManagementViewModel()
+        {
+            _Context = new CustomFSContext();
+
+            var events = _Context.Events.ToList().Select(e => new EventVM(e));
+            Events = new ObservableCollection<EventVM>(events);
+        }
     }
 }
