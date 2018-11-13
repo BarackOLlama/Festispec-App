@@ -26,6 +26,8 @@ namespace FSBeheer.Migrations
             context.Accounts.RemoveRange(context.Accounts);
             context.Roles.RemoveRange(context.Roles);
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.Roles', RESEED, 0)");
+            context.Customers.RemoveRange(context.Customers);
+            context.Events.RemoveRange(context.Events);
 
             var roles = new List<Role>
             {
@@ -302,6 +304,18 @@ namespace FSBeheer.Migrations
                 }
             };
             context.Customers.AddRange(customers);
+
+            var events = new List<Event>
+            {
+                new Event()
+                {
+                    Name = "Pinkpop",
+                    Address = "Megaland",
+                    City = "Landgraaf",
+                    Customer = customers[1]
+                }
+            };
+            context.Events.AddRange(events);
         }
     }
 }

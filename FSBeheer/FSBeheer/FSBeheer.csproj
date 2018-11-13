@@ -95,6 +95,7 @@
     <Compile Include="Model\Answer.cs" />
     <Compile Include="FSContext.cs" />
     <Compile Include="Model\Customer.cs" />
+    <Compile Include="Model\Event.cs" />
     <Compile Include="Model\Inspection.cs" />
     <Compile Include="Model\Inspector.cs" />
     <Compile Include="Model\Question.cs" />
@@ -120,7 +121,7 @@
     <Compile Include="View\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VM\CustomerVM.cs" />
+    <Compile Include="VM\EventVM.cs" />
     <Compile Include="VM\QuestionVM.cs" />
   </ItemGroup>
   <ItemGroup>
