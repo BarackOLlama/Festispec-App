@@ -20,6 +20,7 @@ namespace FSBeheer
         public virtual DbSet<QuestionType> QuestionTypes { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Inspection> Inspections { get; set; }
         public virtual DbSet<Inspector> Inspectors { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
