@@ -8,6 +8,6 @@
         DataContext="{Binding Home, Source={StaticResource Locator}}"
         Title="HomeView" Height="450" Width="600">
 <Grid Background="WhiteSmoke">
-    <Button Content="Customer Management" HorizontalAlignment="Left" Margin="230,281,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
+        <Button Content="Customer Management" Command="{Binding OpenCustomerManagement}" HorizontalAlignment="Left" Margin="230,281,0,0" VerticalAlignment="Top" Width="150" Height="30"/>
     </Grid>
 </Window>

@@ -11,7 +11,7 @@ namespace FSBeheer.VM
     public class CustomerVM : ViewModelBase
     {
         private Customer _customer;
-        private CustomFSContext _customFSContext;
+        private CustomFSContext _customFSContext = new CustomFSContext();
 
         public CustomerVM()
         {
@@ -35,7 +35,7 @@ namespace FSBeheer.VM
             _customFSContext.GetCustomers().Add(this);
 
             // Database
-            _customFSContext.Customers.Add(_customer);
+            _customFSContext.CustomerCrud.AddCustomer(_customer);
 
         }
 

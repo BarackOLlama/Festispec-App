@@ -6,7 +6,27 @@
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
         Title="CreateCustomerView" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <Window.Resources>
+        <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
+            <Button FontSize="15" Margin="5"
+                    Content="{TemplateBinding Content}"
+                    Command="{TemplateBinding Command}"/>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <StackPanel Margin="20">
+        <StackPanel Name="spBackButton" HorizontalAlignment="Left">
+            <Button Content="Back" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+        </StackPanel>
+        <StackPanel Name="spContent" Margin="30">
+            <DataGrid>
+
+            </DataGrid>
+        </StackPanel>
+        <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                    Orientation="Horizontal" Margin="0,0,25,0">
+            <Button Content="Edit" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+            <Button Content="New" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+        </StackPanel>
+    </StackPanel>
 </Window>

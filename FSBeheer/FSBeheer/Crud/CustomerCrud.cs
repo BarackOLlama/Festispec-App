@@ -1,4 +1,5 @@
-﻿using FSBeheer.VM;
+﻿using FSBeheer.Model;
+using FSBeheer.VM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,9 +29,9 @@ namespace FSBeheer.Crud
             return _customers;
         }
 
-        public void AddCustomer()
+        public void AddCustomer(Customer _customer)
         {
-
+            _customFSContext.Customers.Add(_customer);
         }
     }
 }
