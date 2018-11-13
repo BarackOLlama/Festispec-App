@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
         DataContext="{Binding CreateEditCustomer, Source={StaticResource Locator}}"
-        Title="CreateCustomerView" Height="450" Width="800">
+        Title="CreateCustomerView" Height="450" Width="800" Background="LightGray">
     <Window.Resources>
         <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
             <Button FontSize="15" Margin="5"
@@ -15,98 +15,90 @@
         </ControlTemplate>
 
     </Window.Resources>
-    <StackPanel Orientation="Horizontal" Background="LightGray">
+    <StackPanel Orientation="Horizontal" Margin="5">
         <StackPanel Margin="5"  Width="100">
-            <Border Background="White" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" FontSize="12" Text="Naam:"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Naam:"></TextBox>
             </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" FontSize="12" Text="Adres:"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Adres:"></TextBox>
             </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" FontSize="12" Text="Vestigingslocatie:"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Vestigingslocatie:"></TextBox>
             </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" FontSize="12" Text="Postcode:"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Postcode:"></TextBox>
             </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" FontSize="12" Text="Startdatum:"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Startdatum:"></TextBox>
             </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" FontSize="12" Text="KVK:"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="KVK:"></TextBox>
             </Border>
         </StackPanel>
         <StackPanel Margin="5"  Width="225">
-            <Border Background="SkyBlue" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" Text="{Binding Customer.Name}" FontSize="12"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox Foreground="Black" Text="{Binding Customer.Name}" FontSize="12"></TextBox>
             </Border>
-            <Border Background="CadetBlue" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" Text="{Binding Customer.Adres}" FontSize="12"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox Foreground="Black" Text="{Binding Customer.Adres}" FontSize="12"></TextBox>
             </Border>
-            <Border Background="LightGoldenRodYellow" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" Text="{Binding Customer.Place}" FontSize="12"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox Foreground="Black" Text="{Binding Customer.Place}" FontSize="12"></TextBox>
             </Border>
-            <Border Background="PaleGreen" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" Text="{Binding Customer.ZipCode}" FontSize="12"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox Foreground="Black" Text="{Binding Customer.ZipCode}" FontSize="12"></TextBox>
             </Border>
-            <Border Background="SlateBlue" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" Text="{Binding Customer.StartingDate}" FontSize="12"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox Foreground="Black" Text="{Binding Customer.StartingDate}" FontSize="12"></TextBox>
             </Border>
-            <Border Background="Gray" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" Text="{Binding Customer.ChamberOfCommerceNumber}" FontSize="12"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox Foreground="Black" Text="{Binding Customer.ChamberOfCommerceNumber}" FontSize="12"></TextBox>
             </Border>
         </StackPanel>
         <StackPanel Margin="50, 5, 5, 5" Width="100">
-            <Border Background="White" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" FontSize="12" Text="Contact Naam:"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Contact Naam:"></TextBox>
             </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" FontSize="12" Text="CP: Tel."></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="CP: Tel."></TextBox>
             </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" FontSize="12" Text="CP: Email"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="CP: Email"></TextBox>
             </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" FontSize="12" Text="CP: Rol"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="CP: Rol"></TextBox>
             </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" FontSize="12" Text="CP: Notitie"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="CP: Notitie"></TextBox>
             </Border>
         </StackPanel>
         <StackPanel Margin="5" Width="225">
-            <Border Background="SkyBlue" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" Text="{Binding Contact.Naam}" FontSize="12"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox Foreground="Black" Text="{Binding Contact.Naam}" FontSize="12"></TextBox>
             </Border>
-            <Border Background="CadetBlue" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" Text="{Binding Contact.Telefoon}" FontSize="12"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox Foreground="Black" Text="{Binding Contact.Telefoon}" FontSize="12"></TextBox>
             </Border>
-            <Border Background="LightGoldenRodYellow" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" Text="{Binding Contact.Email}" FontSize="12"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="3,5,6.8,5">
+                <TextBox Foreground="Black" Text="{Binding Contact.Email}" FontSize="12"></TextBox>
             </Border>
-            <Border Background="PaleGreen" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" Text="{Binding Contact.Rol}" FontSize="12"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox Foreground="Black" Text="{Binding Contact.Rol}" FontSize="12"></TextBox>
             </Border>
-            <Border Background="SlateBlue" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Foreground="Black" ScrollViewer.VerticalScrollBarVisibility="Visible" Text="{Binding Contact.Notitie}" FontSize="12"></TextBlock>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox TextWrapping="Wrap" Foreground="Black" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollBar.Scroll="TextBox_Scroll" Text="{Binding Contact.Notitie}" FontSize="12"></TextBox>
             </Border>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="175"></RowDefinition>
+                </Grid.RowDefinitions>
+            </Grid>
+            <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
+                <Button Content="Annuleren" Command="{Binding CloseAction}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                <Button Content="Goedkeuren" Command="{Binding AddCustomer}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+            </DockPanel>
         </StackPanel>
     </StackPanel>
-
-    <!--<StackPanel Margin="10">
-        <StackPanel Name="spBackButton" Orientation="Horizontal">
-            <StackPanel Margin="10">
-                <Button>Test</Button>
-            </StackPanel>
-            <StackPanel Margin="10">
-                <Button>Test 2</Button>
-                
-            </StackPanel>
-        </StackPanel>
-        <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                    Orientation="Horizontal" Margin="0,0,25,0">
-            <Button Content="Edit" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-            <Button Content="New" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-        </StackPanel>
-    </StackPanel>-->
-    <!--<TextBlock Text="{Binding Customer.Name}"></TextBlock>-->
+    
 </Window>

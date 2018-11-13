@@ -20,15 +20,15 @@
         <Border Grid.ColumnSpan="2" Margin="0,0,-0.4,0" Background="LightGray">
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <StackPanel Name="spBackButton" Height="Auto">
+                    <StackPanel Name="spBackButton" Height="Auto" Orientation="Horizontal">
                         <Button Content="Back" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                        <TextBlock Text="Klantenbeheer" FontSize="28" FontWeight="ExtraBold" Margin="15,6,0,0"/>
                     </StackPanel>
-                    <TextBlock Text="Klantenbeheer" FontSize="28" FontWeight="ExtraBold" Grid.Column="1" Margin="15,6,0,0"/>
                 </StackPanel>
                 <StackPanel Margin="20">
-                    <StackPanel Orientation="Horizontal" Height="30" Margin="0,0,0,2">
-                        <TextBlock Background="DarkGray" Width="650" Text="{Binding SearchText}"></TextBlock>
-                        <Button Background="WhiteSmoke" Width="105" HorizontalAlignment="Center" Content="Filter"></Button>
+                    <StackPanel Orientation="Horizontal" Height="30">
+                        <TextBox Height="30" VerticalAlignment="Center" Background="DarkGray" Width="650" Text="{Binding SearchText}"></TextBox>
+                        <Button Background="WhiteSmoke" Margin="10,0,0,0" Width="80" Content="Filter"></Button>
                     </StackPanel>
                     <StackPanel Name="spContent" Margin="0,0,0,2">
                         <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}" 
@@ -41,8 +41,8 @@
                                 <DataGridTemplateColumn Width="170">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button Command="{Binding DataContext.CreateEditCustomerWindow, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                    BorderThickness="1" BorderBrush="#FF999A9B" Foreground="White" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="20" Background="#FF6F9BDA">Toevoegen of Aanpassen</Button>
+                                            <Button Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                    BorderThickness="1" BorderBrush="#FF999A9B" Foreground="White" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="20" Background="#FF6F9BDA">Delete</Button>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
@@ -51,8 +51,8 @@
                     </StackPanel>
                     <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"
                     Orientation="Horizontal" Margin="15,10,25,10">
-                        <Button Content="Aanpassen" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                        <Button Content="Nieuw" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                        <Button Content="Aanpassen" Command="{Binding CreateEditCustomerWindowCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                        <Button Content="Nieuw" Command="{Binding CreateEditCustomerWindowCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

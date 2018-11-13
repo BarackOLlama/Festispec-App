@@ -3,6 +3,7 @@ using FSBeheer.VM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,16 +35,18 @@ namespace FSBeheer.Crud
             _customFSContext.Customers.Add(_customer.ToModel());
         }
 
-        public void Update(CustomerVM _customer)
+        public void Modify(CustomerVM _customer)
         {
             // SelectedCustomer
-            //_customFSContext.Customers.Edit(_customer.ToModel());
-
+            _customFSContext.Entry(_customer?.ToModel()).State = EntityState.Modified;
+            _customFSContext.SaveChanges();
         }
 
-        public void DeleteCustomer()
+        public void Delete(CustomerVM _customer)
         {
-
+            _customFSContext.Customers.Attach(_customer?.ToModel());
+            _customFSContext.Customers.Remove(_customer?.ToModel());
+            _customFSContext.SaveChanges();
         }
     }
 }

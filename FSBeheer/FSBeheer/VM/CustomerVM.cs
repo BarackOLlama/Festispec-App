@@ -50,6 +50,7 @@ namespace FSBeheer.VM
             set
             {
                 _customer.Adres = value;
+                // RaisePropertyChanged("Adres");
             }
         }
 
