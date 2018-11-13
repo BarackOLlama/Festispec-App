@@ -62,7 +62,8 @@ namespace FSBeheer.ViewModel
 
 
             var context = new CustomFSContext();
-            ObservableCollection<CustomerVM> test = context.CustomerCrud.GetCustomerVMs;
+            ObservableCollection<CustomerVM> test = context.CustomerCrud.GetAllCustomerVMs;
+            Console.WriteLine("");
         }
 
         private void ShowCustomersView()
