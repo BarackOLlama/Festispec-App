@@ -18,7 +18,7 @@ namespace FSBeheer.Crud
             _customFSContext = customFSContext;
         }
 
-        private ObservableCollection<CustomerVM> _getCustomers()
+        public ObservableCollection<CustomerVM> _getCustomers()
         {
             var customer = _customFSContext.Customers
                .ToList()

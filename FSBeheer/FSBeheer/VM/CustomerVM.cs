@@ -44,6 +44,29 @@ namespace FSBeheer.VM
             get { return _customer.Name; }
         }
 
-        // TODO - rest of the properties
+        public string Adres
+        {
+            get { return _customer.Adres; }
+        }
+
+        public string Place
+        {
+            get { return _customer.Place; }
+        }
+
+        public string ZipCode
+        {
+            get { return _customer.ZipCode; }
+        }
+
+        public DateTime? StartingDate
+        {
+            get { return _customer.StartingDate; }
+        }
+
+        public short? ChamberOfCommerceNumber
+        {
+            get { return _customer.ChamberOfCommerceNumber; }
+        }
     }
 }

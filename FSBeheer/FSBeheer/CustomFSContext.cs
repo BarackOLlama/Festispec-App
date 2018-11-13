@@ -23,12 +23,7 @@ namespace FSBeheer
 
         public ObservableCollection<CustomerVM> GetCustomers()
         {
-            var customer = Customers
-               .ToList()
-               .Select(c => new CustomerVM(c));
-            var _customers = new ObservableCollection<CustomerVM>(customer);
-
-            return _customers;
+            return CustomerCrud._getCustomers();
         }
 
     }
