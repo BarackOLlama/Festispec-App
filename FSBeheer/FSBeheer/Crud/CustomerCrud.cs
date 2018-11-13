@@ -27,5 +27,10 @@ namespace FSBeheer.Crud
 
             return _customers;
         }
+
+        public void AddCustomer()
+        {
+
+        }
     }
 }

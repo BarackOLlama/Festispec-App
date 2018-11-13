@@ -11,6 +11,7 @@ namespace FSBeheer.VM
     public class CustomerVM : ViewModelBase
     {
         private Customer _customer;
+        private CustomFSContext _customFSContext;
 
         public CustomerVM()
         {
@@ -19,7 +20,7 @@ namespace FSBeheer.VM
 
         public CustomerVM(Customer customer)
         {
-            this._customer = customer;
+            _customer = customer;
         }
 
         // Used through the whole assembly to adjust the values of a particular customer
@@ -30,7 +31,12 @@ namespace FSBeheer.VM
 
         public void AddCustomer()
         {
-            //CustomFSContext.Customer.add(_customer);
+            // Observable collection
+            _customFSContext.GetCustomers().Add(this);
+
+            // Database
+            _customFSContext.Customers.Add(_customer);
+
         }
 
         // Properties of Quiz (Database)
