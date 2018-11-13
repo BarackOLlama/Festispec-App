@@ -6,7 +6,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.Linq;
-using FSBeheer.View;
 
 namespace FSBeheer.ViewModel
 {
@@ -16,7 +15,7 @@ namespace FSBeheer.ViewModel
 
         public RelayCommand OpenCustomerManagement { get; set; }
 
-        private CustomerListWindow _customerListWindow;
+        private CustomerManagementView _customerListWindow;
 
         public RelayCommand ShowCustomersViewCommand { get; set; }
         public RelayCommand ShowInspectionViewCommand { get; set; }
@@ -29,8 +28,6 @@ namespace FSBeheer.ViewModel
         public HomeViewModel()
         {
             _context = new FSContext();
-            OpenCustomerManagement = new RelayCommand(OpenCustomer);
-        }
 
             ShowCustomersViewCommand = new RelayCommand(ShowCustomersView);
             ShowInspectionViewCommand = new RelayCommand(ShowInspectionsView);
@@ -46,7 +43,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowCustomersView()
         {
-            _customerListWindow = new CustomerListWindow();
+            _customerListWindow = new CustomerManagementView();
             _customerListWindow.Show();
         }
 

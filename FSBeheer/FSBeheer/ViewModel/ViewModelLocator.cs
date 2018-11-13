@@ -29,11 +29,11 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public CustomerManagementViewModel CustomerManagement
+        public CreateEditCustomerViewModel CreateEditCustomer
         {
             get
             {
-                return new CustomerManagementViewModel();
+                return new CreateEditCustomerViewModel();
             }
         }
 
