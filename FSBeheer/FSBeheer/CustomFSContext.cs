@@ -12,10 +12,11 @@ namespace FSBeheer
     class CustomFSContext: FSContext
     {
         public CustomerCrud CustomerCrud;
+        public InspectionCrud InspectionCrud;
 
         public CustomFSContext() : base() {
             CustomerCrud = new CustomerCrud(this);
-
+            InspectionCrud = new InspectionCrud(this);
         }
 
     }
