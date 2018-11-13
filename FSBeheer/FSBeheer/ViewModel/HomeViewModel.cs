@@ -23,11 +23,11 @@ namespace FSBeheer.ViewModel
     /// </summary>
     public class HomeViewModel : ViewModelBase
     {
-        private FSContext _Context;
+        private CustomFSContext _Context;
 
         public ObservableCollection<QuestionVM> Questions;
 
-        private CustomerListWindow _customerListWindow;
+        private CustomerManagementView _customerListWindow;
 
         public RelayCommand ShowCustomersViewCommand { get; set; }
         public RelayCommand ShowInspectionViewCommand { get; set; }
@@ -39,7 +39,7 @@ namespace FSBeheer.ViewModel
 
         public HomeViewModel()
         {
-            _Context = new FSContext();
+            _Context = new CustomFSContext();
 
             //var questions = _Context.Questions.ToList().Select(q => new QuestionVM(q));
             //Questions = new ObservableCollection<QuestionVM>(questions);
@@ -67,7 +67,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowCustomersView()
         {
-            _customerListWindow = new CustomerListWindow();
+            _customerListWindow = new CustomerManagementView();
             _customerListWindow.Show();
         }
 
@@ -78,7 +78,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowEventsView()
         {
-            throw new NotImplementedException();
+            new EventManagementView().Show();
         }
 
         private void ShowInspectorsView()

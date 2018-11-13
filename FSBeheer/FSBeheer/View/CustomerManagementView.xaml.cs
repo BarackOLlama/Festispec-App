@@ -17,9 +17,9 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for CustomerListWindow.xaml
     /// </summary>
-    public partial class CustomerListWindow : Window
+    public partial class CustomerManagementView : Window
     {
-        public CustomerListWindow()
+        public CustomerManagementView()
         {
             InitializeComponent();
         }
