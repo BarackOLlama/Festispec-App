@@ -104,6 +104,10 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="ViewModel\AddCustomerViewModel.cs" />
+    <Compile Include="ViewModel\EventManagementViewModel.cs" />
+    <Compile Include="View\EventManagementView.xaml.cs">
+      <DependentUpon>EventManagementView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\NullVisibilityConverter.cs" />
     <Compile Include="VM\AnswerVM.cs" />
     <Compile Include="VM\CustomerVM.cs" />
@@ -161,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CustomerManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EventManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
