@@ -18,6 +18,11 @@ namespace FSBeheer.Crud
             _customFSContext = customFSContext;
         }
 
+
+        /*
+         * Returns all customers
+         */
+
         public ObservableCollection<CustomerVM> GetAllCustomerVMs
         {
             get
@@ -31,9 +36,9 @@ namespace FSBeheer.Crud
             }
         }
 
-        /**
+        /*
          * Filter customer results based on a part of their name
-         * */
+         */
         private ObservableCollection<CustomerVM> _getMultipleCustomersByName(string name_contains)
         {
             if (name_contains == null)
@@ -50,10 +55,10 @@ namespace FSBeheer.Crud
             return _customers;
         }
 
-        /**
+        /*
          * Returns one customer based on ID
-         **/
-        private ObservableCollection<CustomerVM> GetCustomerById(int customer_id)
+         */
+        public ObservableCollection<CustomerVM> GetCustomerById(int customer_id)
         {
             var customer = _customFSContext.Customers
                .ToList()

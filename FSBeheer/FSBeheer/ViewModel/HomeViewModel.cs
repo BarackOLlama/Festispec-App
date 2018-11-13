@@ -60,9 +60,13 @@ namespace FSBeheer.ViewModel
             ShowQuotationsCommand = new RelayCommand(ShowQuotationsView);
             ShowQuestionnairesCommand = new RelayCommand(ShowQuestionnairesView);
 
-
+            // Tests to make sure everything is working
             var context = new CustomFSContext();
             ObservableCollection<CustomerVM> test = context.CustomerCrud.GetAllCustomerVMs;
+            ObservableCollection<CustomerVM> test2 = context.CustomerCrud.getFilteredCustomerBasedOnName("F");
+            ObservableCollection<CustomerVM> test3 = context.CustomerCrud.GetCustomerById(51);
+
+            // Place brakepoint here
             Console.WriteLine("");
         }
 
