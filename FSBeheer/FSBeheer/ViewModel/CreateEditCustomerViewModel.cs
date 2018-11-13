@@ -1,24 +1,19 @@
-﻿using FSBeheer.Model;
-using FSBeheer.VM;
+﻿using FSBeheer.VM;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
-    public class CreateEditCustomerViewModel
+    public class CreateEditCustomerViewModel : ViewModelBase
     {
         public CustomerVM Customer { get; set; }
 
-        private RelayCommand EditCommand { get; set; }
+        public RelayCommand EditCommand { get; set; }
 
-        private RelayCommand AddCommand { get; set; }
+        public RelayCommand AddCommand { get; set; }
 
-        private RelayCommand<Window> DiscardCommand { get; set; }
+        public RelayCommand<Window> DiscardCommand { get; set; }
 
         // prop ContactVM
 
@@ -56,12 +51,12 @@ namespace FSBeheer.ViewModel
         // Test
         private void Discard(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to close without saving?","Confirm discard", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Close without saving?","Confirm discard", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.Cancel)
             {
                 _Context.Dispose();
-                Customer = null; // Info reset
-                window.Close();
+                Customer = null; 
+                window?.Close();
             }
         }
 

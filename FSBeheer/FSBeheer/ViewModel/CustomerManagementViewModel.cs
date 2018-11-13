@@ -1,17 +1,12 @@
 ﻿using FSBeheer.VM;
 using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FSBeheer.View;
-using System.Windows;
+using GalaSoft.MvvmLight;
 
 namespace FSBeheer.ViewModel
 {
-    public class CustomerManagementViewModel
+    public class CustomerManagementViewModel : ViewModelBase
     {
         private CustomFSContext CustomFSContext;
         public ObservableCollection<CustomerVM> Customers { get; set; }
@@ -19,7 +14,17 @@ namespace FSBeheer.ViewModel
         public RelayCommand CreateEditCustomerWindowCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
 
-        public CustomerVM SelectedCustomer { get; set; } // doorgeven aan edit
+        private CustomerVM _selectedCustomer { get; set; } 
+
+        public CustomerVM SelectedCustomer
+        {
+            get { return _selectedCustomer; }
+            set
+            {
+                _selectedCustomer = value;
+                base.RaisePropertyChanged(nameof(SelectedCustomer));
+            }
+        }
 
 
         public CustomerManagementViewModel()

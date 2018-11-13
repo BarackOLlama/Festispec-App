@@ -38,56 +38,37 @@ namespace FSBeheer.VM
         public string Name
         {
             get { return _customer.Name; }
-            set
-            {
-                _customer.Name = value;
-            }
+            set { _customer.Name = value; RaisePropertyChanged("Name"); }
         }
 
         public string Adres
         {
             get { return _customer.Adres; }
-            set
-            {
-                _customer.Adres = value;
-                // RaisePropertyChanged("Adres");
-            }
+            set { _customer.Adres = value; RaisePropertyChanged("Adres"); }
         }
 
         public string Place
         {
             get { return _customer.Place; }
-            set
-            {
-                _customer.Place = value;
-            }
+            set { _customer.Place = value; RaisePropertyChanged("Place"); }
         }
 
         public string ZipCode
         {
             get { return _customer.ZipCode; }
-            set
-            {
-                _customer.ZipCode = value;
-            }
+            set { _customer.ZipCode = value; RaisePropertyChanged("ZipCode"); }
         }
 
         public DateTime? StartingDate
         {
             get { return _customer.StartingDate; }
-            set
-            {
-                _customer.StartingDate = value;
-            }
+            set { _customer.StartingDate = value; RaisePropertyChanged("StartingDate"); }
         }
 
         public short? ChamberOfCommerceNumber
         {
             get { return _customer.ChamberOfCommerceNumber; }
-            set
-            {
-                _customer.ChamberOfCommerceNumber = value;
-            }
+            set { _customer.ChamberOfCommerceNumber = value; RaisePropertyChanged("ChamberOfCommerceNumber"); }
         }
     }
 }
