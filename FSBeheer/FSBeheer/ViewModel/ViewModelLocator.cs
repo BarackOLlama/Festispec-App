@@ -33,7 +33,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new CreateEditCustomerViewModel();
+                return new CreateEditCustomerViewModel(CustomerManagement.SelectedCustomer);
             }
         }
 

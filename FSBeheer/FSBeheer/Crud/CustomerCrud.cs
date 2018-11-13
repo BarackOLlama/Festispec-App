@@ -29,20 +29,21 @@ namespace FSBeheer.Crud
             return _customers;
         }
 
-        public void AddCustomer(Customer _customer)
+        public void Add(CustomerVM _customer)
         {
-            var newCustomer = new CustomerVM(new Customer
-            {
-                //Name = NewNameCustomer,
-                //Adres = NewAdres,
-                //Place = NewPlace,
-                //ZipCode = NewZipCode,
-                //StartingDate = NewStartingDate,
-                //ChamberOfCommerceNumber = NewChamberOfCommerceNumber
+            _customFSContext.Customers.Add(_customer.ToModel());
+        }
 
-            });
+        public void Update(CustomerVM _customer)
+        {
+            // SelectedCustomer
+            //_customFSContext.Customers.Edit(_customer.ToModel());
 
-            //_customFSContext.Customers.Add(_customer);
+        }
+
+        public void DeleteCustomer()
+        {
+
         }
     }
 }

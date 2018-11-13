@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FSBeheer.Model;
+using FSBeheer.VM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,19 +10,36 @@ namespace FSBeheer.ViewModel
 {
     public class CreateEditCustomerViewModel
     {
-        public string NewNameCustomer { get; set; }
+        public CustomerVM Customer { get; set; }
 
-        public string NewAdres { get; set; }
+        // prop ContactVM
+
+        private CustomFSContext _Context;
 
 
         // Etc...
 
 
-        public CreateEditCustomerViewModel()
+        public CreateEditCustomerViewModel(CustomerVM c)
         {
-          // try catch
-        }
+            _Context = new CustomFSContext();
 
+            // try catch
+            if (c != null)
+            {
+                Customer = c;
+                // contact van deze customer
+            }
+            else
+            {
+                Customer = new CustomerVM();
+                _Context.CustomerCrud.Add(Customer);
+                // Contact aanmaken
+            }
+
+
+        }
+        
 
         // TODO: Connect to a new contact person when adding a customer 
     }

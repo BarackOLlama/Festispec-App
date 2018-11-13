@@ -29,7 +29,10 @@
                     <RowDefinition Height="20"/>
                     <RowDefinition Height="20"/>
                     <RowDefinition Height="20"/>
-                    
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20"/>
+
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Margin="0,0,0,4">
                     <Grid.ColumnDefinitions>
@@ -59,6 +62,15 @@
                 </Grid>
                 <Grid Grid.Row="6">
                     <TextBox MaxLength="50" Text="{Binding Customer.Info, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="25"/>
+                </Grid>
+                <Grid Grid.Row="7">
+                    <TextBlock Text="Text:" Margin="0,5,0,0" Height="20"/>
+                </Grid>
+                <Grid Grid.Row="8">
+                    <TextBox MaxLength="50" Text="{Binding Customer.Info, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="25"/>
+                </Grid>
+                <Grid Grid.Row="9">
+                    <TextBlock Text="Text:" Margin="0,5,0,0" Height="20"/>
                 </Grid>
             </Grid>
         </StackPanel>

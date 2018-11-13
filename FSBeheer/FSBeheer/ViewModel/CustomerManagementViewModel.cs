@@ -17,7 +17,7 @@ namespace FSBeheer.ViewModel
 
         public RelayCommand CreateEditCustomerWindow { get; set; }
 
-        public CustomerVM SelectedCustomer { get; set; }
+        public CustomerVM SelectedCustomer { get; set; } // doorgeven aan edit
 
         public CustomerManagementViewModel()
         {

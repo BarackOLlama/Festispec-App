@@ -29,16 +29,6 @@ namespace FSBeheer.VM
             return _customer;
         }
 
-        public void AddCustomer()
-        {
-            // Observable collection
-            _customFSContext.GetCustomers().Add(this);
-
-            // Database
-            _customFSContext.CustomerCrud.AddCustomer(_customer);
-
-        }
-
         // Properties of Quiz (Database)
         public int Id
         {
@@ -48,31 +38,55 @@ namespace FSBeheer.VM
         public string Name
         {
             get { return _customer.Name; }
+            set
+            {
+                _customer.Name = value;
+            }
         }
 
         public string Adres
         {
             get { return _customer.Adres; }
+            set
+            {
+                _customer.Adres = value;
+            }
         }
 
         public string Place
         {
             get { return _customer.Place; }
+            set
+            {
+                _customer.Place = value;
+            }
         }
 
         public string ZipCode
         {
             get { return _customer.ZipCode; }
+            set
+            {
+                _customer.ZipCode = value;
+            }
         }
 
         public DateTime? StartingDate
         {
             get { return _customer.StartingDate; }
+            set
+            {
+                _customer.StartingDate = value;
+            }
         }
 
         public short? ChamberOfCommerceNumber
         {
             get { return _customer.ChamberOfCommerceNumber; }
+            set
+            {
+                _customer.ChamberOfCommerceNumber = value;
+            }
         }
     }
 }

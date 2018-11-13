@@ -15,8 +15,6 @@ namespace FSBeheer.ViewModel
 
         public RelayCommand OpenCustomerManagement { get; set; }
 
-        private CustomerManagementView _customerListWindow;
-
         public RelayCommand ShowCustomersViewCommand { get; set; }
         public RelayCommand ShowInspectionViewCommand { get; set; }
         public RelayCommand ShowEventViewCommand { get; set; }
@@ -36,15 +34,14 @@ namespace FSBeheer.ViewModel
             ShowQuotationsCommand = new RelayCommand(ShowQuotationsView);
             ShowQuestionnairesCommand = new RelayCommand(ShowQuestionnairesView);
 
-
+            // TODO: Moet dit?
             var context = new CustomFSContext();
             ObservableCollection<CustomerVM> test = context.CustomerCrud.GetCustomerVMs;
         }
 
         private void ShowCustomersView()
         {
-            _customerListWindow = new CustomerManagementView();
-            _customerListWindow.Show();
+            new CustomerManagementView().Show();
         }
 
         private void ShowInspectionsView()
