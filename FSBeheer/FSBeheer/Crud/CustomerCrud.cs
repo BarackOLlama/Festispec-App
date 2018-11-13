@@ -9,10 +9,7 @@ namespace FSBeheer.Crud
     {
         private CustomFSContext _customFSContext;
 
-        public ObservableCollection<CustomerVM> getFilteredCustomerBasedOnName(string name_contains)
-        {
-            return _getMultipleCustomersByName(name_contains);
-        }
+        public ObservableCollection<CustomerVM> GetFilteredCustomerBasedOnName(string name_contains) => _getMultipleCustomersByName(name_contains);
         public CustomerCrud(CustomFSContext customFSContext)
         {
             _customFSContext = customFSContext;
@@ -23,17 +20,14 @@ namespace FSBeheer.Crud
          * Returns all customers
          */
 
-        public ObservableCollection<CustomerVM> GetAllCustomerVMs
+        public ObservableCollection<CustomerVM> GetGetAllCustomerVMs()
         {
-            get
-            {
-                var customer = _customFSContext.Customers
-                   .ToList()
-                   .Select(c => new CustomerVM(c));
-                var _customers = new ObservableCollection<CustomerVM>(customer);
+            var customer = _customFSContext.Customers
+               .ToList()
+               .Select(c => new CustomerVM(c));
+            var _customers = new ObservableCollection<CustomerVM>(customer);
 
-                return _customers;
-            }
+            return _customers;
         }
 
         /*
@@ -68,5 +62,10 @@ namespace FSBeheer.Crud
 
             return _customers;
         }
+
+        /*
+         * Remove customer based on VM
+         */
+        public void RemoveCustomer(CustomerVM customer) => _customFSContext.Customers.Remove(customer.ToModel());
     }
 }

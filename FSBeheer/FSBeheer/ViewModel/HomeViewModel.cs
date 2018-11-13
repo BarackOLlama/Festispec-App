@@ -62,8 +62,8 @@ namespace FSBeheer.ViewModel
 
             // Tests to make sure everything is working
             var context = new CustomFSContext();
-            ObservableCollection<CustomerVM> test = context.CustomerCrud.GetAllCustomerVMs;
-            ObservableCollection<CustomerVM> test2 = context.CustomerCrud.getFilteredCustomerBasedOnName("F");
+            ObservableCollection<CustomerVM> test = context.CustomerCrud.GetGetAllCustomerVMs();
+            ObservableCollection<CustomerVM> test2 = context.CustomerCrud.GetFilteredCustomerBasedOnName("F");
             ObservableCollection<CustomerVM> test3 = context.CustomerCrud.GetCustomerById(51);
 
             // Place brakepoint here
