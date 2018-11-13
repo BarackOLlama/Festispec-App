@@ -30,10 +30,7 @@ namespace FSBeheer.Crud
             return _customers;
         }
 
-        public void Add(CustomerVM _customer)
-        {
-            _customFSContext.Customers.Add(_customer.ToModel());
-        }
+        public void Add(CustomerVM _customer) => _customFSContext.Customers.Add(_customer.ToModel());
 
         public void Modify(CustomerVM _customer)
         {

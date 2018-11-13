@@ -40,8 +40,8 @@ namespace FSBeheer.ViewModel
         {
             if (SelectedCustomer != null)
             {
-                CustomFSContext.CustomerCrud.GetCustomerVMs.Remove(SelectedCustomer);
                 CustomFSContext.CustomerCrud.Delete(SelectedCustomer);
+                Customers.Remove(SelectedCustomer);
             }
         }
     }

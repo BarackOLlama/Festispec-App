@@ -50,10 +50,7 @@ namespace FSBeheer.ViewModel
             _Context.CustomerCrud.Add(Customer);
         }
 
-        private void ModifyCustomer()
-        {
-            _Context.CustomerCrud.Modify(Customer);
-        }
+        private void ModifyCustomer() => _Context.CustomerCrud.Modify(Customer);
 
 
         // Test
