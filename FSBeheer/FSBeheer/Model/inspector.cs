@@ -12,28 +12,16 @@ namespace FSBeheer.Model
     {
         [Key]
         public int Id { get; set; }
-        [Required]
         public string Name { get; set; }
-        [Required]
-        public string Adres { get; set; }
-        [Required]
-        public string Place { get; set; }
-        [Required]
-        public string ZipCode { get; set; }
-        [Required]
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string Zipcode { get; set; }
         public string Email { get; set; }
-        [Required]
-        public int PhoneNumber { get; set; }
-        [Required]
-        public DateTime CertificateDate { get; set; }
-        [Required]
+        public string PhoneNumber { get; set; }
+        public DateTime CertificationDate { get; set; }
         public DateTime InvalidDate { get; set; }
-        [Required]
-        public int AccountNumber { get; set; }
-
-        public Account Username { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Answer> Answers { get; set; }
+        public string BankNumber { get; set; }
+        public int? AccountId { get; set; }
+        public virtual Account Account { get; set; }
     }
 }

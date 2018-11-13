@@ -6,18 +6,18 @@ using System.Text;
 using System.Threading.Tasks;
 using FSBeheer.Model;
 
-namespace FSBeheer.ViewModel
+namespace FSBeheer.VM
 {
-    public class CustomerViewModel : ViewModelBase
+    public class CustomerVM : ViewModelBase
     {
         private Customer _customer; 
 
-        public CustomerViewModel()
+        public CustomerVM()
         {
             _customer = new Customer();
         }
 
-        public CustomerViewModel(Customer customer)
+        public CustomerVM(Customer customer)
         {
             this._customer = customer;
         }
@@ -28,17 +28,20 @@ namespace FSBeheer.ViewModel
             return _customer;
         }
 
+        public void AddCustomer()
+        {
+            //CustomFSContext.Customer.add(_customer);
+        }
+
         // Properties of Quiz (Database)
         public int Id
         {
             get { return _customer.Id; }
-            set { _customer.Id = value; RaisePropertyChanged("Id"); }
         }
 
         public string Name
         {
             get { return _customer.Name; }
-            set { _customer.Name = value; RaisePropertyChanged("Name"); }
         }
 
         // TODO - rest of the properties
