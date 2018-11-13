@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.ViewModel
 {
-    public class CreateEditCustomerViewModel
+    public class CustomerManagementViewModel
     {
-        public CreateEditCustomerViewModel()
+        public CustomerManagementViewModel()
         {
           // try catch
         }

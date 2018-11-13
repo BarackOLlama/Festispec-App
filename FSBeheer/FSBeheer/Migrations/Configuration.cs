@@ -6,7 +6,7 @@ namespace FSBeheer.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<FSBeheer.FSContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<CustomFSContext>
     {
         public Configuration()
         {
@@ -14,7 +14,7 @@ namespace FSBeheer.Migrations
             AutomaticMigrationDataLossAllowed = true;
         }
 
-        protected override void Seed(FSBeheer.FSContext context)
+        protected override void Seed(CustomFSContext context)
         {
             context.Answers.RemoveRange(context.Answers);
             context.Questions.RemoveRange(context.Questions);
@@ -26,6 +26,8 @@ namespace FSBeheer.Migrations
             context.Accounts.RemoveRange(context.Accounts);
             context.Roles.RemoveRange(context.Roles);
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.Roles', RESEED, 0)");
+            context.Customers.RemoveRange(context.Customers);
+            context.Events.RemoveRange(context.Events);
 
             var roles = new List<Role>
             {
@@ -302,6 +304,18 @@ namespace FSBeheer.Migrations
                 }
             };
             context.Customers.AddRange(customers);
+
+            var events = new List<Event>
+            {
+                new Event()
+                {
+                    Name = "Pinkpop",
+                    Address = "Megaland",
+                    City = "Landgraaf",
+                    Customer = customers[1]
+                }
+            };
+            context.Events.AddRange(events);
         }
     }
 }
