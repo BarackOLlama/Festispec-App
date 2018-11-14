@@ -94,7 +94,9 @@
                 <TextBox Foreground="Black" Text="{Binding Contact.Rol}" FontSize="12"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox TextWrapping="Wrap" Foreground="Black" ScrollViewer.VerticalScrollBarVisibility="Visible" Text="{Binding Contact.Notitie}" FontSize="12"></TextBox>
+                <ScrollViewer Height="100">
+                    <TextBox TextWrapping="Wrap" Foreground="Black" Text="{Binding Contact.Notitie}" FontSize="12"></TextBox>
+                </ScrollViewer>
             </Border>
             <Grid>
                 <Grid.RowDefinitions>
