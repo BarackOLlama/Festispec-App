@@ -10,7 +10,7 @@ namespace FSBeheer.VM
 {
     public class CustomerVM : ViewModelBase
     {
-        private Customer _customer; 
+        private Customer _customer;
 
         public CustomerVM()
         {
@@ -19,18 +19,13 @@ namespace FSBeheer.VM
 
         public CustomerVM(Customer customer)
         {
-            this._customer = customer;
+            _customer = customer;
         }
 
         // Used through the whole assembly to adjust the values of a particular customer
         internal Customer ToModel()
         {
             return _customer;
-        }
-
-        public void AddCustomer()
-        {
-            //CustomFSContext.Customer.add(_customer);
         }
 
         // Properties of Quiz (Database)
@@ -42,8 +37,37 @@ namespace FSBeheer.VM
         public string Name
         {
             get { return _customer.Name; }
+            set { _customer.Name = value; RaisePropertyChanged("Name"); }
         }
 
-        // TODO - rest of the properties
+        public string Adres
+        {
+            get { return _customer.Adres; }
+            set { _customer.Adres = value; RaisePropertyChanged("Adres"); }
+        }
+
+        public string Place
+        {
+            get { return _customer.Place; }
+            set { _customer.Place = value; RaisePropertyChanged("Place"); }
+        }
+
+        public string ZipCode
+        {
+            get { return _customer.ZipCode; }
+            set { _customer.ZipCode = value; RaisePropertyChanged("ZipCode"); }
+        }
+
+        public DateTime? StartingDate
+        {
+            get { return _customer.StartingDate; }
+            set { _customer.StartingDate = value; RaisePropertyChanged("StartingDate"); }
+        }
+
+        public short? ChamberOfCommerceNumber
+        {
+            get { return _customer.ChamberOfCommerceNumber; }
+            set { _customer.ChamberOfCommerceNumber = value; RaisePropertyChanged("ChamberOfCommerceNumber"); }
+        }
     }
 }

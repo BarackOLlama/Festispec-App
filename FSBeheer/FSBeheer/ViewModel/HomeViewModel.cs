@@ -9,25 +9,11 @@ using System.Linq;
 
 namespace FSBeheer.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
     public class HomeViewModel : ViewModelBase
     {
         private CustomFSContext _Context;
 
-        public ObservableCollection<QuestionVM> Questions;
-
-        private CustomerListWindow _customerListWindow;
+        public RelayCommand OpenCustomerManagement { get; set; }
 
         public RelayCommand ShowCustomersViewCommand { get; set; }
         public RelayCommand ShowInspectionViewCommand { get; set; }
@@ -39,6 +25,8 @@ namespace FSBeheer.ViewModel
 
         public HomeViewModel()
         {
+            _Context = new CustomFSContext();
+
             ShowCustomersViewCommand = new RelayCommand(ShowCustomersView);
             ShowInspectionViewCommand = new RelayCommand(ShowInspectionsView);
             ShowEventViewCommand = new RelayCommand(ShowEventsView);
@@ -58,8 +46,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowCustomersView()
         {
-            _customerListWindow = new CustomerListWindow();
-            _customerListWindow.Show();
+            new CustomerManagementView().Show();
         }
 
         private void ShowInspectionsView()

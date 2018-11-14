@@ -1,6 +1,8 @@
-﻿using FSBeheer.VM;
+﻿using FSBeheer.Model;
+using FSBeheer.VM;
 using System;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
 
 namespace FSBeheer.Crud
@@ -63,9 +65,20 @@ namespace FSBeheer.Crud
             return _customers;
         }
 
-        /*
-         * Remove customer based on VM
-         */
-        public void RemoveCustomer(CustomerVM customer) => _customFSContext.Customers.Remove(customer.ToModel());
+        public void Add(CustomerVM _customer) => _customFSContext.Customers.Add(_customer.ToModel());
+
+        public void Modify(CustomerVM _customer)
+        {
+            // SelectedCustomer
+            _customFSContext.Entry(_customer?.ToModel()).State = EntityState.Modified;
+            _customFSContext.SaveChanges();
+        }
+
+        public void Delete(CustomerVM _customer)
+        {
+            _customFSContext.Customers.Attach(_customer?.ToModel());
+            _customFSContext.Customers.Remove(_customer?.ToModel());
+            _customFSContext.SaveChanges();
+        }
     }
 }
