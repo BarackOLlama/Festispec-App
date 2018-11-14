@@ -11,7 +11,7 @@ namespace FSBeheer.ViewModel
 {
     public class HomeViewModel : ViewModelBase
     {
-        private FSContext _context;
+        private CustomFSContext _Context;
 
         public RelayCommand OpenCustomerManagement { get; set; }
 
@@ -34,9 +34,14 @@ namespace FSBeheer.ViewModel
             ShowQuotationsCommand = new RelayCommand(ShowQuotationsView);
             ShowQuestionnairesCommand = new RelayCommand(ShowQuestionnairesView);
 
-            // TODO: Moet dit?
-            var context = new CustomFSContext();
-            ObservableCollection<CustomerVM> test = context.CustomerCrud.GetCustomerVMs;
+            // Tests to make sure everything is working
+            _Context = new CustomFSContext();
+            ObservableCollection<CustomerVM> test = _Context.CustomerCrud.GetGetAllCustomerVMs();
+            ObservableCollection<CustomerVM> test2 = _Context.CustomerCrud.GetFilteredCustomerBasedOnName("F");
+            ObservableCollection<CustomerVM> test3 = _Context.CustomerCrud.GetCustomerById(51);
+
+            // Place brakepoint here
+            Console.WriteLine("");
         }
 
         private void ShowCustomersView()
