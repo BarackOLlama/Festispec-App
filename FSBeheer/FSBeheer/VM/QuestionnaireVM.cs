@@ -17,6 +17,9 @@ namespace FSBeheer.VM
             _questionnaire = q;
         }
 
+        /*
+         *  Getters
+         */
         public int Id
         {
             get { return _questionnaire.Id; }
@@ -35,6 +38,7 @@ namespace FSBeheer.VM
         public int Version
         {
             get { return _questionnaire.Version; }
+            set { _questionnaire.Version = value; }
         }
 
         public string Comments
@@ -55,6 +59,39 @@ namespace FSBeheer.VM
         public virtual ObservableCollection<Question> Questions
         {
             get { return _questionnaire.Questions; }
+        }
+
+        /*
+         *  Logic
+         */
+        public bool AddQuestion(Question question)
+        {
+            // If the given question is already in the questionnaire, don't add it to avoid duplicates.
+            if (Questions.Contains(question))
+            {
+                return false;
+            }
+
+            Questions.Add(question);
+            updateVersion();
+            return true;
+        }
+
+        public bool RemoveQuestion(Question question)
+        {
+            if (Questions.Remove(question))
+            {
+                updateVersion();
+                return true;
+            }
+
+            return false;
+        }
+
+        // Increment the version number by one
+        public int updateVersion()
+        {
+            return _questionnaire.Version += 1;
         }
     }
 }
