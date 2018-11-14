@@ -86,7 +86,7 @@ namespace FSBeheer.VM
         }
 
         // Increment the version number by one
-        public int updateVersion()
+        private int updateVersion()
         {
             return _questionnaire.Version += 1;
         }
