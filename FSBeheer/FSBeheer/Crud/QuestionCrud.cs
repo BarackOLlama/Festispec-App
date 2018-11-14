@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 
 namespace FSBeheer.Crud
 {
@@ -24,6 +25,30 @@ namespace FSBeheer.Crud
             var result = new ObservableCollection<QuestionVM>(questions);
 
             return result;
+        }
+
+        public ObservableCollection<QuestionVM> GetQuestionById(int questionId)
+        {
+            var questions = CustomFSContext.Questions
+               .ToList()
+               .Where(c => c.Id == questionId)
+               .Select(c => new QuestionVM(c));
+            var result = new ObservableCollection<QuestionVM>(questions);
+
+            return result;
+        }
+
+        public void Modify(QuestionVM question)
+        {
+            CustomFSContext.Entry(question?.ToModel()).State = EntityState.Modified;
+            CustomFSContext.SaveChanges();
+        }
+
+        public void Delete(QuestionVM question)
+        {
+            CustomFSContext.Questions.Attach(question?.ToModel());
+            CustomFSContext.Questions.Remove(question?.ToModel());
+            CustomFSContext.SaveChanges();
         }
     }
 }
