@@ -40,5 +40,10 @@ namespace FSBeheer.VM
         {
             get { return _event.Customer.Name; }
         }
+
+        internal Event ToModel()
+        {
+            return _event;
+        }
     }
 }
