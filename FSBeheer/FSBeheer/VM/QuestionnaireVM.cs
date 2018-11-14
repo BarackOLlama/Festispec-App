@@ -17,9 +17,6 @@ namespace FSBeheer.VM
             _questionnaire = q;
         }
 
-        /*
-         *  Getters
-         */
         public int Id
         {
             get { return _questionnaire.Id; }
