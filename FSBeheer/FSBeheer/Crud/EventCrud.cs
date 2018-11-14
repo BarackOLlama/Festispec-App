@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,31 @@ namespace FSBeheer.Crud
 
             return _events;
 
+        }
+        public void Add(EventVM _event) => CustomFSContext.Events.Add(_event.ToModel());
+
+        public ObservableCollection<EventVM> GetEventById(int eventId)
+        {
+            var customer = CustomFSContext.Events
+               .ToList()
+               .Where(c => c.Id == eventId)
+               .Select(c => new EventVM(c));
+            var _customers = new ObservableCollection<EventVM>(customer);
+
+            return _customers;
+        }
+        public void Modify(EventVM _event)
+        {
+            // SelectedCustomer
+            CustomFSContext.Entry(_event?.ToModel()).State = EntityState.Modified;
+            CustomFSContext.SaveChanges();
+        }
+
+        public void Delete(EventVM _event)
+        {
+            CustomFSContext.Events.Attach(_event?.ToModel());
+            CustomFSContext.Events.Remove(_event?.ToModel());
+            CustomFSContext.SaveChanges();
         }
     }
 }
