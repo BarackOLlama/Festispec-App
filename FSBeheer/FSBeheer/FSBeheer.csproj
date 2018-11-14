@@ -86,7 +86,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Crud\AbstractCrud.cs" />
-    <Compile Include="Crud\CrudInterface.cs" />
     <Compile Include="Crud\CustomerCrud.cs" />
     <Compile Include="Crud\EventCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
