@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.Crud
 {
-    class EventCrud: AbstractCrud
+    interface ICrudInterface
     {
-        public EventCrud(CustomFSContext customFSContext) : base(customFSContext)
-        {
 
-        }
-        
     }
 }
