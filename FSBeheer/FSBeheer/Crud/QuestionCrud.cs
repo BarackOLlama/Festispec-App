@@ -50,5 +50,26 @@ namespace FSBeheer.Crud
             CustomFSContext.Questions.Remove(question?.ToModel());
             CustomFSContext.SaveChanges();
         }
+
+        public ObservableCollection<QuestionVM> GetFilteredQuestionsByString(string must_contain)
+        {
+            if (must_contain == null)
+            {
+                throw new ArgumentNullException(nameof(must_contain));
+            }
+            var questions = CustomFSContext.Questions
+                .ToList()
+                .Where(c =>
+                c.Content.Contains(must_contain) ||
+                c.QuestionType.Name.Equals(must_contain) ||
+                c.Comments.Contains(must_contain) ||
+                c.Id.Equals(must_contain)
+                ).Select(c => new QuestionVM(c));
+
+            var result = new ObservableCollection<QuestionVM>(questions);
+
+            return result;
+
+        }
     }
 }
