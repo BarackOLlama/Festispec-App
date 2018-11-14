@@ -85,7 +85,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Crud\AbstractCrud.cs" />
     <Compile Include="Crud\CustomerCrud.cs" />
+    <Compile Include="Crud\EventCrud.cs" />
+    <Compile Include="Crud\QuestionCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
     <Compile Include="Migrations\201811121341460_Initial.cs" />
     <Compile Include="Migrations\201811121341460_Initial.Designer.cs">

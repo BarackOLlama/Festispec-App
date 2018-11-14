@@ -7,14 +7,11 @@ using System.Linq;
 
 namespace FSBeheer.Crud
 {
-    class CustomerCrud
+    class CustomerCrud : AbstractCrud
     {
-        private CustomFSContext _customFSContext;
-
         public ObservableCollection<CustomerVM> GetFilteredCustomerBasedOnName(string name_contains) => _getMultipleCustomersByName(name_contains);
-        public CustomerCrud(CustomFSContext customFSContext)
+        public CustomerCrud(CustomFSContext customFSContext) : base(customFSContext)
         {
-            _customFSContext = customFSContext;
         }
 
 
@@ -24,7 +21,7 @@ namespace FSBeheer.Crud
 
         public ObservableCollection<CustomerVM> GetGetAllCustomerVMs()
         {
-            var customer = _customFSContext.Customers
+            var customer = CustomFSContext.Customers
                .ToList()
                .Select(c => new CustomerVM(c));
             var _customers = new ObservableCollection<CustomerVM>(customer);
@@ -42,7 +39,7 @@ namespace FSBeheer.Crud
                 throw new ArgumentNullException(nameof(name_contains));
             }
 
-            var customer = _customFSContext.Customers
+            var customer = CustomFSContext.Customers
                .ToList()
                .Where(c => c.Name.Contains(name_contains))
                .Select(c => new CustomerVM(c));
@@ -56,7 +53,7 @@ namespace FSBeheer.Crud
          */
         public ObservableCollection<CustomerVM> GetCustomerById(int customer_id)
         {
-            var customer = _customFSContext.Customers
+            var customer = CustomFSContext.Customers
                .ToList()
                .Where(c => c.Id == customer_id)
                .Select(c => new CustomerVM(c));
@@ -65,20 +62,20 @@ namespace FSBeheer.Crud
             return _customers;
         }
 
-        public void Add(CustomerVM _customer) => _customFSContext.Customers.Add(_customer.ToModel());
+        public void Add(CustomerVM _customer) => CustomFSContext.Customers.Add(_customer.ToModel());
 
         public void Modify(CustomerVM _customer)
         {
             // SelectedCustomer
-            _customFSContext.Entry(_customer?.ToModel()).State = EntityState.Modified;
-            _customFSContext.SaveChanges();
+            CustomFSContext.Entry(_customer?.ToModel()).State = EntityState.Modified;
+            CustomFSContext.SaveChanges();
         }
 
         public void Delete(CustomerVM _customer)
         {
-            _customFSContext.Customers.Attach(_customer?.ToModel());
-            _customFSContext.Customers.Remove(_customer?.ToModel());
-            _customFSContext.SaveChanges();
+            CustomFSContext.Customers.Attach(_customer?.ToModel());
+            CustomFSContext.Customers.Remove(_customer?.ToModel());
+            CustomFSContext.SaveChanges();
         }
     }
 }
