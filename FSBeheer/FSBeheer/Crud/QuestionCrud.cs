@@ -64,7 +64,8 @@ namespace FSBeheer.Crud
                 c.QuestionType.Name.Equals(must_contain) ||
                 c.Comments.Contains(must_contain) ||
                 c.Id.Equals(must_contain)
-                ).Select(c => new QuestionVM(c));
+                ).Distinct()
+                .Select(c => new QuestionVM(c));
 
             var result = new ObservableCollection<QuestionVM>(questions);
 

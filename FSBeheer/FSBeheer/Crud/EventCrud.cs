@@ -39,8 +39,7 @@ namespace FSBeheer.Crud
                 c.Customer.Name.Contains(must_contain) ||
                 c.Address.Contains(must_contain) ||
                 c.Id.Equals(must_contain)
-                )
-
+                ).Distinct()
                 .Select(c => new EventVM(c));
             var _events = new ObservableCollection<EventVM>(events);
 
