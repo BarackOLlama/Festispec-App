@@ -7,9 +7,11 @@
         mc:Ignorable="d"
         Title="Vragenlijst Beheer" Height="450" Width="800">
     <Grid>
-        <DataGrid ItemsSource="{Binding Questionnaires}" />
-        <Button Content="Back" HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="60"/>
-        <Button Content="New" HorizontalAlignment="Right" Height="60" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="60"/>
-        <Button Content="Edit" HorizontalAlignment="Right" Height="60" Margin="0,0,80,10" VerticalAlignment="Bottom" Width="60"/>
+        <DataGrid ItemsSource="{Binding Questionnaires}" Margin="90,84,155,10" />
+        <Button Content="Terug" HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="60"/>
+        <Button Content="Nieuw" HorizontalAlignment="Right" Height="60" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="60"/>
+        <Button Content="Bewerken" HorizontalAlignment="Right" Height="60" Margin="0,0,80,10" VerticalAlignment="Bottom" Width="60"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="90,47,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="462"/>
+        <Button Content="Zoeken" HorizontalAlignment="Left" Margin="557,47,0,0" VerticalAlignment="Top" Width="80" Height="23"/>
     </Grid>
 </Window>
