@@ -11,7 +11,6 @@ namespace FSBeheer.VM
     public class CustomerVM : ViewModelBase
     {
         private Customer _customer;
-        private CustomFSContext _customFSContext = new CustomFSContext();
 
         public CustomerVM()
         {
