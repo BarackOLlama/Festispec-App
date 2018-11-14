@@ -18,15 +18,21 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<EventVM> Events { get; set; }
         public EventVM SelectedEvent { get; set; }
 
+        private string _FilterText;
+        public string FilterText { get { return _FilterText; }
+            set { _FilterText = value; } }
+
         public RelayCommand<Window> BackHomeCommand { get; set; }
         public RelayCommand EditEventCommand { get; set; }
         public RelayCommand NewEventCommand { get; set; }
+        public RelayCommand FilterListCommand { get; set; }
 
         public EventManagementViewModel()
         {
             _Context = new CustomFSContext();
 
             BackHomeCommand = new RelayCommand<Window>(CloseAction);
+            FilterListCommand = new RelayCommand(FilterList);
 
             var events = _Context.Events.ToList().Select(e => new EventVM(e));
             Events = new ObservableCollection<EventVM>(events);
@@ -35,6 +41,11 @@ namespace FSBeheer.ViewModel
         private void CloseAction(Window window)
         {
             window.Close();
+        }
+
+        public void FilterList()
+        {
+            Console.WriteLine(FilterText);
         }
     }
 }

@@ -132,12 +132,41 @@ namespace FSBeheer.Migrations
             };
             context.Inspectors.AddRange(inspectors);
 
+            var statuses = new List<Status>
+            {
+                new Status()
+                {
+                    StatusName = "Plan"
+                },
+                new Status()
+                {
+                    StatusName = "Offerte verstuurd"
+                },
+                new Status()
+                {
+                    StatusName = "Pre-planning"
+                },
+                new Status()
+                {
+                    StatusName = "Ingepland"
+                },
+                new Status()
+                {
+                    StatusName = "Inspectie voltooid"
+                },
+                new Status()
+                {
+                    StatusName = "Afgerond"
+                }
+            };
+            context.Statuses.AddRange(statuses);
+
             var inspections = new List<Inspection>
             {
                 new Inspection()
                     {
                         Name = "EersteInspectie",
-                        State = "Ingepland",
+                        Status = statuses[3],
                         Notes = "Minstens 4 inspecteurs"
                     }
             };
@@ -295,15 +324,33 @@ namespace FSBeheer.Migrations
                 new Customer()
                 {
                     Name = "BermDingetje",
-                    Place = "Den Haag"
+                    City = "Den Haag"
                 },
                 new Customer()
                 {
                     Name = "Festispec",
-                    Place = "Den Bosch"
+                    City = "Den Bosch"
                 }
             };
             context.Customers.AddRange(customers);
+
+            var contacts = new List<Contact>
+            {
+                new Contact()
+                {
+                    Name = "Darjush Kolahi",
+                    PhoneNumber = "12345898765",
+                    Email = "dkolahi@gmail.com",
+                    Customer = customers[0]
+                },
+                new Contact()
+                {
+                    Name = "Mitchell Appelman",
+                    PhoneNumber = "678765356",
+                    Email = "mappelman@gmail.com",
+                    Customer = customers[1]
+                }
+            };
 
             var events = new List<Event>
             {
@@ -313,6 +360,20 @@ namespace FSBeheer.Migrations
                     Address = "Megaland",
                     City = "Landgraaf",
                     Customer = customers[1]
+                },
+                new Event()
+                {
+                    Name = "Appelpop",
+                    Address = "Grasweide 15",
+                    City = "Heusde",
+                    Customer = customers[1]
+                },
+                new Event()
+                {
+                    Name = "Zwarte Cross",
+                    Address = "Zandweggetje 4",
+                    City = "Lichtervoorde",
+                    Customer = customers[2]
                 }
             };
             context.Events.AddRange(events);

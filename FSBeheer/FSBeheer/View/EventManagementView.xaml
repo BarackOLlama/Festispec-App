@@ -16,6 +16,16 @@
                     Command="{TemplateBinding Command}"
                     CommandParameter="{TemplateBinding CommandParameter}"/>
         </ControlTemplate>
+        <ControlTemplate x:Key="SearchTextBox" TargetType="TextBox">
+            <TextBox FontSize="15" Width="300"
+                     Text="{TemplateBinding Text}"/>
+        </ControlTemplate>
+        <ControlTemplate x:Key="SearchButton" TargetType="Button">
+            <Button FontSize="15"
+                    Content="{TemplateBinding Content}"
+                    Command="{TemplateBinding Command}"
+                    CommandParameter="{TemplateBinding CommandParameter}"/>
+        </ControlTemplate>
     </Window.Resources>
 
     <StackPanel Margin="20">
@@ -27,11 +37,15 @@
         </StackPanel>
         <StackPanel Name="spContent" Margin="30">
             <StackPanel Name="spFilter" Orientation="Horizontal" Margin="0,0,0,10">
-                <TextBox Name="txtSearchInput" Width="300" />
-                <Button Content="Filter"/>
+                <TextBox Name="txtSearchInput" Template="{StaticResource SearchTextBox}"
+                         Text="{Binding FilterText, Mode=TwoWay}"/>
+                <Button Content="Filter" Template="{StaticResource SearchButton}"
+                        Command="{Binding FilterListCommand}"/>
             </StackPanel>
-            <DataGrid ItemsSource="{Binding Events}" MaxHeight="250">
-                
+            <DataGrid ItemsSource="{Binding Events}" MaxHeight="250" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Naam" Binding="{Binding Name}"/>
+                </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
         <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"                    

@@ -24,5 +24,10 @@ namespace FSBeheer.View
         {
             InitializeComponent();
         }
+
+        private void TextBox_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }

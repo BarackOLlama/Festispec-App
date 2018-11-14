@@ -8,9 +8,9 @@
         DataContext="{Binding Home, Source={StaticResource Locator}}"
         Title="Home" Height="450" Width="600">
     <Grid Background="White">
-        <Button Content="Inspecties" Command="{Binding ShowInspectionsViewCommand}" Background="LightBlue" HorizontalAlignment="Left" Margin="249,107,0,0" VerticalAlignment="Top" Width="121" Height="30" RenderTransformOrigin="2.662,0.869"/>
+        <Button Content="Inspecties" Command="{Binding ShowInspectionViewCommand}" Background="LightBlue" HorizontalAlignment="Left" Margin="249,107,0,0" VerticalAlignment="Top" Width="121" Height="30" RenderTransformOrigin="2.662,0.869"/>
         <Button Content="Evenementen" Command="{Binding ShowEventViewCommand}" Background="LightBlue" HorizontalAlignment="Left" Margin="433,107,0,0" VerticalAlignment="Top" Width="121" Height="30" RenderTransformOrigin="2.662,0.869"/>
-        <Button Content="Klanten" Command="{Binding ShowCustomersViewCommand}" Background="LightBlue" HorizontalAlignment="Left" Margin="71,107,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
+        <Button Content="Klanten" Command="{Binding ShowCustomerViewCommand}" Background="LightBlue" HorizontalAlignment="Left" Margin="71,107,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
         <Button Content="Inspecteurs" Background="LightBlue" HorizontalAlignment="Left" Margin="71,226,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
         <Button Content="Offertes" Background="LightBlue" HorizontalAlignment="Left" Margin="249,226,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
         <Button Content="Vragenlijsten" Background="LightBlue" HorizontalAlignment="Left" Margin="433,226,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
