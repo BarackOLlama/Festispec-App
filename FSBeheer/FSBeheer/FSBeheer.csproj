@@ -104,6 +104,9 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="ViewModel\CustomerManagementViewModel.cs" />
+    <Compile Include="View\QuestionnaireManagementView.xaml.cs">
+      <DependentUpon>QuestionnaireManagementView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\NullVisibilityConverter.cs" />
     <Compile Include="VM\AnswerVM.cs" />
     <Compile Include="VM\CustomerVM.cs" />
@@ -123,6 +126,7 @@
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="VM\EventVM.cs" />
+    <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="VM\QuestionVM.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +163,10 @@
     <Page Include="View\CreateEditCustomerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\QuestionnaireManagementView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\CustomerManagementView.xaml">
       <SubType>Designer</SubType>
