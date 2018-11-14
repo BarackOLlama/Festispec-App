@@ -21,10 +21,5 @@ namespace FSBeheer
             CustomerCrud = new CustomerCrud(this);
         }
 
-        public ObservableCollection<CustomerVM> GetCustomers()
-        {
-            return CustomerCrud._getCustomers();
-        }
-
     }
 }

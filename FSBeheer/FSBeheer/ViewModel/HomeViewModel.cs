@@ -25,7 +25,7 @@ namespace FSBeheer.ViewModel
 
         public HomeViewModel()
         {
-            _context = new FSContext();
+            _Context = new CustomFSContext();
 
             ShowCustomersViewCommand = new RelayCommand(ShowCustomersView);
             ShowInspectionViewCommand = new RelayCommand(ShowInspectionsView);

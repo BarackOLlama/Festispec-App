@@ -41,14 +41,16 @@ namespace FSBeheer.ViewModel
 
         private void AddCustomer()
         {
-            _Context.CustomerCrud.GetCustomerVMs.Add(Customer);
+            // not tested yet
+            _Context.CustomerCrud.GetGetAllCustomerVMs().Add(Customer);
             _Context.CustomerCrud.Add(Customer);
         }
 
+        // Not tested yet
         private void ModifyCustomer() => _Context.CustomerCrud.Modify(Customer);
 
 
-        // Test
+        // Not tested yet
         private void Discard(Window window)
         {
             MessageBoxResult result = MessageBox.Show("Close without saving?","Confirm discard", MessageBoxButton.OKCancel);

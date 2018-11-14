@@ -30,7 +30,7 @@ namespace FSBeheer.ViewModel
         public CustomerManagementViewModel()
         {
             CustomFSContext = new CustomFSContext();
-            Customers = CustomFSContext.GetCustomers();
+            Customers = CustomFSContext.CustomerCrud.GetGetAllCustomerVMs();
 
             CreateEditCustomerWindowCommand = new RelayCommand(OpenCreateEditCustomer);
             DeleteCommand = new RelayCommand(DeleteCustomer);
