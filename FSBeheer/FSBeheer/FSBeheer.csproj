@@ -97,17 +97,27 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Answer.cs" />
     <Compile Include="FSContext.cs" />
+    <Compile Include="Model\Availability.cs" />
+    <Compile Include="Model\Contact.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Event.cs" />
+    <Compile Include="Model\EventDate.cs" />
     <Compile Include="Model\Inspection.cs" />
+    <Compile Include="Model\InspectionDate.cs" />
     <Compile Include="Model\Inspector.cs" />
     <Compile Include="Model\Question.cs" />
     <Compile Include="Model\Questionnaire.cs" />
     <Compile Include="Model\QuestionType.cs" />
     <Compile Include="Model\Account.cs" />
+    <Compile Include="Model\Quotation.cs" />
     <Compile Include="Model\Role.cs" />
+    <Compile Include="Model\Status.cs" />
     <Compile Include="ViewModel\CreateEditCustomerViewModel.cs" />
     <Compile Include="ViewModel\CustomerManagementViewModel.cs" />
+    <Compile Include="ViewModel\EventManagementViewModel.cs" />
+    <Compile Include="View\EventManagementView.xaml.cs">
+      <DependentUpon>EventManagementView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\NullVisibilityConverter.cs" />
     <Compile Include="VM\AnswerVM.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
@@ -165,6 +175,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CustomerManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EventManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
