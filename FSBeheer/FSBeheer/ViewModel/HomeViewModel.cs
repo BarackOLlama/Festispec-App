@@ -12,27 +12,26 @@ namespace FSBeheer.ViewModel
     public class HomeViewModel : ViewModelBase
     {
         private CustomFSContext _Context;
-
-        public RelayCommand OpenCustomerManagement { get; set; }
-
-        public RelayCommand ShowCustomersViewCommand { get; set; }
+        private CustomerManagementView _customerListWindow;
+        
+        public RelayCommand ShowCustomerViewCommand { get; set; }
         public RelayCommand ShowInspectionViewCommand { get; set; }
         public RelayCommand ShowEventViewCommand { get; set; }
-        public RelayCommand ShowInspectorsCommand { get; set; }
-        public RelayCommand ShowQuotationsCommand { get; set; }
-        public RelayCommand ShowQuestionnairesCommand { get; set; }
+        public RelayCommand ShowInspectorViewCommand { get; set; }
+        public RelayCommand ShowQuotationViewCommand { get; set; }
+        public RelayCommand ShowQuestionnaireViewCommand { get; set; }
 
 
         public HomeViewModel()
         {
             _Context = new CustomFSContext();
 
-            ShowCustomersViewCommand = new RelayCommand(ShowCustomersView);
-            ShowInspectionViewCommand = new RelayCommand(ShowInspectionsView);
-            ShowEventViewCommand = new RelayCommand(ShowEventsView);
-            ShowInspectorsCommand = new RelayCommand(ShowInspectorsView);
-            ShowQuotationsCommand = new RelayCommand(ShowQuotationsView);
-            ShowQuestionnairesCommand = new RelayCommand(ShowQuestionnairesView);
+            ShowCustomerViewCommand = new RelayCommand(ShowCustomerView);
+            ShowInspectionViewCommand = new RelayCommand(ShowInspectionView);
+            ShowEventViewCommand = new RelayCommand(ShowEventView);
+            ShowInspectorViewCommand = new RelayCommand(ShowInspectorView);
+            ShowQuotationViewCommand = new RelayCommand(ShowQuotationView);
+            ShowQuestionnaireViewCommand = new RelayCommand(ShowQuestionnaireView);
 
             // Tests to make sure everything is working
             _Context = new CustomFSContext();
@@ -44,32 +43,32 @@ namespace FSBeheer.ViewModel
             Console.WriteLine("");
         }
 
-        private void ShowCustomersView()
+        private void ShowCustomerView()
         {
             new CustomerManagementView().Show();
         }
 
-        private void ShowInspectionsView()
+        private void ShowInspectionView()
         {
             throw new NotImplementedException();
         }
 
-        private void ShowEventsView()
+        private void ShowEventView()
+        {
+            new EventManagementView().Show();
+        }
+
+        private void ShowInspectorView()
         {
             throw new NotImplementedException();
         }
 
-        private void ShowInspectorsView()
+        private void ShowQuotationView()
         {
             throw new NotImplementedException();
         }
 
-        private void ShowQuotationsView()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void ShowQuestionnairesView()
+        private void ShowQuestionnaireView()
         {
             throw new NotImplementedException();
         }
