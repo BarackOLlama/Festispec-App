@@ -46,10 +46,10 @@ namespace FSBeheer.VM
             set { _customer.Adres = value; RaisePropertyChanged("Adres"); }
         }
 
-        public string Place
+        public string City
         {
-            get { return _customer.Place; }
-            set { _customer.Place = value; RaisePropertyChanged("Place"); }
+            get { return _customer.City; }
+            set { _customer.City = value; RaisePropertyChanged("Place"); }
         }
 
         public string ZipCode

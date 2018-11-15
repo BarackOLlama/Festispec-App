@@ -13,12 +13,18 @@ namespace FSBeheer
     class CustomFSContext: FSContext
     {
         public CustomerCrud CustomerCrud;
+        public AnswerCrud AnswerCrud;
+        public EventCrud EventCrud;
+        public QuestionCrud QuestionCrud;
 
         public CustomFSContext() : base() {
 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<CustomFSContext, Migrations.Configuration>());
 
             CustomerCrud = new CustomerCrud(this);
+            AnswerCrud = new AnswerCrud(this);
+            EventCrud = new EventCrud(this);
+            QuestionCrud = new QuestionCrud(this);
         }
 
     }
