@@ -45,5 +45,10 @@ namespace FSBeheer.VM
                     return "";
             }
         }
+
+        internal Event ToModel()
+        {
+            return _event;
+        }
     }
 }
