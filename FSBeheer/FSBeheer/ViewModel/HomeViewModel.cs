@@ -9,92 +9,68 @@ using System.Linq;
 
 namespace FSBeheer.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
     public class HomeViewModel : ViewModelBase
     {
-        private FSContext _Context;
-
-        public ObservableCollection<QuestionVM> Questions;
-
-        private CustomerListWindow _customerListWindow;
-
+        private CustomFSContext _Context;
+        private CustomerManagementView _customerListWindow;
         private InspectionManagementView _inspectionManagementView;
 
-        public RelayCommand ShowCustomersViewCommand { get; set; }
-        public RelayCommand ShowInspectionsViewCommand { get; set; }
-        public RelayCommand ShowEventsViewCommand { get; set; }
-        public RelayCommand ShowInspectorsCommand { get; set; }
-        public RelayCommand ShowQuotationsCommand { get; set; }
-        public RelayCommand ShowQuestionnairesCommand { get; set; }
+        public RelayCommand ShowCustomerViewCommand { get; set; }
+        public RelayCommand ShowInspectionViewCommand { get; set; }
+        public RelayCommand ShowEventViewCommand { get; set; }
+        public RelayCommand ShowInspectorViewCommand { get; set; }
+        public RelayCommand ShowQuotationViewCommand { get; set; }
+        public RelayCommand ShowQuestionnaireViewCommand { get; set; }
 
 
         public HomeViewModel()
         {
-            _Context = new FSContext();
+            _Context = new CustomFSContext();
 
-            //var questions = _Context.Questions.ToList().Select(q => new QuestionVM(q));
-            //Questions = new ObservableCollection<QuestionVM>(questions);
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
-            ///
+            ShowCustomerViewCommand = new RelayCommand(ShowCustomerView);
+            ShowInspectionViewCommand = new RelayCommand(ShowInspectionView);
+            ShowEventViewCommand = new RelayCommand(ShowEventView);
+            ShowInspectorViewCommand = new RelayCommand(ShowInspectorView);
+            ShowQuotationViewCommand = new RelayCommand(ShowQuotationView);
+            ShowQuestionnaireViewCommand = new RelayCommand(ShowQuestionnaireView);
 
-            ShowCustomersViewCommand = new RelayCommand(ShowCustomersView);
-            ShowInspectionsViewCommand = new RelayCommand(ShowInspectionsView);
-            ShowEventsViewCommand = new RelayCommand(ShowEventsView);
-            ShowInspectorsCommand = new RelayCommand(ShowInspectorsView);
-            ShowQuotationsCommand = new RelayCommand(ShowQuotationsView);
-            ShowQuestionnairesCommand = new RelayCommand(ShowQuestionnairesView);
+            // Tests to make sure everything is working
+            _Context = new CustomFSContext();
+            ObservableCollection<CustomerVM> test = _Context.CustomerCrud.GetGetAllCustomerVMs();
+            ObservableCollection<CustomerVM> test2 = _Context.CustomerCrud.GetFilteredCustomerBasedOnName("F");
+            ObservableCollection<CustomerVM> test3 = _Context.CustomerCrud.GetCustomerById(51);
 
-
-            var context = new CustomFSContext();
-            ObservableCollection<CustomerVM> test = context.CustomerCrud.GetCustomerVMs;
+            // Place brakepoint here
+            Console.WriteLine("");
         }
 
-        private void ShowCustomersView()
+        private void ShowCustomerView()
         {
-            _customerListWindow = new CustomerListWindow();
-            _customerListWindow.Show();
+            new CustomerManagementView().Show();
         }
 
-        private void ShowInspectionsView()
+        private void ShowInspectionView()
         {
             _inspectionManagementView = new InspectionManagementView();
             _inspectionManagementView.Show();
         }
 
-        private void ShowEventsView()
+        private void ShowEventView()
+        {
+            new EventManagementView().Show();
+        }
+
+        private void ShowInspectorView()
         {
             throw new NotImplementedException();
         }
 
-        private void ShowInspectorsView()
+        private void ShowQuotationView()
         {
             throw new NotImplementedException();
         }
 
-        private void ShowQuotationsView()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void ShowQuestionnairesView()
+        private void ShowQuestionnaireView()
         {
             throw new NotImplementedException();
         }

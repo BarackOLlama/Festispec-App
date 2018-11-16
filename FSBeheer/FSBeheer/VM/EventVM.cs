@@ -38,7 +38,17 @@ namespace FSBeheer.VM
 
         public string CustomerName
         {
-            get { return _event.Customer.Name; }
+            get {
+                if (_event.Customer != null)
+                    return _event.Customer.Name;
+                else
+                    return "";
+            }
+        }
+
+        internal Event ToModel()
+        {
+            return _event;
         }
     }
 }
