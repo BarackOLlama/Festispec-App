@@ -15,17 +15,13 @@ namespace FSBeheer.Crud
         {
         }
 
-        public ObservableCollection<CustomerVM> GetCustomerVMs => _getCustomers();
-
-        private ObservableCollection<CustomerVM> _getCustomers()
+        public ObservableCollection<InspectorVM> GetInspectors()
         {
-            var inspector = CustomFSContext.Customers
-               .ToList()
-               .Select(c => new CustomerVM(c));
-            var _customers = new ObservableCollection<CustomerVM>(inspector);
-
-            return _customers;
+            var inspector = CustomFSContext.Inspectors
+                .ToList()
+                .Select(i => new InspectorVM(i));
+            var _inspectors = new ObservableCollection<InspectorVM>(inspector);
+            return _inspectors;
         }
-
     }
 }

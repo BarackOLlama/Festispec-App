@@ -17,7 +17,7 @@ namespace FSBeheer.ViewModel
 
             // klopt deze instantie van CustomFSContext?
             _Context = new CustomFSContext();
-            Inspections = _Context.GetInspections();
+            Inspections = _Context.InspectionCrud.GetInspections();
             //RaisePropertyChanged(nameof(Inspections));
         }
 

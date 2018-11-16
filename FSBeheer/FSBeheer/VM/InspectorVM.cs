@@ -48,12 +48,12 @@ namespace FSBeheer.VM
             get { return _Inspector.PhoneNumber; }
         }
 
-        public DateTime CertificationDate
+        public DateTime? CertificationDate
         {
             get { return _Inspector.CertificationDate; }
         }
 
-        public DateTime InvalidDate
+        public DateTime? InvalidDate
         {
             get { return _Inspector.InvalidDate; }
         }

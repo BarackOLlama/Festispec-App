@@ -33,9 +33,9 @@ namespace FSBeheer.VM
             get { return _inspection.Name; }
         }
 
-        public string State
+        public int? StatusId
         {
-            get { return _inspection.State; }
+            get { return _inspection.StatusId; }
         }
 
         public string Notes

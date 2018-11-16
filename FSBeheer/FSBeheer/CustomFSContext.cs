@@ -27,25 +27,8 @@ namespace FSBeheer
             AnswerCrud = new AnswerCrud(this);
             EventCrud = new EventCrud(this);
             QuestionCrud = new QuestionCrud(this);
+            InspectionCrud = new InspectionCrud(this);
+            InspectorCrud = new InspectorCrud(this);
         }
-
-        public ObservableCollection<InspectionVM> GetInspections()
-        {
-            var inspection = Inspections
-                .ToList()
-                .Select(i => new InspectionVM(i));
-            var _inspections = new ObservableCollection<InspectionVM>(inspection);
-            return _inspections;
-        }
-
-        public ObservableCollection<InspectorVM> GetInspectors()
-        {
-            var inspector = Inspectors
-                .ToList()
-                .Select(i => new InspectorVM(i));
-            var _inspectors = new ObservableCollection<InspectorVM>(inspector);
-            return _inspectors;
-        }
-
     }
 }
