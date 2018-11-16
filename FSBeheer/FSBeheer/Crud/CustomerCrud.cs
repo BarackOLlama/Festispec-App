@@ -1,5 +1,4 @@
-﻿using FSBeheer.Model;
-using FSBeheer.VM;
+﻿using FSBeheer.VM;
 using System;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
