@@ -9,13 +9,7 @@ namespace FSBeheer.Model
 {
     public partial class QuestionType
     {
-        public QuestionType()
-        {
-            Questions = new ObservableCollection<Question>();
-        }
-
         public int Id { get; set; }
         public string Name { get; set; }
-        public virtual ObservableCollection<Question> Questions { get; set; }
     }
 }

@@ -31,6 +31,14 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public EventManagementViewModel EventManagement
+        {
+            get
+            {
+                return new EventManagementViewModel();
+            }
+        }
+      
         public CreateEditCustomerViewModel CreateEditCustomer
         {
             get
