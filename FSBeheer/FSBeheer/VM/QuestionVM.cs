@@ -10,10 +10,11 @@ namespace FSBeheer.VM
     public class QuestionVM
     {
         private Question _question;
+        private bool e;
 
-        public QuestionVM(Question q)
+        public QuestionVM(Question question)
         {
-            _question = q;
+            _question = question;
         }
 
         public int Id

@@ -6,8 +6,18 @@
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
         Title="CreateQuestionWindow" Height="300" Width="300"
-        DataContext="{Binding Main, Source={StaticResource Locator}}">
-    <Grid>
-        
-    </Grid>
+        DataContext="{Binding NewQuestionCreationViewModel, Source={StaticResource Locator}}">
+    <StackPanel>
+        <TextBlock Text="Add new Question" FontSize="28"/>
+
+        <TextBlock Text="Question:" Margin="0,5,0,0"  />
+        <TextBox MaxLength="50" Text="{Binding Path=Question.Content}" />
+
+        <TextBlock Text="Question type:" Margin="0,5,0,0"  />
+        <ComboBox ItemsSource="{Binding QuestionTypes}" SelectedItem="{Binding SelectedQuestionType}"></ComboBox>
+
+        <Button Content="Add" Command="{Binding AddQuestionCommand}"
+                    Width="100"  HorizontalAlignment="Left" Margin="0,5,0,0" />
+
+    </StackPanel>
 </Window>

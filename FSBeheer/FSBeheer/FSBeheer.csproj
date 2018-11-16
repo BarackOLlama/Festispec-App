@@ -103,10 +103,14 @@
     <Compile Include="Model\QuestionType.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Role.cs" />
-    <Compile Include="ViewModel\AddQuestionVM.cs" />
+    <Compile Include="ViewModel\CreateQuestionViewModel.cs" />
     <Compile Include="ViewModel\CustomerManagementViewModel.cs" />
     <Compile Include="ViewModel\QuestionnairesViewModel.cs" />
-    <Compile Include="ViewModel\QuestionnaireVM.cs" />
+    <Compile Include="ViewModel\QuestionTypeVM.cs" />
+    <Compile Include="View\QuestionnaireEditView.xaml.cs">
+      <DependentUpon>QuestionnaireEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\QuestionnaireViewModel.cs" />
     <Compile Include="View\CreateQuestionWindow.xaml.cs">
       <DependentUpon>CreateQuestionWindow.xaml</DependentUpon>
     </Compile>
@@ -178,6 +182,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\QuestionnaireEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

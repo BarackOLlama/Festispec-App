@@ -6,10 +6,12 @@ namespace FSBeheer.ViewModel
 {
     public class ViewModelLocator
     {
+        private QuestionnairesViewModel _questionnairesViewModel;
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<HomeViewModel>();
+            _questionnairesViewModel = new QuestionnairesViewModel();
         }
 
         public HomeViewModel Home
@@ -28,14 +30,30 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public QuestionnairesViewModel QuestionnairesVM
+        //View of all questionnaires
+        public QuestionnairesViewModel QuestionnairesViewModel
         {
             get
             {
-                return new QuestionnairesViewModel();
+                return _questionnairesViewModel;
             }
         }
 
+        public QuestionnaireVM SelectedQuestionnaireVM
+        {
+            get
+            {
+                return _questionnairesViewModel.SelectedQuestionnaire;
+            }
+        }
+
+        public CreateQuestionViewModel NewQuestionCreationViewModel
+        {
+            get
+            {
+                return new CreateQuestionViewModel(SelectedQuestionnaireVM);
+            }
+        }
 
         public static void Cleanup()
         {

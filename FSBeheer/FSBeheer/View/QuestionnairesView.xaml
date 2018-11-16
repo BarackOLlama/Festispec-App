@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
         Title="Questionnaires View" Height="400" Width="400"
-        DataContext="{Binding QuestionnairesVM, Source={StaticResource Locator}}">
+        DataContext="{Binding QuestionnairesViewModel, Source={StaticResource Locator}}">
     <StackPanel>
         <Label>Questionnaires view</Label>
         <DataGrid ItemsSource="{Binding Questionnaires}" IsReadOnly="True" SelectedItem="{Binding SelectedQuestionnaire}"></DataGrid>
+        <Button Command="{Binding ViewQuestionnaireCommand}">View Questionnaire</Button>
     </StackPanel>
 </Window>
