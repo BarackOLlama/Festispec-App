@@ -28,7 +28,7 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<QuestionVM> Questions;
 
         private CustomerListWindow _customerListWindow;
-        private CreateEditCustomerView _createEditCustomerWindow;
+        private CreateEditCustomerView _createEditInspectionWindow;
 
         public RelayCommand ShowCustomerViewCommand { get; set; }
         public RelayCommand ShowInspectionViewCommand { get; set; }
@@ -62,7 +62,7 @@ namespace FSBeheer.ViewModel
             ShowQuotationCommand = new RelayCommand(ShowQuotationView);
             ShowQuestionnairCommand = new RelayCommand(ShowQuestionnairView);
 
-            ShowCreateEditCommand = new RelayCommand(ShowCreateEditView);
+            ShowCreateEditCommand = new RelayCommand(ShowCreateEditInspectionView);
 
 
             var context = new CustomFSContext();
@@ -103,10 +103,10 @@ namespace FSBeheer.ViewModel
             throw new NotImplementedException();
         }
 
-        private void ShowCreateEditView()
+        private void ShowCreateEditInspectionView()
         {
-            _createEditCustomerWindow = new CreateEditCustomerView();
-            _createEditCustomerWindow.Show();
+            _createEditInspectionWindow = new CreateEditCustomerView();
+            _createEditInspectionWindow.Show();
         }
     }
 }
