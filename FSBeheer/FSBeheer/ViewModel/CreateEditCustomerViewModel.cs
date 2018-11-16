@@ -26,7 +26,7 @@ namespace FSBeheer.ViewModel
         public CreateEditCustomerViewModel(CustomerVM SelectedCustomer)
         {
             Init();
-
+            MessageBox.Show("Entered constructor with selected customer");
             Customer = SelectedCustomer;
             IsEdit = true;
             // contact van deze customer
@@ -38,6 +38,7 @@ namespace FSBeheer.ViewModel
         public CreateEditCustomerViewModel()
         {
             Init();
+            MessageBox.Show("Entered constructor with no customer existing");
             Customer = new CustomerVM();
             IsEdit = false;
             // Contact aanmaken

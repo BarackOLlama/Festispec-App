@@ -1,6 +1,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using CommonServiceLocator;
+using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
@@ -46,9 +47,11 @@ namespace FSBeheer.ViewModel
             {
                 if (CustomerManagement.SelectedCustomer != null)
                 {
+                    MessageBox.Show("You got a customer");
                     return new CreateEditCustomerViewModel(CustomerManagement.SelectedCustomer);
                 } else
                 {
+                    MessageBox.Show("No customer");
                     return new CreateEditCustomerViewModel();
                 }
             }
