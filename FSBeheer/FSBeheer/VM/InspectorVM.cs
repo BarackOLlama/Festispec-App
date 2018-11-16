@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FSBeheer.Crud
+namespace FSBeheer.VM
 {
-    class InspectionCrud
+    public class InspectorVM
     {
+        public InspectorVM()
+        {
+
+        }
     }
 }

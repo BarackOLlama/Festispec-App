@@ -86,7 +86,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Crud\CustomerCrud.cs" />
-    <Compile Include="Crud\InspectionCrud.cs" />
+    <Compile Include="Crud\InspectorCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
     <Compile Include="Migrations\201811121341460_Initial.cs" />
     <Compile Include="Migrations\201811121341460_Initial.Designer.cs">
@@ -130,6 +130,7 @@
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="VM\EventVM.cs" />
+    <Compile Include="VM\InspectorVM.cs" />
     <Compile Include="VM\QuestionVM.cs" />
   </ItemGroup>
   <ItemGroup>
