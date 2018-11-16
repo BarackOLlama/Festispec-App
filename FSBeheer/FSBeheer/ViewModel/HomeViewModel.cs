@@ -37,7 +37,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowQuotationCommand { get; set; }
         public RelayCommand ShowQuestionnairCommand { get; set; }
 
-        public RelayCommand ShowEditCreateEditCommand { get; set; }
+        public RelayCommand ShowCreateEditCommand { get; set; }
 
         public HomeViewModel()
         {
@@ -62,7 +62,7 @@ namespace FSBeheer.ViewModel
             ShowQuotationCommand = new RelayCommand(ShowQuotationView);
             ShowQuestionnairCommand = new RelayCommand(ShowQuestionnairView);
 
-            ShowEditCreateEditCommand = new RelayCommand(ShowCreateEditView);
+            ShowCreateEditCommand = new RelayCommand(ShowCreateEditView);
 
 
             var context = new CustomFSContext();

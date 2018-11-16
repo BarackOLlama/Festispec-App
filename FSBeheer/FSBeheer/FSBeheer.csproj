@@ -120,8 +120,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\CreateEditCustomerView.xaml.cs">
-      <DependentUpon>CreateEditCustomerView.xaml</DependentUpon>
+    <Compile Include="View\CreateEditInspectionView.xaml.cs">
+      <DependentUpon>CreateEditInspectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CustomerManagementView.xaml.cs">
       <DependentUpon>CustomerManagementView.xaml</DependentUpon>
@@ -164,7 +164,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\CreateEditCustomerView.xaml">
+    <Page Include="View\CreateEditInspectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
