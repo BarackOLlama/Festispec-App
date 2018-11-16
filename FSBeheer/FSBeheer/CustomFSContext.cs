@@ -16,6 +16,8 @@ namespace FSBeheer
         public AnswerCrud AnswerCrud;
         public EventCrud EventCrud;
         public QuestionCrud QuestionCrud;
+        public InspectionCrud InspectionCrud;
+        public InspectorCrud InspectorCrud;
 
         public CustomFSContext() : base() {
 
@@ -25,7 +27,8 @@ namespace FSBeheer
             AnswerCrud = new AnswerCrud(this);
             EventCrud = new EventCrud(this);
             QuestionCrud = new QuestionCrud(this);
+            InspectionCrud = new InspectionCrud(this);
+            InspectorCrud = new InspectorCrud(this);
         }
-
     }
 }

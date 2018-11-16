@@ -13,7 +13,8 @@ namespace FSBeheer.ViewModel
     {
         private CustomFSContext _Context;
         private CustomerManagementView _customerListWindow;
-        
+        private InspectionManagementView _inspectionManagementView;
+
         public RelayCommand ShowCustomerViewCommand { get; set; }
         public RelayCommand ShowInspectionViewCommand { get; set; }
         public RelayCommand ShowEventViewCommand { get; set; }
@@ -50,7 +51,8 @@ namespace FSBeheer.ViewModel
 
         private void ShowInspectionView()
         {
-            throw new NotImplementedException();
+            _inspectionManagementView = new InspectionManagementView();
+            _inspectionManagementView.Show();
         }
 
         private void ShowEventView()
