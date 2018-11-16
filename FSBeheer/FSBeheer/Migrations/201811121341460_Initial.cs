@@ -129,8 +129,7 @@ namespace FSBeheer.Migrations
                         StartingDate = c.DateTime(nullable: false),
                         ChamberOfCommerceNumber = c.Short(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
-            
+                .PrimaryKey(t => t.Id);            
         }
         
         public override void Down()

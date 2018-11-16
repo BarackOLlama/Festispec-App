@@ -85,7 +85,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Crud\AbstractCrud.cs" />
     <Compile Include="Crud\CustomerCrud.cs" />
+    <Compile Include="Crud\EventCrud.cs" />
+    <Compile Include="Crud\QuestionCrud.cs" />
     <Compile Include="Crud\QuestionnaireCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
     <Compile Include="Migrations\201811121341460_Initial.cs" />
@@ -95,17 +98,27 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Answer.cs" />
     <Compile Include="FSContext.cs" />
+    <Compile Include="Model\Availability.cs" />
+    <Compile Include="Model\Contact.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Event.cs" />
+    <Compile Include="Model\EventDate.cs" />
     <Compile Include="Model\Inspection.cs" />
+    <Compile Include="Model\InspectionDate.cs" />
     <Compile Include="Model\Inspector.cs" />
     <Compile Include="Model\Question.cs" />
     <Compile Include="Model\Questionnaire.cs" />
     <Compile Include="Model\QuestionType.cs" />
     <Compile Include="Model\Account.cs" />
+    <Compile Include="Model\Quotation.cs" />
     <Compile Include="Model\Role.cs" />
+    <Compile Include="Model\Status.cs" />
     <Compile Include="ViewModel\CreateEditCustomerViewModel.cs" />
     <Compile Include="ViewModel\CustomerManagementViewModel.cs" />
+    <Compile Include="ViewModel\EventManagementViewModel.cs" />
+    <Compile Include="View\EventManagementView.xaml.cs">
+      <DependentUpon>EventManagementView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\QuestionnaireManagementViewModel.cs" />
     <Compile Include="View\QuestionnaireManagementView.xaml.cs">
       <DependentUpon>QuestionnaireManagementView.xaml</DependentUpon>
@@ -172,6 +185,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\CustomerManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EventManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
