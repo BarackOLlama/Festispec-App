@@ -1,20 +1,43 @@
 ﻿using FSBeheer.Model;
+using FSBeheer.VM;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace FSBeheer.ViewModel
 {
     public class CreateQuestionViewModel : ViewModelBase
     {
+        public QuestionVM Question { get; set; }
         private QuestionnaireVM _selectedQuestionnaireVM;
         private Question _question;
         private QuestionTypeVM _selectedQuestionType;
         public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
+        public ICommand AddQuestionCommand { get; set; }
+
+        public CreateQuestionViewModel(QuestionnaireVM selectedQuestionnaireVM)
+        {
+            _selectedQuestionnaireVM = selectedQuestionnaireVM;
+
+            _question = new Question();
+
+            using (var context = new CustomFSContext())
+            {
+                var temp = context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
+                QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
+                SelectedQuestionType = QuestionTypes?.First();
+            }
+
+            AddQuestionCommand = new RelayCommand(AddQuestion, CanAddQuestion);
+            Question = new QuestionVM();
+        }
+
 
         public QuestionTypeVM SelectedQuestionType
         {
@@ -28,36 +51,18 @@ namespace FSBeheer.ViewModel
                 base.RaisePropertyChanged("SelectedQuestionType");
             }
         }
-        public CreateQuestionViewModel(QuestionnaireVM selectedQuestionnaireVM)
+
+        public void AddQuestion()
         {
-            selectedQuestionnaireVM = _selectedQuestionnaireVM;
-
-            _question = new Question();
-
             using (var context = new FSContext())
             {
-                var temp = context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
-                QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
+
             }
         }
 
-        public Question Question
+        public bool CanAddQuestion()
         {
-            get
-            {
-                return _question;
-            }
-            set
-            {
-                _question = value;
-                base.RaisePropertyChanged("Question");
-            }
-        }
-
-
-        public void InsertQuestion()
-        {
-            int questionnaireId = _selectedQuestionnaireVM.Id;
+            return true;
         }
 
 

@@ -5,12 +5,11 @@ namespace FSBeheer.ViewModel
 {
     public class QuestionTypeVM : ViewModelBase
     {
-        private QuestionType e;
         private QuestionType _questionType;
 
-        public QuestionTypeVM(QuestionType e)
+        public QuestionTypeVM(QuestionType questiontype)
         {
-            this.e = e;
+            _questionType = questiontype;
         }
 
         public string Name
@@ -19,6 +18,16 @@ namespace FSBeheer.ViewModel
             {
                 return _questionType.Name;
             }
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        internal QuestionType ToModel()
+        {
+            return _questionType;
         }
     }
 }
