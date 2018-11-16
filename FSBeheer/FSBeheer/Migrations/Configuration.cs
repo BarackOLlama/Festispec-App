@@ -359,21 +359,21 @@ namespace FSBeheer.Migrations
                     Name = "Pinkpop",
                     Address = "Megaland",
                     City = "Landgraaf",
-                    Customer = customers[1]
+                    Customer = customers[0]
                 },
                 new Event()
                 {
                     Name = "Appelpop",
                     Address = "Grasweide 15",
                     City = "Heusde",
-                    Customer = customers[1]
+                    Customer = customers[0]
                 },
                 new Event()
                 {
                     Name = "Zwarte Cross",
                     Address = "Zandweggetje 4",
                     City = "Lichtervoorde",
-                    Customer = customers[2]
+                    Customer = customers[1]
                 }
             };
             context.Events.AddRange(events);
