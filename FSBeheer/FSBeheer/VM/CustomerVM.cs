@@ -49,7 +49,7 @@ namespace FSBeheer.VM
         public string City
         {
             get { return _customer.City; }
-            set { _customer.City = value; RaisePropertyChanged("Place"); }
+            set { _customer.City = value; RaisePropertyChanged("City"); }
         }
 
         public string ZipCode
