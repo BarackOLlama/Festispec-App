@@ -120,6 +120,9 @@
       <DependentUpon>EventManagementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\QuestionnaireManagementViewModel.cs" />
+    <Compile Include="View\ModifyQuestionnaireView.xaml.cs">
+      <DependentUpon>ModifyQuestionnaireView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\QuestionnaireManagementView.xaml.cs">
       <DependentUpon>QuestionnaireManagementView.xaml</DependentUpon>
     </Compile>
@@ -179,6 +182,10 @@
     <Page Include="View\CreateEditCustomerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ModifyQuestionnaireView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\QuestionnaireManagementView.xaml">
       <Generator>MSBuild:Compile</Generator>

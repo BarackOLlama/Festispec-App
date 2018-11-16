@@ -1,0 +1,40 @@
+﻿<Window x:Class="FSBeheer.View.QuestionnaireManagementView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FSBeheer.View"
+        mc:Ignorable="d"
+        Title="Vragenlijst Aanpassen" Height="450" Width="800">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,10,0,0" Width="500">
+            <ComboBox Width="300" HorizontalAlignment="Left">
+                <ComboBoxItem IsSelected="True">Selecteer een inspectie</ComboBoxItem>
+                <ComboBoxItem>ComboBox Item #1</ComboBoxItem>
+                <ComboBoxItem>ComboBox Item #2</ComboBoxItem>
+                <ComboBoxItem>ComboBox Item #3</ComboBoxItem>
+                <ComboBoxItem>ComboBox Item #4</ComboBoxItem>
+            </ComboBox>
+        </StackPanel>
+        
+        <StackPanel Margin="0,10,0,0">
+            <DataGrid ItemsSource="{Binding Questionnaires}" Height="180" Width="500" />
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Center" Width="500" Margin="0,20,0,0">
+            <Label Content="Instructie"  />
+            <TextBox Height="70" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Width="500" >
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Bewerken" HorizontalAlignment="Right" Height="60" Margin="0,0,10,0" VerticalAlignment="Bottom" Width="60"/>
+                <Button Content="Nieuw" HorizontalAlignment="Right" Height="60" Margin="0,0,10,0" VerticalAlignment="Bottom" Width="60"/>
+                <Button Content="Annuleren" HorizontalAlignment="Right" Height="60" Margin="0" VerticalAlignment="Bottom" Width="60"/>
+            </StackPanel>
+            <StackPanel Margin="240,0,0,0">
+                <Button Content="Opslaan" HorizontalAlignment="Right" Height="60" Margin="0" VerticalAlignment="Bottom" Width="60" HorizontalContentAlignment="Center"/>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</Window>
