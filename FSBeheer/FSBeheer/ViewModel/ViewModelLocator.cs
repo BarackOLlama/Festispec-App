@@ -38,6 +38,22 @@ namespace FSBeheer.ViewModel
                 return new EventManagementViewModel();
             }
         }
+
+        public InspectionManagementViewModel InspectionManagement
+        {
+            get
+            {
+                return new InspectionManagementViewModel();
+            }
+        }
+
+        public InspectorSelectionViewModel InspectorSelection
+        {
+            get
+            {
+                return new InspectorSelectionViewModel();
+            }
+        }
       
         public CreateEditCustomerViewModel CreateEditCustomer
         {
