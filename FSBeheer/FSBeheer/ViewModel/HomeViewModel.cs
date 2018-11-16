@@ -29,9 +29,11 @@ namespace FSBeheer.ViewModel
 
         private CustomerListWindow _customerListWindow;
 
+        private InspectionManagementView _inspectionManagementView;
+
         public RelayCommand ShowCustomersViewCommand { get; set; }
-        public RelayCommand ShowInspectionViewCommand { get; set; }
-        public RelayCommand ShowEventViewCommand { get; set; }
+        public RelayCommand ShowInspectionsViewCommand { get; set; }
+        public RelayCommand ShowEventsViewCommand { get; set; }
         public RelayCommand ShowInspectorsCommand { get; set; }
         public RelayCommand ShowQuotationsCommand { get; set; }
         public RelayCommand ShowQuestionnairesCommand { get; set; }
@@ -54,8 +56,8 @@ namespace FSBeheer.ViewModel
             ///
 
             ShowCustomersViewCommand = new RelayCommand(ShowCustomersView);
-            ShowInspectionViewCommand = new RelayCommand(ShowInspectionsView);
-            ShowEventViewCommand = new RelayCommand(ShowEventsView);
+            ShowInspectionsViewCommand = new RelayCommand(ShowInspectionsView);
+            ShowEventsViewCommand = new RelayCommand(ShowEventsView);
             ShowInspectorsCommand = new RelayCommand(ShowInspectorsView);
             ShowQuotationsCommand = new RelayCommand(ShowQuotationsView);
             ShowQuestionnairesCommand = new RelayCommand(ShowQuestionnairesView);
@@ -73,7 +75,8 @@ namespace FSBeheer.ViewModel
 
         private void ShowInspectionsView()
         {
-            throw new NotImplementedException();
+            _inspectionManagementView = new InspectionManagementView();
+            _inspectionManagementView.Show();
         }
 
         private void ShowEventsView()

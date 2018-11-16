@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.VM
 {
-    class InspectionVM : ViewModelBase
+    public class InspectionVM : ViewModelBase
     {
         private Inspection _inspection;
 
@@ -17,6 +17,7 @@ namespace FSBeheer.VM
             _inspection = inspection;
         }
 
+        // useful?
         internal Inspection ToModel()
         {
             return _inspection;
@@ -25,6 +26,21 @@ namespace FSBeheer.VM
         public int Id
         {
             get { return _inspection.Id; }
+        }
+
+        public string Name
+        {
+            get { return _inspection.Name; }
+        }
+
+        public string State
+        {
+            get { return _inspection.State; }
+        }
+
+        public string Notes
+        {
+            get { return _inspection.Notes; }
         }
 
     }

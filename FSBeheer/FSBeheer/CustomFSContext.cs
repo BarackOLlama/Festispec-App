@@ -14,12 +14,15 @@ namespace FSBeheer
     {
         public CustomerCrud CustomerCrud;
         public InspectionCrud InspectionCrud;
+        public InspectorCrud InspectorCrud;
 
         public CustomFSContext() : base() {
 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<CustomFSContext, Migrations.Configuration>());
 
             CustomerCrud = new CustomerCrud(this);
+            InspectionCrud = new InspectionCrud(this);
+            InspectorCrud = new InspectorCrud(this);
         }
 
         public ObservableCollection<CustomerVM> GetCustomers()
@@ -30,7 +33,24 @@ namespace FSBeheer
             var _customers = new ObservableCollection<CustomerVM>(customer);
 
             return _customers;
-            InspectionCrud = new InspectionCrud(this);
+        }
+
+        public ObservableCollection<InspectionVM> GetInspections()
+        {
+            var inspection = Inspections
+                .ToList()
+                .Select(i => new InspectionVM(i));
+            var _inspections = new ObservableCollection<InspectionVM>(inspection);
+            return _inspections;
+        }
+
+        public ObservableCollection<InspectorVM> GetInspectors()
+        {
+            var inspector = Inspectors
+                .ToList()
+                .Select(i => new InspectorVM(i));
+            var _inspectors = new ObservableCollection<InspectorVM>(inspector);
+            return _inspectors;
         }
 
     }
