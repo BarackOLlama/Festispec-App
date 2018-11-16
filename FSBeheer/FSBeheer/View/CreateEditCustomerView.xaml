@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
         DataContext="{Binding CreateEditCustomer, Source={StaticResource Locator}}"
-        Title="CreateCustomerView" Height="450" Width="800" Background="LightGray">
+        Title="CreateEditCustomerView" Height="450" Width="800" Background="LightGray">
     <Window.Resources>
         <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
             <Button FontSize="15" Margin="5"
@@ -105,7 +105,7 @@
             </Grid>
             <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
                 <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                <Button Content="Goedkeuren" Command="{Binding AddCustomer}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                <Button Content="Goedkeuren" Command="{Binding CreateEditCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
             </DockPanel>
         </StackPanel>
     </StackPanel>

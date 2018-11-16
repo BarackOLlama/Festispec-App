@@ -13,6 +13,7 @@ namespace FSBeheer.ViewModel
             SimpleIoc.Default.Register<HomeViewModel>();
             SimpleIoc.Default.Register<CustomerManagementViewModel>();
 
+
         }
 
         public HomeViewModel Home
@@ -43,9 +44,17 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new CreateEditCustomerViewModel(CustomerManagement.SelectedCustomer);
+                if (CustomerManagement.SelectedCustomer != null)
+                {
+                    return new CreateEditCustomerViewModel(CustomerManagement.SelectedCustomer);
+                } else
+                {
+                    return new CreateEditCustomerViewModel();
+                }
             }
         }
+
+
 
         public static void Cleanup()
         {

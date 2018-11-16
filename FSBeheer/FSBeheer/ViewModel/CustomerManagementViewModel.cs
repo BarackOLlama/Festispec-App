@@ -11,7 +11,9 @@ namespace FSBeheer.ViewModel
         private CustomFSContext CustomFSContext;
         public ObservableCollection<CustomerVM> Customers { get; set; }
 
-        public RelayCommand CreateEditCustomerWindowCommand { get; set; }
+        public RelayCommand EditCustomerWindowCommand { get; set; }
+
+        public RelayCommand CreateCustomerWindowCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
 
         private CustomerVM _selectedCustomer { get; set; } 
@@ -32,12 +34,20 @@ namespace FSBeheer.ViewModel
             CustomFSContext = new CustomFSContext();
             Customers = CustomFSContext.CustomerCrud.GetGetAllCustomerVMs();
 
-            CreateEditCustomerWindowCommand = new RelayCommand(OpenCreateEditCustomer);
+            CreateCustomerWindowCommand = new RelayCommand(OpenCreateCustomer);
+            EditCustomerWindowCommand = new RelayCommand(OpenEditCustomer);
             DeleteCommand = new RelayCommand(DeleteCustomer);
         }
 
-        private void OpenCreateEditCustomer()
+        // Standard way of doing this
+        private void OpenCreateCustomer()
         {
+            new CreateEditCustomerViewModel();
+            new CreateEditCustomerView().Show();
+        }
+        private void OpenEditCustomer()
+        {
+            new CreateEditCustomerViewModel(_selectedCustomer);
             new CreateEditCustomerView().Show();
         }
 
