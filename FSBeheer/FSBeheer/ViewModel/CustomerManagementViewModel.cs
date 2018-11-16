@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;
 using FSBeheer.View;
 using GalaSoft.MvvmLight;
+using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
@@ -42,13 +43,21 @@ namespace FSBeheer.ViewModel
         // Standard way of doing this
         private void OpenCreateCustomer()
         {
-            new CreateEditCustomerViewModel();
-            new CreateEditCustomerView().Show();
+            var view =  new CreateEditCustomerView();
+            view.Show();
+
         }
         private void OpenEditCustomer()
         {
-            new CreateEditCustomerViewModel(_selectedCustomer);
-            new CreateEditCustomerView().Show();
+            if (_selectedCustomer == null)
+            {
+                MessageBox.Show("No customer selected");
+            }
+            else
+            {
+                var view = new CreateEditCustomerView(_selectedCustomer);
+                view.Show();
+            }
         }
 
         private void DeleteCustomer()

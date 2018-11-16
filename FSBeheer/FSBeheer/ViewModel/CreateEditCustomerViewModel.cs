@@ -15,33 +15,46 @@ namespace FSBeheer.ViewModel
 
         // prop ContactVM
 
-        private readonly bool IsEdit;
-
         private CustomFSContext _Context;
 
-        /// <summary>
-        /// Constructor when an existing customer is selected
-        /// </summary>
-        /// <param name="SelectedCustomer"></param>
-        public CreateEditCustomerViewModel(CustomerVM SelectedCustomer)
-        {
-            Init();
-            MessageBox.Show("Entered constructor with selected customer");
-            Customer = SelectedCustomer;
-            IsEdit = true;
-            // contact van deze customer
-        }
+        ///// <summary>
+        ///// Constructor when an existing customer is selected
+        ///// </summary>
+        ///// <param name="SelectedCustomer"></param>
+        //public CreateEditCustomerViewModel(CustomerVM SelectedCustomer)
+        //{
+        //    Init();
+        //    //MessageBox.Show("Entered constructor with selected customer");
+        //    Customer = SelectedCustomer;
+        //    IsEdit = true;
+        //    // contact van deze customer
+        //}
 
-        /// <summary>
-        /// Constructor for a new customer if no customer is selected
-        /// </summary>
+        ///// <summary>
+        ///// Constructor for a new customer if no customer is selected
+        ///// </summary>
+        //public CreateEditCustomerViewModel(CustomerVM customer = null)
+        //{
+        //    Init();
+        //    // MessageBox.Show("Entered constructor with no customer existing");
+        //    if(customer == null)
+        //    {
+        //        Customer = new CustomerVM();
+        //    }
+        //    // IsEdit = false;
+        //    // Contact aanmaken
+        //}
+
         public CreateEditCustomerViewModel()
         {
             Init();
-            MessageBox.Show("Entered constructor with no customer existing");
-            Customer = new CustomerVM();
-            IsEdit = false;
-            // Contact aanmaken
+            Customer = new CustomerVM();           
+        }
+
+        public void SetCustomer(CustomerVM customer)
+        {
+            Customer = customer;
+            RaisePropertyChanged("Customer");
         }
 
         /// <summary>
@@ -63,7 +76,7 @@ namespace FSBeheer.ViewModel
 
         private void AddModifyCustomer()
         {
-            if (IsEdit)
+            if (Customer.Id != 0)
             {
                 ModifyCustomer();
             } else

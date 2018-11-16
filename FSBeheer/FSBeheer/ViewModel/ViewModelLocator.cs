@@ -56,20 +56,23 @@ namespace FSBeheer.ViewModel
                 return new InspectorSelectionViewModel();
             }
         }
-      
+
         public CreateEditCustomerViewModel CreateEditCustomer
         {
             get
             {
-                if (CustomerManagement.SelectedCustomer != null)
-                {
-                    MessageBox.Show("You got a customer");
-                    return new CreateEditCustomerViewModel(CustomerManagement.SelectedCustomer);
-                } else
-                {
-                    MessageBox.Show("No customer");
-                    return new CreateEditCustomerViewModel();
-                }
+                return new CreateEditCustomerViewModel();
+            //{
+            //    if (CustomerManagement.SelectedCustomer != null)
+            //    {
+            //        MessageBox.Show("You got a customer");
+            //        return new CreateEditCustomerViewModel(CustomerManagement.SelectedCustomer);
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("No customer");
+            //        return new CreateEditCustomerViewModel();
+            //    }
             }
         }
 
