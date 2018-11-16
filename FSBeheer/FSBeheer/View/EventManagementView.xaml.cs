@@ -10,18 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace FSBeheer.View
 {
     /// <summary>
-    /// Interaction logic for CustomerListWindow.xaml
+    /// Interaction logic for EventManagementView.xaml
     /// </summary>
-    public partial class CustomerManagementView : Window
+    public partial class EventManagementView : Window
     {
-        public CustomerManagementView()
+        public EventManagementView()
         {
             InitializeComponent();
+        }
+
+        private void TextBox_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+
         }
     }
 }

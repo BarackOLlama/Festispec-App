@@ -85,8 +85,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Crud\AbstractCrud.cs" />
+    <Compile Include="Crud\AnswerCrud.cs" />
     <Compile Include="Crud\CustomerCrud.cs" />
+    <Compile Include="Crud\InspectionCrud.cs" />
     <Compile Include="Crud\InspectorCrud.cs" />
+    <Compile Include="Crud\EventCrud.cs" />
+    <Compile Include="Crud\QuestionCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
     <Compile Include="Migrations\201811121341460_Initial.cs" />
     <Compile Include="Migrations\201811121341460_Initial.Designer.cs">
@@ -95,25 +100,41 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Answer.cs" />
     <Compile Include="FSContext.cs" />
+    <Compile Include="Model\Availability.cs" />
+    <Compile Include="Model\Contact.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Event.cs" />
+    <Compile Include="Model\EventDate.cs" />
     <Compile Include="Model\Inspection.cs" />
+    <Compile Include="Model\InspectionDate.cs" />
     <Compile Include="Model\Inspector.cs" />
     <Compile Include="Model\Question.cs" />
     <Compile Include="Model\Questionnaire.cs" />
     <Compile Include="Model\QuestionType.cs" />
     <Compile Include="Model\Account.cs" />
+    <Compile Include="Model\Quotation.cs" />
     <Compile Include="Model\Role.cs" />
+    <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
+    <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
+    <Compile Include="View\InspectionManagementView.xaml.cs">
+      <DependentUpon>InspectionManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Status.cs" />
+    <Compile Include="ViewModel\CreateEditCustomerViewModel.cs" />
     <Compile Include="ViewModel\CustomerManagementViewModel.cs" />
-    <Compile Include="View\InspectorManagementView.xaml.cs">
-      <DependentUpon>InspectorManagementView.xaml</DependentUpon>
+    <Compile Include="ViewModel\EventManagementViewModel.cs" />
+    <Compile Include="View\EventManagementView.xaml.cs">
+      <DependentUpon>EventManagementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InspectorSelectionView.xaml.cs">
       <DependentUpon>InspectorSelectionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\InspectorManagementView.xaml.cs">
+      <DependentUpon>InspectorManagementView.xaml</DependentUpon>
+    </Compile>
+
     <Compile Include="View\NullVisibilityConverter.cs" />
     <Compile Include="VM\AnswerVM.cs" />
-    <Compile Include="VM\CustomerVM.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="App.xaml.cs">
@@ -129,7 +150,9 @@
     <Compile Include="View\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VM\CustomerVM.cs" />
     <Compile Include="VM\EventVM.cs" />
+    <Compile Include="VM\InspectionVM.cs" />
     <Compile Include="VM\InspectorVM.cs" />
     <Compile Include="VM\QuestionVM.cs" />
   </ItemGroup>
@@ -172,11 +195,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\EventManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\InspectorManagementView.xaml">
+    <Page Include="View\InspectionManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -184,6 +211,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\InspectorManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,23 +13,22 @@ namespace FSBeheer
     class CustomFSContext: FSContext
     {
         public CustomerCrud CustomerCrud;
+        public AnswerCrud AnswerCrud;
+        public EventCrud EventCrud;
+        public QuestionCrud QuestionCrud;
+        public InspectionCrud InspectionCrud;
+        public InspectorCrud InspectorCrud;
 
         public CustomFSContext() : base() {
 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<CustomFSContext, Migrations.Configuration>());
 
             CustomerCrud = new CustomerCrud(this);
+            AnswerCrud = new AnswerCrud(this);
+            EventCrud = new EventCrud(this);
+            QuestionCrud = new QuestionCrud(this);
+            InspectionCrud = new InspectionCrud(this);
+            InspectorCrud = new InspectorCrud(this);
         }
-
-        public ObservableCollection<CustomerVM> GetCustomers()
-        {
-            var customer = Customers
-               .ToList()
-               .Select(c => new CustomerVM(c));
-            var _customers = new ObservableCollection<CustomerVM>(customer);
-
-            return _customers;
-        }
-
     }
 }

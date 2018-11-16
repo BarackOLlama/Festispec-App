@@ -1,29 +1,27 @@
-﻿using System;
+﻿using FSBeheer.VM;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FSBeheer.Crud
 {
-    class InspectorCrud
+    class InspectorCrud : AbstractCrud
     {
-        //private CustomFSContext _customFSContext;
 
-        //public ObservableCollection<InspectorVM> GetInspectorVMs => _getInspector();
-        //public InspectorCrud(CustomFSContext customFSContext)
-        //{
-        //    _customFSContext = customFSContext;
-        //}
+        public InspectorCrud(CustomFSContext customFSContext) : base(customFSContext)
+        {
+        }
 
-        //private ObservableCollection<CustomerVM> _getCustomers()
-        //{
-        //    var customer = _customFSContext.Customers
-        //       .ToList()
-        //       .Select(c => new InspectorVM(c));
-        //    var _customers = new ObservableCollection<InspectorVM>(inspector);
-
-        //    return _customers;
-        //}
+        public ObservableCollection<InspectorVM> GetInspectors()
+        {
+            var inspector = CustomFSContext.Inspectors
+                .ToList()
+                .Select(i => new InspectorVM(i));
+            var _inspectors = new ObservableCollection<InspectorVM>(inspector);
+            return _inspectors;
+        }
     }
 }

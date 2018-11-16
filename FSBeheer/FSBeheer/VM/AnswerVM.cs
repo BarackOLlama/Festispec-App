@@ -37,5 +37,10 @@ namespace FSBeheer.VM
         {
             get { return _answer.Content.Split('|')[0]; }
         }
+
+        internal Answer ToModel()
+        {
+            return _answer;
+        }
     }
 }
