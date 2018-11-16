@@ -28,7 +28,7 @@
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Adres:"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Plaats:"></TextBox>
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="City:"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Postcode:"></TextBox>
@@ -51,7 +51,7 @@
                 <TextBox Foreground="Black" Text="{Binding Customer.Adres}" FontSize="12"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox Foreground="Black" Text="{Binding Customer.Place}" FontSize="12"></TextBox>
+                <TextBox Foreground="Black" Text="{Binding Customer.City}" FontSize="12"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox Foreground="Black" Text="{Binding Customer.ZipCode}" FontSize="12"></TextBox>
@@ -100,7 +100,7 @@
             </Border>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="175"></RowDefinition>
+                    <RowDefinition Height="125"></RowDefinition>
                 </Grid.RowDefinitions>
             </Grid>
             <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
