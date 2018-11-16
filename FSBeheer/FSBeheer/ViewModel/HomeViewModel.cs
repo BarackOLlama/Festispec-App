@@ -28,14 +28,16 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<QuestionVM> Questions;
 
         private CustomerListWindow _customerListWindow;
+        private CreateEditCustomerView _createEditCustomerWindow;
 
-        public RelayCommand ShowCustomersViewCommand { get; set; }
+        public RelayCommand ShowCustomerViewCommand { get; set; }
         public RelayCommand ShowInspectionViewCommand { get; set; }
         public RelayCommand ShowEventViewCommand { get; set; }
-        public RelayCommand ShowInspectorsCommand { get; set; }
-        public RelayCommand ShowQuotationsCommand { get; set; }
-        public RelayCommand ShowQuestionnairesCommand { get; set; }
+        public RelayCommand ShowInspectorCommand { get; set; }
+        public RelayCommand ShowQuotationCommand { get; set; }
+        public RelayCommand ShowQuestionnairCommand { get; set; }
 
+        public RelayCommand ShowEditCreateEditCommand { get; set; }
 
         public HomeViewModel()
         {
@@ -53,48 +55,58 @@ namespace FSBeheer.ViewModel
             ////}
             ///
 
-            ShowCustomersViewCommand = new RelayCommand(ShowCustomersView);
-            ShowInspectionViewCommand = new RelayCommand(ShowInspectionsView);
-            ShowEventViewCommand = new RelayCommand(ShowEventsView);
-            ShowInspectorsCommand = new RelayCommand(ShowInspectorsView);
-            ShowQuotationsCommand = new RelayCommand(ShowQuotationsView);
-            ShowQuestionnairesCommand = new RelayCommand(ShowQuestionnairesView);
+            ShowCustomerViewCommand = new RelayCommand(ShowCustomerView);
+            ShowInspectionViewCommand = new RelayCommand(ShowInspectionView);
+            ShowEventViewCommand = new RelayCommand(ShowEventView);
+            ShowInspectorCommand = new RelayCommand(ShowInspectorView);
+            ShowQuotationCommand = new RelayCommand(ShowQuotationView);
+            ShowQuestionnairCommand = new RelayCommand(ShowQuestionnairView);
+
+            ShowEditCreateEditCommand = new RelayCommand(ShowCreateEditView);
 
 
             var context = new CustomFSContext();
             ObservableCollection<CustomerVM> test = context.CustomerCrud.GetCustomerVMs;
+
+           
         }
 
-        private void ShowCustomersView()
+
+        private void ShowCustomerView()
         {
             _customerListWindow = new CustomerListWindow();
             _customerListWindow.Show();
         }
 
-        private void ShowInspectionsView()
+        private void ShowInspectionView()
         {
             throw new NotImplementedException();
         }
 
-        private void ShowEventsView()
+        private void ShowEventView()
         {
             throw new NotImplementedException();
         }
 
-        private void ShowInspectorsView()
+        private void ShowInspectorView()
         {
             throw new NotImplementedException();
         }
 
-        private void ShowQuotationsView()
+        private void ShowQuotationView()
         {
             throw new NotImplementedException();
         }
 
-        private void ShowQuestionnairesView()
+        private void ShowQuestionnairView()
         {
             throw new NotImplementedException();
         }
 
+        private void ShowCreateEditView()
+        {
+            _createEditCustomerWindow = new CreateEditCustomerView();
+            _createEditCustomerWindow.Show();
+        }
     }
 }

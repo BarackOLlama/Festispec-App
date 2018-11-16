@@ -86,6 +86,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Crud\CustomerCrud.cs" />
+    <Compile Include="Crud\InspectionCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
     <Compile Include="Migrations\201811121341460_Initial.cs" />
     <Compile Include="Migrations\201811121341460_Initial.Designer.cs">
@@ -104,6 +105,12 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="ViewModel\CustomerManagementViewModel.cs" />
+    <Compile Include="View\InspectorManagementView.xaml.cs">
+      <DependentUpon>InspectorManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\InspectorSelectionView.xaml.cs">
+      <DependentUpon>InspectorSelectionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\NullVisibilityConverter.cs" />
     <Compile Include="VM\AnswerVM.cs" />
     <Compile Include="VM\CustomerVM.cs" />
@@ -165,6 +172,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InspectorManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InspectorSelectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
