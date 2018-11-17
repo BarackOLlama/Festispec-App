@@ -5,7 +5,6 @@ namespace FSBeheer.VM
 {
     public class InspectorVM
     {
-
         private Inspector _inspector;
 
         public InspectorVM(Inspector inspector)

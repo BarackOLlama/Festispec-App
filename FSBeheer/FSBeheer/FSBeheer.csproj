@@ -146,8 +146,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\CreateEditInspectionView.xaml.cs">
-      <DependentUpon>CreateEditInspectionView.xaml</DependentUpon>
+    <Compile Include="View\EditInspectionView.xaml.cs">
+      <DependentUpon>EditInspectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CustomerManagementView.xaml.cs">
       <DependentUpon>CustomerManagementView.xaml</DependentUpon>
@@ -196,7 +196,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CreateEditInspectionView.xaml">
+    <Page Include="View\EditInspectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
