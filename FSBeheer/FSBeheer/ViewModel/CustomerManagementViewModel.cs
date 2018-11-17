@@ -38,7 +38,8 @@ namespace FSBeheer.ViewModel
 
         private void OpenCreateEditCustomer()
         {
-            new CreateEditCustomerView().Show();
+            //this was set the wrong window. CreateEditCustomer still needs to be made. Window that was being opened was CreateEditInspection
+            //new CreateEditCustomerView().Show();
         }
 
         private void DeleteCustomer()

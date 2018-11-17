@@ -33,6 +33,11 @@ namespace FSBeheer.VM
             get { return _Inspector.City; }
         }
 
+        public string AddressAndCity
+        {
+            get { return _Inspector.Address + " " + _Inspector.City; }
+        }
+
         public string Zipcode
         {
             get { return _Inspector.Zipcode; }

@@ -47,6 +47,14 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public InspectorManagementViewModel InspectorManagement
+        {
+            get
+            {
+                return new InspectorManagementViewModel();
+            }
+        }
+
         public InspectorSelectionViewModel InspectorSelection
         {
             get

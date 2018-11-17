@@ -17,9 +17,9 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for AddCustomerWindow.xaml
     /// </summary>
-    public partial class CreateEditCustomerView : Window
+    public partial class CreateEditInspectionView : Window
     {
-        public CreateEditCustomerView()
+        public CreateEditInspectionView()
         {
             InitializeComponent();
         }

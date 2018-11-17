@@ -21,12 +21,12 @@
             <Button Content="Back" Template="{StaticResource InterfaceButtonTemplate}"></Button>
         </StackPanel>
         <StackPanel Name="spContent" Margin="30">
-            <DataGrid MaxHeight="250" ItemsSource="{Binding Inspections}" AutoGenerateColumns="False">
+            <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Inspections}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Inspectienummer" Binding="{Binding Id}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Evenement" Binding="{Binding }"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Status" Binding="{Binding StatusId}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Prijs" Binding="{Binding }"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Inspectienummer" Binding="{Binding Id}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Evenement" Binding="{Binding }" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Status" Binding="{Binding StatusId}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Prijs" Binding="{Binding }" Width="*"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

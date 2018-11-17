@@ -12,14 +12,8 @@ namespace FSBeheer.ViewModel
     public class HomeViewModel : ViewModelBase
     {
         private CustomFSContext _Context;
-        private CustomerManagementView _customerListWindow;
-        private InspectionManagementView _inspectionManagementView;
-
         
         public ObservableCollection<QuestionVM> Questions;
-
-        private CustomerListWindow _customerListWindow;
-        private CreateEditCustomerView _createEditInspectionWindow;
 
         public RelayCommand ShowCustomerViewCommand { get; set; }
         public RelayCommand ShowInspectionViewCommand { get; set; }
@@ -61,8 +55,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowInspectionView()
         {
-            _inspectionManagementView = new InspectionManagementView();
-            _inspectionManagementView.Show();
+            new InspectionManagementView().Show();
         }
 
         private void ShowEventView()
@@ -72,7 +65,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowInspectorView()
         {
-            throw new NotImplementedException();
+            new InspectorManagementView().Show();
         }
 
         private void ShowQuotationView()
@@ -87,8 +80,8 @@ namespace FSBeheer.ViewModel
 
         private void ShowCreateEditInspectionView()
         {
-            _createEditInspectionWindow = new CreateEditCustomerView();
-            _createEditInspectionWindow.Show();
+           new CreateEditInspectionView().Show();
+
         }
     }
 }
