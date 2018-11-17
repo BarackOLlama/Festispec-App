@@ -118,6 +118,9 @@
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
+    <Compile Include="View\CreateEditCustomerView.xaml.cs">
+      <DependentUpon>CreateEditCustomerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\InspectionManagementView.xaml.cs">
       <DependentUpon>InspectionManagementView.xaml</DependentUpon>
     </Compile>
@@ -189,6 +192,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\CreateEditCustomerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CreateEditInspectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
