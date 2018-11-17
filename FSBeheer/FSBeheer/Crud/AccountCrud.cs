@@ -23,5 +23,6 @@ namespace FSBeheer.Crud
             var _Accounts = new ObservableCollection<AccountVM>(Account);
             return _Accounts;
         }
+
     }
 }

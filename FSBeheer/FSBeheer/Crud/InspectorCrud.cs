@@ -23,5 +23,7 @@ namespace FSBeheer.Crud
             var _inspectors = new ObservableCollection<InspectorVM>(inspector);
             return _inspectors;
         }
+
+        public void Add(InspectorVM _inspector) => CustomFSContext.Inspectors.Add(_inspector.ToModel());
     }
 }

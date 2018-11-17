@@ -10,7 +10,7 @@
 
     <StackPanel Background="White" Height="420">
 
-        <StackPanel VerticalAlignment="Center" Height="250" Margin="0,50,0,0">
+        <StackPanel VerticalAlignment="Center" Height="220" Margin="0,50,0,0">
             <Grid Margin="50">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
