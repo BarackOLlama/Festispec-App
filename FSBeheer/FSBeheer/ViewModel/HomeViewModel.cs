@@ -43,7 +43,7 @@ namespace FSBeheer.ViewModel
             ////    // Code runs "for real"
             ////}
             ///
-
+            //
             ShowCustomersViewCommand = new RelayCommand(ShowCustomersView);
             ShowInspectionViewCommand = new RelayCommand(ShowInspectionsView);
             ShowEventViewCommand = new RelayCommand(ShowEventsView);
