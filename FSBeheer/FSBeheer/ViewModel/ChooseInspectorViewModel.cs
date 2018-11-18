@@ -16,7 +16,7 @@ namespace FSBeheer.ViewModel
         {
             _Context = new CustomFSContext();
             Inspections = _Context.InspectionCrud.GetInspections();
-            Availabilities = _Context.AvailabilityCrud;
+            Availabilities = _Context.AvailabilityCrud.GetAvailabilities();
         }
 
     }
