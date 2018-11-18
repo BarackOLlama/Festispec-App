@@ -66,12 +66,8 @@ namespace FSBeheer.ViewModel
         {
             using (var context = new FSContext())
             {
-                var temp1 = context.Questions.ToList().Select(e=> new QuestionVM(e)).ToList();
-
                 context.Questions.Add(Question.ToModel());
                 context.SaveChanges();
-
-                var temp2 = context.Questions.ToList().Select(e => new QuestionVM(e)).ToList();
             }
         }
 
