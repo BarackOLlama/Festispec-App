@@ -13,7 +13,7 @@ namespace FSBeheer.ViewModel
     public class QuestionnaireVM
     {
         private Questionnaire _questionnaire;
-        private CreateQuestionWindow _createQuestionWindow;
+        private CreateQuestionView _createQuestionView;
         public ObservableCollection<QuestionVM> Questions { get; set; }
 
         public ICommand OpenCreateQuestionCommand { get; set; }
@@ -22,7 +22,7 @@ namespace FSBeheer.ViewModel
         {
             _questionnaire = questionnaire;
 
-            using(var context = new FSContext())
+            using (var context = new FSContext())
             {
                 var questions = context.Questions
                     .Include("QuestionType")
@@ -54,8 +54,7 @@ namespace FSBeheer.ViewModel
 
         public void OpenCreateQuestionWindow()
         {
-            _createQuestionWindow = new CreateQuestionWindow();
-            _createQuestionWindow.Show();
+            new CreateQuestionView().ShowDialog();
         }
     }
 }
