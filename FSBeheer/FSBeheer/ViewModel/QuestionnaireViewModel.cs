@@ -55,7 +55,7 @@ namespace FSBeheer.ViewModel
         public void OpenCreateQuestionWindow()
         {
             _createQuestionWindow = new CreateQuestionWindow();
-            _createQuestionWindow.Show();
+            _createQuestionWindow.ShowDialog();
         }
     }
 }

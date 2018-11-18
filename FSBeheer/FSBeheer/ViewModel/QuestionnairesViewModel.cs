@@ -50,7 +50,7 @@ namespace FSBeheer.ViewModel
         public void OpenCreateQuestionWindow()
         {
             _questionnaireEditView = new QuestionnaireEditView();
-            _questionnaireEditView.Show();
+            _questionnaireEditView.ShowDialog();
         }
     }
 }

@@ -21,6 +21,12 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
         public ICommand AddQuestionCommand { get; set; }
 
+
+        public bool SelectedTypeIsMulti => _selectedQuestionType.Name == "Multiple Choice Vraag";
+        public bool SelectedTypeIsOpen => _selectedQuestionType.Name == "Open vraag";
+        public bool SelectedTypeIsOpenTabel => _selectedQuestionType.Name == "Open Tabelvraag";
+        public bool SelectedTypeIsMultiTabel => _selectedQuestionType.Name == "Multiple Choice Tabelvraag";
+
         public CreateQuestionViewModel(QuestionnaireVM selectedQuestionnaireVM)
         {
             _selectedQuestionnaireVM = selectedQuestionnaireVM;
