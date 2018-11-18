@@ -15,8 +15,8 @@
         <TextBox MaxLength="50" Text="{Binding Question.Content, Mode=TwoWay}"/>
 
         <TextBlock Text="Vraag type:" Margin="0,5,0,0"  />
-
-        <ComboBox IsReadOnly="True" ItemsSource="{Binding QuestionTypes}" SelectedItem="{Binding SelectedQuestionType}" HorizontalAlignment="Left" Width="292"/>
+        <!--Is disabled for the moment : trouble implementing other choices.-->
+        <ComboBox IsReadOnly="True" IsEnabled="False" ItemsSource="{Binding QuestionTypes}" SelectedItem="{Binding SelectedQuestionType}" HorizontalAlignment="Left" Width="292"/>
 
         <Button Content="Add" Command="{Binding AddQuestionCommand}" CommandParameter="{Binding AddQuestionCommand}"
                     Width="100"  HorizontalAlignment="Left" Margin="0,5,0,0" />

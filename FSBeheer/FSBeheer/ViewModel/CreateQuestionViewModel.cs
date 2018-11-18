@@ -14,31 +14,21 @@ namespace FSBeheer.ViewModel
 {
     public class CreateQuestionViewModel : ViewModelBase
     {
-        public QuestionVM Question { get; set; }
-        private QuestionnaireVM _selectedQuestionnaireVM;
-        private Question _question;
-        private QuestionTypeVM _selectedQuestionType;
-        public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
-        public ICommand AddQuestionCommand { get; set; }
-
-        public CreateQuestionViewModel(QuestionnaireVM selectedQuestionnaireVM)
+        private QuestionVM _questionVM;
+        public QuestionVM Question
         {
-            _selectedQuestionnaireVM = selectedQuestionnaireVM;
-
-            _question = new Question();
-
-            using (var context = new CustomFSContext())
+            get
             {
-                var temp = context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
-                QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
-                SelectedQuestionType = QuestionTypes?.First();
+                return _questionVM;
             }
-
-            AddQuestionCommand = new RelayCommand(AddQuestion, CanAddQuestion);
-            Question = new QuestionVM();
+            set
+            {
+                _questionVM = value;
+                base.RaisePropertyChanged("Question");
+            }
         }
-
-
+        private QuestionnaireVM _selectedQuestionnaireVM;
+        private QuestionTypeVM _selectedQuestionType;
         public QuestionTypeVM SelectedQuestionType
         {
             get
@@ -49,14 +39,39 @@ namespace FSBeheer.ViewModel
             {
                 _selectedQuestionType = value;
                 base.RaisePropertyChanged("SelectedQuestionType");
+                Question.Type = value.ToModel();
             }
+        }
+        public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
+        public RelayCommand AddQuestionCommand { get; set; }
+
+        public CreateQuestionViewModel(QuestionnaireVM selectedQuestionnaireVM)
+        {
+            _selectedQuestionnaireVM = selectedQuestionnaireVM;
+            _questionVM = new QuestionVM();
+
+            using (var context = new CustomFSContext())
+            {
+                var temp = context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
+                QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
+                SelectedQuestionType = QuestionTypes?[1];
+            }
+
+            AddQuestionCommand = new RelayCommand(AddQuestion, CanAddQuestion);
+            Question = new QuestionVM();
+            Question.Type = _selectedQuestionType.ToModel();
         }
 
         public void AddQuestion()
         {
             using (var context = new FSContext())
             {
+                var temp1 = context.Questions.ToList().Select(e=> new QuestionVM(e)).ToList();
 
+                context.Questions.Add(Question.ToModel());
+                context.SaveChanges();
+
+                var temp2 = context.Questions.ToList().Select(e => new QuestionVM(e)).ToList();
             }
         }
 

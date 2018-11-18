@@ -21,7 +21,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowEventViewCommand { get; set; }
         public RelayCommand ShowInspectorViewCommand { get; set; }
         public RelayCommand ShowQuotationViewCommand { get; set; }
-        public RelayCommand ShowQuestionnaireViewCommand { get; set; }
+        public RelayCommand ShowQuestionnairesViewCommand { get; set; }
 
 
         public HomeViewModel()
@@ -33,7 +33,7 @@ namespace FSBeheer.ViewModel
             ShowEventViewCommand = new RelayCommand(ShowEventView);
             ShowInspectorViewCommand = new RelayCommand(ShowInspectorView);
             ShowQuotationViewCommand = new RelayCommand(ShowQuotationView);
-            ShowQuestionnaireViewCommand = new RelayCommand(ShowQuestionnaireView);
+            ShowQuestionnairesViewCommand = new RelayCommand(ShowQuestionnairesView);
 
             // Tests to make sure everything is working
             _Context = new CustomFSContext();

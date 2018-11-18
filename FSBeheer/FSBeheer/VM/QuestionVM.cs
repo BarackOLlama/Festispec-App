@@ -48,14 +48,20 @@ namespace FSBeheer.VM
             get { return _question.Columns; }
         }
 
-        public string Type
+        public QuestionType Type
         {
-            get { return _question.QuestionType.Name; }
+            set { _question.QuestionType = value; }
+            get { return _question.QuestionType; }
         }
 
         internal Question ToModel()
         {
             return _question;
+        }
+
+        public override string ToString()
+        {
+            return _question.QuestionType.Name;
         }
     }
 }
