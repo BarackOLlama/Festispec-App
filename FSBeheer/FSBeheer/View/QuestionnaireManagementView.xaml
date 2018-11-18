@@ -19,12 +19,20 @@
         </StackPanel>
 
         <StackPanel Margin="0,10,0,0">
-            <DataGrid Height="255" Width="500" />
+            <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Questionnaires}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Vragenlijstnummer" Binding="{Binding Id}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Naam" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Inspectienummer" Binding="{Binding InspectionId}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Evenement" Binding="{Binding Event}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Aantal vragen" Binding="{Binding QuestionCount}" Width="*"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Width="500" FlowDirection="RightToLeft" >
-            <Button Content="Nieuw" HorizontalAlignment="Right" Height="60" Margin="0,0,10,0" VerticalAlignment="Bottom" Width="60"/>
-            <Button Content="Bewerken" Command="{Binding ShowEditQuestionViewCommand}" HorizontalAlignment="Right" Height="60" Margin="0" VerticalAlignment="Bottom" Width="60"/>
+            <Button Content="Nieuw" Command="{Binding CreateQuestionnaireCommand}" HorizontalAlignment="Right" Height="60" Margin="0,0,10,0" VerticalAlignment="Bottom" Width="60"/>
+            <Button Content="Bewerken" Command="{Binding ShowEditQuestionnaireView}" HorizontalAlignment="Right" Height="60" Margin="0" VerticalAlignment="Bottom" Width="60"/>
         </StackPanel>
     </StackPanel>
 </Window>

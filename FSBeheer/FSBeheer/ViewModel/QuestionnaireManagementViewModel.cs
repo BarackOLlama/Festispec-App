@@ -16,16 +16,24 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<QuestionnaireVM> Questionnaires { get; }
         public RelayCommand ShowEditQuestionnaireViewCommand { get; set; }
 
+        public RelayCommand CreateQuestionnaireCommand { get; set; }
+
         public QuestionnaireManagementViewModel()
         {
             _Context = new CustomFSContext();
-            Questionnaires = _Context.QuestionnaireCrud.GetQuestionnaires();
-            ShowEditQuestionnaireViewCommand = new RelayCommand(ShowEditQuestionView);
+            Questionnaires = _Context.QuestionnaireCrud.GetAllQuestionnaireVMs();
+            ShowEditQuestionnaireViewCommand = new RelayCommand(ShowEditQuestionnaireView);
+            CreateQuestionnaireCommand = new RelayCommand(CreateQuestionnaire);
         }
 
-        private void ShowEditQuestionView()
+        private void ShowEditQuestionnaireView()
         {
             new EditQuestionnaireView().Show();
+        }
+
+        private void CreateQuestionnaire()
+        {
+            new CreateQuestionnaireView().Show();
         }
     }
 }

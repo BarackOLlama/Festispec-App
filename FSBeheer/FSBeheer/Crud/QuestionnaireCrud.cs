@@ -16,7 +16,7 @@ namespace FSBeheer.Crud
 
         }
 
-        public ObservableCollection<QuestionnaireVM> GetQuestionnaires()
+        public ObservableCollection<QuestionnaireVM> GetAllQuestionnaireVMs()
         {
             var questionnaire = CustomFSContext.Questionnaires
                 .ToList()
@@ -24,6 +24,8 @@ namespace FSBeheer.Crud
             var _questionnaire = new ObservableCollection<QuestionnaireVM>(questionnaire);
             return _questionnaire;
         }
+
+        public void Add(QuestionnaireVM _questionnaire) => CustomFSContext.Questionnaires.Add(_questionnaire.ToModel());
 
     }
 }

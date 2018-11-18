@@ -38,6 +38,11 @@ namespace FSBeheer.VM
             set { _questionnaire.Version = value; }
         }
 
+        internal Questionnaire ToModel()
+        {
+            return _questionnaire;
+        }
+
         public string Comments
         {
             get { return _questionnaire.Comments; }
@@ -58,6 +63,18 @@ namespace FSBeheer.VM
             get { return _questionnaire.Questions; }
         }
 
+
+
+        public int QuestionCount()
+        {
+            return Questions.Count;
+        }
+
+        //public Event Event()
+        //{
+            // need logic to get Event corresponding to Questionnaire
+        //}
+
         /*
          *  Logic
          */
@@ -70,7 +87,7 @@ namespace FSBeheer.VM
             }
 
             Questions.Add(question);
-            updateVersion();
+            UpdateVersion();
             return true;
         }
 
@@ -78,7 +95,7 @@ namespace FSBeheer.VM
         {
             if (Questions.Remove(question))
             {
-                updateVersion();
+                UpdateVersion();
                 return true;
             }
 
@@ -86,7 +103,7 @@ namespace FSBeheer.VM
         }
 
         // Increment the version number by one
-        private int updateVersion()
+        private int UpdateVersion()
         {
             return _questionnaire.Version += 1;
         }
