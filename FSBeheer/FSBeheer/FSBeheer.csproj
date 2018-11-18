@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net-Next, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.3.1.0\lib\net452\BCrypt.Net-Next.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
     </Reference>
@@ -114,8 +118,10 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Quotation.cs" />
     <Compile Include="Model\Role.cs" />
+    <Compile Include="ViewModel\AccountVM.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="View\InspectionManagementView.xaml.cs">
       <DependentUpon>InspectionManagementView.xaml</DependentUpon>
     </Compile>
@@ -128,6 +134,9 @@
     </Compile>
     <Compile Include="View\InspectorSelectionView.xaml.cs">
       <DependentUpon>InspectorSelectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\NullVisibilityConverter.cs" />
     <Compile Include="VM\AnswerVM.cs" />
@@ -204,6 +213,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InspectorSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

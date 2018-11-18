@@ -63,6 +63,14 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public LoginViewModel LoginViewModel
+        {
+            get
+            {
+                return new LoginViewModel(Home);
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

@@ -21,6 +21,21 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowInspectorViewCommand { get; set; }
         public RelayCommand ShowQuotationViewCommand { get; set; }
         public RelayCommand ShowQuestionnaireViewCommand { get; set; }
+        public RelayCommand ShowLoginViewCommand { get; set; }
+
+        private AccountVM _account;
+        public AccountVM Account
+        {
+            get
+            {
+                return _account;
+            }
+            set
+            {
+                _account = value;
+                base.RaisePropertyChanged("Account");
+            }
+        }
 
 
         public HomeViewModel()
@@ -33,6 +48,7 @@ namespace FSBeheer.ViewModel
             ShowInspectorViewCommand = new RelayCommand(ShowInspectorView);
             ShowQuotationViewCommand = new RelayCommand(ShowQuotationView);
             ShowQuestionnaireViewCommand = new RelayCommand(ShowQuestionnaireView);
+            ShowLoginViewCommand = new RelayCommand(ShowLoginView);
 
             // Tests to make sure everything is working
             _Context = new CustomFSContext();
@@ -42,6 +58,11 @@ namespace FSBeheer.ViewModel
 
             // Place brakepoint here
             Console.WriteLine("");
+        }
+
+        private void ShowLoginView()
+        {
+            new LoginView().Show();
         }
 
         private void ShowCustomerView()
