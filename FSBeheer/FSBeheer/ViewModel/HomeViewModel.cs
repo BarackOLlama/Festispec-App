@@ -11,81 +11,68 @@ namespace FSBeheer.ViewModel
 {
     public class HomeViewModel : ViewModelBase
     {
-        private FSContext _Context;
+        private CustomFSContext _Context;
+        private CustomerManagementView _customerListWindow;
+        private InspectionManagementView _inspectionManagementView;
 
-        //collections
-        public ObservableCollection<QuestionVM> Questions;
-
-        //views
-        private CustomerListWindow _customerListWindow;
-        private QuestionnairesView _questionnairesView;
-        //commands
-        public RelayCommand ShowCustomersViewCommand { get; set; }
+        public RelayCommand ShowCustomerViewCommand { get; set; }
         public RelayCommand ShowInspectionViewCommand { get; set; }
         public RelayCommand ShowEventViewCommand { get; set; }
-        public RelayCommand ShowInspectorsCommand { get; set; }
-        public RelayCommand ShowQuotationsCommand { get; set; }
-        public RelayCommand ShowQuestionnairesCommand { get; set; }
+        public RelayCommand ShowInspectorViewCommand { get; set; }
+        public RelayCommand ShowQuotationViewCommand { get; set; }
+        public RelayCommand ShowQuestionnaireViewCommand { get; set; }
 
 
         public HomeViewModel()
         {
-            _Context = new FSContext();
+            _Context = new CustomFSContext();
 
-            //var questions = _Context.Questions.ToList().Select(q => new QuestionVM(q));
-            //Questions = new ObservableCollection<QuestionVM>(questions);
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
-            ///
+            ShowCustomerViewCommand = new RelayCommand(ShowCustomerView);
+            ShowInspectionViewCommand = new RelayCommand(ShowInspectionView);
+            ShowEventViewCommand = new RelayCommand(ShowEventView);
+            ShowInspectorViewCommand = new RelayCommand(ShowInspectorView);
+            ShowQuotationViewCommand = new RelayCommand(ShowQuotationView);
+            ShowQuestionnaireViewCommand = new RelayCommand(ShowQuestionnaireView);
 
-            ShowCustomersViewCommand = new RelayCommand(ShowCustomersView);
-            ShowInspectionViewCommand = new RelayCommand(ShowInspectionsView);
-            ShowEventViewCommand = new RelayCommand(ShowEventsView);
-            ShowInspectorsCommand = new RelayCommand(ShowInspectorsView);
-            ShowQuotationsCommand = new RelayCommand(ShowQuotationsView);
-            ShowQuestionnairesCommand = new RelayCommand(ShowQuestionnairesView);
+            // Tests to make sure everything is working
+            _Context = new CustomFSContext();
+            ObservableCollection<CustomerVM> test = _Context.CustomerCrud.GetGetAllCustomerVMs();
+            ObservableCollection<CustomerVM> test2 = _Context.CustomerCrud.GetFilteredCustomerBasedOnName("F");
+            ObservableCollection<CustomerVM> test3 = _Context.CustomerCrud.GetCustomerById(51);
 
-
-            var context = new CustomFSContext();
-            ObservableCollection<CustomerVM> test = context.CustomerCrud.GetCustomerVMs;
+            // Place brakepoint here
+            Console.WriteLine("");
         }
 
-        private void ShowCustomersView()
+        private void ShowCustomerView()
         {
-            _customerListWindow = new CustomerListWindow();
-            _customerListWindow.Show();
+            new CustomerManagementView().Show();
         }
 
-        private void ShowInspectionsView()
+        private void ShowInspectionView()
         {
-            throw new NotImplementedException();
+            _inspectionManagementView = new InspectionManagementView();
+            _inspectionManagementView.Show();
         }
 
-        private void ShowEventsView()
+        private void ShowEventView()
+        {
+            new EventManagementView().Show();
+        }
+
+        private void ShowInspectorView()
         {
             throw new NotImplementedException();
         }
 
-        private void ShowInspectorsView()
+        private void ShowQuotationView()
         {
             throw new NotImplementedException();
         }
 
-        private void ShowQuotationsView()
+        private void ShowQuestionnaireView()
         {
             throw new NotImplementedException();
-        }
-
-        private void ShowQuestionnairesView()
-        {
-            _questionnairesView = new QuestionnairesView();
-            _questionnairesView.Show();
         }
 
     }

@@ -52,5 +52,10 @@ namespace FSBeheer.VM
         {
             get { return _question.QuestionType.Name; }
         }
+
+        internal Question ToModel()
+        {
+            return _question;
+        }
     }
 }
