@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.VM
 {
-    public class InspectionVM : ViewModelBase
+    public class InspectionVM
     {
         private Inspection _inspection;
 
@@ -41,6 +41,11 @@ namespace FSBeheer.VM
         public string Notes
         {
             get { return _inspection.Notes; }
+        }
+
+        public int? EventId
+        {
+            get { return _inspection.EventId; }
         }
 
     }

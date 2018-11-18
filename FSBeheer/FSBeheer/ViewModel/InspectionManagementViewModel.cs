@@ -11,17 +11,9 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<InspectionVM> Inspections { get; }
 
         public InspectionManagementViewModel()
-        {
-            //var questions = _Context.Questions.ToList().Select(q => new QuestionVM(q));
-            //Questions = new ObservableCollection<QuestionVM>(questions);
-
-            // klopt deze instantie van CustomFSContext?
+        {            
             _Context = new CustomFSContext();
             Inspections = _Context.InspectionCrud.GetInspections();
-            //RaisePropertyChanged(nameof(Inspections));
         }
-
-        
-
     }
 }

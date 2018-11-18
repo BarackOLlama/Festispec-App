@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FSBeheer.Crud
+{
+    class InspectionDateCrud : AbstractCrud
+    {
+
+        public InspectionDateCrud(CustomFSContext customFSContext) : base(customFSContext)
+        {
+
+        }
+
+    }
+}

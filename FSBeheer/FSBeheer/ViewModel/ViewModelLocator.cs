@@ -63,6 +63,14 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public ChooseInspectorViewModel ChooseInspector
+        {
+            get
+            {
+                return new ChooseInspectorViewModel();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels
