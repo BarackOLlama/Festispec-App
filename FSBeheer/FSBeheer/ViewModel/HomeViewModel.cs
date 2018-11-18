@@ -20,7 +20,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowEventViewCommand { get; set; }
         public RelayCommand ShowInspectorViewCommand { get; set; }
         public RelayCommand ShowQuotationViewCommand { get; set; }
-        public RelayCommand ShowQuestionnaireViewCommand { get; set; }
+        public RelayCommand ShowQuestionnaireManagementViewCommand { get; set; }
 
         public RelayCommand ShowCreateEditViewCommand { get; set; }
 
@@ -33,7 +33,7 @@ namespace FSBeheer.ViewModel
             ShowEventViewCommand = new RelayCommand(ShowEventView);
             ShowInspectorViewCommand = new RelayCommand(ShowInspectorView);
             ShowQuotationViewCommand = new RelayCommand(ShowQuotationView);
-            ShowQuestionnaireViewCommand = new RelayCommand(ShowQuestionnaireView);
+            ShowQuestionnaireManagementViewCommand = new RelayCommand(ShowQuestionnaireView);
 
 
             ShowCreateEditViewCommand = new RelayCommand(ShowCreateEditInspectionView);
@@ -75,7 +75,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowQuestionnaireView()
         {
-            throw new NotImplementedException();
+            new QuestionnaireManagementView().Show();
         }
 
         private void ShowCreateEditInspectionView()

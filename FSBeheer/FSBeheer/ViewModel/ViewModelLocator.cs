@@ -71,6 +71,14 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public QuestionnaireManagementViewModel QuestionnaireManagement
+        {
+            get
+            {
+                return new QuestionnaireManagementViewModel();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

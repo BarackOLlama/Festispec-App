@@ -1,0 +1,30 @@
+﻿<Window x:Class="FSBeheer.View.QuestionnaireManagementView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FSBeheer.View"
+        mc:Ignorable="d"
+        DataContext="{Binding QuestionnaireManagement, Source={StaticResource Locator}}"
+        Title="Vragenlijst Beheer" Height="450" Width="800">
+
+
+    <StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Terug" HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="60"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="75,0,0,0">
+                <TextBox HorizontalAlignment="Left" Height="23" Margin="0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="420"/>
+                <Button Content="Zoeken" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Top" Width="80" Height="23"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Margin="0,10,0,0">
+            <DataGrid Height="255" Width="500" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Width="500" FlowDirection="RightToLeft" >
+            <Button Content="Nieuw" HorizontalAlignment="Right" Height="60" Margin="0,0,10,0" VerticalAlignment="Bottom" Width="60"/>
+            <Button Content="Bewerken" Command="{Binding ShowEditQuestionViewCommand}" HorizontalAlignment="Right" Height="60" Margin="0" VerticalAlignment="Bottom" Width="60"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
