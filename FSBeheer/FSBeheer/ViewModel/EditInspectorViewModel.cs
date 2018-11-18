@@ -1,13 +1,19 @@
 ﻿using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
-    public class CreateEditCustomerViewModel : ViewModelBase
+    public class EditInspectorViewModel : ViewModelBase
     {
-        public CustomerVM Customer { get; set; }
+
+        public InspectorVM Inspector { get; set; }
 
         public RelayCommand EditCommand { get; set; }
 
@@ -19,49 +25,48 @@ namespace FSBeheer.ViewModel
 
         private CustomFSContext _Context;
 
-        public CreateEditCustomerViewModel(CustomerVM SelectedCustomer)
+        public EditInspectorViewModel(InspectorVM SelectedInspector)
         {
             _Context = new CustomFSContext();
-            EditCommand = new RelayCommand(ModifyCustomer);
-            AddCommand = new RelayCommand(AddCustomer);
+            EditCommand = new RelayCommand(ModifyInspector);
+            AddCommand = new RelayCommand(AddInspector);
             DiscardCommand = new RelayCommand<Window>(Discard);
 
             // try catch
-            if (SelectedCustomer != null)
+            if (SelectedInspector != null)
             {
-                Customer = SelectedCustomer;
+                Inspector = SelectedInspector;
                 // contact van deze customer
             }
             else
             {
-                Customer = new CustomerVM();
+                Inspector = new InspectorVM();
                 // Contact aanmaken
             }
         }
 
-        private void AddCustomer()
+        private void AddInspector()
         {
             // not tested yet
-            _Context.CustomerCrud.GetAllCustomerVMs().Add(Customer);
-            _Context.CustomerCrud.Add(Customer);
+            _Context.InspectorCrud.GetAllInspectorVMs().Add(Inspector);
+            _Context.InspectorCrud.Add(Inspector);
         }
 
         // Not tested yet
-        private void ModifyCustomer() => _Context.CustomerCrud.Modify(Customer);
+        private void ModifyInspector() => _Context.InspectorCrud.Modify(Inspector);
 
 
         // Not tested yet
         private void Discard(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Close without saving?","Confirm discard", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Close without saving?", "Confirm discard", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.Cancel)
             {
                 _Context.Dispose();
-                Customer = null; 
+                Inspector = null;
                 window?.Close();
             }
         }
 
-        // TODO: Connect to a new contact person when adding a customer 
     }
 }

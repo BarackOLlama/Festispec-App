@@ -20,7 +20,10 @@
         <StackPanel Name="spBackButton" HorizontalAlignment="Left">
             <Button Content="Back" Template="{StaticResource InterfaceButtonTemplate}"></Button>
         </StackPanel>
+
+
         <StackPanel Name="spContent" Margin="30">
+
             <DataGrid MaxHeight="250" ItemsSource="{Binding Inspectors}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="*"></DataGridTextColumn>
@@ -32,8 +35,8 @@
         </StackPanel>
         <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"
                     Orientation="Horizontal" Margin="0,0,25,0">
-            <Button Content="Edit" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-            <Button Content="New" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+            <Button Content="Edit" Command="{Binding ShowEditInspectorViewCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+            <Button Content="New" Command="{Binding ShowCreateInspectorViewCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
         </StackPanel>
     </StackPanel>
 </Window>

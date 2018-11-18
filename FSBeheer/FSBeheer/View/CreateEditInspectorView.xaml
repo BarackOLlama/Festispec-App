@@ -1,0 +1,81 @@
+﻿<Window x:Class="FSBeheer.View.CreateEditInspectorView"
+        Name="CreateEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FSBeheer.View"
+        mc:Ignorable="d"
+        DataContext="{Binding CreateEditInspector, Source={StaticResource Locator}}"
+        Title="CreateEditInspectorView" Height="450" Width="800" Background="White">
+    <Window.Resources>
+        <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
+            <Button FontSize="15" Margin="5"
+                    Content="{TemplateBinding Content}"
+                    Command="{TemplateBinding Command}"/>
+        </ControlTemplate>
+
+    </Window.Resources>
+    <StackPanel Orientation="Horizontal" Margin="5">
+        <StackPanel Margin="5"  Width="100">
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="ID:"></TextBox>
+            </Border>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Naam:"></TextBox>
+            </Border>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Adres:"></TextBox>
+            </Border>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Plaats:"></TextBox>
+            </Border>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Postcode:"></TextBox>
+            </Border>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="E-mail:"></TextBox>
+            </Border>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Telefoon:"></TextBox>
+            </Border>
+        </StackPanel>
+        <StackPanel Margin="5"  Width="225">
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox IsReadOnly="True" Foreground="Black" Text="{Binding Inspector.Id, Mode=OneWay}" FontSize="12"></TextBox>
+            </Border>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox Foreground="Black" Text="{Binding Inspector.Name}" FontSize="12"></TextBox>
+            </Border>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox Foreground="Black" Text="{Binding Inspector.Adres}" FontSize="12"></TextBox>
+            </Border>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox Foreground="Black" Text="{Binding Inspector.Place}" FontSize="12"></TextBox>
+            </Border>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox Foreground="Black" Text="{Binding Inspector.ZipCode}" FontSize="12"></TextBox>
+            </Border>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox Foreground="Black" Text="{Binding Inspector.Email}" FontSize="12"></TextBox>
+            </Border>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                <TextBox Foreground="Black" Text="{Binding Inspector.PhoneNumber}" FontSize="12"></TextBox>
+            </Border>
+        </StackPanel>
+
+        <StackPanel Margin="5" Width="225">
+           
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="175"></RowDefinition>
+                </Grid.RowDefinitions>
+            </Grid>
+            <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
+                <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                <Button Content="Bevestig" Command="{Binding AddInspectorCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+            </DockPanel>
+        </StackPanel>
+    </StackPanel>
+
+</Window>

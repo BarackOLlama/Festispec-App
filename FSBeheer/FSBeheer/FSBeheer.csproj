@@ -115,9 +115,13 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Quotation.cs" />
     <Compile Include="Model\Role.cs" />
+    <Compile Include="ViewModel\EditInspectorViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
+    <Compile Include="View\CreateEditInspectorView.xaml.cs">
+      <DependentUpon>CreateEditInspectorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CreateEditCustomerView.xaml.cs">
       <DependentUpon>CreateEditCustomerView.xaml</DependentUpon>
     </Compile>
@@ -192,6 +196,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\CreateEditInspectorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CreateEditCustomerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

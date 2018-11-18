@@ -40,7 +40,7 @@ namespace FSBeheer.ViewModel
 
             // Tests to make sure everything is working
             _Context = new CustomFSContext();
-            ObservableCollection<CustomerVM> test = _Context.CustomerCrud.GetGetAllCustomerVMs();
+            ObservableCollection<CustomerVM> test = _Context.CustomerCrud.GetAllCustomerVMs();
             ObservableCollection<CustomerVM> test2 = _Context.CustomerCrud.GetFilteredCustomerBasedOnName("F");
             ObservableCollection<CustomerVM> test3 = _Context.CustomerCrud.GetCustomerById(51);
 
@@ -80,7 +80,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowCreateEditInspectionView()
         {
-           new CreateEditInspectionView().Show();
+           new EditInspectionView().Show();
 
         }
     }

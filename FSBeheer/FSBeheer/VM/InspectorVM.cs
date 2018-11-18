@@ -12,6 +12,11 @@ namespace FSBeheer.VM
             _inspector = inspector;
         }
 
+        public InspectorVM()
+        {
+            _inspector = new Inspector();
+        }
+
         internal Inspector ToModel()
         {
             return _inspector;
