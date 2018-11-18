@@ -21,8 +21,8 @@ namespace FSBeheer.Crud
             var availability = CustomFSContext.Availabilities
                 .ToList()
                 .Select(i => new AvailabilityVM(i));
-            var _inspections = new ObservableCollection<AvailabilityVM>(availability);
-            return _inspections;
+            var _availability = new ObservableCollection<AvailabilityVM>(availability);
+            return _availability;
         }
 
     }
