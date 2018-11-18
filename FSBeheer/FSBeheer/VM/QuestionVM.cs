@@ -11,9 +11,14 @@ namespace FSBeheer.VM
     {
         private Question _question;
 
-        public QuestionVM(Question q)
+        public QuestionVM(Question question)
         {
-            _question = q;
+            _question = question;
+        }
+
+        public QuestionVM()
+        {
+            _question = new Question();
         }
 
         public int Id
@@ -23,7 +28,14 @@ namespace FSBeheer.VM
 
         public string Content
         {
-            get { return _question.Content; }
+            get
+            {
+                return _question.Content;
+            }
+            set
+            {
+                _question.Content = value;
+            }
         }
 
         public string Options
