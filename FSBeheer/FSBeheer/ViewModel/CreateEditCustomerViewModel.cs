@@ -87,7 +87,8 @@ namespace FSBeheer.ViewModel
 
         private void SaveChanges()
         {
-            _Context.CustomerCrud.GetGetAllCustomerVMs().Add(Customer);
+            //_Context.CustomerCrud.GetGetAllCustomerVMs().Add(Customer);
+            _Context.CustomerCrud.GetAllCustomerVMs().Add(Customer);
             _Context.SaveChanges();
             
             //if (Customer.Id != 0)
@@ -98,8 +99,7 @@ namespace FSBeheer.ViewModel
             //    AddCustomer();
             //}
             // not tested yet
-            _Context.CustomerCrud.GetAllCustomerVMs().Add(Customer);
-            _Context.CustomerCrud.Add(Customer);
+            //_Context.CustomerCrud.Add(Customer);
         }
 
         /*=> _Context.CustomerCrud.Modify(Customer);*/
