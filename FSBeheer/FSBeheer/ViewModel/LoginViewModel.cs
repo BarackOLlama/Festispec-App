@@ -60,7 +60,6 @@ namespace FSBeheer.ViewModel
 
                 //check whether there's there's any such username in the database.
                 var findSalt = context.Accounts.Where(e => e.Username == username).FirstOrDefault();
-                var all = context.Accounts.ToList().Select(e => new AccountVM(e));
                 salt = findSalt?.Salt;
                 //short circuti
                 if (salt == null)
