@@ -25,7 +25,11 @@ namespace FSBeheer.Crud
             return _questionnaire;
         }
 
-        public void Add(QuestionnaireVM _questionnaire) => CustomFSContext.Questionnaires.Add(_questionnaire.ToModel());
+        public void Add(QuestionnaireVM _questionnaire)
+        {
+            CustomFSContext.Questionnaires.Add(_questionnaire.ToModel());
+            CustomFSContext.SaveChanges();
+        }
 
     }
 }

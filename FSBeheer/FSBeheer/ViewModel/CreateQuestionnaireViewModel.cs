@@ -1,4 +1,5 @@
 ﻿using FSBeheer.VM;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,35 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.ViewModel
 {
-    public class CreateQuestionnaireViewModel
+    public class CreateQuestionnaireViewModel : ViewModelBase
     {
-        public QuestionnaireVM Questionnaire { get; set; }
+        private QuestionnaireVM _questionnaire;
+        public QuestionnaireVM Questionnaire
+        {
+            get
+            {
+                return _questionnaire;
+            }
+            set
+            {
+                _questionnaire = value;
+                base.RaisePropertyChanged("Questionnaire");
+            }
+        }
 
         private CustomFSContext _Context;
         public ObservableCollection<QuestionnaireVM> Questionnaires { get; }
 
         public RelayCommand AddQuestionnaireCommand { get; set; }
+
+        public CreateQuestionnaireViewModel(int QuestionID)
+        {
+            _Context = new CustomFSContext();
+            Questionnaires = _Context.QuestionnaireCrud.GetAllQuestionnaireVMs();
+
+            AddQuestionnaireCommand = new RelayCommand(AddQuestionnaire);
+            _questionnaire = new QuestionnaireVM();
+        }
 
         public CreateQuestionnaireViewModel()
         {
@@ -24,7 +46,7 @@ namespace FSBeheer.ViewModel
             Questionnaires = _Context.QuestionnaireCrud.GetAllQuestionnaireVMs();
 
             AddQuestionnaireCommand = new RelayCommand(AddQuestionnaire);
-
+            _questionnaire = new QuestionnaireVM();
         }
 
         private void AddQuestionnaire()

@@ -17,6 +17,12 @@ namespace FSBeheer.VM
             _questionnaire = q;
         }
 
+        public QuestionnaireVM()
+        {
+            //new constructor
+            _questionnaire = new Questionnaire();
+        }
+
         public int Id
         {
             get { return _questionnaire.Id; }
@@ -25,11 +31,13 @@ namespace FSBeheer.VM
         public string Name
         {
             get { return _questionnaire.Name; }
+            set { _questionnaire.Name = value; }
         }
 
         public string Instructions
         {
             get { return _questionnaire.Instructions; }
+            set { _questionnaire.Instructions = value; }
         }
 
         public int Version
@@ -46,6 +54,7 @@ namespace FSBeheer.VM
         public string Comments
         {
             get { return _questionnaire.Comments; }
+            set { _questionnaire.Comments = value; }
         }
 
         public int? InspectionId
@@ -62,7 +71,6 @@ namespace FSBeheer.VM
         {
             get { return _questionnaire.Questions; }
         }
-
 
 
         public int QuestionCount()
