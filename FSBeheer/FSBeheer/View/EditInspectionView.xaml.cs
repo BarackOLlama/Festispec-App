@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace FSBeheer.View
 {
     /// <summary>
-    /// Interaction logic for CreateEditCustomerView.xaml
+    /// Interaction logic for AddCustomerWindow.xaml
     /// </summary>
-    public partial class CreateEditCustomerView : Window
+    public partial class EditInspectionView : Window
     {
-        public CreateEditCustomerView()
+        public EditInspectionView()
         {
             InitializeComponent();
         }

@@ -10,7 +10,7 @@ using System.Data.Entity;
 
 namespace FSBeheer
 {
-    class CustomFSContext: FSContext
+    class CustomFSContext : FSContext
     {
         public CustomerCrud CustomerCrud;
         public AnswerCrud AnswerCrud;
@@ -20,8 +20,10 @@ namespace FSBeheer
         public InspectorCrud InspectorCrud;
         public AvailabilityCrud AvailabilityCrud;
         public InspectionDateCrud InspectionDateCrud;
+        public QuestionnaireCrud QuestionnaireCrud;
 
-        public CustomFSContext() : base() {
+        public CustomFSContext() : base()
+        {
 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<CustomFSContext, Migrations.Configuration>());
 
@@ -33,6 +35,7 @@ namespace FSBeheer
             InspectorCrud = new InspectorCrud(this);
             AvailabilityCrud = new AvailabilityCrud(this);
             InspectionDateCrud = new InspectionDateCrud(this);
+            QuestionnaireCrud = new QuestionnaireCrud(this);
         }
     }
 }

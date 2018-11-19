@@ -15,13 +15,18 @@ using System.Windows.Shapes;
 namespace FSBeheer.View
 {
     /// <summary>
-    /// Interaction logic for CreateEditCustomerView.xaml
+    /// Interaction logic for InspectorManagementView.xaml
     /// </summary>
-    public partial class CreateEditCustomerView : Window
+    public partial class InspectorManagementView : Window
     {
-        public CreateEditCustomerView()
+        public InspectorManagementView()
         {
             InitializeComponent();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

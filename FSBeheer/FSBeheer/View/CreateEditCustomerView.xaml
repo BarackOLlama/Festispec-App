@@ -51,7 +51,7 @@
                 <TextBox Foreground="Black" Text="{Binding Customer.Adres}" FontSize="12"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox Foreground="Black" Text="{Binding Customer.Place}" FontSize="12"></TextBox>
+                <TextBox Foreground="Black" Text="{Binding Customer.City}" FontSize="12"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox Foreground="Black" Text="{Binding Customer.ZipCode}" FontSize="12"></TextBox>
@@ -107,5 +107,5 @@
             </DockPanel>
         </StackPanel>
     </StackPanel>
-    
+
 </Window>
