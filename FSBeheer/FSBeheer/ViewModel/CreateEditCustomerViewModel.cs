@@ -97,6 +97,9 @@ namespace FSBeheer.ViewModel
             //{
             //    AddCustomer();
             //}
+            // not tested yet
+            _Context.CustomerCrud.GetAllCustomerVMs().Add(Customer);
+            _Context.CustomerCrud.Add(Customer);
         }
 
         /*=> _Context.CustomerCrud.Modify(Customer);*/

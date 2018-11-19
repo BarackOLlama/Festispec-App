@@ -49,6 +49,14 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public InspectorManagementViewModel InspectorManagement
+        {
+            get
+            {
+                return new InspectorManagementViewModel();
+            }
+        }
+
         public InspectorSelectionViewModel InspectorSelection
         {
             get
@@ -76,7 +84,21 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public QuestionnaireManagementViewModel QuestionnaireManagement
+        {
+            get
+            {
+                return new QuestionnaireManagementViewModel();
+            }
+        }
 
+        public CreateQuestionnaireViewModel CreateQuestionnaire
+        {
+            get
+            {
+                return new CreateQuestionnaireViewModel();
+            }
+        }
 
         public static void Cleanup()
         {
