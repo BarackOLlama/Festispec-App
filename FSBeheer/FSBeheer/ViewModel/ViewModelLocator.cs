@@ -95,6 +95,22 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public CreateInspectionViewModel CreateInspection
+        {
+            get
+            {
+                return new CreateInspectionViewModel();
+            }
+        }
+
+        public EditInspectionViewModel EditInspection
+        {
+            get
+            {
+                return new EditInspectionViewModel();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

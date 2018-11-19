@@ -26,10 +26,10 @@
                 
             </Button>
         </StackPanel>
-        
-        
+
+
         <StackPanel Name="spContent" Margin="30">
-            <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Inspections}" AutoGenerateColumns="False">
+            <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Inspections}" AutoGenerateColumns="False" SelectedItem="{Binding deselecteditemdienognergensstaat}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Inspectienummer" Binding="{Binding Id}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Evenement" Binding="{Binding EventId}"></DataGridTextColumn>

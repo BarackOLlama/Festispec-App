@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="EditInspectionWindow" Height="720" Width="960">
+        Title="EditInspectionWindow" Height="720" Width="960"
+        DataContext="{Binding EditInspection, Source={StaticResource Locator}}">
     <Window.Resources>
         <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
             <Button FontSize="15" Margin="5"
@@ -15,12 +16,6 @@
     </Window.Resources>
 
     <StackPanel Margin="20">
-
-        <StackPanel Name="EventSelection" Margin="0,30,0,0">
-
-            <ComboBox ItemsSource="{Binding Events}" Width="500" HorizontalAlignment="Left" Height="30" Margin="20,0,0,0"/>
-
-        </StackPanel>
 
         <StackPanel Name="EventOverview" Margin="10,10,10,0" Height="500" Orientation="Horizontal">
 

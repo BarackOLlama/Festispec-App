@@ -118,7 +118,9 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Quotation.cs" />
     <Compile Include="Model\Role.cs" />
+    <Compile Include="ViewModel\CreateInspectionViewModel.cs" />
     <Compile Include="ViewModel\CreateQuestionnaireViewModel.cs" />
+    <Compile Include="ViewModel\EditInspectionViewModel.cs" />
     <Compile Include="ViewModel\EditInspectorViewModel.cs" />
     <Compile Include="ViewModel\ChooseInspectorViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
@@ -130,6 +132,9 @@
     </Compile>
     <Compile Include="View\CreateEditCustomerView.xaml.cs">
       <DependentUpon>CreateEditCustomerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CreateInspectionView.xaml.cs">
+      <DependentUpon>CreateInspectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CreateQuestionnaireView.xaml.cs">
       <DependentUpon>CreateQuestionnaireView.xaml</DependentUpon>
@@ -226,6 +231,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CreateEditCustomerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CreateInspectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
