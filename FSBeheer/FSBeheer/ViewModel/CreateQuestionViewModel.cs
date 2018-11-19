@@ -69,6 +69,17 @@ namespace FSBeheer.ViewModel
         {
             using (var context = new FSContext())
             {
+                if (SelectedQuestionType.Name == "Multiple Choice Vraag")
+                {//clear columns
+                    Question.Columns = null;
+                } else if (SelectedQuestionType.Name == "Open vraag")
+                {//clear options and columns
+                    Question.Columns = null;
+                    Question.Options = null;
+                } else if (SelectedQuestionType.Name == "Open Tabelvraag")
+                {//clear options
+                    Question.Options = null;
+                }
                 context.Questions.Add(Question.ToModel());
                 context.SaveChanges();
             }
