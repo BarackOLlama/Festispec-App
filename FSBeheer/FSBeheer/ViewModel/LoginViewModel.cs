@@ -52,7 +52,7 @@ namespace FSBeheer.ViewModel
                 {
                     context.Accounts.First();
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Message = "Could not connect to database.";
                     return;

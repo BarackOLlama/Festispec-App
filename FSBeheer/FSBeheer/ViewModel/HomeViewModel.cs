@@ -1,3 +1,4 @@
+using FSBeheer.Model;
 using FSBeheer.View;
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
@@ -22,6 +23,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowInspectorViewCommand { get; set; }
         public RelayCommand ShowQuotationViewCommand { get; set; }
         public RelayCommand ShowQuestionnairesViewCommand { get; set; }
+        public RelayCommand ShowLoginViewCommand { get; set; }
 
         private AccountVM _account;
         public AccountVM Account
@@ -47,6 +49,7 @@ namespace FSBeheer.ViewModel
             ShowInspectorViewCommand = new RelayCommand(ShowInspectorView);
             ShowQuotationViewCommand = new RelayCommand(ShowQuotationView);
             ShowQuestionnairesViewCommand = new RelayCommand(ShowQuestionnairesView);
+            ShowLoginViewCommand = new RelayCommand(ShowLoginView);
 
             // Tests to make sure everything is working
             _Context = new CustomFSContext();
@@ -56,6 +59,11 @@ namespace FSBeheer.ViewModel
 
             // Place brakepoint here
             Console.WriteLine("");
+        }
+
+        private void ShowLoginView()
+        {
+            new LoginView().ShowDialog();
         }
 
         private void ShowCustomerView()
@@ -84,15 +92,9 @@ namespace FSBeheer.ViewModel
             throw new NotImplementedException();
         }
 
-        private void ShowQuestionnaireView()
+        private void ShowQuestionnairesView()
         {
-            throw new NotImplementedException();
-        }
-
-        private void ShowQuestionnaireView()
-        {
-            _questionnairesView = new QuestionnairesView();
-            _questionnairesView.ShowDialog();
+            new QuestionnairesView().ShowDialog();
         }
 
     }

@@ -76,9 +76,5 @@ namespace FSBeheer.VM
             return _question.QuestionType.Name;
         }
 
-        internal Question ToModel()
-        {
-            return _question;
-        }
     }
 }
