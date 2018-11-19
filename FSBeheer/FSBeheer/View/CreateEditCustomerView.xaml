@@ -12,7 +12,8 @@
         <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
             <Button FontSize="15" Margin="5"
                     Content="{TemplateBinding Content}"
-                    Command="{TemplateBinding Command}"/>
+                    Command="{TemplateBinding Command}"
+                    CommandParameter="{TemplateBinding CommandParameter}"/>
         </ControlTemplate>
 
     </Window.Resources>
@@ -105,7 +106,7 @@
             </Grid>
             <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
                 <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                <Button Content="Goedkeuren" Command="{Binding CreateEditCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                <Button Content="Goedkeuren" Command="{Binding SaveChangesCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
             </DockPanel>
         </StackPanel>
     </StackPanel>

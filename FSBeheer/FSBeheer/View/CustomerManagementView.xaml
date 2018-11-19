@@ -12,7 +12,8 @@
         <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
             <Button FontSize="15" Margin="5"
                     Content="{TemplateBinding Content}"
-                    Command="{TemplateBinding Command}"/>
+                    Command="{TemplateBinding Command}"
+                    CommandParameter="{TemplateBinding CommandParameter}"/>
         </ControlTemplate>
     </Window.Resources>
 

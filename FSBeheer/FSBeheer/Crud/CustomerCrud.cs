@@ -50,31 +50,28 @@ namespace FSBeheer.Crud
         /*
          * Returns one customer based on ID
          */
-        public ObservableCollection<CustomerVM> GetCustomerById(int customer_id)
+        public CustomerVM GetCustomerById(int customer_id)
         {
-            var customer = CustomFSContext.Customers
+            return new CustomerVM(CustomFSContext.Customers
                .ToList()
-               .Where(c => c.Id == customer_id)
-               .Select(c => new CustomerVM(c));
-            var _customers = new ObservableCollection<CustomerVM>(customer);
-
-            return _customers;
+               .FirstOrDefault(c => c.Id == customer_id));
         }
 
-        public void Add(CustomerVM _customer) => CustomFSContext.Customers.Add(_customer.ToModel());
+        //public void Add(CustomerVM _customer) => CustomFSContext.Customers.Add(_customer.ToModel());
 
-        public void Modify(CustomerVM _customer)
-        {
-            // SelectedCustomer
-            //CustomFSContext.Entry(_customer?.ToModel()).State = EntityState.Modified; // TODO
-            CustomFSContext.SaveChanges();
-        }
+        //public void Modify(CustomerVM _customer)
+        //{
+        //    // SelectedCustomer
+        //    //CustomFSContext.Entry(_customer?.ToModel()).State = EntityState.Modified; // TODO
+        //    CustomFSContext.SaveChanges();
+        //}
 
         public void Delete(CustomerVM _customer)
         {
             CustomFSContext.Customers.Attach(_customer?.ToModel());
             CustomFSContext.Customers.Remove(_customer?.ToModel());
             CustomFSContext.SaveChanges();
+            // CASCADE ON DELETE
         }
     }
 }

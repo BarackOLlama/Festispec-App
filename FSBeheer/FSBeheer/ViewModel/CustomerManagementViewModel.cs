@@ -43,6 +43,7 @@ namespace FSBeheer.ViewModel
         // Standard way of doing this
         private void OpenCreateCustomer()
         {
+            _selectedCustomer = null;
             var view =  new CreateEditCustomerView();
             view.Show();
 
@@ -55,7 +56,8 @@ namespace FSBeheer.ViewModel
             }
             else
             {
-                var view = new CreateEditCustomerView(_selectedCustomer);
+                //var view = new CreateEditCustomerView(_selectedCustomer);
+                var view = new CreateEditCustomerView();
                 view.Show();
             }
         }

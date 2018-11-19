@@ -9,7 +9,7 @@ namespace FSBeheer.ViewModel
     {
         public CustomerVM Customer { get; set; }
 
-        public RelayCommand CreateEditCommand { get; set; }
+        public RelayCommand SaveChangesCommand { get; set; }
 
         public RelayCommand<Window> DiscardCommand { get; set; }
 
@@ -30,32 +30,41 @@ namespace FSBeheer.ViewModel
         //    // contact van deze customer
         //}
 
-        ///// <summary>
-        ///// Constructor for a new customer if no customer is selected
-        ///// </summary>
-        //public CreateEditCustomerViewModel(CustomerVM customer = null)
-        //{
-        //    Init();
-        //    // MessageBox.Show("Entered constructor with no customer existing");
-        //    if(customer == null)
-        //    {
-        //        Customer = new CustomerVM();
-        //    }
-        //    // IsEdit = false;
-        //    // Contact aanmaken
-        //}
-
-        public CreateEditCustomerViewModel()
+        /// <summary>
+        /// Constructor for a new customer if no customer is selected
+        /// </summary>
+        public CreateEditCustomerViewModel(CustomerVM customer)
         {
             Init();
-            Customer = new CustomerVM();           
+            // MessageBox.Show("Entered constructor with no customer existing");
+            if (customer == null)
+            {
+                Customer = new CustomerVM();
+                _Context.Customers.Add(Customer.ToModel());
+            } else
+            {
+                //Customer = customer;
+                Customer = _Context.CustomerCrud.GetCustomerById(customer.Id);
+            }
+            // IsEdit = false;
+            // Contact aanmaken
         }
 
-        public void SetCustomer(CustomerVM customer)
-        {
-            Customer = customer;
-            RaisePropertyChanged("Customer");
-        }
+        //public CreateEditCustomerViewModel()
+        //{
+        //    Init();
+        //    Customer = new CustomerVM();           
+        //}
+
+        ///// <summary>
+        ///// Code Behind ding
+        ///// </summary>
+        ///// <param name="customer"></param>
+        //public void SetCustomer(CustomerVM customer)
+        //{
+        //    Customer = customer;
+        //    RaisePropertyChanged("Customer");
+        //}
 
         /// <summary>
         /// Initializer of needed components
@@ -63,30 +72,39 @@ namespace FSBeheer.ViewModel
         public void Init()
         {
             _Context = new CustomFSContext();
-            CreateEditCommand = new RelayCommand(AddModifyCustomer);
+            SaveChangesCommand = new RelayCommand(SaveChanges);
             DiscardCommand = new RelayCommand<Window>(Discard);
         }
 
-        private void AddCustomer()
+        //private void AddCustomer()
+        //{
+        //    // not tested yet
+        //    _Context.CustomerCrud.GetGetAllCustomerVMs().Add(Customer);
+        //    _Context.Customers.Add(Customer.ToModel());
+        //    //_Context.CustomerCrud.Add(Customer);
+        //    RaisePropertyChanged();
+        //}
+
+        private void SaveChanges()
         {
-            // not tested yet
             _Context.CustomerCrud.GetGetAllCustomerVMs().Add(Customer);
-            _Context.CustomerCrud.Add(Customer);
+            _Context.SaveChanges();
+            
+            //if (Customer.Id != 0)
+            //{
+            //    ModifyCustomer();
+            //} else
+            //{
+            //    AddCustomer();
+            //}
         }
 
-        private void AddModifyCustomer()
-        {
-            if (Customer.Id != 0)
-            {
-                ModifyCustomer();
-            } else
-            {
-                AddCustomer();
-            }
-        }
-
+        /*=> _Context.CustomerCrud.Modify(Customer);*/
         // Not tested yet
-        private void ModifyCustomer() => _Context.CustomerCrud.Modify(Customer);
+        //private void ModifyCustomer()
+        //{
+        //    _Context.SaveChanges();
+        //}
 
 
         // Not tested yet
