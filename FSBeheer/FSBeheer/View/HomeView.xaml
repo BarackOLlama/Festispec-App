@@ -13,7 +13,7 @@
         <Button Content="Klanten" Command="{Binding ShowCustomerViewCommand}" Background="LightBlue" HorizontalAlignment="Left" Margin="71,107,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
         <Button Content="Inspecteurs" Background="LightBlue" HorizontalAlignment="Left" Margin="71,226,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
         <Button Content="Offertes" Background="LightBlue" HorizontalAlignment="Left" Margin="249,226,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
-        <Button Content="Vragenlijsten" Command="{Binding ShowQuestionnairesCommand}" Background="LightBlue" HorizontalAlignment="Left" Margin="433,226,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
+        <Button Content="Vragenlijsten" Command="{Binding ShowQuestionnaireListViewCommand}" Background="LightBlue" HorizontalAlignment="Left" Margin="433,226,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
         <Button Content="Login" Command="{Binding ShowLoginViewCommand}" Background="LightBlue" HorizontalAlignment="Right" Margin="35" VerticalAlignment="Bottom" Width="121" Height="30"></Button>
         <Label Content="Ingelogd als" HorizontalAlignment="Left" Margin="47,299,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
         <TextBlock Text="{Binding Account.Username, FallbackValue=Gebruiker: , StringFormat=Gebruiker: {0}}" HorizontalAlignment="Left" Margin="51,346,0,0" VerticalAlignment="Top" />

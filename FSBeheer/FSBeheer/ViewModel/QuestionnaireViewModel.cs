@@ -7,18 +7,18 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using System;
 
 namespace FSBeheer.ViewModel
 {
-    public class QuestionnaireVM
+    public class QuestionnaireViewModel
     {
         private Questionnaire _questionnaire;
-        private CreateQuestionView _createQuestionView;
         public ObservableCollection<QuestionVM> Questions { get; set; }
 
-        public ICommand OpenCreateQuestionCommand { get; set; }
+        public RelayCommand OpenCreateQuestionCommand { get; set; }
 
-        public QuestionnaireVM(Questionnaire questionnaire)
+        public QuestionnaireViewModel(Questionnaire questionnaire)
         {
             _questionnaire = questionnaire;
 
@@ -55,6 +55,11 @@ namespace FSBeheer.ViewModel
         public void OpenCreateQuestionWindow()
         {
             new CreateQuestionView().ShowDialog();
+        }
+
+        public  Questionnaire ToModel()
+        {
+            return _questionnaire;
         }
     }
 }

@@ -29,7 +29,7 @@ namespace FSBeheer.ViewModel
                 base.RaisePropertyChanged("Question");
             }
         }
-        private QuestionnaireVM _selectedQuestionnaireVM;
+        private QuestionnaireViewModel _selectedQuestionnaireVM;
         private QuestionTypeVM _selectedQuestionType;
         public QuestionTypeVM SelectedQuestionType
         {
@@ -47,7 +47,7 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
         public RelayCommand AddQuestionCommand { get; set; }
 
-        public CreateQuestionViewModel(QuestionnaireVM selectedQuestionnaireVM)
+        public CreateQuestionViewModel(QuestionnaireViewModel selectedQuestionnaireVM)
         {
             _selectedQuestionnaireVM = selectedQuestionnaireVM;
             _questionVM = new QuestionVM();
@@ -63,7 +63,7 @@ namespace FSBeheer.ViewModel
             Question = new QuestionVM();
             Question.Type = _selectedQuestionType.ToModel();
             //TODO there should be a cleaner way to do this.
-            Question.QuestionnaireId = selectedQuestionnaireVM.Id+1;
+            Question.QuestionnaireId = selectedQuestionnaireVM.Id;
         }
 
         public void AddQuestion()

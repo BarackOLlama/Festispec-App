@@ -24,6 +24,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowQuotationViewCommand { get; set; }
         public RelayCommand ShowQuestionnairesViewCommand { get; set; }
         public RelayCommand ShowLoginViewCommand { get; set; }
+        public RelayCommand ShowQuestionnaireListViewCommand { get; set; }
 
         private AccountVM _account;
         public AccountVM Account
@@ -48,8 +49,9 @@ namespace FSBeheer.ViewModel
             ShowEventViewCommand = new RelayCommand(ShowEventView);
             ShowInspectorViewCommand = new RelayCommand(ShowInspectorView);
             ShowQuotationViewCommand = new RelayCommand(ShowQuotationView);
-            ShowQuestionnairesViewCommand = new RelayCommand(ShowQuestionnairesView);
+            ShowQuestionnairesViewCommand = new RelayCommand(ShowQuestionnaireListView);
             ShowLoginViewCommand = new RelayCommand(ShowLoginView);
+            ShowQuestionnaireListViewCommand = new RelayCommand(ShowQuestionnaireListView);
 
             // Tests to make sure everything is working
             _Context = new CustomFSContext();
@@ -59,6 +61,11 @@ namespace FSBeheer.ViewModel
 
             // Place brakepoint here
             Console.WriteLine("");
+        }
+
+        private void ShowQuestionnaireListView()
+        {
+            new QuestionnairesView().ShowDialog();
         }
 
         private void ShowLoginView()
@@ -90,11 +97,6 @@ namespace FSBeheer.ViewModel
         private void ShowQuotationView()
         {
             throw new NotImplementedException();
-        }
-
-        private void ShowQuestionnairesView()
-        {
-            new QuestionnairesView().ShowDialog();
         }
 
     }

@@ -12,17 +12,17 @@ using System.Windows.Input;
 
 namespace FSBeheer.ViewModel
 {
-    public class QuestionnairesViewModel : ViewModelBase
+    public class QuestionnaireListViewModel : ViewModelBase
     {
         //PLURAL FORM
-        public ObservableCollection<QuestionnaireVM> Questionnaires { get; set; }
-        private QuestionnaireVM _selectedQuestionnaire;
+        public ObservableCollection<QuestionnaireViewModel> Questionnaires { get; set; }
+        private QuestionnaireViewModel _selectedQuestionnaire;
 
         private QuestionnaireEditView _questionnaireEditView;
 
         public ICommand ViewQuestionnaireCommand { get; set; }
 
-        public QuestionnaireVM SelectedQuestionnaire
+        public QuestionnaireViewModel SelectedQuestionnaire
         {
             get
             {
@@ -35,12 +35,12 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public QuestionnairesViewModel()
+        public QuestionnaireListViewModel()
         {
             using (var context = new FSContext())
             {
-                var result = context.Questionnaires.Include("Questions").ToList().Select(e => new QuestionnaireVM(e));
-                Questionnaires = new ObservableCollection<QuestionnaireVM>(result);
+                var result = context.Questionnaires.Include("Questions").ToList().Select(e => new QuestionnaireViewModel(e));
+                Questionnaires = new ObservableCollection<QuestionnaireViewModel>(result);
             }
             SelectedQuestionnaire = Questionnaires?.First();
             ViewQuestionnaireCommand = new RelayCommand(OpenCreateQuestionWindow);
@@ -49,8 +49,7 @@ namespace FSBeheer.ViewModel
 
         public void OpenCreateQuestionWindow()
         {
-            _questionnaireEditView = new QuestionnaireEditView();
-            _questionnaireEditView.ShowDialog();
+            new QuestionnaireEditView().ShowDialog();
         }
     }
 }
