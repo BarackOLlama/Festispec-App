@@ -62,6 +62,7 @@ namespace FSBeheer.ViewModel
             AddQuestionCommand = new RelayCommand(AddQuestion, CanAddQuestion);
             Question = new QuestionVM();
             Question.Type = _selectedQuestionType.ToModel();
+            //TODO there should be a cleaner way to do this.
             Question.QuestionnaireId = selectedQuestionnaireVM.Id+1;
         }
 
@@ -69,6 +70,7 @@ namespace FSBeheer.ViewModel
         {
             using (var context = new FSContext())
             {
+                //TODO hard coded, dirty.
                 if (SelectedQuestionType.Name == "Multiple Choice Vraag")
                 {//clear columns
                     Question.Columns = null;
