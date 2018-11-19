@@ -26,6 +26,12 @@ namespace FSBeheer.VM
             get { return _question.Id; }
         }
 
+        public int? QuestionnaireId
+        {
+            get { return _question.QuestionnaireId; }
+            set { }
+        }
+
         public string Content
         {
             get
@@ -52,6 +58,12 @@ namespace FSBeheer.VM
         {
             set { _question.QuestionType = value; }
             get { return _question.QuestionType; }
+        }
+
+        public string Comments
+        {
+            get { return _question.Comments; }
+            set { _question.Comments = value; }
         }
 
         internal Question ToModel()

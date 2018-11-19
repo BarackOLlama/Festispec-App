@@ -16,8 +16,6 @@ namespace FSBeheer.ViewModel
     public class CreateQuestionViewModel : ViewModelBase
     {
         private QuestionVM _questionVM;
-        private QuestionCrud _questionCrud;
-        private QuestionTypeCrud _questionTypeCrud;
 
         public QuestionVM Question
         {
@@ -53,14 +51,6 @@ namespace FSBeheer.ViewModel
         {
             _selectedQuestionnaireVM = selectedQuestionnaireVM;
             _questionVM = new QuestionVM();
-            //_questionCrud = new QuestionCrud(new CustomFSContext());
-            //_questionTypeCrud = new QuestionTypeCrud(new CustomFSContext());
-
-            //var questionTypes = _questionTypeCrud.GetQuestionTypeVMs();
-            //questionTypes.RemoveAt
-            //because the other options currently do not work.
-
-
 
             using (var context = new CustomFSContext())
             {
@@ -72,6 +62,7 @@ namespace FSBeheer.ViewModel
             AddQuestionCommand = new RelayCommand(AddQuestion, CanAddQuestion);
             Question = new QuestionVM();
             Question.Type = _selectedQuestionType.ToModel();
+            Question.
         }
 
         public void AddQuestion()
@@ -87,7 +78,6 @@ namespace FSBeheer.ViewModel
         {
             return true;
         }
-
 
     }
 }

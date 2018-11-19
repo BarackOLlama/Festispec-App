@@ -14,11 +14,15 @@
         <TextBlock Text="Vraag:" Margin="0,5,0,0"  />
         <TextBox MaxLength="50" Text="{Binding Question.Content, Mode=TwoWay}"/>
 
-        <TextBlock Text="Vraag type:" Margin="0,5,0,0"  />
-        <!--Is disabled for the moment : trouble implementing other choices.-->
-        <ComboBox IsReadOnly="True" IsEnabled="False" ItemsSource="{Binding QuestionTypes}" SelectedItem="{Binding SelectedQuestionType}" HorizontalAlignment="Left" Width="292"/>
-
+        <TextBlock Text="Vraag type:" Margin="5,5,0,0"  />
+        <ComboBox ItemsSource="{Binding QuestionTypes}" SelectedItem="{Binding SelectedQuestionType}" HorizontalAlignment="Left" Width="292"/>
+        <TextBlock>Commentaar:</TextBlock>
+        <TextBox Text="{Binding Question.Comment}"></TextBox>
+        <TextBlock Text="Opties:* multiple choice"></TextBlock>
+        <TextBox Text="{Binding Question.Options}"></TextBox>
+        <TextBlock Text="Kolommen"></TextBlock>
+        <TextBox Text="{Binding Question.Columns}"></TextBox>
         <Button Content="Add" Command="{Binding AddQuestionCommand}" CommandParameter="{Binding AddQuestionCommand}"
-                    Width="100"  HorizontalAlignment="Left" Margin="0,5,0,0" />
+                    Width="100"  HorizontalAlignment="Left" Margin="5,5,0,0" />
     </StackPanel>
 </Window>
