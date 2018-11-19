@@ -31,7 +31,7 @@ namespace FSBeheer.ViewModel
         public LoginViewModel(HomeViewModel homeViewModel)
         {
             _homeViewModel = homeViewModel;
-            this.CreateNewAccount();
+            //this.CreateNewAccount();
             VerifyLoginCommand = new RelayCommand(VerifyLogin);
             Message = "";
             Account = new AccountVM();

@@ -19,13 +19,7 @@ namespace FSBeheer.ViewModel
         private Question _question;
         private QuestionTypeVM _selectedQuestionType;
         public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
-        public ICommand AddQuestionCommand { get; set; }
-
-
-        public bool SelectedTypeIsMulti => _selectedQuestionType.Name == "Multiple Choice Vraag";
-        public bool SelectedTypeIsOpen => _selectedQuestionType.Name == "Open vraag";
-        public bool SelectedTypeIsOpenTabel => _selectedQuestionType.Name == "Open Tabelvraag";
-        public bool SelectedTypeIsMultiTabel => _selectedQuestionType.Name == "Multiple Choice Tabelvraag";
+        public RelayCommand AddQuestionCommand { get; set; }
 
         public CreateQuestionViewModel(QuestionnaireVM selectedQuestionnaireVM)
         {
@@ -70,7 +64,6 @@ namespace FSBeheer.ViewModel
         {
             return true;
         }
-
 
     }
 }
