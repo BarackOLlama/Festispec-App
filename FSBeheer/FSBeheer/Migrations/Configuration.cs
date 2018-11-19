@@ -153,7 +153,6 @@ namespace FSBeheer.Migrations
                     BankNumber = "NL01INGB0123456789",
                     Account = accounts[3]
                 }
-
             };
 
             context.Inspectors.AddRange(inspectors);
