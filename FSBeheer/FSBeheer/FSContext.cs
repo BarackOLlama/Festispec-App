@@ -8,7 +8,6 @@ namespace FSBeheer
 
     public partial class FSContext : DbContext
     {
-        internal object temp;
 
         public FSContext()
             : base("name=FSDB")

@@ -96,6 +96,7 @@
     <Compile Include="Crud\InspectorCrud.cs" />
     <Compile Include="Crud\EventCrud.cs" />
     <Compile Include="Crud\QuestionCrud.cs" />
+    <Compile Include="Crud\QuestionTypeCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
     <Compile Include="Migrations\201811121341460_Initial.cs" />
     <Compile Include="Migrations\201811121341460_Initial.Designer.cs">
