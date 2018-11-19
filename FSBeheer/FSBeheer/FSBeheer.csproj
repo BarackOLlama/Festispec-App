@@ -35,10 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BCrypt.Net-Next, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BCrypt.Net-Next.3.1.0\lib\net452\BCrypt.Net-Next.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
     </Reference>
@@ -96,6 +92,7 @@
     <Compile Include="Crud\InspectorCrud.cs" />
     <Compile Include="Crud\EventCrud.cs" />
     <Compile Include="Crud\QuestionCrud.cs" />
+    <Compile Include="Crud\QuestionTypeCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
     <Compile Include="Migrations\201811121341460_Initial.cs" />
     <Compile Include="Migrations\201811121341460_Initial.Designer.cs">
@@ -118,10 +115,14 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Quotation.cs" />
     <Compile Include="Model\Role.cs" />
-    <Compile Include="ViewModel\AccountVM.cs" />
+    <Compile Include="ViewModel\CreateQuestionViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
-    <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\QuestionnairesViewModel.cs" />
+    <Compile Include="ViewModel\QuestionnaireViewModel.cs" />
+    <Compile Include="View\CreateQuestionView.xaml.cs">
+      <DependentUpon>CreateQuestionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\InspectionManagementView.xaml.cs">
       <DependentUpon>InspectionManagementView.xaml</DependentUpon>
     </Compile>
@@ -135,10 +136,13 @@
     <Compile Include="View\InspectorSelectionView.xaml.cs">
       <DependentUpon>InspectorSelectionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\LoginView.xaml.cs">
-      <DependentUpon>LoginView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\NullVisibilityConverter.cs" />
+    <Compile Include="View\QuestionnaireEditView.xaml.cs">
+      <DependentUpon>QuestionnaireEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\QuestionnairesView.xaml.cs">
+      <DependentUpon>QuestionnairesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VM\AnswerVM.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -159,6 +163,7 @@
     <Compile Include="VM\EventVM.cs" />
     <Compile Include="VM\InspectionVM.cs" />
     <Compile Include="VM\InspectorVM.cs" />
+    <Compile Include="VM\QuestionTypeVM.cs" />
     <Compile Include="VM\QuestionVM.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +201,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\CreateQuestionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CustomerManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -216,7 +225,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\LoginView.xaml">
+    <Page Include="View\QuestionnaireEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\QuestionnairesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,0 +1,28 @@
+﻿<Window x:Class="FSBeheer.View.CreateQuestionView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FSBeheer.View"
+        mc:Ignorable="d"
+        Title="CreateQuestionWindow" Height="300" Width="300"
+        DataContext="{Binding NewQuestionCreationViewModel, Source={StaticResource Locator}}">
+    <StackPanel>
+
+        <TextBlock Text="Vraag toevoegen" FontSize="28"/>
+
+        <TextBlock Text="Vraag:" Margin="0,5,0,0"  />
+        <TextBox MaxLength="50" Text="{Binding Question.Content, Mode=TwoWay}"/>
+
+        <TextBlock Text="Vraag type:" Margin="5,5,0,0"  />
+        <ComboBox ItemsSource="{Binding QuestionTypes}" SelectedItem="{Binding SelectedQuestionType}" HorizontalAlignment="Left" Width="292"/>
+        <TextBlock>Commentaar:</TextBlock>
+        <TextBox Text="{Binding Question.Comment}"></TextBox>
+        <TextBlock Text="Opties:* multiple choice"></TextBlock>
+        <TextBox Text="{Binding Question.Options}"></TextBox>
+        <TextBlock Text="Kolommen"></TextBlock>
+        <TextBox Text="{Binding Question.Columns}"></TextBox>
+        <Button Content="Add" Command="{Binding AddQuestionCommand}" CommandParameter="{Binding AddQuestionCommand}"
+                    Width="100"  HorizontalAlignment="Left" Margin="5,5,0,0" />
+    </StackPanel>
+</Window>

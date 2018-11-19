@@ -14,14 +14,14 @@ namespace FSBeheer.ViewModel
         private CustomFSContext _Context;
         private CustomerManagementView _customerListWindow;
         private InspectionManagementView _inspectionManagementView;
+        private QuestionnairesView _questionnairesView;
 
         public RelayCommand ShowCustomerViewCommand { get; set; }
         public RelayCommand ShowInspectionViewCommand { get; set; }
         public RelayCommand ShowEventViewCommand { get; set; }
         public RelayCommand ShowInspectorViewCommand { get; set; }
         public RelayCommand ShowQuotationViewCommand { get; set; }
-        public RelayCommand ShowQuestionnaireViewCommand { get; set; }
-        public RelayCommand ShowLoginViewCommand { get; set; }
+        public RelayCommand ShowQuestionnairesViewCommand { get; set; }
 
         private AccountVM _account;
         public AccountVM Account
@@ -46,8 +46,7 @@ namespace FSBeheer.ViewModel
             ShowEventViewCommand = new RelayCommand(ShowEventView);
             ShowInspectorViewCommand = new RelayCommand(ShowInspectorView);
             ShowQuotationViewCommand = new RelayCommand(ShowQuotationView);
-            ShowQuestionnaireViewCommand = new RelayCommand(ShowQuestionnaireView);
-            ShowLoginViewCommand = new RelayCommand(ShowLoginView);
+            ShowQuestionnairesViewCommand = new RelayCommand(ShowQuestionnairesView);
 
             // Tests to make sure everything is working
             _Context = new CustomFSContext();
@@ -57,11 +56,6 @@ namespace FSBeheer.ViewModel
 
             // Place brakepoint here
             Console.WriteLine("");
-        }
-
-        private void ShowLoginView()
-        {
-            new LoginView().Show();
         }
 
         private void ShowCustomerView()
@@ -82,7 +76,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowInspectorView()
         {
-            throw new NotImplementedException();
+            new EventManagementView().Show();
         }
 
         private void ShowQuotationView()
@@ -93,6 +87,12 @@ namespace FSBeheer.ViewModel
         private void ShowQuestionnaireView()
         {
             throw new NotImplementedException();
+        }
+
+        private void ShowQuestionnaireView()
+        {
+            _questionnairesView = new QuestionnairesView();
+            _questionnairesView.ShowDialog();
         }
 
     }

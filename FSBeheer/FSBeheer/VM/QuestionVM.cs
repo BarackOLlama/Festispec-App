@@ -26,31 +26,54 @@ namespace FSBeheer.VM
             get { return _question.Id; }
         }
 
-        public string Content
+        public int? QuestionnaireId
         {
-            get
-            {
-                return _question.Content;
-            }
+            get { return _question.QuestionnaireId; }
             set
             {
-                _question.Content = value;
+                int? conv = value;
+                _question.QuestionnaireId = conv;
             }
+        }
+
+        public string Content
+        {
+            get { return _question.Content; }
+            set { _question.Content = value; }
         }
 
         public string Options
         {
             get { return _question.Options; }
+            set { _question.Options = value; }
         }
 
         public string Columns
         {
             get { return _question.Columns; }
+            set { _question.Columns = value; }
         }
 
-        public string Type
+        public QuestionType Type
         {
-            get { return _question.QuestionType.Name; }
+            set { _question.QuestionType = value; }
+            get { return _question.QuestionType; }
+        }
+
+        public string Comments
+        {
+            get { return _question.Comments; }
+            set { _question.Comments = value; }
+        }
+
+        internal Question ToModel()
+        {
+            return _question;
+        }
+
+        public override string ToString()
+        {
+            return _question.QuestionType.Name;
         }
 
         internal Question ToModel()

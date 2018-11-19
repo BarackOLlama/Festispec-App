@@ -1,4 +1,5 @@
-﻿using FSBeheer.Model;
+﻿using FSBeheer.Crud;
+using FSBeheer.Model;
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -14,31 +15,22 @@ namespace FSBeheer.ViewModel
 {
     public class CreateQuestionViewModel : ViewModelBase
     {
-        public QuestionVM Question { get; set; }
-        private QuestionnaireVM _selectedQuestionnaireVM;
-        private Question _question;
-        private QuestionTypeVM _selectedQuestionType;
-        public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
-        public RelayCommand AddQuestionCommand { get; set; }
+        private QuestionVM _questionVM;
 
-        public CreateQuestionViewModel(QuestionnaireVM selectedQuestionnaireVM)
+        public QuestionVM Question
         {
-            _selectedQuestionnaireVM = selectedQuestionnaireVM;
-
-            _question = new Question();
-
-            using (var context = new CustomFSContext())
+            get
             {
-                var temp = context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
-                QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
-                SelectedQuestionType = QuestionTypes?.First();
+                return _questionVM;
             }
-
-            AddQuestionCommand = new RelayCommand(AddQuestion, CanAddQuestion);
-            Question = new QuestionVM();
+            set
+            {
+                _questionVM = value;
+                base.RaisePropertyChanged("Question");
+            }
         }
-
-
+        private QuestionnaireVM _selectedQuestionnaireVM;
+        private QuestionTypeVM _selectedQuestionType;
         public QuestionTypeVM SelectedQuestionType
         {
             get
@@ -49,14 +41,49 @@ namespace FSBeheer.ViewModel
             {
                 _selectedQuestionType = value;
                 base.RaisePropertyChanged("SelectedQuestionType");
+                Question.Type = value.ToModel();
             }
+        }
+        public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
+        public RelayCommand AddQuestionCommand { get; set; }
+
+        public CreateQuestionViewModel(QuestionnaireVM selectedQuestionnaireVM)
+        {
+            _selectedQuestionnaireVM = selectedQuestionnaireVM;
+            _questionVM = new QuestionVM();
+
+            using (var context = new CustomFSContext())
+            {
+                var temp = context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
+                QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
+                SelectedQuestionType = QuestionTypes?[1];
+            }
+
+            AddQuestionCommand = new RelayCommand(AddQuestion, CanAddQuestion);
+            Question = new QuestionVM();
+            Question.Type = _selectedQuestionType.ToModel();
+            //TODO there should be a cleaner way to do this.
+            Question.QuestionnaireId = selectedQuestionnaireVM.Id+1;
         }
 
         public void AddQuestion()
         {
             using (var context = new FSContext())
             {
-
+                //TODO hard coded, dirty.
+                if (SelectedQuestionType.Name == "Multiple Choice Vraag")
+                {//clear columns
+                    Question.Columns = null;
+                } else if (SelectedQuestionType.Name == "Open vraag")
+                {//clear options and columns
+                    Question.Columns = null;
+                    Question.Options = null;
+                } else if (SelectedQuestionType.Name == "Open Tabelvraag")
+                {//clear options
+                    Question.Options = null;
+                }
+                context.Questions.Add(Question.ToModel());
+                context.SaveChanges();
             }
         }
 
