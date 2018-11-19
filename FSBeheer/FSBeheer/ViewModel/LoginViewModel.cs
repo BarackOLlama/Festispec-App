@@ -42,7 +42,6 @@ namespace FSBeheer.ViewModel
             string username;
             string password;
             string salt;
-            int i = 5;
 
             using (var context = new CustomFSContext())
             {
@@ -52,15 +51,18 @@ namespace FSBeheer.ViewModel
                 try
                 {
                     context.Accounts.First();
-                }catch(Exception e)
+                }
+                catch (Exception e)
                 {
                     Message = "Could not connect to database.";
                     return;
                 }
+
                 //check whether there's there's any such username in the database.
                 var findSalt = context.Accounts.Where(e => e.Username == username).FirstOrDefault();
+                var all = context.Accounts.ToList().Select(e => new AccountVM(e));
                 salt = findSalt?.Salt;
-                //short circuit
+                //short circuti
                 if (salt == null)
                 {
                     Message = "No such username/password combination found.";
@@ -70,7 +72,7 @@ namespace FSBeheer.ViewModel
                 string saltedPW = BCrypt.Net.BCrypt.HashPassword(password, salt);
 
                 //check whether there's any account in the database with that username/password combination
-                var findUser = context.Accounts.Where(e => e.Username == username && e.Password == saltedPW).FirstOrDefault();
+                var findUser = context.Accounts.ToList().Where(e => e.Username == username && e.Password == saltedPW).FirstOrDefault();
 
                 if (findUser == null)
                 {
@@ -99,7 +101,7 @@ namespace FSBeheer.ViewModel
             using (var context = new CustomFSContext())
             {
                 //You do not ever save the plaintext (var password) in the database, only the salted
-                context.Accounts.Add(new Account() { Id = 0, Username = username, Password = saltedPW, Salt = salt });
+                context.Accounts.Add(new Account() { Id = 0, Username = username, RoleId = 1, Password = saltedPW, Salt = salt, IsAdmin = true });
                 context.SaveChanges();
             }
 
