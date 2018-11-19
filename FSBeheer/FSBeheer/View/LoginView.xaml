@@ -8,11 +8,12 @@
         Title="Festispec - Login" Height="300" Width="300"
         DataContext="{Binding LoginViewModel, Source={StaticResource Locator}}">
     <StackPanel>
-        <Label>Username:</Label>
+        <Label>Gebruikersnaam:</Label>
         <TextBox Text="{Binding Path=Account.Username, Mode=TwoWay}"></TextBox>
-        <Label>Password:</Label>
+        <Label>Wachtwoord:</Label>
+        <!--Is not a passwordbox.-->
         <TextBox Text="{Binding Path =Account.Password, Mode=TwoWay}"></TextBox>
         <Label Content="{Binding Message}"></Label>
-        <Button Command="{Binding VerifyLoginCommand}" CommandParameter="{Binding VerifyLoginCommand}">Login</Button>
+        <Button Command="{Binding VerifyLoginCommand}" CommandParameter="{Binding VerifyLoginCommand}">Log in</Button>
     </StackPanel>
 </Window>

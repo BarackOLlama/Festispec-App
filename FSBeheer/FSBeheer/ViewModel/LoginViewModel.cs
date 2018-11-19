@@ -14,20 +14,11 @@ namespace FSBeheer.ViewModel
     {
         private string _message;
         public AccountVM Account { get; set; }
-
         private HomeViewModel _homeViewModel;
-
-        public LoginViewModel(HomeViewModel homeViewModel)
-        {
-            _homeViewModel = homeViewModel;
-        }
 
         public string Message
         {
-            get
-            {
-                return _message;
-            }
+            get { return _message; }
             set
             {
                 _message = value;
@@ -35,9 +26,12 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public ICommand VerifyLoginCommand { get; set; }
-        public LoginViewModel()
+        public RelayCommand VerifyLoginCommand { get; set; }
+
+        public LoginViewModel(HomeViewModel homeViewModel)
         {
+            _homeViewModel = homeViewModel;
+            this.CreateNewAccount();
             VerifyLoginCommand = new RelayCommand(VerifyLogin);
             Message = "";
             Account = new AccountVM();
@@ -48,8 +42,9 @@ namespace FSBeheer.ViewModel
             string username;
             string password;
             string salt;
+            int i = 5;
 
-            using (var context = new FSContext())
+            using (var context = new CustomFSContext())
             {
                 username = Account.Username;
                 password = Account.Password;
@@ -62,19 +57,15 @@ namespace FSBeheer.ViewModel
                     Message = "Could not connect to database.";
                     return;
                 }
-
-
                 //check whether there's there's any such username in the database.
                 var findSalt = context.Accounts.Where(e => e.Username == username).FirstOrDefault();
                 salt = findSalt?.Salt;
-
                 //short circuit
                 if (salt == null)
                 {
                     Message = "No such username/password combination found.";
                     return;
                 }
-
                 //get the salted version of the user input with the salt from the account in the database
                 string saltedPW = BCrypt.Net.BCrypt.HashPassword(password, salt);
 
@@ -98,14 +89,14 @@ namespace FSBeheer.ViewModel
 
         public void CreateNewAccount()
         {
-            //for demonstrative purposes
+            //create any username/password account combination you want
 
-            string username = "gebruikersnaam";
-            string password = "wachtwoord";
+            string username = "username";
+            string password = "password";
             string salt = BCrypt.Net.BCrypt.GenerateSalt();
             string saltedPW = BCrypt.Net.BCrypt.HashPassword(password, salt);
 
-            using (var context = new FSContext())
+            using (var context = new CustomFSContext())
             {
                 //You do not ever save the plaintext (var password) in the database, only the salted
                 context.Accounts.Add(new Account() { Id = 0, Username = username, Password = saltedPW, Salt = salt });
