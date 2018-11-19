@@ -29,29 +29,29 @@ namespace FSBeheer.VM
         public int? QuestionnaireId
         {
             get { return _question.QuestionnaireId; }
-            set { }
+            set
+            {
+                int? conv = value;
+                _question.QuestionnaireId = conv;
+            }
         }
 
         public string Content
         {
-            get
-            {
-                return _question.Content;
-            }
-            set
-            {
-                _question.Content = value;
-            }
+            get { return _question.Content; }
+            set { _question.Content = value; }
         }
 
         public string Options
         {
             get { return _question.Options; }
+            set { _question.Options = value; }
         }
 
         public string Columns
         {
             get { return _question.Columns; }
+            set { _question.Columns = value; }
         }
 
         public QuestionType Type

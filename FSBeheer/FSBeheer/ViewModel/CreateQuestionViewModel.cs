@@ -62,7 +62,7 @@ namespace FSBeheer.ViewModel
             AddQuestionCommand = new RelayCommand(AddQuestion, CanAddQuestion);
             Question = new QuestionVM();
             Question.Type = _selectedQuestionType.ToModel();
-            Question.
+            Question.QuestionnaireId = selectedQuestionnaireVM.Id+1;
         }
 
         public void AddQuestion()
