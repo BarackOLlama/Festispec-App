@@ -1,4 +1,5 @@
-﻿using FSBeheer.Model;
+﻿using FSBeheer.Crud;
+using FSBeheer.Model;
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -15,6 +16,9 @@ namespace FSBeheer.ViewModel
     public class CreateQuestionViewModel : ViewModelBase
     {
         private QuestionVM _questionVM;
+        private QuestionCrud _questionCrud;
+        private QuestionTypeCrud _questionTypeCrud;
+
         public QuestionVM Question
         {
             get
@@ -49,6 +53,14 @@ namespace FSBeheer.ViewModel
         {
             _selectedQuestionnaireVM = selectedQuestionnaireVM;
             _questionVM = new QuestionVM();
+            //_questionCrud = new QuestionCrud(new CustomFSContext());
+            //_questionTypeCrud = new QuestionTypeCrud(new CustomFSContext());
+
+            //var questionTypes = _questionTypeCrud.GetQuestionTypeVMs();
+            //questionTypes.RemoveAt
+            //because the other options currently do not work.
+
+
 
             using (var context = new CustomFSContext())
             {
