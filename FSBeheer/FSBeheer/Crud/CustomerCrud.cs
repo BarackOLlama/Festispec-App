@@ -66,7 +66,7 @@ namespace FSBeheer.Crud
         public void Modify(CustomerVM _customer)
         {
             // SelectedCustomer
-            CustomFSContext.Entry(_customer?.ToModel()).State = EntityState.Modified;
+            //CustomFSContext.Entry(_customer?.ToModel()).State = EntityState.Modified; // TODO
             CustomFSContext.SaveChanges();
         }
 
