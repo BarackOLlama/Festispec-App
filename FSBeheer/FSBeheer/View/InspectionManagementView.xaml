@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
+        x:Name="InspectionManagementViewName"
         Title="InspectionManagementView" Height="450" Width="800"
         DataContext="{Binding InspectionManagement, Source={StaticResource Locator}}">
     
@@ -18,21 +19,28 @@
 
     <StackPanel Margin="20">
         <StackPanel Name="spBackButton" HorizontalAlignment="Left">
-            <Button Content="Back" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+            <Button Content="Back" 
+                    Command="{Binding WORKINPROGRESS}" 
+                    CommandParameter="{Binding ElementName=InspectionManagementViewName}" 
+                    Template="{StaticResource InterfaceButtonTemplate}">
+                
+            </Button>
         </StackPanel>
+        
+        
         <StackPanel Name="spContent" Margin="30">
-            <DataGrid MaxHeight="250" ItemsSource="{Binding Inspections}" AutoGenerateColumns="False">
+            <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Inspections}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Inspectienummer" Binding="{Binding Id}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Evenement" Binding="{Binding }"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Status" Binding="{Binding StatusId}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Prijs" Binding="{Binding }"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Inspectienummer" Binding="{Binding Id}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Evenement" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Status" Binding="{Binding StatusId}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Prijs" Binding="{Binding Price}" Width="*"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
         <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"
                     Orientation="Horizontal" Margin="0,0,25,0">
-            <Button Content="Edit" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+            <Button Content="Edit" Command="{Binding ShowEditInspectionViewCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
             <Button Content="New" Template="{StaticResource InterfaceButtonTemplate}"></Button>
         </StackPanel>
     </StackPanel>
