@@ -42,7 +42,7 @@ namespace FSBeheer.ViewModel
             _Context = new CustomFSContext();
             ObservableCollection<CustomerVM> test = _Context.CustomerCrud.GetAllCustomerVMs();
             ObservableCollection<CustomerVM> test2 = _Context.CustomerCrud.GetFilteredCustomerBasedOnName("F");
-            ObservableCollection<CustomerVM> test3 = _Context.CustomerCrud.GetCustomerById(51);
+            // ObservableCollection<CustomerVM> test3 = _Context.CustomerCrud.GetCustomerById(51);
 
             // Place brakepoint here
             Console.WriteLine("");
