@@ -9,7 +9,7 @@ using System.Linq;
 using System.Windows.Input;
 using System;
 
-namespace FSBeheer.ViewModel
+namespace FSBeheer.VM
 {
     public class QuestionnaireVM
     {

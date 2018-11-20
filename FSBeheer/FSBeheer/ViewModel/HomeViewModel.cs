@@ -13,7 +13,6 @@ namespace FSBeheer.ViewModel
     public class HomeViewModel : ViewModelBase
     {
         private CustomFSContext _Context;
-        
         public AccountVM Account { get; set; }
 
         public ObservableCollection<QuestionVM> Questions;
