@@ -37,37 +37,37 @@ namespace FSBeheer.VM
         public string Name
         {
             get { return _customer.Name; }
-            set { _customer.Name = value; RaisePropertyChanged("Name"); }
+            set { _customer.Name = value; RaisePropertyChanged(nameof(Name)); }
         }
 
         public string Adres
         {
             get { return _customer.Adres; }
-            set { _customer.Adres = value; RaisePropertyChanged("Adres"); }
+            set { _customer.Adres = value; RaisePropertyChanged(nameof(Adres)); }
         }
 
         public string City
         {
             get { return _customer.City; }
-            set { _customer.City = value; RaisePropertyChanged("City"); }
+            set { _customer.City = value; RaisePropertyChanged(nameof(City)); }
         }
 
         public string ZipCode
         {
             get { return _customer.ZipCode; }
-            set { _customer.ZipCode = value; RaisePropertyChanged("ZipCode"); }
+            set { _customer.ZipCode = value; RaisePropertyChanged(nameof(ZipCode)); }
         }
 
         public DateTime? StartingDate
         {
             get { return _customer.StartingDate; }
-            set { _customer.StartingDate = value; RaisePropertyChanged("StartingDate"); }
+            set { _customer.StartingDate = value; RaisePropertyChanged(nameof(StartingDate)); }
         }
 
         public short? ChamberOfCommerceNumber
         {
             get { return _customer.ChamberOfCommerceNumber; }
-            set { _customer.ChamberOfCommerceNumber = value; RaisePropertyChanged("ChamberOfCommerceNumber"); }
+            set { _customer.ChamberOfCommerceNumber = value; RaisePropertyChanged(nameof(ChamberOfCommerceNumber)); }
         }
     }
 }

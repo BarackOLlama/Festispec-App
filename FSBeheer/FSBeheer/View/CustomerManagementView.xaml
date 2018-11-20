@@ -39,7 +39,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Foreground="#FF1D1616" />
                                 <DataGridTextColumn Header="Naam" Binding="{Binding Name}" Width="*" />
-                                <DataGridTextColumn Header="City" Binding="{Binding City}" Width="*" />
+                                <DataGridTextColumn Header="Adres" Binding="{Binding Adres}" Width="*" />
                                 <DataGridTemplateColumn Width="170">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
