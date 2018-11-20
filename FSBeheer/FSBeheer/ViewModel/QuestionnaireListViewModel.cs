@@ -14,11 +14,22 @@ namespace FSBeheer.ViewModel
 {
     public class QuestionnaireListViewModel : ViewModelBase
     {
-        public ObservableCollection<QuestionnaireVM> Questionnaires { get; set; }
         private QuestionnaireVM _selectedQuestionnaire;
+        private CustomFSContext _Context;
+        public ObservableCollection<QuestionnaireVM> Questionnaires { get; set; }
+        public RelayCommand ShowEditQuestionnaireViewCommand { get; set; }
 
-        public ICommand ViewQuestionnaireCommand { get; set; }
-
+        public RelayCommand ViewQuestionnaireCommand { get; set; }
+        public RelayCommand CreateQuestionnaireCommand { get; set; }
+        public QuestionnaireListViewModel()
+        {
+            _Context = new CustomFSContext();
+            Questionnaires = _Context.QuestionnaireCrud.GetAllQuestionnaireVMs();
+            ShowEditQuestionnaireViewCommand = new RelayCommand(ShowEditQuestionnaireView);
+            CreateQuestionnaireCommand = new RelayCommand(CreateQuestionnaire);
+            SelectedQuestionnaire = Questionnaires?.First();
+            ViewQuestionnaireCommand = new RelayCommand(OpenCreateQuestionWindow);
+        }
         public QuestionnaireVM SelectedQuestionnaire
         {
             get
@@ -31,21 +42,18 @@ namespace FSBeheer.ViewModel
                 base.RaisePropertyChanged("SelectedQuestionnaire");
             }
         }
-
-        public QuestionnaireListViewModel()
-        {
-            using (var context = new CustomFSContext())
-            {
-                var result = context.Questionnaires.Include("Questions").ToList().Select(e => new QuestionnaireVM(e));
-                Questionnaires = new ObservableCollection<QuestionnaireVM>(result);
-            }
-            SelectedQuestionnaire = Questionnaires?.First();
-            ViewQuestionnaireCommand = new RelayCommand(OpenCreateQuestionWindow);
-        }
-
         public void OpenCreateQuestionWindow()
         {
             new QuestionnaireEditView().ShowDialog();
+        }
+        private void ShowEditQuestionnaireView()
+        {
+            new EditQuestionnaireView().Show();
+        }
+
+        private void CreateQuestionnaire()
+        {
+            new CreateQuestionnaireView().Show();
         }
     }
 }

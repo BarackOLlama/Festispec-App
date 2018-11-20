@@ -1,6 +1,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using CommonServiceLocator;
+using System;
 
 namespace FSBeheer.ViewModel
 {
@@ -65,17 +66,11 @@ namespace FSBeheer.ViewModel
       
         public CreateEditCustomerViewModel CreateEditCustomer
         {
+            
             get
             {
-                return new CreateEditCustomerViewModel(CustomerManagement.SelectedCustomer);
-            }
-        }
-
-        public QuestionnaireManagementViewModel QuestionnaireManagement
-        {
-            get
-            {
-                return new QuestionnaireManagementViewModel();
+                throw new NotImplementedException();
+                //return new CreateEditCustomerViewModel(CustomerManagement.SelectedCustomer);
             }
         }
 

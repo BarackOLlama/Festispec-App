@@ -29,7 +29,21 @@ namespace FSBeheer.ViewModel
                     .Select(e => new QuestionVM(e));
                 Questions = new ObservableCollection<QuestionVM>(questions);
             }
+        }
 
+        public QuestionnaireVM()
+        {
+            _questionnaire = new Questionnaire();
+
+            using (var context = new CustomFSContext())
+            {
+                var questions = context.Questions
+                    .Include("QuestionType")
+                    .ToList()
+                    .Where(e => e.QuestionnaireId == _questionnaire.Id)
+                    .Select(e => new QuestionVM(e));
+                Questions = new ObservableCollection<QuestionVM>(questions);
+            }
         }
 
         public int Id

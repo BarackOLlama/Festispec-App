@@ -14,6 +14,8 @@ namespace FSBeheer.ViewModel
     {
         private CustomFSContext _Context;
         
+        public AccountVM Account { get; set; }
+
         public ObservableCollection<QuestionVM> Questions;
 
         public RelayCommand ShowCustomerViewCommand { get; set; }
@@ -22,8 +24,10 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowInspectorViewCommand { get; set; }
         public RelayCommand ShowQuotationViewCommand { get; set; }
         public RelayCommand ShowQuestionnaireManagementViewCommand { get; set; }
-
         public RelayCommand ShowCreateEditViewCommand { get; set; }
+        public RelayCommand ShowQuestionnairesViewCommand { get; set; }
+        public RelayCommand ShowLoginViewCommand { get; set; }
+        public RelayCommand ShowQuestionnaireListViewCommand { get; set; }
 
         public HomeViewModel()
         {
@@ -39,7 +43,6 @@ namespace FSBeheer.ViewModel
             ShowLoginViewCommand = new RelayCommand(ShowLoginView);
             ShowQuestionnaireListViewCommand = new RelayCommand(ShowQuestionnaireListView);
 
-
             ShowCreateEditViewCommand = new RelayCommand(ShowCreateEditInspectionView);
 
             // Tests to make sure everything is working
@@ -54,7 +57,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowQuestionnaireListView()
         {
-            new QuestionnairesView().ShowDialog();
+            new QuestionnaireListView().ShowDialog();
         }
 
         private void ShowLoginView()

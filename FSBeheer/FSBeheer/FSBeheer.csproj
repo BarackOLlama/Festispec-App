@@ -129,7 +129,7 @@
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
-    <Compile Include="ViewModel\QuestionnaireManagementViewModel.cs" />
+    <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="View\CreateEditInspectorView.xaml.cs">
       <DependentUpon>CreateEditInspectorView.xaml</DependentUpon>
     </Compile>
@@ -198,9 +198,7 @@
     <Compile Include="VM\EventVM.cs" />
     <Compile Include="VM\InspectionVM.cs" />
     <Compile Include="VM\InspectorVM.cs" />
-    <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="VM\QuestionTypeVM.cs" />
-    <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="VM\QuestionVM.cs" />
   </ItemGroup>
   <ItemGroup>
