@@ -40,12 +40,17 @@ namespace FSBeheer.ViewModel
             DeleteCommand = new RelayCommand(DeleteCustomer);
         }
 
+        internal void Init(CustomerVM customer)
+        {
+            _selectedCustomer = customer;
+        }
+
         // Standard way of doing this
         private void OpenCreateCustomer()
         {
-            _selectedCustomer = null;
-            var view =  new CreateEditCustomerView();
-            view.Show();
+            //_selectedCustomer = null;
+            new CreateEditCustomerView().Show();
+            //view.Show();
 
         }
         private void OpenEditCustomer()
@@ -56,9 +61,9 @@ namespace FSBeheer.ViewModel
             }
             else
             {
-                //var view = new CreateEditCustomerView(_selectedCustomer);
-                var view = new CreateEditCustomerView();
-                view.Show();
+                new CreateEditCustomerView(_selectedCustomer).Show();
+                //var view = new CreateEditCustomerView();
+                //view.Show();
             }
         }
 

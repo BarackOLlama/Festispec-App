@@ -26,12 +26,12 @@ namespace FSBeheer.View
             InitializeComponent();
         }
 
-        //public CreateEditCustomerView(CustomerVM customer)
-        //{
-        //    InitializeComponent();
-        //    // Zijn datacontext is een create edit, hier kun je hem nog zetten, bij viewmodel hoef je niet meer bij te houden wat er allemaal gebeurt
-        //    (DataContext as CreateEditCustomerViewModel).SetCustomer(customer);
-        //}
+        public CreateEditCustomerView(CustomerVM customer)
+        {
+            InitializeComponent();
+            // Zijn datacontext is een create edit, hier kun je hem nog zetten, bij viewmodel hoef je niet meer bij te houden wat er allemaal gebeurt
+            (DataContext as CreateEditCustomerViewModel).SetCustomer(customer);
+        }
 
     }
 }

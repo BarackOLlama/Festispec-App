@@ -33,38 +33,38 @@ namespace FSBeheer.ViewModel
         /// <summary>
         /// Constructor for a new customer if no customer is selected
         /// </summary>
-        public CreateEditCustomerViewModel(CustomerVM customer)
-        {
-            Init();
-            // MessageBox.Show("Entered constructor with no customer existing");
-            if (customer == null)
-            {
-                Customer = new CustomerVM();
-                _Context.Customers.Add(Customer.ToModel());
-            } else
-            {
-                //Customer = customer;
-                Customer = _Context.CustomerCrud.GetCustomerById(customer.Id);
-            }
-            // IsEdit = false;
-            // Contact aanmaken
-        }
-
-        //public CreateEditCustomerViewModel()
+        //public CreateEditCustomerViewModel(CustomerVM customer)
         //{
         //    Init();
-        //    Customer = new CustomerVM();           
+        //    // MessageBox.Show("Entered constructor with no customer existing");
+        //    if (customer == null)
+        //    {
+        //        Customer = new CustomerVM();
+        //        _Context.Customers.Add(Customer.ToModel());
+        //    } else
+        //    {
+        //        //Customer = customer;
+        //        Customer = _Context.CustomerCrud.GetCustomerById(customer.Id);
+        //    }
+        //    // IsEdit = false;
+        //    // Contact aanmaken
         //}
+
+        public CreateEditCustomerViewModel()
+        {
+            Init();
+            Customer = new CustomerVM();
+        }
 
         ///// <summary>
         ///// Code Behind ding
         ///// </summary>
         ///// <param name="customer"></param>
-        //public void SetCustomer(CustomerVM customer)
-        //{
-        //    Customer = customer;
-        //    RaisePropertyChanged("Customer");
-        //}
+        public void SetCustomer(CustomerVM customer)
+        {
+            Customer = customer;
+            RaisePropertyChanged("Customer");
+        }
 
         /// <summary>
         /// Initializer of needed components

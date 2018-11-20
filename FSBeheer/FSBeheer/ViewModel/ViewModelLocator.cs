@@ -69,7 +69,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new CreateEditCustomerViewModel(CustomerManagement.SelectedCustomer);
+                return new CreateEditCustomerViewModel();
             //{
             //    if (CustomerManagement.SelectedCustomer != null)
             //    {
