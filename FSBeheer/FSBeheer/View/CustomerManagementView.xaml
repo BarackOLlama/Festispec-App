@@ -19,7 +19,7 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
 
-        <Border Grid.ColumnSpan="2" Margin="0,0,-0.4,0" Background="LightGray">
+        <Border Grid.ColumnSpan="2" Margin="0,0,-0.4,0" Background="White">
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Name="spBackButton" Height="Auto" Orientation="Horizontal">

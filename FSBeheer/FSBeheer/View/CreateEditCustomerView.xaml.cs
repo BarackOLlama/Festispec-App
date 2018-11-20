@@ -21,12 +21,7 @@ namespace FSBeheer.View
     /// </summary>
     public partial class CreateEditCustomerView : Window
     {
-        public CreateEditCustomerView()
-        {
-            InitializeComponent();
-        }
-
-        public CreateEditCustomerView(CustomerVM customer)
+        public CreateEditCustomerView(CustomerVM customer = null)
         {
             InitializeComponent();
             // Zijn datacontext is een create edit, hier kun je hem nog zetten, bij viewmodel hoef je niet meer bij te houden wat er allemaal gebeurt

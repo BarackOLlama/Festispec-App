@@ -57,21 +57,9 @@ namespace FSBeheer.Crud
                .FirstOrDefault(c => c.Id == customer_id));
         }
 
-        //public void Add(CustomerVM _customer) => CustomFSContext.Customers.Add(_customer.ToModel());
-
-        //public void Modify(CustomerVM _customer)
-        //{
-        //    // SelectedCustomer
-        //    //CustomFSContext.Entry(_customer?.ToModel()).State = EntityState.Modified; // TODO
-        //    CustomFSContext.SaveChanges();
-        //}
-
         public void Delete(CustomerVM _customer)
         {
-            CustomFSContext.Customers.Attach(_customer?.ToModel());
-            CustomFSContext.Customers.Remove(_customer?.ToModel());
-            CustomFSContext.SaveChanges();
-            // CASCADE ON DELETE
+            // isDeleted is true veld check zo ja dan krijg je alle deleted terug!
         }
     }
 }

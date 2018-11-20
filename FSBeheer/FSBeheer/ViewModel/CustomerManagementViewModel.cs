@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using FSBeheer.View;
 using GalaSoft.MvvmLight;
 using System.Windows;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace FSBeheer.ViewModel
 {
@@ -32,26 +33,25 @@ namespace FSBeheer.ViewModel
 
         public CustomerManagementViewModel()
         {
-            CustomFSContext = new CustomFSContext();
-            Customers = CustomFSContext.CustomerCrud.GetAllCustomerVMs();
+            Messenger.Default.Register<bool>(this,"UpdateCustomerList", cl => Init()); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
 
+            Init();
             CreateCustomerWindowCommand = new RelayCommand(OpenCreateCustomer);
             EditCustomerWindowCommand = new RelayCommand(OpenEditCustomer);
             DeleteCommand = new RelayCommand(DeleteCustomer);
         }
 
-        internal void Init(CustomerVM customer)
+        internal void Init()
         {
-            _selectedCustomer = customer;
+            CustomFSContext = new CustomFSContext();
+            Customers = CustomFSContext.CustomerCrud.GetAllCustomerVMs();
+            RaisePropertyChanged(nameof(Customers));
         }
 
         // Standard way of doing this
         private void OpenCreateCustomer()
         {
-            //_selectedCustomer = null;
             new CreateEditCustomerView().Show();
-            //view.Show();
-
         }
         private void OpenEditCustomer()
         {
@@ -62,8 +62,6 @@ namespace FSBeheer.ViewModel
             else
             {
                 new CreateEditCustomerView(_selectedCustomer).Show();
-                //var view = new CreateEditCustomerView();
-                //view.Show();
             }
         }
 
