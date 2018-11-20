@@ -18,8 +18,6 @@ namespace FSBeheer.ViewModel
         private CustomFSContext _Context;
         public ObservableCollection<QuestionnaireVM> Questionnaires { get; set; }
         public RelayCommand ShowEditQuestionnaireViewCommand { get; set; }
-
-        public RelayCommand ViewQuestionnaireCommand { get; set; }
         public RelayCommand CreateQuestionnaireCommand { get; set; }
         public QuestionnaireListViewModel()
         {
@@ -28,7 +26,6 @@ namespace FSBeheer.ViewModel
             ShowEditQuestionnaireViewCommand = new RelayCommand(ShowEditQuestionnaireView);
             CreateQuestionnaireCommand = new RelayCommand(CreateQuestionnaire);
             SelectedQuestionnaire = Questionnaires?.First();
-            ViewQuestionnaireCommand = new RelayCommand(OpenCreateQuestionWindow);
         }
         public QuestionnaireVM SelectedQuestionnaire
         {
@@ -42,16 +39,13 @@ namespace FSBeheer.ViewModel
                 base.RaisePropertyChanged("SelectedQuestionnaire");
             }
         }
-        public void OpenCreateQuestionWindow()
+
+        public void ShowEditQuestionnaireView()
         {
             new QuestionnaireEditView().ShowDialog();
         }
-        private void ShowEditQuestionnaireView()
-        {
-            new EditQuestionnaireView().Show();
-        }
 
-        private void CreateQuestionnaire()
+        public void CreateQuestionnaire()
         {
             new CreateQuestionnaireView().Show();
         }

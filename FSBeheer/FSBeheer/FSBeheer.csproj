@@ -168,9 +168,6 @@
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\NullVisibilityConverter.cs" />
-    <Compile Include="View\QuestionnaireManagementView.xaml.cs">
-      <DependentUpon>QuestionnaireManagementView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="VM\AccountVM.cs" />
     <Compile Include="View\QuestionnaireEditView.xaml.cs">
       <DependentUpon>QuestionnaireEditView.xaml</DependentUpon>
@@ -277,10 +274,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InspectorManagementView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\QuestionnaireManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

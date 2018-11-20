@@ -38,8 +38,6 @@ namespace FSBeheer.ViewModel
             ShowEventViewCommand = new RelayCommand(ShowEventView);
             ShowInspectorViewCommand = new RelayCommand(ShowInspectorView);
             ShowQuotationViewCommand = new RelayCommand(ShowQuotationView);
-            ShowQuestionnaireManagementViewCommand = new RelayCommand(ShowQuestionnaireView);
-            ShowQuestionnairesViewCommand = new RelayCommand(ShowQuestionnaireListView);
             ShowLoginViewCommand = new RelayCommand(ShowLoginView);
             ShowQuestionnaireListViewCommand = new RelayCommand(ShowQuestionnaireListView);
 
@@ -53,11 +51,6 @@ namespace FSBeheer.ViewModel
 
             // Place brakepoint here
             Console.WriteLine("");
-        }
-
-        private void ShowQuestionnaireListView()
-        {
-            new QuestionnaireListView().ShowDialog();
         }
 
         private void ShowLoginView()
@@ -90,9 +83,9 @@ namespace FSBeheer.ViewModel
             throw new NotImplementedException();
         }
 
-        private void ShowQuestionnaireView()
+        private void ShowQuestionnaireListView()
         {
-            new QuestionnaireManagementView().Show();
+            new QuestionnaireListView().ShowDialog();
         }
 
         private void ShowCreateEditInspectionView()
