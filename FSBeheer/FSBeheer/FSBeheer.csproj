@@ -90,12 +90,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Crud\AbstractCrud.cs" />
+    <Compile Include="Crud\AccountCrud.cs" />
     <Compile Include="Crud\AnswerCrud.cs" />
     <Compile Include="Crud\CustomerCrud.cs" />
     <Compile Include="Crud\InspectionCrud.cs" />
     <Compile Include="Crud\InspectorCrud.cs" />
     <Compile Include="Crud\EventCrud.cs" />
     <Compile Include="Crud\QuestionCrud.cs" />
+    <Compile Include="Crud\QuestionnaireCrud.cs" />
     <Compile Include="Crud\QuestionTypeCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
     <Compile Include="Migrations\201811121341460_Initial.cs" />
@@ -119,11 +121,27 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Quotation.cs" />
     <Compile Include="Model\Role.cs" />
+    <Compile Include="ViewModel\CreateQuestionnaireViewModel.cs" />
+    <Compile Include="ViewModel\EditInspectorViewModel.cs" />
     <Compile Include="ViewModel\AccountVM.cs" />
     <Compile Include="ViewModel\EditQuestionnaireViewModel.cs" />
     <Compile Include="ViewModel\CreateQuestionViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
+    <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
+    <Compile Include="ViewModel\QuestionnaireManagementViewModel.cs" />
+    <Compile Include="View\CreateEditInspectorView.xaml.cs">
+      <DependentUpon>CreateEditInspectorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CreateEditCustomerView.xaml.cs">
+      <DependentUpon>CreateEditCustomerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CreateQuestionnaireView.xaml.cs">
+      <DependentUpon>CreateQuestionnaireView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditQuestionnaireView.xaml.cs">
+      <DependentUpon>EditQuestionnaireView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\QuestionnaireListViewModel.cs" />
     <Compile Include="ViewModel\QuestionnaireViewModel.cs" />
@@ -143,10 +161,17 @@
     <Compile Include="View\InspectorSelectionView.xaml.cs">
       <DependentUpon>InspectorSelectionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\InspectorManagementView.xaml.cs">
+      <DependentUpon>InspectorManagementView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\NullVisibilityConverter.cs" />
+    <Compile Include="View\QuestionnaireManagementView.xaml.cs">
+      <DependentUpon>QuestionnaireManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VM\AccountVM.cs" />
     <Compile Include="View\QuestionnaireEditView.xaml.cs">
       <DependentUpon>QuestionnaireEditView.xaml</DependentUpon>
     </Compile>
@@ -160,8 +185,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="View\CreateEditCustomerView.xaml.cs">
-      <DependentUpon>CreateEditCustomerView.xaml</DependentUpon>
+    <Compile Include="View\EditInspectionView.xaml.cs">
+      <DependentUpon>EditInspectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CustomerManagementView.xaml.cs">
       <DependentUpon>CustomerManagementView.xaml</DependentUpon>
@@ -173,6 +198,7 @@
     <Compile Include="VM\EventVM.cs" />
     <Compile Include="VM\InspectionVM.cs" />
     <Compile Include="VM\InspectorVM.cs" />
+    <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="VM\QuestionTypeVM.cs" />
     <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="VM\QuestionVM.cs" />
@@ -208,7 +234,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\CreateEditInspectorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CreateEditCustomerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CreateQuestionnaireView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditInspectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -217,6 +255,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CustomerManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditQuestionnaireView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -233,6 +275,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InspectorSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\InspectorManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\QuestionnaireManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
