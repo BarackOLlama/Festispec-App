@@ -14,15 +14,12 @@ namespace FSBeheer.ViewModel
 {
     public class QuestionnaireListViewModel : ViewModelBase
     {
-        //PLURAL FORM
-        public ObservableCollection<QuestionnaireViewModel> Questionnaires { get; set; }
-        private QuestionnaireViewModel _selectedQuestionnaire;
-
-        private QuestionnaireEditView _questionnaireEditView;
+        public ObservableCollection<QuestionnaireVM> Questionnaires { get; set; }
+        private QuestionnaireVM _selectedQuestionnaire;
 
         public ICommand ViewQuestionnaireCommand { get; set; }
 
-        public QuestionnaireViewModel SelectedQuestionnaire
+        public QuestionnaireVM SelectedQuestionnaire
         {
             get
             {
@@ -37,15 +34,14 @@ namespace FSBeheer.ViewModel
 
         public QuestionnaireListViewModel()
         {
-            using (var context = new FSContext())
+            using (var context = new CustomFSContext())
             {
-                var result = context.Questionnaires.Include("Questions").ToList().Select(e => new QuestionnaireViewModel(e));
-                Questionnaires = new ObservableCollection<QuestionnaireViewModel>(result);
+                var result = context.Questionnaires.Include("Questions").ToList().Select(e => new QuestionnaireVM(e));
+                Questionnaires = new ObservableCollection<QuestionnaireVM>(result);
             }
             SelectedQuestionnaire = Questionnaires?.First();
             ViewQuestionnaireCommand = new RelayCommand(OpenCreateQuestionWindow);
         }
-
 
         public void OpenCreateQuestionWindow()
         {

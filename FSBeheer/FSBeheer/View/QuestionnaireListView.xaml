@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="Questionnaires View" Height="400" Width="400"
+        Title="Questionnaires lijst" Height="400" Width="400"
         DataContext="{Binding QuestionnaireList, Source={StaticResource Locator}}">
     <StackPanel>
         <Label>Questionnaires view</Label>

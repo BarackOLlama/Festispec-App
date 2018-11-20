@@ -15,7 +15,6 @@ namespace FSBeheer.ViewModel
         private CustomFSContext _Context;
         private CustomerManagementView _customerListWindow;
         private InspectionManagementView _inspectionManagementView;
-        private QuestionnairesView _questionnairesView;
 
         public RelayCommand ShowCustomerViewCommand { get; set; }
         public RelayCommand ShowInspectionViewCommand { get; set; }

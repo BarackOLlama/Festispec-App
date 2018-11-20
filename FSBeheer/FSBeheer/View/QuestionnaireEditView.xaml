@@ -6,16 +6,16 @@
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
         Title="QuestionnaireEditView" Height="400" Width="300"
-        DataContext="{Binding SelectedQuestionnaireVM, Source={StaticResource Locator}}">
+        DataContext="{Binding EditQuestionnaireViewModel, Source={StaticResource Locator}}">
     <StackPanel>
         <TextBlock Text="Questionnaire" FontSize="28"/>
 
         <Label>Id</Label>
         <Label Content="{Binding Id}"></Label>
-        <Label>Questionnaire name</Label>
+        <Label>Vragenlijst naam</Label>
         <Label Content="{Binding Name}"></Label>
-        <Label>Questions:</Label>
+        <Label>Vragen:</Label>
         <DataGrid ItemsSource="{Binding Questions}"></DataGrid>
-        <Button Command="{Binding OpenCreateQuestionCommand}">Add Question</Button>
+        <Button Command="{Binding OpenCreateQuestionViewCommand}">Vraag toevoegen</Button>
     </StackPanel>
 </Window>

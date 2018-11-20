@@ -17,7 +17,7 @@
         <TextBlock Text="Vraag type:" Margin="5,5,0,0"  />
         <ComboBox ItemsSource="{Binding QuestionTypes}" SelectedItem="{Binding SelectedQuestionType}" HorizontalAlignment="Left" Width="292"/>
         <TextBlock>Commentaar:</TextBlock>
-        <TextBox Text="{Binding Question.Comment}"></TextBox>
+        <TextBox Text="{Binding Question.Comments}"></TextBox>
         <TextBlock Text="Opties:* multiple choice"></TextBlock>
         <TextBox Text="{Binding Question.Options}"></TextBox>
         <TextBlock Text="Kolommen"></TextBlock>

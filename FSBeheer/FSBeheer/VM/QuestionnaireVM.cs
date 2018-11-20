@@ -11,14 +11,12 @@ using System;
 
 namespace FSBeheer.ViewModel
 {
-    public class QuestionnaireViewModel
+    public class QuestionnaireVM
     {
-        private QuestionnaireVM _questionnaire;
+        private Questionnaire _questionnaire;
         public ObservableCollection<QuestionVM> Questions { get; set; }
 
-        public RelayCommand OpenCreateQuestionViewCommand { get; set; }
-
-        public QuestionnaireViewModel(QuestionnaireVM questionnaire)
+        public QuestionnaireVM(Questionnaire questionnaire)
         {
             _questionnaire = questionnaire;
 
@@ -32,12 +30,27 @@ namespace FSBeheer.ViewModel
                 Questions = new ObservableCollection<QuestionVM>(questions);
             }
 
-            OpenCreateQuestionViewCommand = new RelayCommand(OpenCreateQuestionView);
         }
 
-        public void OpenCreateQuestionView()
+        public int Id
         {
-            new CreateQuestionView().ShowDialog();
+            get
+            {
+                return _questionnaire.Id;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return _questionnaire.Name;
+            }
+        }
+
+        internal Questionnaire ToModel()
+        {
+            return _questionnaire;
         }
     }
 }

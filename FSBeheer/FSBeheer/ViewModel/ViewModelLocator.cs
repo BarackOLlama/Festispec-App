@@ -81,11 +81,11 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public QuestionnaireViewModel SelectedQuestionnaireVM
+        public QuestionnaireViewModel EditQuestionnaireViewModel
         {
             get
             {
-                return new QuestionnaireViewModel(_questionListViewModel.SelectedQuestionnaire.ToModel());
+                return new QuestionnaireViewModel(_questionListViewModel.SelectedQuestionnaire);
             }
         }
 

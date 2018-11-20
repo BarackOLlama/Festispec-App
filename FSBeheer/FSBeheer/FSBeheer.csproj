@@ -120,6 +120,7 @@
     <Compile Include="Model\Quotation.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="ViewModel\AccountVM.cs" />
+    <Compile Include="ViewModel\EditQuestionnaireViewModel.cs" />
     <Compile Include="ViewModel\CreateQuestionViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="VM\InspectionVM.cs" />
     <Compile Include="VM\InspectorVM.cs" />
     <Compile Include="VM\QuestionTypeVM.cs" />
+    <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="VM\QuestionVM.cs" />
   </ItemGroup>
   <ItemGroup>

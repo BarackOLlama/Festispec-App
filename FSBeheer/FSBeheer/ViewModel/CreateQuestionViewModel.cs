@@ -29,7 +29,7 @@ namespace FSBeheer.ViewModel
                 base.RaisePropertyChanged("Question");
             }
         }
-        private QuestionnaireViewModel _selectedQuestionnaireVM;
+        private QuestionnaireVM _selectedQuestionnaireVM;
         private QuestionTypeVM _selectedQuestionType;
         public QuestionTypeVM SelectedQuestionType
         {
@@ -47,7 +47,7 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
         public RelayCommand AddQuestionCommand { get; set; }
 
-        public CreateQuestionViewModel(QuestionnaireViewModel selectedQuestionnaireVM)
+        public CreateQuestionViewModel(QuestionnaireVM selectedQuestionnaireVM)
         {
             _selectedQuestionnaireVM = selectedQuestionnaireVM;
             _questionVM = new QuestionVM();
@@ -68,7 +68,7 @@ namespace FSBeheer.ViewModel
 
         public void AddQuestion()
         {
-            using (var context = new FSContext())
+            using (var context = new CustomFSContext())
             {
                 //TODO hard coded, dirty.
                 if (SelectedQuestionType.Name == "Multiple Choice Vraag")
