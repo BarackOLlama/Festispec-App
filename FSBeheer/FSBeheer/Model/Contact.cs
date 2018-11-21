@@ -17,5 +17,6 @@ namespace FSBeheer.Model
         public string Note { get; set; }
         public int? CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

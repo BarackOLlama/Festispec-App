@@ -22,5 +22,6 @@ namespace FSBeheer.Model
         public int? InspectionId { get; set; }
         public virtual Inspection Inspection { get; set; }
         public virtual ObservableCollection<Question> Questions { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

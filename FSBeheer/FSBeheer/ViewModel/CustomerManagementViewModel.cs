@@ -3,6 +3,8 @@ using GalaSoft.MvvmLight.Command;
 using System.Collections.ObjectModel;
 using FSBeheer.View;
 using GalaSoft.MvvmLight;
+using System.Windows;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace FSBeheer.ViewModel
 {
@@ -11,7 +13,9 @@ namespace FSBeheer.ViewModel
         private CustomFSContext CustomFSContext;
         public ObservableCollection<CustomerVM> Customers { get; set; }
 
-        public RelayCommand CreateEditCustomerWindowCommand { get; set; }
+        public RelayCommand EditCustomerWindowCommand { get; set; }
+
+        public RelayCommand CreateCustomerWindowCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
 
         private CustomerVM _selectedCustomer { get; set; } 
@@ -29,16 +33,36 @@ namespace FSBeheer.ViewModel
 
         public CustomerManagementViewModel()
         {
-            CustomFSContext = new CustomFSContext();
-            Customers = CustomFSContext.CustomerCrud.GetAllCustomerVMs();
+            Messenger.Default.Register<bool>(this,"UpdateCustomerList", cl => Init()); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
 
-            CreateEditCustomerWindowCommand = new RelayCommand(OpenCreateEditCustomer);
+            Init();
+            CreateCustomerWindowCommand = new RelayCommand(OpenCreateCustomer);
+            EditCustomerWindowCommand = new RelayCommand(OpenEditCustomer);
             DeleteCommand = new RelayCommand(DeleteCustomer);
         }
 
-        private void OpenCreateEditCustomer()
+        internal void Init()
+        {
+            CustomFSContext = new CustomFSContext();
+            Customers = CustomFSContext.CustomerCrud.GetAllCustomerVMs();
+            RaisePropertyChanged(nameof(Customers));
+        }
+
+        // Standard way of doing this
+        private void OpenCreateCustomer()
         {
             new CreateEditCustomerView().Show();
+        }
+        private void OpenEditCustomer()
+        {
+            if (_selectedCustomer == null)
+            {
+                MessageBox.Show("No customer selected");
+            }
+            else
+            {
+                new CreateEditCustomerView(_selectedCustomer).Show();
+            }
         }
 
         private void DeleteCustomer()

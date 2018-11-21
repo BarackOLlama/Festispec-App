@@ -15,5 +15,6 @@ namespace FSBeheer.Model
         public virtual Question Question { get; set; }
         public int? InspectorId { get; set; }
         public virtual Inspector Inspector { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

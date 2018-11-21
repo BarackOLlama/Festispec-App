@@ -25,5 +25,6 @@ namespace FSBeheer.Model
         public short? ChamberOfCommerceNumber { get; set; }
         public virtual ObservableCollection<Contact> Contacts { get; set; }
         public virtual ObservableCollection<Event> Events { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

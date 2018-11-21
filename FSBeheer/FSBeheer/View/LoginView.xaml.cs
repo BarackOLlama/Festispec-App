@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace FSBeheer.View
 {
     /// <summary>
-    /// Interaction logic for QuestionnaireManagementView.xaml
+    /// Interaction logic for LoginView.xaml
     /// </summary>
-    public partial class QuestionnaireManagementView : Window
+    public partial class LoginView : Window
     {
-        public QuestionnaireManagementView()
+        public LoginView()
         {
             InitializeComponent();
         }

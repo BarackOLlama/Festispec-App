@@ -12,13 +12,14 @@
         <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
             <Button FontSize="15" Margin="5"
                     Content="{TemplateBinding Content}"
-                    Command="{TemplateBinding Command}"/>
+                    Command="{TemplateBinding Command}"
+                    CommandParameter="{TemplateBinding CommandParameter}"/>
         </ControlTemplate>
     </Window.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
 
-        <Border Grid.ColumnSpan="2" Margin="0,0,-0.4,0" Background="LightGray">
+        <Border Grid.ColumnSpan="2" Margin="0,0,-0.4,0" Background="White">
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Name="spBackButton" Height="Auto" Orientation="Horizontal">
@@ -50,11 +51,11 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
-                    <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                </StackPanel>
+                <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"
                     Orientation="Horizontal" Margin="15,10,25,10">
-                        <Button Content="Aanpassen" Command="{Binding CreateEditCustomerWindowCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                        <Button Content="Nieuw" Command="{Binding Something}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                    </StackPanel>
+                    <Button Content="Aanpassen" Command="{Binding EditCustomerWindowCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Nieuw" Command="{Binding CreateCustomerWindowCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
                 </StackPanel>
             </StackPanel>
         </Border>

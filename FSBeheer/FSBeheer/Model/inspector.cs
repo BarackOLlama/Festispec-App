@@ -30,5 +30,6 @@ namespace FSBeheer.Model
         public int? AccountId { get; set; }
         public virtual Account Account { get; set; }
         public virtual ObservableCollection<Inspection> Inspections { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
