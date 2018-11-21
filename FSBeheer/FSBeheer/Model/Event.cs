@@ -25,5 +25,6 @@ namespace FSBeheer.Model
         public virtual Customer Customer { get; set; }
         public virtual ObservableCollection<EventDate> EventDates { get; set; }
         public virtual ObservableCollection<Inspection> Inspections { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

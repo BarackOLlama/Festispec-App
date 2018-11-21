@@ -1,0 +1,21 @@
+﻿<Window x:Class="FSBeheer.View.QuestionnaireEditView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FSBeheer.View"
+        mc:Ignorable="d"
+        Title="QuestionnaireEditView" Height="400" Width="300"
+        DataContext="{Binding EditQuestionnaireViewModel, Source={StaticResource Locator}}">
+    <StackPanel>
+        <TextBlock Text="Questionnaire" FontSize="28"/>
+
+        <Label>Id</Label>
+        <Label Content="{Binding Id}"></Label>
+        <Label>Vragenlijst naam</Label>
+        <Label Content="{Binding Name}"></Label>
+        <Label>Vragen:</Label>
+        <DataGrid ItemsSource="{Binding Questions}"></DataGrid>
+        <Button Command="{Binding OpenCreateQuestionViewCommand}">Vraag toevoegen</Button>
+    </StackPanel>
+</Window>
