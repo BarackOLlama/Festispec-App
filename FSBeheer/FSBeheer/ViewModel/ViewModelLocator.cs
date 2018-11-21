@@ -69,8 +69,7 @@ namespace FSBeheer.ViewModel
             
             get
             {
-                throw new NotImplementedException();
-                //return new CreateEditCustomerViewModel(CustomerManagement.SelectedCustomer);
+                return new CreateEditCustomerViewModel();
             }
         }
 
