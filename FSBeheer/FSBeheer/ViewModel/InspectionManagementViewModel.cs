@@ -8,7 +8,7 @@ using FSBeheer.View;
 
 namespace FSBeheer.ViewModel
 {
-    public class InspectionManagementViewModel
+    public class InspectionManagementViewModel : ViewModelBase
     {
         private CustomFSContext _Context;
         public ObservableCollection<InspectionVM> Inspections { get; }

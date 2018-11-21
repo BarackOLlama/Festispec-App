@@ -21,7 +21,7 @@ namespace FSBeheer.ViewModel
 
         public RelayCommand<Window> DiscardCommand { get; set; }
 
-        // prop ContactVM
+
 
         private CustomFSContext _Context;
 
@@ -29,34 +29,31 @@ namespace FSBeheer.ViewModel
         {
             _Context = new CustomFSContext();
             EditCommand = new RelayCommand(ModifyInspector);
-            AddCommand = new RelayCommand(AddInspector);
-            DiscardCommand = new RelayCommand<Window>(Discard);
 
-            // try catch
             if (SelectedInspector != null)
             {
                 Inspector = SelectedInspector;
-                // contact van deze customer
+
             }
             else
             {
                 Inspector = new InspectorVM();
-                // Contact aanmaken
+
             }
         }
 
         private void AddInspector()
         {
-            // not tested yet
+
             _Context.InspectorCrud.GetAllInspectorVMs().Add(Inspector);
             _Context.InspectorCrud.Add(Inspector);
         }
 
-        // Not tested yet
+
         private void ModifyInspector() => _Context.InspectorCrud.Modify(Inspector);
 
 
-        // Not tested yet
+
         private void Discard(Window window)
         {
             MessageBoxResult result = MessageBox.Show("Close without saving?", "Confirm discard", MessageBoxButton.OKCancel);
