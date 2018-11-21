@@ -108,7 +108,7 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public QuestionnaireManagementViewModel QuestionnaireManagement
+        public QuestionnaireViewModel QuestionnaireManagement
         {
             get
             {
