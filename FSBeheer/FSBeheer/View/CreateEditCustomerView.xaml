@@ -7,12 +7,13 @@
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
         DataContext="{Binding CreateEditCustomer, Source={StaticResource Locator}}"
-        Title="CreateCustomerView" Height="450" Width="800" Background="LightGray">
+        Title="CreateEditCustomerView" Height="450" Width="800" Background="White">
     <Window.Resources>
         <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
             <Button FontSize="15" Margin="5"
                     Content="{TemplateBinding Content}"
-                    Command="{TemplateBinding Command}"/>
+                    Command="{TemplateBinding Command}"
+                    CommandParameter="{TemplateBinding CommandParameter}"/>
         </ControlTemplate>
 
     </Window.Resources>
@@ -28,7 +29,7 @@
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Adres:"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Plaats:"></TextBox>
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="City:"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Postcode:"></TextBox>
@@ -51,7 +52,7 @@
                 <TextBox Foreground="Black" Text="{Binding Customer.Adres}" FontSize="12"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox Foreground="Black" Text="{Binding Customer.Place}" FontSize="12"></TextBox>
+                <TextBox Foreground="Black" Text="{Binding Customer.City}" FontSize="12"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox Foreground="Black" Text="{Binding Customer.ZipCode}" FontSize="12"></TextBox>
@@ -94,18 +95,20 @@
                 <TextBox Foreground="Black" Text="{Binding Contact.Rol}" FontSize="12"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox TextWrapping="Wrap" Foreground="Black" ScrollViewer.VerticalScrollBarVisibility="Visible" Text="{Binding Contact.Notitie}" FontSize="12"></TextBox>
+                <ScrollViewer Height="100">
+                    <TextBox TextWrapping="Wrap" Foreground="Black" Text="{Binding Contact.Notitie}" FontSize="12"></TextBox>
+                </ScrollViewer>
             </Border>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="175"></RowDefinition>
+                    <RowDefinition Height="125"></RowDefinition>
                 </Grid.RowDefinitions>
             </Grid>
             <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
                 <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                <Button Content="Goedkeuren" Command="{Binding AddCustomer}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                <Button Content="Goedkeuren" Command="{Binding SaveChangesCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
             </DockPanel>
         </StackPanel>
     </StackPanel>
-    
+
 </Window>

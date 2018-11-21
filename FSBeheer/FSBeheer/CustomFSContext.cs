@@ -10,7 +10,7 @@ using System.Data.Entity;
 
 namespace FSBeheer
 {
-    class CustomFSContext: FSContext
+    class CustomFSContext : FSContext
     {
         public CustomerCrud CustomerCrud;
         public AnswerCrud AnswerCrud;
@@ -18,8 +18,10 @@ namespace FSBeheer
         public QuestionCrud QuestionCrud;
         public InspectionCrud InspectionCrud;
         public InspectorCrud InspectorCrud;
+        public QuestionnaireCrud QuestionnaireCrud;
 
-        public CustomFSContext() : base() {
+        public CustomFSContext() : base()
+        {
 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<CustomFSContext, Migrations.Configuration>());
 
@@ -29,6 +31,7 @@ namespace FSBeheer
             QuestionCrud = new QuestionCrud(this);
             InspectionCrud = new InspectionCrud(this);
             InspectorCrud = new InspectorCrud(this);
+            QuestionnaireCrud = new QuestionnaireCrud(this);
         }
     }
 }

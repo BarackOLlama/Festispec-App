@@ -12,16 +12,17 @@ namespace FSBeheer.ViewModel
     public class HomeViewModel : ViewModelBase
     {
         private CustomFSContext _Context;
-        private CustomerManagementView _customerListWindow;
-        private InspectionManagementView _inspectionManagementView;
+        
+        public ObservableCollection<QuestionVM> Questions;
 
         public RelayCommand ShowCustomerViewCommand { get; set; }
         public RelayCommand ShowInspectionViewCommand { get; set; }
         public RelayCommand ShowEventViewCommand { get; set; }
         public RelayCommand ShowInspectorViewCommand { get; set; }
         public RelayCommand ShowQuotationViewCommand { get; set; }
-        public RelayCommand ShowQuestionnaireViewCommand { get; set; }
+        public RelayCommand ShowQuestionnaireManagementViewCommand { get; set; }
 
+        public RelayCommand ShowCreateEditViewCommand { get; set; }
 
         public HomeViewModel()
         {
@@ -32,13 +33,16 @@ namespace FSBeheer.ViewModel
             ShowEventViewCommand = new RelayCommand(ShowEventView);
             ShowInspectorViewCommand = new RelayCommand(ShowInspectorView);
             ShowQuotationViewCommand = new RelayCommand(ShowQuotationView);
-            ShowQuestionnaireViewCommand = new RelayCommand(ShowQuestionnaireView);
+            ShowQuestionnaireManagementViewCommand = new RelayCommand(ShowQuestionnaireView);
+
+
+            ShowCreateEditViewCommand = new RelayCommand(ShowCreateEditInspectionView);
 
             // Tests to make sure everything is working
             _Context = new CustomFSContext();
-            ObservableCollection<CustomerVM> test = _Context.CustomerCrud.GetGetAllCustomerVMs();
+            ObservableCollection<CustomerVM> test = _Context.CustomerCrud.GetAllCustomerVMs();
             ObservableCollection<CustomerVM> test2 = _Context.CustomerCrud.GetFilteredCustomerBasedOnName("F");
-            ObservableCollection<CustomerVM> test3 = _Context.CustomerCrud.GetCustomerById(51);
+            // ObservableCollection<CustomerVM> test3 = _Context.CustomerCrud.GetCustomerById(51);
 
             // Place brakepoint here
             Console.WriteLine("");
@@ -51,8 +55,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowInspectionView()
         {
-            _inspectionManagementView = new InspectionManagementView();
-            _inspectionManagementView.Show();
+            new InspectionManagementView().Show();
         }
 
         private void ShowEventView()
@@ -62,7 +65,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowInspectorView()
         {
-            throw new NotImplementedException();
+            new InspectorManagementView().Show();
         }
 
         private void ShowQuotationView()
@@ -72,8 +75,13 @@ namespace FSBeheer.ViewModel
 
         private void ShowQuestionnaireView()
         {
-            throw new NotImplementedException();
+            new QuestionnaireManagementView().Show();
         }
 
+        private void ShowCreateEditInspectionView()
+        {
+           new EditInspectionView().Show();
+
+        }
     }
 }

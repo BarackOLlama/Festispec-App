@@ -1,6 +1,8 @@
 ﻿using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using System.Linq;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
@@ -9,9 +11,7 @@ namespace FSBeheer.ViewModel
     {
         public CustomerVM Customer { get; set; }
 
-        public RelayCommand EditCommand { get; set; }
-
-        public RelayCommand AddCommand { get; set; }
+        public RelayCommand SaveChangesCommand { get; set; }
 
         public RelayCommand<Window> DiscardCommand { get; set; }
 
@@ -19,45 +19,44 @@ namespace FSBeheer.ViewModel
 
         private CustomFSContext _Context;
 
-        public CreateEditCustomerViewModel(CustomerVM SelectedCustomer)
+        public CreateEditCustomerViewModel()
         {
             _Context = new CustomFSContext();
-            EditCommand = new RelayCommand(ModifyCustomer);
-            AddCommand = new RelayCommand(AddCustomer);
+            SaveChangesCommand = new RelayCommand(SaveChanges);
             DiscardCommand = new RelayCommand<Window>(Discard);
+        }
 
-            // try catch
-            if (SelectedCustomer != null)
+
+        public void SetCustomer(CustomerVM customer)
+        {
+            if (customer == null)
             {
-                Customer = SelectedCustomer;
-                // contact van deze customer
+                Customer = new CustomerVM();
+                _Context.Customers.Add(Customer.ToModel());
+                RaisePropertyChanged(nameof(Customer));
             }
             else
             {
-                Customer = new CustomerVM();
-                // Contact aanmaken
+                Customer = new CustomerVM(_Context.Customers.FirstOrDefault(c => c.Id == customer.Id));
+                RaisePropertyChanged(nameof(Customer));
             }
         }
 
-        private void AddCustomer()
+        private void SaveChanges()
         {
-            // not tested yet
-            _Context.CustomerCrud.GetGetAllCustomerVMs().Add(Customer);
-            _Context.CustomerCrud.Add(Customer);
+            _Context.CustomerCrud.GetAllCustomerVMs().Add(Customer);
+            _Context.SaveChanges();
+
+            Messenger.Default.Send(true, "UpdateCustomerList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
         }
 
-        // Not tested yet
-        private void ModifyCustomer() => _Context.CustomerCrud.Modify(Customer);
-
-
-        // Not tested yet
         private void Discard(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Close without saving?","Confirm discard", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Close without saving?", "Confirm discard", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.Cancel)
             {
                 _Context.Dispose();
-                Customer = null; 
+                Customer = null;
                 window?.Close();
             }
         }

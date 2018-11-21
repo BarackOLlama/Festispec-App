@@ -1,6 +1,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using CommonServiceLocator;
+using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
@@ -12,6 +13,7 @@ namespace FSBeheer.ViewModel
 
             SimpleIoc.Default.Register<HomeViewModel>();
             SimpleIoc.Default.Register<CustomerManagementViewModel>();
+
 
         }
 
@@ -47,6 +49,14 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public InspectorManagementViewModel InspectorManagement
+        {
+            get
+            {
+                return new InspectorManagementViewModel();
+            }
+        }
+
         public InspectorSelectionViewModel InspectorSelection
         {
             get
@@ -54,12 +64,28 @@ namespace FSBeheer.ViewModel
                 return new InspectorSelectionViewModel();
             }
         }
-      
+
         public CreateEditCustomerViewModel CreateEditCustomer
         {
             get
             {
-                return new CreateEditCustomerViewModel(CustomerManagement.SelectedCustomer);
+                return new CreateEditCustomerViewModel();
+            }
+        }
+
+        public QuestionnaireManagementViewModel QuestionnaireManagement
+        {
+            get
+            {
+                return new QuestionnaireManagementViewModel();
+            }
+        }
+
+        public CreateQuestionnaireViewModel CreateQuestionnaire
+        {
+            get
+            {
+                return new CreateQuestionnaireViewModel();
             }
         }
 

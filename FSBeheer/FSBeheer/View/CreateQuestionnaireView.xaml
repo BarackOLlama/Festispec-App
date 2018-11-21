@@ -1,0 +1,76 @@
+﻿<Window x:Class="FSBeheer.View.CreateQuestionnaireView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FSBeheer.View"
+        mc:Ignorable="d"
+        Title="CreateQuestionnaireView" Height="450" Width="800"
+        DataContext="{Binding CreateQuestionnaire, Source={StaticResource Locator}}">
+    <Window.Resources>
+        <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
+            <Button FontSize="15" Margin="5"
+                    Content="{TemplateBinding Content}"
+                    Command="{TemplateBinding Command}"/>
+        </ControlTemplate>
+
+    </Window.Resources>
+    <StackPanel Margin="5">
+
+        <StackPanel Margin="5">
+            <StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+
+                    <Border Grid.Column="0" Grid.Row="0" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <Label Foreground="Black" FontSize="12" Content="Naam:"></Label>
+                    </Border>
+                    <Border Grid.Column="0" Grid.Row="1" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <Label Foreground="Black" FontSize="12" Content="Versie:"></Label>
+                    </Border>
+                    <Border Grid.Column="0" Grid.Row="2" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <Label Foreground="Black" FontSize="12" Content="Opmerkingen:" VerticalAlignment="Center"></Label>
+                    </Border>
+                    <Border Grid.Column="0" Grid.Row="3" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <Label Foreground="Black" FontSize="12" Content="Instructies:" VerticalAlignment="Center"></Label>
+                    </Border>
+
+                    <Border Grid.Column="1" Grid.Row="0" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <TextBox Foreground="Black" Text="{Binding Questionnaire.Name, Mode=TwoWay}" FontSize="12"></TextBox>
+                    </Border>
+                    <Border Grid.Column="1" Grid.Row="1" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <TextBox Foreground="Black" Text="{Binding Questionnaire.Version, Mode=TwoWay}" FontSize="12"></TextBox>
+                    </Border>
+                    <Border Height="100" Grid.Column="1" Grid.Row="2" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <TextBox Foreground="Black" Text="{Binding Questionnaire.Comments, Mode=TwoWay}" FontSize="12"></TextBox>
+                    </Border>
+                    <Border Height="100" Grid.Column="1" Grid.Row="3" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <TextBox Foreground="Black" Text="{Binding Questionnaire.Instructions, Mode=TwoWay}" FontSize="12"></TextBox>
+                    </Border>
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Margin="5" >
+                <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
+                    <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Bevestig" Command="{Binding AddQuestionnaireCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                </DockPanel>
+            </StackPanel>
+
+        </StackPanel>
+
+
+    </StackPanel>
+</Window>
