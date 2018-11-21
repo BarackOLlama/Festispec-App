@@ -1,20 +1,19 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using CommonServiceLocator;
-using System.Windows;
+using System;
 
 namespace FSBeheer.ViewModel
 {
     public class ViewModelLocator
     {
+        private QuestionnaireListViewModel _questionListViewModel;
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             SimpleIoc.Default.Register<HomeViewModel>();
             SimpleIoc.Default.Register<CustomerManagementViewModel>();
-
-
         }
 
         public HomeViewModel Home
@@ -67,17 +66,11 @@ namespace FSBeheer.ViewModel
 
         public CreateEditCustomerViewModel CreateEditCustomer
         {
+            
             get
             {
-                return new CreateEditCustomerViewModel();
-            }
-        }
-
-        public QuestionnaireManagementViewModel QuestionnaireManagement
-        {
-            get
-            {
-                return new QuestionnaireManagementViewModel();
+                throw new NotImplementedException();
+                //return new CreateEditCustomerViewModel(CustomerManagement.SelectedCustomer);
             }
         }
 
@@ -86,6 +79,40 @@ namespace FSBeheer.ViewModel
             get
             {
                 return new CreateQuestionnaireViewModel();
+            }
+        }
+
+
+        public LoginViewModel LoginViewModel
+        {
+            get
+            {
+                return new LoginViewModel(Home);
+            }
+        }
+
+        public QuestionnaireListViewModel QuestionnaireList
+        {
+            get
+            {
+                _questionListViewModel = new QuestionnaireListViewModel();
+                return _questionListViewModel;   
+            }
+        }
+
+        public QuestionnaireViewModel EditQuestionnaireViewModel
+        {
+            get
+            {
+                return new QuestionnaireViewModel(_questionListViewModel.SelectedQuestionnaire);
+            }
+        }
+
+        public CreateQuestionViewModel NewQuestionCreationViewModel
+        {
+            get
+            {
+                return new CreateQuestionViewModel(_questionListViewModel.SelectedQuestionnaire);
             }
         }
 

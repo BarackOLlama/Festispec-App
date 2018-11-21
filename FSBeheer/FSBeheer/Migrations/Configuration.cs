@@ -1,5 +1,6 @@
 namespace FSBeheer.Migrations
 {
+    using BCrypt.Net;
     using FSBeheer.Model;
     using System;
     using System.Collections.Generic;
@@ -46,31 +47,54 @@ namespace FSBeheer.Migrations
             };
             context.QuestionTypes.AddRange(questiontypes);
 
+            string bartSalt = BCrypt.GenerateSalt();
+            string phiSalt = BCrypt.GenerateSalt();
+            string cjSalt = BCrypt.GenerateSalt();
+            string evertSalt = BCrypt.GenerateSalt();
+            string mitchSalt = BCrypt.GenerateSalt();
+
             var accounts = new List<Account>
             {
+
                 new Account()
                 {
                     Username = "bkoevoets@gmail.com",
-                    Password = "bartswachtwoord",
-                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur")
+                    Password = BCrypt.HashPassword("bartswachtwoord", bartSalt),
+                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur"),
+                    Salt = bartSalt,
+                    IsAdmin = true
                 },
                 new Account()
                 {
                     Username = "pnguyen@gmail.com",
-                    Password = "phiswachtwoord",
-                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur")
+                    Password = BCrypt.HashPassword("phiswachtwoord", phiSalt),
+                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur"),
+                    Salt = phiSalt,
+                    IsAdmin = true
                 },
                 new Account()
                 {
                     Username = "clancaster@gmail.com",
-                    Password = "cjswachtwoord",
-                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur")
+                    Password = BCrypt.HashPassword("cjswachtwoord", cjSalt),
+                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur"),
+                    Salt = cjSalt,
+                    IsAdmin = true
                 },
                 new Account()
                 {
                     Username = "earends@gmail.com",
-                    Password = "evertswachtwoord",
-                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur")
+                    Password = BCrypt.HashPassword("evertswachtwoord", evertSalt),
+                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur"),
+                    Salt = evertSalt,
+                    IsAdmin = true
+                },
+                new Account()
+                {
+                    Username = "mitchadmin",
+                    Password = BCrypt.HashPassword("password", mitchSalt),
+                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur"),
+                    Salt = mitchSalt,
+                    IsAdmin = true
                 }
             };
             context.Accounts.AddRange(accounts);
@@ -130,6 +154,7 @@ namespace FSBeheer.Migrations
                     Account = accounts[3]
                 }
             };
+
             context.Inspectors.AddRange(inspectors);
 
             var statuses = new List<Status>
