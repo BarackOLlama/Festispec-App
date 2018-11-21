@@ -15,9 +15,25 @@
                     Command="{TemplateBinding Command}"
                     CommandParameter="{TemplateBinding CommandParameter}"/>
         </ControlTemplate>
-
+        <ControlTemplate x:Key="SearchTextBox" TargetType="TextBox">
+            <TextBox FontSize="15" Width="300"
+                     Text="{TemplateBinding Text}"/>
+        </ControlTemplate>
+        <ControlTemplate x:Key="SearchButton" TargetType="Button">
+            <Button FontSize="15"
+                    Content="{TemplateBinding Content}"
+                    Command="{TemplateBinding Command}"
+                    CommandParameter="{TemplateBinding CommandParameter}"/>
+        </ControlTemplate>
     </Window.Resources>
+    
     <StackPanel Orientation="Horizontal" Margin="5">
+        <StackPanel Name="spBackButton" HorizontalAlignment="Left">
+            <Button Content="Back"
+                    Command="{Binding BackHomeCommand}"
+                    CommandParameter="{Binding ElementName=EventManagementViewName}"
+                    Template="{StaticResource InterfaceButtonTemplate}"/>
+        </StackPanel>
         <StackPanel Margin="5"  Width="100">
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="ID:"></TextBox>

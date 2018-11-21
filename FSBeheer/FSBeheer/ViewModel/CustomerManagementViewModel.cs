@@ -18,6 +18,8 @@ namespace FSBeheer.ViewModel
         public RelayCommand CreateCustomerWindowCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
 
+        public RelayCommand SearchTextCommand { get; set; }
+
         private CustomerVM _selectedCustomer { get; set; } 
 
         public CustomerVM SelectedCustomer
