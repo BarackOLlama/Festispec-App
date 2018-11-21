@@ -63,7 +63,8 @@ namespace FSBeheer.Migrations
                     Password = BCrypt.HashPassword("bartswachtwoord", bartSalt),
                     Role = roles.FirstOrDefault(r => r.Content == "Inspecteur"),
                     Salt = bartSalt,
-                    IsAdmin = true
+                    IsAdmin = true,
+                    IsDeleted = false
                 },
                 new Account()
                 {
@@ -71,7 +72,8 @@ namespace FSBeheer.Migrations
                     Password = BCrypt.HashPassword("phiswachtwoord", phiSalt),
                     Role = roles.FirstOrDefault(r => r.Content == "Inspecteur"),
                     Salt = phiSalt,
-                    IsAdmin = true
+                    IsAdmin = true,
+                    IsDeleted = false
                 },
                 new Account()
                 {
@@ -79,7 +81,8 @@ namespace FSBeheer.Migrations
                     Password = BCrypt.HashPassword("cjswachtwoord", cjSalt),
                     Role = roles.FirstOrDefault(r => r.Content == "Inspecteur"),
                     Salt = cjSalt,
-                    IsAdmin = true
+                    IsAdmin = true,
+                    IsDeleted = false
                 },
                 new Account()
                 {
@@ -87,7 +90,8 @@ namespace FSBeheer.Migrations
                     Password = BCrypt.HashPassword("evertswachtwoord", evertSalt),
                     Role = roles.FirstOrDefault(r => r.Content == "Inspecteur"),
                     Salt = evertSalt,
-                    IsAdmin = true
+                    IsAdmin = true,
+                    IsDeleted = false
                 },
                 new Account()
                 {
@@ -95,7 +99,8 @@ namespace FSBeheer.Migrations
                     Password = BCrypt.HashPassword("password", mitchSalt),
                     Role = roles.FirstOrDefault(r => r.Content == "Inspecteur"),
                     Salt = mitchSalt,
-                    IsAdmin = true
+                    IsAdmin = true,
+                    IsDeleted = false
                 }
             };
             context.Accounts.AddRange(accounts);
