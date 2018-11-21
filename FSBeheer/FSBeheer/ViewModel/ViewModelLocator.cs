@@ -63,7 +63,7 @@ namespace FSBeheer.ViewModel
                 return new InspectorSelectionViewModel();
             }
         }
-      
+
         public CreateEditCustomerViewModel CreateEditCustomer
         {
             

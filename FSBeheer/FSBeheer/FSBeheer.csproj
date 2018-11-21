@@ -100,9 +100,9 @@
     <Compile Include="Crud\QuestionnaireCrud.cs" />
     <Compile Include="Crud\QuestionTypeCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
-    <Compile Include="Migrations\201811121341460_Initial.cs" />
-    <Compile Include="Migrations\201811121341460_Initial.Designer.cs">
-      <DependentUpon>201811121341460_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201811191106389_Initial.cs" />
+    <Compile Include="Migrations\201811191106389_Initial.Designer.cs">
+      <DependentUpon>201811191106389_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Answer.cs" />
@@ -191,6 +191,7 @@
     <Compile Include="View\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VM\ContactVM.cs" />
     <Compile Include="VM\CustomerVM.cs" />
     <Compile Include="VM\EventVM.cs" />
     <Compile Include="VM\InspectionVM.cs" />
@@ -212,8 +213,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201811121341460_Initial.resx">
-      <DependentUpon>201811121341460_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201811191106389_Initial.resx">
+      <DependentUpon>201811191106389_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
