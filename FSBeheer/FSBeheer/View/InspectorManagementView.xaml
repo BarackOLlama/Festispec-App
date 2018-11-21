@@ -21,7 +21,6 @@
             <Button Content="Back" Template="{StaticResource InterfaceButtonTemplate}"></Button>
         </StackPanel>
 
-
         <StackPanel Name="spContent" Margin="30">
 
             <DataGrid MaxHeight="250" ItemsSource="{Binding Inspectors}" AutoGenerateColumns="False">
