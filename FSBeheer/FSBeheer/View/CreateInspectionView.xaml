@@ -55,11 +55,11 @@
                                     <Label Grid.Row="4" Grid.Column="0" Content="Datum:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
 
-                                    <Label Grid.Row="0" Grid.Column="1" Content="Naam:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="1" Grid.Column="1" Content="Adres:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="2" Grid.Column="1" Content="Plaats:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="3" Grid.Column="1" Content="Postcode:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="4" Grid.Column="1" Content="Datum:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding EventName}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding EventAddress}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding EventCity}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding EventZipcode}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="4" Grid.Column="1" Content="{Binding EventDate}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                                 </Grid>
 
@@ -109,9 +109,9 @@
                     </StackPanel>
                 </StackPanel>
 
-                <StackPanel Height="300" Margin="0,5,0,0">
+                <StackPanel Margin="0,5,0,0">
                     <Border BorderBrush="Black" BorderThickness="1">
-                        <Grid Height="300">
+                        <Grid Height="250" Margin="0.2,0,-0.2,0">
                             <Grid.ColumnDefinitions>
 
                                 <ColumnDefinition Width="150" />
@@ -154,10 +154,10 @@
 
             </StackPanel>
 
-            <StackPanel Width="250" Height="400" HorizontalAlignment="Center" Margin="10,0,0,0">
+            <StackPanel Width="250" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,48,0,0">
 
 
-                <Border BorderBrush="Black" BorderThickness="1" Height="390">
+                <Border BorderBrush="Black" BorderThickness="1">
                     <StackPanel>
 
 
@@ -166,10 +166,10 @@
                             <Label Height="50" Content="Voorkeuren klant" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="18"></Label>
                         </StackPanel>
 
-                        <StackPanel Height="300" Margin="10,20,10,0">
+                        <StackPanel Height="390" Margin="10,20,10,0">
                             <Border BorderBrush="Black" BorderThickness="1">
 
-                                <TextBox Height="290"/>
+                                <TextBox Height="380"/>
 
                             </Border>
                         </StackPanel>
@@ -186,9 +186,9 @@
         <StackPanel x:Name="spInterfaceButtons" VerticalAlignment="Bottom"
                     Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,20,0">
 
-            <!--<Button Content="Save" Template="{StaticResource InterfaceButtonTemplate}"/>-->
+            <!--<Button Content="Save" Command="{Binding AddInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>-->
 
-            <!--<Button Content="Cancel" Template="{StaticResource InterfaceButtonTemplate}"/>-->
+            <!--<Button Content="Cancel" Command="{Binding CancelInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>-->
 
         </StackPanel>
     </StackPanel>

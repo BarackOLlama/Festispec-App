@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,11 +34,6 @@ namespace FSBeheer.VM
             get { return _inspection.Name; }
         }
 
-        public int? StatusId
-        {
-            get { return _inspection.StatusId; }
-        }
-
         public string Notes
         {
             get { return _inspection.Notes; }
@@ -48,5 +44,19 @@ namespace FSBeheer.VM
             get { return _inspection.EventId; }
         }
 
+        public Event Event
+        {
+            get { return _inspection.Event; }
+        }
+
+        public int? StatusId
+        {
+            get { return _inspection.StatusId; }
+        }
+
+        public Status Status
+        {
+            get { return _inspection.Status; }
+        }
     }
 }

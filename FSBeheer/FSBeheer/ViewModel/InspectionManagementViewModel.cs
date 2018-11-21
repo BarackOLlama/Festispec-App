@@ -3,6 +3,8 @@ using FSBeheer.Model;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using System.Windows;
+using FSBeheer.View;
 
 namespace FSBeheer.ViewModel
 {

@@ -23,5 +23,8 @@ namespace FSBeheer.Crud
             var _inspections = new ObservableCollection<InspectionVM>(inspection);
             return _inspections;
         }
+
+
+
     }
 }
