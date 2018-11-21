@@ -1,5 +1,6 @@
 ﻿using FSBeheer.Model;
 using FSBeheer.View;
+using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
