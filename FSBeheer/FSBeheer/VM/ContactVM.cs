@@ -58,7 +58,10 @@ namespace FSBeheer.VM
             set { _contact.Note = value; RaisePropertyChanged(nameof(Note)); }
         }
 
-        // TODO: CustomerId
+        public int? CustomerId
+        {
+            get { return _contact.CustomerId; }
+        }
 
     }
 }
