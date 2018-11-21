@@ -60,7 +60,7 @@ namespace FSBeheer.VM
 
         public int? CustomerId
         {
-            get { return _contact.CustomerId; }
+            get { return _contact.Customer.Id; }
         }
 
     }
