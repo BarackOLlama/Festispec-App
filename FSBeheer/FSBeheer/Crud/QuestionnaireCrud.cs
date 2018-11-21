@@ -1,4 +1,5 @@
-﻿using FSBeheer.VM;
+﻿using FSBeheer.ViewModel;
+using FSBeheer.VM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,7 +26,11 @@ namespace FSBeheer.Crud
             return _questionnaire;
         }
 
-        public void Add(QuestionnaireVM _questionnaire) => CustomFSContext.Questionnaires.Add(_questionnaire.ToModel());
+        public void Add(QuestionnaireVM _questionnaire)
+        {
+            CustomFSContext.Questionnaires.Add(_questionnaire.ToModel());
+            CustomFSContext.SaveChanges();
+        }
 
     }
 }

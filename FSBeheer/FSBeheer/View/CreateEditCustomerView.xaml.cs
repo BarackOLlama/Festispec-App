@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FSBeheer.ViewModel;
+using FSBeheer.VM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,12 @@ namespace FSBeheer.View
     /// </summary>
     public partial class CreateEditCustomerView : Window
     {
-        public CreateEditCustomerView()
+        public CreateEditCustomerView(CustomerVM customer = null)
         {
             InitializeComponent();
+            // Zijn datacontext is een create edit, hier kun je hem nog zetten, bij viewmodel hoef je niet meer bij te houden wat er allemaal gebeurt
+            (DataContext as CreateEditCustomerViewModel).SetCustomer(customer);
         }
+
     }
 }

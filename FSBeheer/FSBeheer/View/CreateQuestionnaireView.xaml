@@ -15,59 +15,62 @@
         </ControlTemplate>
 
     </Window.Resources>
-    <StackPanel Orientation="Horizontal" Margin="5">
-        <StackPanel Margin="5"  Width="100">
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="ID:"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Naam:"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Versie:"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Opmerkingen:"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Instructies:"></TextBox>
-            </Border>
-        </StackPanel>
-        <StackPanel Margin="5"  Width="225">
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" Text="{Binding Inspector.Id, Mode=OneWay}" FontSize="12"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox Foreground="Black" Text="{Binding Inspector.Name}" FontSize="12"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox Foreground="Black" Text="{Binding Inspector.Adres}" FontSize="12"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox Foreground="Black" Text="{Binding Inspector.Place}" FontSize="12"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox Foreground="Black" Text="{Binding Inspector.ZipCode}" FontSize="12"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox Foreground="Black" Text="{Binding Inspector.Email}" FontSize="12"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox Foreground="Black" Text="{Binding Inspector.PhoneNumber}" FontSize="12"></TextBox>
-            </Border>
+    <StackPanel Margin="5">
+
+        <StackPanel Margin="5">
+            <StackPanel>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+
+                    <Border Grid.Column="0" Grid.Row="0" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <Label Foreground="Black" FontSize="12" Content="Naam:"></Label>
+                    </Border>
+                    <Border Grid.Column="0" Grid.Row="1" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <Label Foreground="Black" FontSize="12" Content="Versie:"></Label>
+                    </Border>
+                    <Border Grid.Column="0" Grid.Row="2" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <Label Foreground="Black" FontSize="12" Content="Opmerkingen:" VerticalAlignment="Center"></Label>
+                    </Border>
+                    <Border Grid.Column="0" Grid.Row="3" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <Label Foreground="Black" FontSize="12" Content="Instructies:" VerticalAlignment="Center"></Label>
+                    </Border>
+
+                    <Border Grid.Column="1" Grid.Row="0" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <TextBox Foreground="Black" Text="{Binding Questionnaire.Name, Mode=TwoWay}" FontSize="12"></TextBox>
+                    </Border>
+                    <Border Grid.Column="1" Grid.Row="1" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <TextBox Foreground="Black" Text="{Binding Questionnaire.Version, Mode=TwoWay}" FontSize="12"></TextBox>
+                    </Border>
+                    <Border Height="100" Grid.Column="1" Grid.Row="2" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <TextBox Foreground="Black" Text="{Binding Questionnaire.Comments, Mode=TwoWay}" FontSize="12"></TextBox>
+                    </Border>
+                    <Border Height="100" Grid.Column="1" Grid.Row="3" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                        <TextBox Foreground="Black" Text="{Binding Questionnaire.Instructions, Mode=TwoWay}" FontSize="12"></TextBox>
+                    </Border>
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Margin="5" >
+                <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
+                    <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Bevestig" Command="{Binding AddQuestionnaireCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                </DockPanel>
+            </StackPanel>
+
         </StackPanel>
 
-        <StackPanel Margin="5" Width="225">
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="175"></RowDefinition>
-                </Grid.RowDefinitions>
-            </Grid>
-            <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
-                <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                <Button Content="Bevestig" Command="{Binding AddQuestionnaireCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-            </DockPanel>
-        </StackPanel>
     </StackPanel>
 </Window>

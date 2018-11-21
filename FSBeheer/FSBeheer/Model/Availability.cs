@@ -19,6 +19,7 @@ namespace FSBeheer.Model
         public TimeSpan? ScheduleEndTime { get; set; }
         public int? InspectorId { get; set; }
         public virtual Inspector Inspector { get; set; }
+        public bool IsDeleted { get; set; }
 
     }
 }
