@@ -67,7 +67,7 @@ namespace FSBeheer.Migrations
                 new Account()
                 {
                     Username = "pnguyen@gmail.com",
-                    Password = "phiswachtwoord",
+                    Password = BCrypt.HashPassword("phiswachtwoord", phiSalt),
                     Role = roles.FirstOrDefault(r => r.Content == "Inspecteur"),
                     Salt = phiSalt,
                     IsAdmin = true
