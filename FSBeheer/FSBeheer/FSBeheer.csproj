@@ -95,10 +95,6 @@
     <Compile Include="Crud\QuestionCrud.cs" />
     <Compile Include="Crud\QuestionnaireCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
-    <Compile Include="Migrations\201811191106389_Initial.cs" />
-    <Compile Include="Migrations\201811191106389_Initial.Designer.cs">
-      <DependentUpon>201811191106389_Initial.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Answer.cs" />
     <Compile Include="FSContext.cs" />
@@ -193,9 +189,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201811191106389_Initial.resx">
-      <DependentUpon>201811191106389_Initial.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

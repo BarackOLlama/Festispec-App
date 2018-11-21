@@ -26,6 +26,7 @@ namespace FSBeheer.Migrations
             context.Accounts.RemoveRange(context.Accounts);
             context.Roles.RemoveRange(context.Roles);
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.Roles', RESEED, 0)");
+            context.Contacts.RemoveRange(context.Contacts);
             context.Customers.RemoveRange(context.Customers);
             context.Events.RemoveRange(context.Events);
 
@@ -52,25 +53,29 @@ namespace FSBeheer.Migrations
                 {
                     Username = "bkoevoets@gmail.com",
                     Password = "bartswachtwoord",
-                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur")
+                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur"),
+                    IsDeleted = false
                 },
                 new Account()
                 {
                     Username = "pnguyen@gmail.com",
                     Password = "phiswachtwoord",
-                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur")
+                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur"),
+                    IsDeleted = false
                 },
                 new Account()
                 {
                     Username = "clancaster@gmail.com",
                     Password = "cjswachtwoord",
-                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur")
+                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur"),
+                    IsDeleted = false
                 },
                 new Account()
                 {
                     Username = "earends@gmail.com",
                     Password = "evertswachtwoord",
-                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur")
+                    Role = roles.FirstOrDefault(r => r.Content == "Inspecteur"),
+                    IsDeleted = false
                 }
             };
             context.Accounts.AddRange(accounts);
@@ -88,7 +93,8 @@ namespace FSBeheer.Migrations
                     CertificationDate = new DateTime(2018, 1, 1),
                     InvalidDate = new DateTime(2019, 1, 1),
                     BankNumber = "NL01INGB0123456789",
-                    Account = accounts[0]
+                    Account = accounts[0],
+                    IsDeleted = false
                 },
                 new Inspector()
                 {
@@ -101,7 +107,8 @@ namespace FSBeheer.Migrations
                     CertificationDate = new DateTime(2018, 1, 1),
                     InvalidDate = new DateTime(2019, 1, 1),
                     BankNumber = "NL01INGB0123456789",
-                    Account = accounts[1]
+                    Account = accounts[1],
+                    IsDeleted = false
                 },
                 new Inspector()
                 {
@@ -114,7 +121,8 @@ namespace FSBeheer.Migrations
                     CertificationDate = new DateTime(2018, 1, 1),
                     InvalidDate = new DateTime(2019, 1, 1),
                     BankNumber = "NL01INGB0123456789",
-                    Account = accounts[2]
+                    Account = accounts[2],
+                    IsDeleted = false
                 },
                 new Inspector()
                 {
@@ -127,7 +135,8 @@ namespace FSBeheer.Migrations
                     CertificationDate = new DateTime(2018, 1, 1),
                     InvalidDate = new DateTime(2019, 1, 1),
                     BankNumber = "NL01INGB0123456789",
-                    Account = accounts[3]
+                    Account = accounts[3],
+                    IsDeleted = false
                 }
             };
             context.Inspectors.AddRange(inspectors);
@@ -167,7 +176,8 @@ namespace FSBeheer.Migrations
                     {
                         Name = "EersteInspectie",
                         Status = statuses[3],
-                        Notes = "Minstens 4 inspecteurs"
+                        Notes = "Minstens 4 inspecteurs",
+                        IsDeleted = false
                     }
             };
             context.Inspections.AddRange(inspections);
@@ -180,7 +190,8 @@ namespace FSBeheer.Migrations
                     Instructions = "Laat geen vragen leeg",
                     Version = 1,
                     Comments = "Dit is onze eerste inspectie, extra goed opletten!",
-                    Inspection = inspections[0]
+                    Inspection = inspections[0],
+                    IsDeleted = false
                 }
             };
             context.Questionnaires.AddRange(questionnaires);
@@ -192,28 +203,32 @@ namespace FSBeheer.Migrations
                     Content = "Hoeveel man is er op het festival?",
                     Options = "A|100;B|200;C|500;D|1000",
                     Questionnaire = questionnaires[0],
-                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice vraag")
+                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice vraag"),
+                    IsDeleted = false
                 },
                 new Question()
                 {
                     Content = "Hoe groot is het percentage van roest op het podium?",
                     Options = "A|10%;B|20%;C|50%;D|100%",
                     Questionnaire = questionnaires[0],
-                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice vraag")
+                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice vraag"),
+                    IsDeleted = false
                 },
                 new Question()
                 {
                     Content = "Wat is de draaglast van de fundament van het podium?",
                     Options = "A|100kg;B|200kg;C|500kg;D|1000kg",
                     Questionnaire = questionnaires[0],
-                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice vraag")
+                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice vraag"),
+                    IsDeleted = false
                 },
                 new Question()
                 {
                     Content = "Hoeveel bars zijn er op het festival?",
                     Options = "A|5;B|10;C|20;D|40",
                     Questionnaire = questionnaires[0],
-                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice vraag")
+                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice vraag"),
+                    IsDeleted = false
                 }
             };
             context.Questions.AddRange(questions);
@@ -224,97 +239,113 @@ namespace FSBeheer.Migrations
                 {
                     Content = "B|200",
                     Question = questions[0],
-                    Inspector = inspectors[0]
+                    Inspector = inspectors[0],
+                    IsDeleted = false
                 },
                 new Answer()
                 {
                     Content = "A|100",
                     Question = questions[0],
-                    Inspector = inspectors[1]
+                    Inspector = inspectors[1],
+                    IsDeleted = false
                 },
                 new Answer()
                 {
                     Content = "B|200",
                     Question = questions[0],
-                    Inspector = inspectors[2]
+                    Inspector = inspectors[2],
+                    IsDeleted = false
                 },
                 new Answer()
                 {
                     Content = "C|500",
                     Question = questions[0],
-                    Inspector = inspectors[3]
+                    Inspector = inspectors[3],
+                    IsDeleted = false
                 },
                 new Answer()
                 {
                     Content = "A|10%",
                     Question = questions[1],
-                    Inspector = inspectors[0]
+                    Inspector = inspectors[0],
+                    IsDeleted = false
                 },
                 new Answer()
                 {
                     Content = "A|10%",
                     Question = questions[1],
-                    Inspector = inspectors[1]
+                    Inspector = inspectors[1],
+                    IsDeleted = false
                 },
                 new Answer()
                 {
                     Content = "A|10%",
                     Question = questions[1],
-                    Inspector = inspectors[2]
+                    Inspector = inspectors[2],
+                    IsDeleted = false
                 },
                 new Answer()
                 {
                     Content = "B|20%",
                     Question = questions[1],
-                    Inspector = inspectors[3]
+                    Inspector = inspectors[3],
+                    IsDeleted = false
                 },
                 new Answer()
                 {
                     Content = "B|200kg",
                     Question = questions[2],
-                    Inspector = inspectors[0]
+                    Inspector = inspectors[0],
+                    IsDeleted = false
                 },
                 new Answer()
                 {
                     Content = "B|200kg",
                     Question = questions[2],
-                    Inspector = inspectors[1]
+                    Inspector = inspectors[1],
+                    IsDeleted = false
                 },
                 new Answer()
                 {
                     Content = "B|200kg",
                     Question = questions[2],
-                    Inspector = inspectors[2]
+                    Inspector = inspectors[2],
+                    IsDeleted = false
                 },
                 new Answer()
                 {
                     Content = "B|200kg",
                     Question = questions[2],
-                    Inspector = inspectors[3]
+                    Inspector = inspectors[3],
+                    IsDeleted = false
                 },
                 new Answer()
                 {
                     Content = "C|20",
                     Question = questions[3],
-                    Inspector = inspectors[0]
+                    Inspector = inspectors[0],
+                    IsDeleted = false
                 },
                 new Answer()
                 {
                     Content = "B|10",
                     Question = questions[3],
-                    Inspector = inspectors[1]
+                    Inspector = inspectors[1],
+                    IsDeleted = false
                 },
                 new Answer()
                 {
                     Content = "D|40",
                     Question = questions[3],
-                    Inspector = inspectors[2]
+                    Inspector = inspectors[2],
+                    IsDeleted = false
                 },
                 new Answer()
                 {
                     Content = "C|20",
                     Question = questions[3],
-                    Inspector = inspectors[3]
+                    Inspector = inspectors[3],
+                    IsDeleted = false
                 }
             };
             context.Answers.AddRange(answers);
@@ -324,12 +355,14 @@ namespace FSBeheer.Migrations
                 new Customer()
                 {
                     Name = "BermDingetje",
-                    City = "Den Haag"
+                    City = "Den Haag",
+                    IsDeleted = false
                 },
                 new Customer()
                 {
                     Name = "Festispec",
-                    City = "Den Bosch"
+                    City = "Den Bosch",
+                    IsDeleted = false
                 }
             };
             context.Customers.AddRange(customers);
@@ -341,16 +374,19 @@ namespace FSBeheer.Migrations
                     Name = "Darjush Kolahi",
                     PhoneNumber = "12345898765",
                     Email = "dkolahi@gmail.com",
-                    Customer = customers[0]
+                    Customer = customers[0],
+                    IsDeleted = false
                 },
                 new Contact()
                 {
                     Name = "Mitchell Appelman",
                     PhoneNumber = "678765356",
                     Email = "mappelman@gmail.com",
-                    Customer = customers[1]
+                    Customer = customers[1],
+                    IsDeleted = false
                 }
             };
+            context.Contacts.AddRange(contacts);
 
             var events = new List<Event>
             {
@@ -359,21 +395,24 @@ namespace FSBeheer.Migrations
                     Name = "Pinkpop",
                     Address = "Megaland",
                     City = "Landgraaf",
-                    Customer = customers[0]
+                    Customer = customers[0],
+                    IsDeleted = false
                 },
                 new Event()
                 {
                     Name = "Appelpop",
                     Address = "Grasweide 15",
                     City = "Heusde",
-                    Customer = customers[0]
+                    Customer = customers[0],
+                    IsDeleted = false
                 },
                 new Event()
                 {
                     Name = "Zwarte Cross",
                     Address = "Zandweggetje 4",
                     City = "Lichtervoorde",
-                    Customer = customers[1]
+                    Customer = customers[1],
+                    IsDeleted = false
                 }
             };
             context.Events.AddRange(events);

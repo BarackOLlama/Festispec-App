@@ -18,5 +18,6 @@ namespace FSBeheer.Model
         public virtual Customer Customer { get; set; }
         public int? InspectionId { get; set; }
         public virtual Inspection Inspection { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

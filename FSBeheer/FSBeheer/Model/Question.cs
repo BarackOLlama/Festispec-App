@@ -24,5 +24,6 @@ namespace FSBeheer.Model
         public virtual Questionnaire Questionnaire { get; set; }
         public int? QuestionTypeId { get; set; }
         public virtual QuestionType QuestionType { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
