@@ -63,5 +63,11 @@ namespace FSBeheer.VM
             get { return _contact.Customer.Id; }
         }
 
+        public bool IsDeleted
+        {
+            get { return _contact.IsDeleted; }
+            set { _contact.IsDeleted = value; RaisePropertyChanged(nameof(IsDeleted)); }
+        }
+
     }
 }
