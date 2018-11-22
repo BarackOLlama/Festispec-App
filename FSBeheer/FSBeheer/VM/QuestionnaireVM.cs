@@ -34,16 +34,6 @@ namespace FSBeheer.VM
         public QuestionnaireVM()
         {
             _questionnaire = new Questionnaire();
-
-            using (var context = new CustomFSContext())
-            {
-                var questions = context.Questions
-                    .Include("QuestionType")
-                    .ToList()
-                    .Where(e => e.QuestionnaireId == _questionnaire.Id)
-                    .Select(e => new QuestionVM(e));
-                Questions = new ObservableCollection<QuestionVM>(questions);
-            }
         }
 
         public int Id
@@ -59,6 +49,34 @@ namespace FSBeheer.VM
             get
             {
                 return _questionnaire.Name;
+            }
+            set
+            {
+                _questionnaire.Name = value;
+            }
+        }
+
+        public string Instructions
+        {
+            get
+            {
+                return _questionnaire.Instructions;
+            }
+            set
+            {
+                _questionnaire.Instructions = value;
+            }
+        }
+
+        public string Comments
+        {
+            get
+            {
+                return _questionnaire.Comments;
+            }
+            set
+            {
+                _questionnaire.Comments = value;
             }
         }
 

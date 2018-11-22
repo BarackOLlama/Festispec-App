@@ -16,7 +16,6 @@ namespace FSBeheer.ViewModel
     public class CreateQuestionViewModel : ViewModelBase
     {
         private QuestionVM _questionVM;
-
         public QuestionVM Question
         {
             get
@@ -31,6 +30,8 @@ namespace FSBeheer.ViewModel
         }
         private QuestionnaireVM _selectedQuestionnaireVM;
         private QuestionTypeVM _selectedQuestionType;
+        private CustomFSContext _context;
+
         public QuestionTypeVM SelectedQuestionType
         {
             get
@@ -51,13 +52,11 @@ namespace FSBeheer.ViewModel
         {
             _selectedQuestionnaireVM = selectedQuestionnaireVM;
             _questionVM = new QuestionVM();
+            _context = new CustomFSContext();
 
-            using (var context = new CustomFSContext())
-            {
-                var temp = context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
-                QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
-                SelectedQuestionType = QuestionTypes?[1];
-            }
+            var temp = _context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
+            QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
+            SelectedQuestionType = QuestionTypes?[1];
 
             AddQuestionCommand = new RelayCommand(AddQuestion, CanAddQuestion);
             Question = new QuestionVM();
@@ -74,11 +73,13 @@ namespace FSBeheer.ViewModel
                 if (SelectedQuestionType.Name == "Multiple Choice Vraag")
                 {//clear columns
                     Question.Columns = null;
-                } else if (SelectedQuestionType.Name == "Open vraag")
+                }
+                else if (SelectedQuestionType.Name == "Open vraag")
                 {//clear options and columns
                     Question.Columns = null;
                     Question.Options = null;
-                } else if (SelectedQuestionType.Name == "Open Tabelvraag")
+                }
+                else if (SelectedQuestionType.Name == "Open Tabelvraag")
                 {//clear options
                     Question.Options = null;
                 }
