@@ -16,6 +16,11 @@ namespace FSBeheer.VM
             _account = account;
         }
 
+        public AccountVM()
+        {
+            _account = new Account();
+        }
+
         public int Id
         {
             get { return _account.Id; }
@@ -24,11 +29,13 @@ namespace FSBeheer.VM
         public string Username
         {
             get { return _account.Username; }
+            set { _account.Username = value; }
         }
 
         public string Password
         {
             get { return _account.Password; }
+            set { _account.Password = value; }
         }
 
         public string Salt

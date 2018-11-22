@@ -138,7 +138,7 @@
       <DependentUpon>EditQuestionnaireView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\LoginViewModel.cs" />
-    <Compile Include="ViewModel\QuestionnaireListViewModel.cs" />
+    <Compile Include="ViewModel\QuestionnaireManagementViewModel.cs" />
     <Compile Include="ViewModel\QuestionnaireViewModel.cs" />
     <Compile Include="View\CreateQuestionView.xaml.cs">
       <DependentUpon>CreateQuestionView.xaml</DependentUpon>
@@ -167,8 +167,8 @@
     <Compile Include="View\QuestionnaireEditView.xaml.cs">
       <DependentUpon>QuestionnaireEditView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\QuestionnaireListView.xaml.cs">
-      <DependentUpon>QuestionnaireListView.xaml</DependentUpon>
+    <Compile Include="View\QuestionnaireManagementView.xaml.cs">
+      <DependentUpon>QuestionnaireManagementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="VM\AnswerVM.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
@@ -278,7 +278,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\QuestionnaireListView.xaml">
+    <Page Include="View\QuestionnaireManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

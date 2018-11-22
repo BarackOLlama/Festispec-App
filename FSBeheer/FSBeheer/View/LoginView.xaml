@@ -12,7 +12,7 @@
         <TextBox Text="{Binding Path=Account.Username, Mode=TwoWay}"></TextBox>
         <Label>Wachtwoord:</Label>
         <!--Is not a passwordbox.-->
-        <TextBox Text="{Binding Path =Account.Password, Mode=TwoWay}"></TextBox>
+        <TextBox Text="{Binding Path=Account.Password, Mode=TwoWay}"></TextBox>
         <Label Content="{Binding Message}"></Label>
         <Button Command="{Binding VerifyLoginCommand}" CommandParameter="{Binding VerifyLoginCommand}">Log in</Button>
     </StackPanel>
