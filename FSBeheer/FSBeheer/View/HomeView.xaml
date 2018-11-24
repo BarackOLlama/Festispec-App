@@ -8,16 +8,19 @@
         DataContext="{Binding Home, Source={StaticResource Locator}}"
         Title="Home" Height="450" Width="600">
     <Grid Background="White">
+        <StackPanel>
+            <Button Command="{Binding ShowLoginViewCommand}">Log in</Button>
+            <TextBlock Text="{Binding Account.Username, StringFormat=Naam:{0},  FallbackValue='Niet ingelogd'}"></TextBlock>
+        </StackPanel>
         <Button Content="Inspecties" Command="{Binding ShowInspectionViewCommand}" Background="LightBlue" HorizontalAlignment="Left" Margin="249,107,0,0" VerticalAlignment="Top" Width="121" Height="30" RenderTransformOrigin="2.662,0.869"/>
         <Button Content="Evenementen" Command="{Binding ShowEventViewCommand}" Background="LightBlue" HorizontalAlignment="Left" Margin="433,107,0,0" VerticalAlignment="Top" Width="121" Height="30" RenderTransformOrigin="2.662,0.869"/>
         <Button Content="Klanten" Command="{Binding ShowCustomerViewCommand}" Background="LightBlue" HorizontalAlignment="Left" Margin="71,107,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
         <Button Content="Inspecteurs" Background="LightBlue" HorizontalAlignment="Left" Margin="71,226,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
         <Button Content="Offertes" Background="LightBlue" HorizontalAlignment="Left" Margin="249,226,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
-        <Button Content="Vragenlijsten" Background="LightBlue" HorizontalAlignment="Left" Margin="433,226,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
+        <Button Content="Vragenlijsten" Command="{Binding ShowQuestionnaireManagementViewCommand}" Background="LightBlue" HorizontalAlignment="Left" Margin="433,226,0,0" VerticalAlignment="Top" Width="121" Height="30"/>
         <Label Content="Ingelogd als" HorizontalAlignment="Left" Margin="47,299,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
         <Label Content="Naam" HorizontalAlignment="Left" Margin="47,341,0,0" VerticalAlignment="Top"/>
         <Label Content="Functie" HorizontalAlignment="Left" Margin="47,362,0,0" VerticalAlignment="Top"/>
         <Label Content="Ingelogd sinds" HorizontalAlignment="Left" Margin="47,380,0,0" VerticalAlignment="Top"/>
     </Grid>
-
 </Window>

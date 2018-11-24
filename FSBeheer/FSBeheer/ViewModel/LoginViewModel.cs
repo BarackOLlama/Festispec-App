@@ -89,12 +89,9 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public void CreateNewAccount()
+        public void CreateNewAccount(string username, string password)
         {
-            //create any username/password account combination you want
-
-            string username = "username";
-            string password = "password";
+            //move to an AccountCreationViewModel
             string salt = BCrypt.Net.BCrypt.GenerateSalt();
             string saltedPW = BCrypt.Net.BCrypt.HashPassword(password, salt);
 

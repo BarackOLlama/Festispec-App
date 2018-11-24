@@ -35,6 +35,7 @@ namespace FSBeheer.VM
         public string Password
         {
             get { return _account.Password; }
+            set { _account.Password = value; }
         }
 
         public string Salt

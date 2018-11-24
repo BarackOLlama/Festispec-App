@@ -13,14 +13,14 @@ using System.Windows.Input;
 
 namespace FSBeheer.ViewModel
 {
-    public class QuestionnaireListViewModel : ViewModelBase
+    public class QuestionnaireManagementViewModel : ViewModelBase
     {
         private QuestionnaireVM _selectedQuestionnaire;
         private CustomFSContext _Context;
         public ObservableCollection<QuestionnaireVM> Questionnaires { get; set; }
         public RelayCommand ShowEditQuestionnaireViewCommand { get; set; }
         public RelayCommand CreateQuestionnaireCommand { get; set; }
-        public QuestionnaireListViewModel()
+        public QuestionnaireManagementViewModel()
         {
             _Context = new CustomFSContext();
             Questionnaires = _Context.QuestionnaireCrud.GetAllQuestionnaireVMs();

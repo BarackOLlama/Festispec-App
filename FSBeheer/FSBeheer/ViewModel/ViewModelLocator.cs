@@ -7,7 +7,7 @@ namespace FSBeheer.ViewModel
 {
     public class ViewModelLocator
     {
-        private QuestionnaireListViewModel _questionListViewModel;
+        private QuestionnaireManagementViewModel _questionListViewModel;
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
@@ -90,11 +90,11 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public QuestionnaireListViewModel QuestionnaireList
+        public QuestionnaireManagementViewModel QuestionnaireList
         {
             get
             {
-                _questionListViewModel = new QuestionnaireListViewModel();
+                _questionListViewModel = new QuestionnaireManagementViewModel();
                 return _questionListViewModel;   
             }
         }
