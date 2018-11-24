@@ -71,7 +71,7 @@ namespace FSBeheer.ViewModel
         {
             if (SelectedCustomer != null)
             {
-                CustomFSContext.CustomerCrud.Delete(SelectedCustomer);
+                CustomFSContext.CustomerCrud.SetDeleted(SelectedCustomer);
                 Customers.Remove(SelectedCustomer);
             }
         }

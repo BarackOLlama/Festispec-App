@@ -92,6 +92,7 @@
     <Compile Include="Crud\AbstractCrud.cs" />
     <Compile Include="Crud\AccountCrud.cs" />
     <Compile Include="Crud\AnswerCrud.cs" />
+    <Compile Include="Crud\ContactCrud.cs" />
     <Compile Include="Crud\CustomerCrud.cs" />
     <Compile Include="Crud\InspectionCrud.cs" />
     <Compile Include="Crud\InspectorCrud.cs" />

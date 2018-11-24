@@ -45,10 +45,10 @@ namespace FSBeheer.ViewModel
 
         private void SaveChanges()
         {
-            // _Context.ContactCrud.GetAllContactVMs().Add(Contact);
+            _Context.ContactCrud.GetAllContactVMs().Add(Contact);
             _Context.SaveChanges();
 
-            // Messenger.Default.Send(true, "UpdateContactList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
+            Messenger.Default.Send(true, "UpdateContactList"); // Stuurt object/boolean true naar ontvanger, die dan zijn methode init() uitvoert, stap II
         }
 
         private void Discard(Window window)

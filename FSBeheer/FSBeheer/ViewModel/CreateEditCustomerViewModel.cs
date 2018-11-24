@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 
@@ -15,15 +16,39 @@ namespace FSBeheer.ViewModel
 
         public RelayCommand<Window> DiscardCommand { get; set; }
 
-        // prop ContactVM
+        public ObservableCollection<ContactVM> Contacts { get; set; }
+
+        private ContactVM _selectedContact { get; set; }
 
         private CustomFSContext _Context;
 
         public CreateEditCustomerViewModel()
         {
-            _Context = new CustomFSContext();
+            Messenger.Default.Register<bool>(this, "UpdateContactList", cl => Init()); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
+
+            Init();
             SaveChangesCommand = new RelayCommand(SaveChanges);
             DiscardCommand = new RelayCommand<Window>(Discard);
+        }
+
+        internal void Init()
+        {
+            _Context = new CustomFSContext();
+            if (Customer != null)
+            {
+                Contacts = _Context.ContactCrud.GetContactByCustomer(Customer);
+                RaisePropertyChanged(nameof(Contacts));
+            }
+        }
+
+        public ContactVM SelectedContact
+        {
+            get { return _selectedContact; }
+            set
+            {
+                _selectedContact = value;
+                base.RaisePropertyChanged(nameof(SelectedContact));
+            }
         }
 
 
@@ -33,13 +58,15 @@ namespace FSBeheer.ViewModel
             {
                 Customer = new CustomerVM();
                 _Context.Customers.Add(Customer.ToModel());
-                RaisePropertyChanged(nameof(Customer));
+                RaisePropertyChanged(nameof(Customer)); // a sign that a property has changed for viewing
             }
             else
             {
                 Customer = new CustomerVM(_Context.Customers.FirstOrDefault(c => c.Id == customer.Id));
                 RaisePropertyChanged(nameof(Customer));
             }
+            Contacts = _Context.ContactCrud.GetContactByCustomer(Customer); // TODO kan beter
+            RaisePropertyChanged(nameof(Contacts));
         }
 
         private void SaveChanges()
@@ -53,11 +80,11 @@ namespace FSBeheer.ViewModel
         private void Discard(Window window)
         {
             MessageBoxResult result = MessageBox.Show("Close without saving?", "Confirm discard", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.Cancel)
+            if (result == MessageBoxResult.OK)
             {
                 _Context.Dispose();
                 Customer = null;
-                window?.Close();
+                window.Close();
             }
         }
 
