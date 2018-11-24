@@ -35,6 +35,7 @@ namespace FSBeheer
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Quotation>().Property(q => q.Price).HasPrecision(10, 2);
+            modelBuilder.Entity<Customer>().Property(c => c.ChamberOfCommerceNumber).HasPrecision(8, 0);
         }
     }
 }
