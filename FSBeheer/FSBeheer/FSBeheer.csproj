@@ -124,6 +124,7 @@
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
+    <Compile Include="View\BaseView.cs" />
     <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="View\CreateEditInspectorView.xaml.cs">
       <DependentUpon>CreateEditInspectorView.xaml</DependentUpon>
