@@ -196,11 +196,79 @@ namespace FSBeheer.Migrations
             };
             context.Statuses.AddRange(statuses);
 
+            var customers = new List<Customer>
+            {
+                new Customer()
+                {
+                    Name = "BermDingetje",
+                    City = "Den Haag",
+                    IsDeleted = false
+                },
+                new Customer()
+                {
+                    Name = "Festispec",
+                    City = "Den Bosch",
+                    IsDeleted = false
+                }
+            };
+            context.Customers.AddRange(customers);
+
+            var contacts = new List<Contact>
+            {
+                new Contact()
+                {
+                    Name = "Darjush Kolahi",
+                    PhoneNumber = "12345898765",
+                    Email = "dkolahi@gmail.com",
+                    Customer = customers[0],
+                    IsDeleted = false
+                },
+                new Contact()
+                {
+                    Name = "Mitchell Appelman",
+                    PhoneNumber = "678765356",
+                    Email = "mappelman@gmail.com",
+                    Customer = customers[1],
+                    IsDeleted = false
+                }
+            };
+            context.Contacts.AddRange(contacts);
+
+            var events = new List<Event>
+            {
+                new Event()
+                {
+                    Name = "Pinkpop",
+                    Address = "Megaland",
+                    City = "Landgraaf",
+                    Customer = customers[0],
+                    IsDeleted = false
+                },
+                new Event()
+                {
+                    Name = "Appelpop",
+                    Address = "Grasweide 15",
+                    City = "Heusde",
+                    Customer = customers[0],
+                    IsDeleted = false
+                },
+                new Event()
+                {
+                    Name = "Zwarte Cross",
+                    Address = "Zandweggetje 4",
+                    City = "Lichtervoorde",
+                    Customer = customers[1],
+                    IsDeleted = false
+                }
+            };
+            context.Events.AddRange(events);
+
             var inspections = new List<Inspection>
             {
                 new Inspection()
                     {
                         Name = "EersteInspectie",
+                        Event = events[1],
                         Status = statuses[3],
                         Notes = "Minstens 4 inspecteurs",
                         IsDeleted = false
@@ -375,73 +443,6 @@ namespace FSBeheer.Migrations
                 }
             };
             context.Answers.AddRange(answers);
-
-            var customers = new List<Customer>
-            {
-                new Customer()
-                {
-                    Name = "BermDingetje",
-                    City = "Den Haag",
-                    IsDeleted = false
-                },
-                new Customer()
-                {
-                    Name = "Festispec",
-                    City = "Den Bosch",
-                    IsDeleted = false
-                }
-            };
-            context.Customers.AddRange(customers);
-
-            var contacts = new List<Contact>
-            {
-                new Contact()
-                {
-                    Name = "Darjush Kolahi",
-                    PhoneNumber = "12345898765",
-                    Email = "dkolahi@gmail.com",
-                    Customer = customers[0],
-                    IsDeleted = false
-                },
-                new Contact()
-                {
-                    Name = "Mitchell Appelman",
-                    PhoneNumber = "678765356",
-                    Email = "mappelman@gmail.com",
-                    Customer = customers[1],
-                    IsDeleted = false
-                }
-            };
-            context.Contacts.AddRange(contacts);
-
-            var events = new List<Event>
-            {
-                new Event()
-                {
-                    Name = "Pinkpop",
-                    Address = "Megaland",
-                    City = "Landgraaf",
-                    Customer = customers[0],
-                    IsDeleted = false
-                },
-                new Event()
-                {
-                    Name = "Appelpop",
-                    Address = "Grasweide 15",
-                    City = "Heusde",
-                    Customer = customers[0],
-                    IsDeleted = false
-                },
-                new Event()
-                {
-                    Name = "Zwarte Cross",
-                    Address = "Zandweggetje 4",
-                    City = "Lichtervoorde",
-                    Customer = customers[1],
-                    IsDeleted = false
-                }
-            };
-            context.Events.AddRange(events);
         }
     }
 }
