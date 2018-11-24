@@ -89,8 +89,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowCreateEditInspectionView()
         {
-           new EditInspectionView().Show();
-
+           new CreateEditInspectionView().Show();
         }
     }
 }

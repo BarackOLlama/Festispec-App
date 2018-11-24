@@ -8,6 +8,8 @@ namespace FSBeheer.ViewModel
     public class ViewModelLocator
     {
         private QuestionnaireListViewModel _questionListViewModel;
+        private InspectionManagementViewModel _InspectionManagementViewModel;
+
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
@@ -44,7 +46,8 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new InspectionManagementViewModel();
+                _InspectionManagementViewModel = new InspectionManagementViewModel();
+                return _InspectionManagementViewModel;
             }
         }
 
@@ -69,8 +72,7 @@ namespace FSBeheer.ViewModel
             
             get
             {
-                throw new NotImplementedException();
-                //return new CreateEditCustomerViewModel(CustomerManagement.SelectedCustomer);
+                return new CreateEditCustomerViewModel();
             }
         }
 
@@ -124,19 +126,11 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public CreateInspectionViewModel CreateInspection
+        public CreateEditInspectionViewModel CreateEditInspection
         {
             get
             {
-                return new CreateInspectionViewModel();
-            }
-        }
-
-        public EditInspectionViewModel EditInspection
-        {
-            get
-            {
-                return new EditInspectionViewModel();
+                return new CreateEditInspectionViewModel(_InspectionManagementViewModel);
             }
         }
 

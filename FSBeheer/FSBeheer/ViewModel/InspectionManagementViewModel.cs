@@ -12,36 +12,28 @@ namespace FSBeheer.ViewModel
     {
         private CustomFSContext _Context;
         public ObservableCollection<InspectionVM> Inspections { get; }
+        public InspectionVM SelectedInspection { get; set; }
 
-        public RelayCommand ShowEditInspectionViewCommand { get; set; }
+        public RelayCommand ShowCreateEditInspectionViewCommand { get; set; }
         public RelayCommand<Window> BackHomeCommand { get; set; }
-
-        public RelayCommand AddNewInspectionCommand;
 
         public InspectionManagementViewModel()
         {            
             _Context = new CustomFSContext();
             Inspections = _Context.InspectionCrud.GetInspections();
-            //RaisePropertyChanged(nameof(Inspections));
-            ShowEditInspectionViewCommand = new RelayCommand(ShowEditInspectionView);
+
+            ShowCreateEditInspectionViewCommand = new RelayCommand(ShowCreateEditInspectionView);
             BackHomeCommand = new RelayCommand<Window>(CloseAction);
-
-
-            AddNewInspectionCommand = new RelayCommand(AddNewInspection);
-        }
-
-        private void ShowEditInspectionView()
-        {
-            new EditInspectionView().Show();
         }
 
         private void CloseAction(Window window)
         {
             window.Close();
         }
-        private void AddNewInspection()
-        {
 
+        private void ShowCreateEditInspectionView()
+        {
+            new CreateEditInspectionView().Show();                                                                                                                                                                                 
         }
     }
 }

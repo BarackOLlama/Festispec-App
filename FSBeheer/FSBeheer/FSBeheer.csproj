@@ -119,9 +119,8 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Quotation.cs" />
     <Compile Include="Model\Role.cs" />
-    <Compile Include="ViewModel\CreateInspectionViewModel.cs" />
+    <Compile Include="ViewModel\CreateEditInspectionViewModel.cs" />
     <Compile Include="ViewModel\CreateQuestionnaireViewModel.cs" />
-    <Compile Include="ViewModel\EditInspectionViewModel.cs" />
     <Compile Include="ViewModel\EditInspectorViewModel.cs" />
     <Compile Include="ViewModel\AccountVM.cs" />
     <Compile Include="ViewModel\EditQuestionnaireViewModel.cs" />
@@ -130,6 +129,9 @@
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
+    <Compile Include="View\CreateQuestionView.xaml.cs">
+      <DependentUpon>CreateQuestionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="View\CreateEditInspectorView.xaml.cs">
       <DependentUpon>CreateEditInspectorView.xaml</DependentUpon>
@@ -137,8 +139,8 @@
     <Compile Include="View\CreateEditCustomerView.xaml.cs">
       <DependentUpon>CreateEditCustomerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\CreateInspectionView.xaml.cs">
-      <DependentUpon>CreateInspectionView.xaml</DependentUpon>
+    <Compile Include="View\CreateEditInspectionView.xaml.cs">
+      <DependentUpon>CreateEditInspectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CreateQuestionnaireView.xaml.cs">
       <DependentUpon>CreateQuestionnaireView.xaml</DependentUpon>
@@ -149,9 +151,6 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\QuestionnaireListViewModel.cs" />
     <Compile Include="ViewModel\QuestionnaireViewModel.cs" />
-    <Compile Include="View\CreateQuestionView.xaml.cs">
-      <DependentUpon>CreateQuestionView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\ChooseInspectorView.xaml.cs">
       <DependentUpon>ChooseInspectorView.xaml</DependentUpon>
     </Compile>
@@ -188,9 +187,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="View\EditInspectionView.xaml.cs">
-      <DependentUpon>EditInspectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CustomerManagementView.xaml.cs">
       <DependentUpon>CustomerManagementView.xaml</DependentUpon>
@@ -248,15 +244,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\CreateInspectionView.xaml">
+    <Page Include="View\CreateEditInspectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\CreateQuestionnaireView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\EditInspectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

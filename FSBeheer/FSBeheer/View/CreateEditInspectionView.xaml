@@ -1,17 +1,26 @@
-﻿<Window x:Class="FSBeheer.View.CreateInspectionView"
+﻿<Window x:Class="FSBeheer.View.CreateEditInspectionView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="CreateInspectionView" Height="900" Width="1000"
-        DataContext="{Binding CreateInspection, Source={StaticResource Locator}}">
+        Title="CreateEditInspectionView" Height="900" Width="1000"
+        DataContext="{Binding CreateEditInspection, Source={StaticResource Locator}}">
+
+    <Window.Resources>
+        <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
+            <Button FontSize="15" Margin="5"
+                    Content="{TemplateBinding Content}"
+                    Command="{TemplateBinding Command}"/>
+        </ControlTemplate>
+    </Window.Resources>
+
     <StackPanel Margin="20">
 
         <StackPanel Name="EventSelection" Margin="0,30,0,0">
 
-            <ComboBox ItemsSource="{Binding Events}" Width="500" HorizontalAlignment="Left" Height="30" Margin="20,0,0,0"/>
+            <ComboBox ItemsSource="{Binding Events}" SelectedItem="SelectedEvent" Width="500" HorizontalAlignment="Left" Height="30" Margin="20,0,0,0"/>
 
         </StackPanel>
 
@@ -55,11 +64,11 @@
                                     <Label Grid.Row="4" Grid.Column="0" Content="Datum:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
 
-                                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding EventName}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding EventAddress}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding EventCity}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding EventZipcode}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="4" Grid.Column="1" Content="{Binding EventDate}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedInspection.Event.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedInspection.Event.Address}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedInspection.Event.City}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                                 </Grid>
 
@@ -186,9 +195,9 @@
         <StackPanel x:Name="spInterfaceButtons" VerticalAlignment="Bottom"
                     Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,20,0">
 
-            <!--<Button Content="Save" Command="{Binding AddInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>-->
+            <Button Content="Save" Command="{Binding AddInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>
 
-            <!--<Button Content="Cancel" Command="{Binding CancelInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>-->
+            <Button Content="Cancel" Command="{Binding CancelInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>
 
         </StackPanel>
     </StackPanel>
