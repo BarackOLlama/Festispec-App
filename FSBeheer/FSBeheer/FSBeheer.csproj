@@ -101,6 +101,7 @@
     <Compile Include="Crud\QuestionCrud.cs" />
     <Compile Include="Crud\QuestionnaireCrud.cs" />
     <Compile Include="Crud\QuestionTypeCrud.cs" />
+    <Compile Include="Crud\StatusCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Answer.cs" />

@@ -12,8 +12,10 @@ namespace FSBeheer.ViewModel
         private InspectionManagementViewModel _InspectionManagementViewModel;
 
         public ObservableCollection<CustomerVM> Customers { get; }
-        public ObservableCollection<EventVM> Events { get; }
-        public ObservableCollection<StatusVM> Statuses { get; }
+        public ObservableCollection<EventVM> Events { get; set; }
+        public ObservableCollection<string> EventNames { get; set; }
+        public ObservableCollection<StatusVM> Statuses { get; set; }
+        public ObservableCollection<string> StatusNames { get; set; }
         
         public DateTime? NewStartDate { get; set; }
         public DateTime? NewEndDate { get; set; }
@@ -21,6 +23,7 @@ namespace FSBeheer.ViewModel
         public TimeSpan? NewEndTime { get; set; }
         public InspectionVM SelectedInspection { get; set; }
         public EventVM SelectedEvent { get; set; }
+        public StatusVM SelectedStatus { get; set; }
         public RelayCommand CancelInspectionCommand { get; set; }
         public RelayCommand AddInspectionCommand { get; set; }
 
@@ -28,7 +31,23 @@ namespace FSBeheer.ViewModel
         {
             _Context = new CustomFSContext();
             Customers = _Context.CustomerCrud.GetAllCustomerVMs();
+
             Events = _Context.EventCrud.GetAllEventVMs();
+            ObservableCollection<string> _EventList = new ObservableCollection<string>();
+            foreach (EventVM eventVM in Events)
+            {
+                _EventList.Add(eventVM.Name);
+            }
+            EventNames = _EventList;
+
+            Statuses = _Context.StatusCrud.GetAllStatusVMs();
+            ObservableCollection<string> _StatusList = new ObservableCollection<string>();
+            foreach (StatusVM statusVM in Statuses)
+            {
+                _StatusList.Add(statusVM.StatusName);
+            }
+            StatusNames = _StatusList;
+
             CancelInspectionCommand = new RelayCommand(CancelInspection);
             AddInspectionCommand = new RelayCommand(AddInspection);
             _InspectionManagementViewModel = inspectionManagementViewModel;
