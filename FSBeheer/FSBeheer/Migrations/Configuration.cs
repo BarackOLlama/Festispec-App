@@ -241,6 +241,7 @@ namespace FSBeheer.Migrations
                     Name = "Pinkpop",
                     Address = "Megaland",
                     City = "Landgraaf",
+                    Zipcode = "6372 XC",
                     Customer = customers[0],
                     IsDeleted = false
                 },
@@ -249,6 +250,7 @@ namespace FSBeheer.Migrations
                     Name = "Appelpop",
                     Address = "Grasweide 15",
                     City = "Heusde",
+                    Zipcode = "1234 AB",
                     Customer = customers[0],
                     IsDeleted = false
                 },
@@ -257,6 +259,7 @@ namespace FSBeheer.Migrations
                     Name = "Zwarte Cross",
                     Address = "Zandweggetje 4",
                     City = "Lichtervoorde",
+                    Zipcode = "2753 HG",
                     Customer = customers[1],
                     IsDeleted = false
                 }
