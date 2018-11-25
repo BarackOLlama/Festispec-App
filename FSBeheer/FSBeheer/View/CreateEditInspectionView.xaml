@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="CreateEditInspectionView" Height="900" Width="1000"
+        Title="CreateEditInspectionView" Height="750" Width="1000"
         DataContext="{Binding CreateEditInspection, Source={StaticResource Locator}}">
 
     <Window.Resources>
@@ -24,7 +24,7 @@
 
         </StackPanel>
 
-        <StackPanel Name="EventOverview" Margin="10,10,10,0" Height="700" Orientation="Horizontal">
+        <StackPanel Name="EventOverview" Margin="10,10,10,0" Height="500" Orientation="Horizontal">
 
             <StackPanel Name="EventCustomerData" Height="600" Margin="10,0,0,5" Width="610" HorizontalAlignment="Left">
                 <StackPanel Height="200" Orientation="Horizontal" Margin="0,0,0,5">
@@ -39,7 +39,7 @@
 
 
 
-                                <Grid DataContext="{Binding EventManagementViewModel}" Height="140">
+                                <Grid Height="140">
                                     <Grid.ColumnDefinitions>
 
                                         <ColumnDefinition Width="80" />
@@ -67,7 +67,7 @@
                                     <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedInspection.Event.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedInspection.Event.Address}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedInspection.Event.City}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding SelectedInspection.Event.EventDates}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     <Label Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                                 </Grid>
@@ -101,16 +101,14 @@
                                     </Grid.RowDefinitions>
 
                                     <Label Grid.Row="0" Grid.Column="0" Content="Naam:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="1" Grid.Column="0" Content="E-mailadres:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="2" Grid.Column="0" Content="Telefoonnummer:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="3" Grid.Column="0" Content="Postcode:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="1" Grid.Column="0" Content="Adres:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="2" Grid.Column="0" Content="Postcode:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
 
 
-                                    <Label Grid.Row="0" Grid.Column="1" Content="Naam:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="1" Grid.Column="1" Content="E-mailadresAdres:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="2" Grid.Column="1" Content="Plaats:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="3" Grid.Column="1" Content="Postcode:" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedInspection.Event.Customer.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedInspection.Event.Customer.Adres}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedInspection.Event.Customer.ZipCode}" VerticalAlignment="Center"/>
 
                                 </Grid>
                             </StackPanel>
@@ -163,7 +161,7 @@
 
             </StackPanel>
 
-            <StackPanel Width="250" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,48,0,0">
+            <StackPanel Width="250" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,0,0,0">
 
 
                 <Border BorderBrush="Black" BorderThickness="1">

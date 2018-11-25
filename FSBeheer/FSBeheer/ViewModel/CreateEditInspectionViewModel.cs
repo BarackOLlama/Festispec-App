@@ -1,13 +1,7 @@
 ﻿using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using FSBeheer.ViewModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FSBeheer.ViewModel
 {
@@ -21,7 +15,6 @@ namespace FSBeheer.ViewModel
         private InspectionManagementViewModel _InspectionManagementViewModel;
         public InspectionVM SelectedInspection { get; set; }
         public EventVM SelectedEvent { get; set; }
-
         public RelayCommand CancelInspectionCommand { get; set; }
         public RelayCommand AddInspectionCommand { get; set; }
 
