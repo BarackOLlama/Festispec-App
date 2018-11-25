@@ -24,17 +24,20 @@ namespace FSBeheer.Crud
 
         public ObservableCollection<EventVM> GetFilteredEventsByString(string must_contain)
         {
-            if (must_contain == null)
+            if (string.IsNullOrEmpty(must_contain))
             {
                 throw new ArgumentNullException(nameof(must_contain));
             }
+
+            must_contain = must_contain.ToLower();
+
             var events = CustomFSContext.Events
                 .ToList()
                 .Where(c =>
-                c.Name.Contains(must_contain) ||
-                c.City.Contains(must_contain) ||
-                c.Customer.Name.Contains(must_contain) ||
-                c.Address.Contains(must_contain) ||
+                c.Name.ToLower().Contains(must_contain) ||
+                c.City.ToLower().Contains(must_contain) ||
+                c.Customer.Name.ToLower().Contains(must_contain) ||
+                c.Address.ToLower().Contains(must_contain) ||
                 c.Id.Equals(must_contain)
                 ).Distinct()
                 .Select(c => new EventVM(c));

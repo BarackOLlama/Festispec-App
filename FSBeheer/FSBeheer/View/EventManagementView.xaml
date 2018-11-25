@@ -19,7 +19,7 @@
         </StackPanel>
         <StackPanel Name="spContent" Margin="30">
             <StackPanel Name="spFilter" Orientation="Horizontal" Margin="0,0,0,10">
-                <local:FilterTextBox x:Name="txtSearchInput" ItemsSource="{Binding Events}"
+                <local:FilterTextBox x:Name="txtSearchInput"
                                      Template="{DynamicResource SearchTextBox}"/>
                 <Button Content="Filter"
                         Command="{Binding FilterListCommand}"
