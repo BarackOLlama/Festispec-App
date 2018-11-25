@@ -42,7 +42,14 @@ namespace FSBeheer.ViewModel
 
         public void FilterList(string filter)
         {
-            Events = _Context.EventCrud.GetFilteredEventsByString(filter);
+            if (string.IsNullOrEmpty(filter))
+            {
+                Events = _Context.EventCrud.GetAllEventVMs();
+            }
+            else
+            {
+                Events = _Context.EventCrud.GetFilteredEventsByString(filter);
+            }
             RaisePropertyChanged(nameof(Events));
         }
     }

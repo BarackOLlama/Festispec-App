@@ -160,12 +160,17 @@ namespace FSBeheer.View
 
     public class FilterTextBox : TextBox
     {
+        int eventCount = 0;
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            base.OnKeyUp(e);
-            if (!string.IsNullOrEmpty(Text))
+            eventCount++;
+            if(eventCount == 1)
             {
                 Filter(Text);
+            }
+            else
+            {
+                eventCount = 0;
             }
         }
 
