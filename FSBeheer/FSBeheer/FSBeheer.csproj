@@ -202,6 +202,7 @@
     <Compile Include="VM\InspectorVM.cs" />
     <Compile Include="VM\QuestionTypeVM.cs" />
     <Compile Include="VM\QuestionVM.cs" />
+    <Compile Include="VM\StatusVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

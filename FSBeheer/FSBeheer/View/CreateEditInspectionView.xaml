@@ -67,8 +67,8 @@
                                     <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedInspection.Event.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedInspection.Event.Address}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedInspection.Event.City}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding SelectedInspection.Event.EventDates}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding SelectedInspection.Event.Zipcode}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="4" Grid.Column="1" Content="{Binding SelectedInspection.Event.EventDates}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                                 </Grid>
 
@@ -137,19 +137,19 @@
 
                             </Grid.RowDefinitions>
 
-                            <Label Grid.Row="0" Grid.Column="0" Content="Inspectie begindatum" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                            <Label Grid.Row="1" Grid.Column="0" Content="Inspectie begindatum" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                            <Label Grid.Row="2" Grid.Column="0" Content="Inspectie begintijd" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                            <Label Grid.Row="3" Grid.Column="0" Content="Inspectie eindtijd" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            <Label Grid.Row="0" Grid.Column="0" Content="Begindatum" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            <Label Grid.Row="1" Grid.Column="0" Content="Einddatum" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            <Label Grid.Row="2" Grid.Column="0" Content="Begintijd" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                            <Label Grid.Row="3" Grid.Column="0" Content="Eindtijd" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                             <Label Grid.Row="4" Grid.Column="0" Content="Inspecteur(s)" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                             <Label Grid.Row="5" Grid.Column="0" Content="Status" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
 
 
-                            <DatePicker Grid.Row="0" Grid.Column="1" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
-                            <DatePicker Grid.Row="1" Grid.Column="1" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
-                            <DatePicker Grid.Row="2" Grid.Column="1" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
-                            <DatePicker Grid.Row="3" Grid.Column="1" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
+                            <DatePicker Grid.Row="0" Grid.Column="1" SelectedDateFormat="Short" SelectedDate="{Binding NewStartDate, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
+                            <DatePicker Grid.Row="1" Grid.Column="1" SelectedDateFormat="Short" SelectedDate="{Binding NewEndDate, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" Validation.Error="TextBox_Error" Text="{Binding NewStartTime, StringFormat=HH:mm, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NewEndTime, StringFormat=HH:mm, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <TextBox Grid.Row="4" Grid.Column="1" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <ComboBox Grid.Row="5" Grid.Column="1" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
 
@@ -176,7 +176,7 @@
                         <StackPanel Height="390" Margin="10,20,10,0">
                             <Border BorderBrush="Black" BorderThickness="1">
 
-                                <TextBox Height="380"/>
+                                <TextBox Height="380" TextWrapping="Wrap"/>
 
                             </Border>
                         </StackPanel>
@@ -193,9 +193,9 @@
         <StackPanel x:Name="spInterfaceButtons" VerticalAlignment="Bottom"
                     Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,20,0">
 
-            <Button Content="Save" Command="{Binding AddInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>
+            <Button Content="Opslaan" Command="{Binding AddInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>
 
-            <Button Content="Cancel" Command="{Binding CancelInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>
+            <Button Content="Annuleren" Command="{Binding CancelInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>
 
         </StackPanel>
     </StackPanel>

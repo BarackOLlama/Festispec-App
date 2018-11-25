@@ -36,6 +36,11 @@ namespace FSBeheer.VM
             get { return _event.City; }
         }
 
+        public string Zipcode
+        {
+            get { return _event.Zipcode; }
+        }
+
         public string CustomerName
         {
             get {
