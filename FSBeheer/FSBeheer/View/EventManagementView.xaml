@@ -15,15 +15,28 @@
             <Button Content="Back"
                     Command="{Binding BackHomeCommand}"
                     CommandParameter="{Binding ElementName=EventManagementViewName}"
-                    />
+                    Template="{DynamicResource InterfaceButton}"/>
         </StackPanel>
         <StackPanel Name="spContent" Margin="30">
             <StackPanel Name="spFilter" Orientation="Horizontal" Margin="0,0,0,10">
-                <TextBox Name="txtSearchInput"
-                         Text="{Binding FilterText, Mode=TwoWay}"/>
+                <local:FilterTextBox x:Name="txtSearchInput" ItemsSource="{Binding Events}"
+                                     Template="{DynamicResource SearchTextBox}"/>
                 <Button Content="Filter"
-                        Command="{Binding FilterListCommand}"/>
+                        Command="{Binding FilterListCommand}"
+                        Template="{DynamicResource SearchButton}"/>
             </StackPanel>
+            <local:FilteredComboBox ItemsSource="{Binding Events}"
+                                    SelectedItem="{Binding SelectedEvent}"
+                                    DisplayMemberPath="Name"
+                                    IsEditable="True"
+                                    IsTextSearchEnabled="False"
+                                    StaysOpenOnEdit="True">
+                <local:FilteredComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel VirtualizationMode="Recycling"/>
+                    </ItemsPanelTemplate>
+                </local:FilteredComboBox.ItemsPanel>
+            </local:FilteredComboBox>
             <DataGrid ItemsSource="{Binding Events}" MaxHeight="250" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Naam" Binding="{Binding Name}"/>
