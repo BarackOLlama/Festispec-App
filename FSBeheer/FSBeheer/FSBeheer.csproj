@@ -129,7 +129,6 @@
     <Compile Include="View\EditQuestionView.xaml.cs">
       <DependentUpon>EditQuestionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="View\CreateEditContactView.xaml.cs">
       <DependentUpon>CreateEditContactView.xaml</DependentUpon>
     </Compile>
