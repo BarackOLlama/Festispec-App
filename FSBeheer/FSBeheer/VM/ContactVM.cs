@@ -61,6 +61,7 @@ namespace FSBeheer.VM
         public int? CustomerId
         {
             get { return _contact.Customer.Id; }
+            set { _contact.CustomerId = value; RaisePropertyChanged(nameof(CustomerId)); } 
         }
 
         public bool IsDeleted

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
-        Name="CreateEditContact"
+        Name="CreateEditContactWindow"
         mc:Ignorable="d"
         DataContext="{Binding CreateEditContact, Source={StaticResource Locator}}"
         Title="CreateEditContactView" Height="400" Width="385">
@@ -61,9 +61,9 @@
             </StackPanel>
             <StackPanel Height="120"></StackPanel>
             <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="2">
-                <Button Content="Annuleer" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                <Button Content="Verwijder" Command="{Binding DeleteContactCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                <Button Content="Accepteer" Command="{Binding SaveChangesCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                <Button Content="Annuleer" CommandParameter="{Binding ElementName=CreateEditContactWindow}" Command="{Binding DiscardContactCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                <Button Content="Verwijder" CommandParameter="{Binding ElementName=CreateEditContactWindow}" Command="{Binding DeleteContactCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                <Button Content="Accepteer" Command="{Binding SaveChangesContactCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
             </DockPanel>
         </StackPanel>
     </StackPanel>

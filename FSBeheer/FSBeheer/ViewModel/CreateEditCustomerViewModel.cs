@@ -53,7 +53,7 @@ namespace FSBeheer.ViewModel
 
         private void OpenCreateContact()
         {
-            new CreateEditContactView().Show();
+            new CreateEditContactView(null, Customer).Show();
         }
 
         private void OpenEditContact()
@@ -64,7 +64,7 @@ namespace FSBeheer.ViewModel
             }
             else
             {
-                new CreateEditContactView(_selectedContact).Show();
+                new CreateEditContactView(_selectedContact, Customer).Show();
             }
         }
 
@@ -98,10 +98,14 @@ namespace FSBeheer.ViewModel
 
         private void SaveChanges()
         {
-            _Context.CustomerCrud.GetAllCustomerVMs().Add(Customer);
-            _Context.SaveChanges();
+            MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                _Context.CustomerCrud.GetAllCustomerVMs().Add(Customer);
+                _Context.SaveChanges();
 
-            Messenger.Default.Send(true, "UpdateCustomerList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
+                Messenger.Default.Send(true, "UpdateCustomerList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
+            }
         }
 
         private void Discard(Window window)

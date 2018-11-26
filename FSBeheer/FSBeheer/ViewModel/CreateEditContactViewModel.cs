@@ -15,24 +15,33 @@ namespace FSBeheer.ViewModel
     {
         public ContactVM Contact { get; set; }
 
-        public RelayCommand SaveChangesCommand { get; set; }
+        public CustomerVM _linkCustomer { get; set; }
 
-        public RelayCommand<Window> DiscardCommand { get; set; }
+        public RelayCommand SaveChangesContactCommand { get; set; }
+
+        public RelayCommand<Window> DiscardContactCommand { get; set; }
+
+        public RelayCommand<Window> DeleteContactCommand { get; set; }
 
         private CustomFSContext _Context;
 
         public CreateEditContactViewModel()
         {
             _Context = new CustomFSContext();
-            SaveChangesCommand = new RelayCommand(SaveChanges);
-            DiscardCommand = new RelayCommand<Window>(Discard);
+            SaveChangesContactCommand = new RelayCommand(SaveChangesContact);
+            DiscardContactCommand = new RelayCommand<Window>(DiscardContact);
+            DeleteContactCommand = new RelayCommand<Window>(DeleteContact);
         }
 
-        public void SetContact(ContactVM contact)
+        public void SetContact(ContactVM contact, CustomerVM customer)
         {
+            _linkCustomer = customer;
             if (contact == null)
             {
-                Contact = new ContactVM();
+                Contact = new ContactVM()
+                {
+                    CustomerId = _linkCustomer.Id
+                };
                 _Context.Contacts.Add(Contact.ToModel());
                 RaisePropertyChanged(nameof(Contact));
             }
@@ -43,22 +52,39 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        private void SaveChanges()
+        private void SaveChangesContact()
         {
-            _Context.ContactCrud.GetAllContactVMs().Add(Contact);
-            _Context.SaveChanges();
+            MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                _Context.ContactCrud.GetAllContactVMs().Add(Contact);
+                _Context.SaveChanges();
 
-            Messenger.Default.Send(true, "UpdateContactList"); // Stuurt object/boolean true naar ontvanger, die dan zijn methode init() uitvoert, stap II
+                Messenger.Default.Send(true, "UpdateContactList");
+            }
         }
 
-        private void Discard(Window window)
+        private void DiscardContact(Window window)
         {
             MessageBoxResult result = MessageBox.Show("Close without saving?", "Confirm discard", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.Cancel)
+            if (result == MessageBoxResult.OK)
             {
                 _Context.Dispose();
                 Contact = null;
                 window?.Close();
+            }
+        }
+
+        private void DeleteContact(Window window)
+        {
+            MessageBoxResult result = MessageBox.Show("Delete the selected contactperson?", "Confirm Delete", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                Contact.IsDeleted = true;
+                _Context.SaveChanges(); 
+                window.Close();
+
+                Messenger.Default.Send(true, "UpdateContactList");
             }
         }
     }
