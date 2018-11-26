@@ -64,7 +64,7 @@ namespace FSBeheer.VM
             set { _customer.StartingDate = value; RaisePropertyChanged(nameof(StartingDate)); }
         }
 
-        public short? ChamberOfCommerceNumber
+        public decimal? ChamberOfCommerceNumber
         {
             get { return _customer.ChamberOfCommerceNumber; }
             set { _customer.ChamberOfCommerceNumber = value; RaisePropertyChanged(nameof(ChamberOfCommerceNumber)); }
