@@ -8,10 +8,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using System;
+using GalaSoft.MvvmLight;
 
 namespace FSBeheer.VM
 {
-    public class QuestionnaireVM
+    public class QuestionnaireVM : ViewModelBase
     {
         private Questionnaire _questionnaire;
         public ObservableCollection<QuestionVM> Questions { get; set; }
@@ -28,6 +29,7 @@ namespace FSBeheer.VM
                     .Where(e => e.QuestionnaireId == _questionnaire.Id)
                     .Select(e => new QuestionVM(e));
                 Questions = new ObservableCollection<QuestionVM>(questions);
+                context.Dispose();
             }
         }
 
@@ -38,10 +40,7 @@ namespace FSBeheer.VM
 
         public int Id
         {
-            get
-            {
-                return _questionnaire.Id;
-            }
+            get { return _questionnaire.Id; }
         }
 
         public string Name
@@ -53,6 +52,7 @@ namespace FSBeheer.VM
             set
             {
                 _questionnaire.Name = value;
+                base.RaisePropertyChanged("Name");
             }
         }
 
@@ -65,6 +65,7 @@ namespace FSBeheer.VM
             set
             {
                 _questionnaire.Instructions = value;
+                base.RaisePropertyChanged("Instructions");
             }
         }
 
@@ -77,6 +78,15 @@ namespace FSBeheer.VM
             set
             {
                 _questionnaire.Comments = value;
+                base.RaisePropertyChanged("Comments");
+            }
+        }
+
+        public int QuestionCount
+        {
+            get
+            {
+                return 0;
             }
         }
 

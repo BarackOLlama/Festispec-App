@@ -11,6 +11,7 @@ namespace FSBeheer.ViewModel
     {
         private QuestionnaireManagementViewModel _questionnaireManagementViewModel;
         private EditQuestionnaireViewModel _questionnaireViewModel;
+
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
@@ -107,7 +108,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                _questionnaireViewModel = new EditQuestionnaireViewModel(_questionnaireManagementViewModel.SelectedQuestionnaire, _questionnaireManagementViewModel.Questionnaires);
+                _questionnaireViewModel = new EditQuestionnaireViewModel(_questionnaireManagementViewModel.SelectedQuestionnaire);
                 return _questionnaireViewModel;
             }
         }
@@ -117,6 +118,14 @@ namespace FSBeheer.ViewModel
             get
             {
                 return new CreateQuestionViewModel(_questionnaireManagementViewModel.SelectedQuestionnaire);
+            }
+        }
+
+        public EditQuestionViewModel EditQuestion
+        {
+            get
+            {
+                return new EditQuestionViewModel(_questionnaireViewModel.SelectedQuestion);
             }
         }
 

@@ -1,15 +1,9 @@
-﻿using FSBeheer.Model;
-using FSBeheer.View;
+﻿using FSBeheer.View;
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace FSBeheer.ViewModel
 {
@@ -18,6 +12,7 @@ namespace FSBeheer.ViewModel
         private QuestionnaireVM _selectedQuestionnaire;
         private CustomFSContext _context;
         public ObservableCollection<QuestionnaireVM> Questionnaires { get; set; }
+
         public RelayCommand ShowEditQuestionnaireViewCommand { get; set; }
         public RelayCommand CreateQuestionnaireCommand { get; set; }
         public QuestionnaireManagementViewModel()
@@ -31,10 +26,7 @@ namespace FSBeheer.ViewModel
         }
         public QuestionnaireVM SelectedQuestionnaire
         {
-            get
-            {
-                return _selectedQuestionnaire;
-            }
+            get { return _selectedQuestionnaire; }
             set
             {
                 _selectedQuestionnaire = value;

@@ -61,7 +61,6 @@ namespace FSBeheer.ViewModel
             AddQuestionCommand = new RelayCommand(AddQuestion, CanAddQuestion);
             Question = new QuestionVM();
             Question.Type = _selectedQuestionType.ToModel();
-            //TODO there should be a cleaner way to do this.
             Question.QuestionnaireId = selectedQuestionnaireVM.Id;
         }
 
