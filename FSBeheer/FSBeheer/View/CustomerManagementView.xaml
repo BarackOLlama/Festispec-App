@@ -15,6 +15,16 @@
                     Command="{TemplateBinding Command}"
                     CommandParameter="{TemplateBinding CommandParameter}"/>
         </ControlTemplate>
+        <ControlTemplate x:Key="SearchTextBox" TargetType="TextBox">
+            <TextBox FontSize="15" Width="700" Background="DarkGray"
+                     Text="{TemplateBinding Text}"/>
+        </ControlTemplate>
+        <ControlTemplate x:Key="SearchButton" TargetType="Button">
+            <Button FontSize="15"
+                    Content="{TemplateBinding Content}"
+                    Command="{TemplateBinding Command}"
+                    CommandParameter="{TemplateBinding CommandParameter}"/>
+        </ControlTemplate>
     </Window.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -28,11 +38,13 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="20">
-                    <StackPanel Orientation="Horizontal" Height="30">
-                        <TextBox Height="30" VerticalAlignment="Center" Background="DarkGray" Width="650" Text="{Binding SearchText}"></TextBox>
-                        <Button Background="WhiteSmoke" Margin="10,0,0,0" Width="80" Content="Filter"></Button>
+                    <StackPanel Name="spContent">
+                        <StackPanel Name="spFilter" Orientation="Horizontal" Margin="0,0,0,10">
+                            <TextBox Name="txtSearchInput" Template="{StaticResource SearchTextBox}"/>
+                            <Button Content="Filter" Template="{StaticResource SearchButton}"/>
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Name="spContent" Margin="0,0,0,2">
+                    <StackPanel Margin="0,0,0,2">
                         <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}" 
                       ItemsSource="{Binding Customers}" Margin="0,6,0,0" BorderBrush="#FF979494"
                       GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFF0E0E0" HeadersVisibility="Column">
@@ -40,14 +52,8 @@
                                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Foreground="#FF1D1616" />
                                 <DataGridTextColumn Header="Naam" Binding="{Binding Name}" Width="*" />
                                 <DataGridTextColumn Header="Adres" Binding="{Binding Adres}" Width="*" />
-                                <DataGridTemplateColumn Width="170">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                    BorderThickness="1" BorderBrush="#FF999A9B" Foreground="White" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="20" Background="#FF6F9BDA">Delete</Button>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="City" Binding="{Binding City}" Width="*" />
+                                <DataGridTextColumn Header="Starting date" Binding="{Binding StartingDate}" Width="*" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>

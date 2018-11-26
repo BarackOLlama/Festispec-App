@@ -73,8 +73,7 @@ namespace FSBeheer.ViewModel
             
             get
             {
-                throw new NotImplementedException();
-                //return new CreateEditCustomerViewModel(CustomerManagement.SelectedCustomer);
+                return new CreateEditCustomerViewModel();
             }
         }
 
@@ -104,6 +103,15 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public CreateEditContactViewModel CreateEditContact
+        {
+            get
+            {
+                return new CreateEditContactViewModel();
+            }
+        }
+
+        public QuestionnaireViewModel QuestionnaireManagement
         public EditQuestionnaireViewModel EditQuestionnaireViewModel
         {
             get
