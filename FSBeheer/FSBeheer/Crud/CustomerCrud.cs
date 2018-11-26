@@ -21,6 +21,7 @@ namespace FSBeheer.Crud
         {
             var customer = CustomFSContext.Customers
                .ToList()
+               .Where(c => c.IsDeleted == false)
                .Select(c => new CustomerVM(c));
             var _customers = new ObservableCollection<CustomerVM>(customer);
 

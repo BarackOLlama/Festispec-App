@@ -16,6 +16,8 @@ namespace FSBeheer.ViewModel
 
         public RelayCommand<Window> DiscardCommand { get; set; }
 
+        public RelayCommand<Window> DeleteCustomerCommand { get; set; }
+
         public ObservableCollection<ContactVM> Contacts { get; set; }
 
         private ContactVM _selectedContact { get; set; }
@@ -29,6 +31,7 @@ namespace FSBeheer.ViewModel
             Init();
             SaveChangesCommand = new RelayCommand(SaveChanges);
             DiscardCommand = new RelayCommand<Window>(Discard);
+            DeleteCustomerCommand = new RelayCommand<Window>(DeleteCustomer);
         }
 
         internal void Init()
@@ -88,6 +91,25 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        // TODO: Connect to a new contact person when adding a customer 
+        /// <summary>
+        /// Set Customer on Deleted, and also all contacts connected to it (fields)
+        /// </summary>
+        /// <param name="window"></param>
+        private void DeleteCustomer(Window window)
+        {
+            MessageBoxResult result = MessageBox.Show("Delete the selected customer?", "Confirm Delete", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                Customer.IsDeleted = true;
+                foreach (var e in Contacts)
+                {
+                    e.IsDeleted = true;
+                }
+                _Context.SaveChanges(); // TODO: Changes of last changes to customer stays, do we want that?
+                window.Close();
+
+                Messenger.Default.Send(true, "UpdateCustomerList");
+            }
+        }
     }
 }

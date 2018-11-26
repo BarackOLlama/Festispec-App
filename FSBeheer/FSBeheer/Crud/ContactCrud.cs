@@ -16,7 +16,7 @@ namespace FSBeheer.Crud
         {
             var contact = CustomFSContext.Contacts
                .ToList()
-               .Where(c => c.CustomerId == _customer.Id)
+               .Where(c => c.CustomerId == _customer.Id && c.IsDeleted == false)
                .Select(c => new ContactVM(c));
             var _contacts = new ObservableCollection<ContactVM>(contact);
 
