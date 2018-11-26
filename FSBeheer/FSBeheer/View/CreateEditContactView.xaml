@@ -7,7 +7,7 @@
         Name="CreateEditContact"
         mc:Ignorable="d"
         DataContext="{Binding CreateEditContact, Source={StaticResource Locator}}"
-        Title="CreateEditContactView" Height="400" Width="450">
+        Title="CreateEditContactView" Height="400" Width="385">
     <Window.Resources>
         <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
             <Button FontSize="15" Margin="5"
@@ -28,12 +28,6 @@
     </Window.Resources>
 
     <StackPanel Orientation="Horizontal">
-        <StackPanel Name="spBackButton" HorizontalAlignment="Left" Margin="2">
-            <Button Content="Back"
-                    Command="{Binding BackHomeCommand}"
-                    CommandParameter="{Binding ElementName=CreateEditContactView}"
-                    Template="{StaticResource InterfaceButtonTemplate}"/>
-        </StackPanel>
         <StackPanel Margin="5 5, 5, 5" Width="100">
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Contact Naam:"></TextBox>
@@ -48,7 +42,8 @@
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="CP: Notitie"></TextBox>
             </Border>
         </StackPanel>
-        <StackPanel Margin="5" Width="250">
+        <StackPanel Margin="5" Width="250" Orientation="Vertical">
+            <StackPanel>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox Foreground="Black" Text="{Binding Contact.Name}" FontSize="12"></TextBox>
             </Border>
@@ -63,12 +58,9 @@
                     <TextBox TextWrapping="Wrap" Foreground="Black" Text="{Binding Contact.Note}" FontSize="12"></TextBox>
                 </ScrollViewer>
             </Border>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="75"></RowDefinition>
-                </Grid.RowDefinitions>
-            </Grid>
-            <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
+            </StackPanel>
+            <StackPanel Height="120"></StackPanel>
+            <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="2">
                 <Button Content="Annuleer" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
                 <Button Content="Verwijder" Command="{Binding DeleteContactCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
                 <Button Content="Accepteer" Command="{Binding SaveChangesCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FSBeheer.ViewModel;
+using FSBeheer.VM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,10 @@ namespace FSBeheer.View
     /// </summary>
     public partial class CreateEditContactView : Window
     {
-        public CreateEditContactView()
+        public CreateEditContactView(ContactVM contact = null)
         {
             InitializeComponent();
+            (DataContext as CreateEditContactViewModel).SetContact(contact);
         }
     }
 }

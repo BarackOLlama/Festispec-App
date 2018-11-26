@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
         DataContext="{Binding CreateEditCustomer, Source={StaticResource Locator}}"
-        Title="CreateEditCustomerView" Height="450" Width="900" Background="White">
+        Title="CreateEditCustomerView" Height="450" Width="850" Background="White">
     <Window.Resources>
         <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
             <Button FontSize="15" Margin="5"
@@ -28,12 +28,6 @@
     </Window.Resources>
 
     <StackPanel Orientation="Horizontal" Margin="5">
-        <StackPanel Name="spBackButton" HorizontalAlignment="Left">
-            <Button Content="Back"
-                    Command="{Binding BackHomeCommand}"
-                    CommandParameter="{Binding ElementName=EventManagementViewName}"
-                    Template="{StaticResource InterfaceButtonTemplate}"/>
-        </StackPanel>
         <StackPanel Margin="5"  Width="100">
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="ID:"></TextBox>
@@ -81,22 +75,29 @@
             </Border>
         </StackPanel>
         <StackPanel Margin="5" Width="475" Orientation="Vertical">
-            <StackPanel Margin="0,0,0,2" Height="350">
-                <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedContacts, Mode=TwoWay}" 
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Contacten" FontSize="28" FontWeight="ExtraBold" Margin="5"/>
+                <DockPanel Margin="5">
+                    <Button Content="Aanpassen" Command="{Binding EditContactWindowCommand}" Margin="180,0,0,0" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Nieuw" Command="{Binding CreateContactWindowCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                </DockPanel>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,2" Height="300">
+                <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedContact, Mode=TwoWay}" 
                       ItemsSource="{Binding Contacts}" Margin="0,6,0,0" BorderBrush="#FF979494"
                       GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFF0E0E0" HeadersVisibility="Column">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID" Binding="{Binding Id}" Foreground="#FF1D1616" />
                         <DataGridTextColumn Header="Naam" Binding="{Binding Name}" Width="*" />
                         <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*" />
-                        <DataGridTextColumn Header="Emailadres" Binding="{Binding EmailAdres}" Width="*" />
+                        <DataGridTextColumn Header="Emailadres" Binding="{Binding Email}" Width="*" />
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
             <StackPanel Height="50">
                 <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
                     <Button Content="Annuleer" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                    <Button Content="Verwijder" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DeleteCustomerCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Verwijder" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DeleteContactCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
                     <Button Content="Accepteer" Command="{Binding SaveChangesCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
                 </DockPanel>
             </StackPanel>

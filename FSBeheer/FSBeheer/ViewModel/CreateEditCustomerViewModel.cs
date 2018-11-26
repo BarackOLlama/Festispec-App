@@ -1,4 +1,5 @@
-﻿using FSBeheer.VM;
+﻿using FSBeheer.View;
+using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -18,6 +19,10 @@ namespace FSBeheer.ViewModel
 
         public RelayCommand<Window> DeleteCustomerCommand { get; set; }
 
+        public RelayCommand CreateContactWindowCommand { get; set; }
+
+        public RelayCommand EditContactWindowCommand { get; set; }
+
         public ObservableCollection<ContactVM> Contacts { get; set; }
 
         private ContactVM _selectedContact { get; set; }
@@ -32,6 +37,8 @@ namespace FSBeheer.ViewModel
             SaveChangesCommand = new RelayCommand(SaveChanges);
             DiscardCommand = new RelayCommand<Window>(Discard);
             DeleteCustomerCommand = new RelayCommand<Window>(DeleteCustomer);
+            CreateContactWindowCommand = new RelayCommand(OpenCreateContact);
+            EditContactWindowCommand = new RelayCommand(OpenEditContact);
         }
 
         internal void Init()
@@ -41,6 +48,23 @@ namespace FSBeheer.ViewModel
             {
                 Contacts = _Context.ContactCrud.GetContactByCustomer(Customer);
                 RaisePropertyChanged(nameof(Contacts));
+            }
+        }
+
+        private void OpenCreateContact()
+        {
+            new CreateEditContactView().Show();
+        }
+
+        private void OpenEditContact()
+        {
+            if (_selectedContact == null)
+            {
+                MessageBox.Show("No contact selected");
+            }
+            else
+            {
+                new CreateEditContactView(_selectedContact).Show();
             }
         }
 
