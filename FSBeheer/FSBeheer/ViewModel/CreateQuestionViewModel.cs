@@ -67,13 +67,12 @@ namespace FSBeheer.ViewModel
         public void AddQuestion()
         {
             using (var context = new CustomFSContext())
-            {
-                //TODO hard coded, dirty.
+                //clear irrelevant fields to avoid confusion in case the user mistakenly filled them in.
                 if (SelectedQuestionType.Name == "Multiple Choice Vraag")
                 {//clear columns
                     Question.Columns = null;
                 }
-                else if (SelectedQuestionType.Name == "Open vraag")
+                else if (SelectedQuestionType.Name == "Open Vraag")
                 {//clear options and columns
                     Question.Columns = null;
                     Question.Options = null;
