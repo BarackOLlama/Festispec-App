@@ -21,6 +21,7 @@ namespace FSBeheer.Model
         public string Name { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
+        public string Zipcode { get; set; }
         public int? CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual ObservableCollection<EventDate> EventDates { get; set; }
