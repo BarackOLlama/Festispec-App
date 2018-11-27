@@ -1,4 +1,5 @@
 ﻿using FSBeheer.VM;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,42 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.ViewModel
 {
-    public class AvailableInspectorViewModel
+    public class AvailableInspectorViewModel : ViewModelBase
     {
-        public ObservableCollection<AvailabilityVM> AvailableInspectors;
+        private CustomFSContext CustomFSContext;
 
-        public ObservableCollection<AvailabilityVM> ChosenInspectors;
+        public ObservableCollection<AvailabilityVM> AvailableInspectors { get; set; }
 
-        public RelayCommand<InspectorVM> ChooseInspectorCommand;
+        public ObservableCollection<AvailabilityVM> ChosenInspectors { get; set; }
+
+        public RelayCommand<InspectorVM> SetInspectorCommand { get; set; }
+
+        public RelayCommand<InspectorVM> RemoveInspectorCommand { get; set; }
+
+        private InspectorVM _selectedInspector { get; set; }
 
         public AvailableInspectorViewModel()
         {
-            ChooseInspectorCommand = new RelayCommand<InspectorVM>(DummyMethod);
+            Init();
+            SetInspectorCommand = new RelayCommand<InspectorVM>(DummyMethod);
+            RemoveInspectorCommand = new RelayCommand<InspectorVM>(DummyMethod);
+        }
+
+        public InspectorVM SelectedInspector
+        {
+            get { return _selectedInspector; }
+            set
+            {
+                _selectedInspector = value;
+                base.RaisePropertyChanged(nameof(SelectedInspector));
+            }
+        }
+
+        internal void Init()
+        {
+            CustomFSContext = new CustomFSContext();
+            AvailableInspectors = CustomFSContext.AvailabilityCrud.GetAvailabilities();
+            RaisePropertyChanged(nameof(AvailableInspectors));
         }
 
         private void DummyMethod(InspectorVM commandParameter)
