@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Globalization;
+﻿using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -161,37 +159,18 @@ namespace FSBeheer.View
 
     public class FilterTextBox : TextBox
     {
-        int eventCount = 0;
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            eventCount++;
-            if(eventCount == 1)
-            {
-                Filter(Text);
-            }
-            else
-            {
-                eventCount = 0;
-            }
+            Filter(Text);
+            e.Handled = true;
         }
 
         private void Filter(string f)
         {
-            DataContext.GetType().GetMethod("FilterList").Invoke(DataContext, new object[] { f });
-        }
-    }
-
-    public class FilterConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            //DataContext.GetType().GetMethod("FilterList").Invoke(DataContext, new object[] { f });
-            return value;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
+            var method = DataContext.GetType().GetMethod("FilterList"); // find method FilterList in your xaml's viewmodel
+            if (method != null) { // if method exists
+                method.Invoke(DataContext, new object[] { f }); // run it with parameter f
+            }
         }
     }
 }

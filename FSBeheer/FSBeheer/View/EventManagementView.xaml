@@ -37,7 +37,7 @@
                     </ItemsPanelTemplate>
                 </local:FilteredComboBox.ItemsPanel>
             </local:FilteredComboBox>
-            <DataGrid ItemsSource="{Binding Events}" MaxHeight="250" AutoGenerateColumns="False">
+            <DataGrid  ItemsSource="{Binding Events}" MaxHeight="250" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Naam" Binding="{Binding Name}"/>
                 </DataGrid.Columns>
