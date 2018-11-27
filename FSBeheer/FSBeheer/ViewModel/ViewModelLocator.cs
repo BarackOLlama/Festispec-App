@@ -102,7 +102,15 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public QuestionnaireViewModel EditQuestionnaireViewModel
+        public CreateEditContactViewModel CreateEditContact
+        {
+            get
+            {
+                return new CreateEditContactViewModel();
+            }
+        }
+
+        public QuestionnaireViewModel QuestionnaireManagement
         {
             get
             {

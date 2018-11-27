@@ -69,5 +69,11 @@ namespace FSBeheer.VM
             get { return _customer.ChamberOfCommerceNumber; }
             set { _customer.ChamberOfCommerceNumber = value; RaisePropertyChanged(nameof(ChamberOfCommerceNumber)); }
         }
+
+        public bool IsDeleted
+        {
+            get { return _customer.IsDeleted; }
+            set { _customer.IsDeleted = value; RaisePropertyChanged(nameof(IsDeleted)); }
+        }
     }
 }
