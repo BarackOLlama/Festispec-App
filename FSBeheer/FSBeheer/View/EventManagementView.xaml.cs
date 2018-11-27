@@ -18,16 +18,11 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for EventManagementView.xaml
     /// </summary>
-    public partial class EventManagementView : Window
+    public partial class EventManagementView : BaseView
     {
         public EventManagementView()
         {
             InitializeComponent();
-        }
-
-        private void TextBox_PreviewKeyUp(object sender, KeyEventArgs e)
-        {
-
         }
     }
 }
