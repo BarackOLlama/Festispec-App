@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
         DataContext="{Binding CreateEditCustomer, Source={StaticResource Locator}}"
-        Title="CreateEditCustomerView" Height="450" Width="800" Background="White">
+        Title="CreateEditCustomerView" Height="450" Width="850" Background="White">
     <Window.Resources>
         <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
             <Button FontSize="15" Margin="5"
@@ -15,8 +15,18 @@
                     Command="{TemplateBinding Command}"
                     CommandParameter="{TemplateBinding CommandParameter}"/>
         </ControlTemplate>
-
+        <ControlTemplate x:Key="SearchTextBox" TargetType="TextBox">
+            <TextBox FontSize="15" Width="300"
+                     Text="{TemplateBinding Text}"/>
+        </ControlTemplate>
+        <ControlTemplate x:Key="SearchButton" TargetType="Button">
+            <Button FontSize="15"
+                    Content="{TemplateBinding Content}"
+                    Command="{TemplateBinding Command}"
+                    CommandParameter="{TemplateBinding CommandParameter}"/>
+        </ControlTemplate>
     </Window.Resources>
+
     <StackPanel Orientation="Horizontal" Margin="5">
         <StackPanel Margin="5"  Width="100">
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
@@ -35,10 +45,10 @@
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Postcode:"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Startdatum:"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="KVK:"></TextBox>
+            </Border>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5" Height="26">
+                <TextBox IsReadOnly="True" Foreground="Black" Margin="0,3,3,3" BorderThickness="0" FontSize="12" Text="Startdatum:"></TextBox>
             </Border>
         </StackPanel>
         <StackPanel Margin="5"  Width="225">
@@ -58,56 +68,39 @@
                 <TextBox Foreground="Black" Text="{Binding Customer.ZipCode}" FontSize="12"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox Foreground="Black" Text="{Binding Customer.StartingDate}" FontSize="12"></TextBox>
+                <TextBox Foreground="Black" Text="{Binding Customer.ChamberOfCommerceNumber}" MaxLength="8" FontSize="12"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox Foreground="Black" Text="{Binding Customer.ChamberOfCommerceNumber}" FontSize="12"></TextBox>
+                <DatePicker HorizontalAlignment="Center" VerticalAlignment="Center" Width="215" SelectedDate="{Binding Customer.StartingDate}"/>
             </Border>
         </StackPanel>
-        <StackPanel Margin="50, 5, 5, 5" Width="100">
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Contact Naam:"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="CP: Tel."></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="CP: Email"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="CP: Rol"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="CP: Notitie"></TextBox>
-            </Border>
-        </StackPanel>
-        <StackPanel Margin="5" Width="225">
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox Foreground="Black" Text="{Binding Contact.Naam}" FontSize="12"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox Foreground="Black" Text="{Binding Contact.Telefoon}" FontSize="12"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="3,5,6.8,5">
-                <TextBox Foreground="Black" Text="{Binding Contact.Email}" FontSize="12"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox Foreground="Black" Text="{Binding Contact.Rol}" FontSize="12"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <ScrollViewer Height="100">
-                    <TextBox TextWrapping="Wrap" Foreground="Black" Text="{Binding Contact.Notitie}" FontSize="12"></TextBox>
-                </ScrollViewer>
-            </Border>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="125"></RowDefinition>
-                </Grid.RowDefinitions>
-            </Grid>
-            <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
-                <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                <Button Content="Goedkeuren" Command="{Binding SaveChangesCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-            </DockPanel>
+        <StackPanel Margin="5" Width="475" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Contacten" FontSize="28" FontWeight="ExtraBold" Margin="5"/>
+                <DockPanel Margin="5">
+                    <Button Content="Aanpassen" Command="{Binding EditContactWindowCommand}" Margin="180,0,0,0" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Nieuw" Command="{Binding CreateContactWindowCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                </DockPanel>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,2" Height="300">
+                <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedContact, Mode=TwoWay}" 
+                      ItemsSource="{Binding Contacts}" Margin="0,6,0,0" BorderBrush="#FF979494"
+                      GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFF0E0E0" HeadersVisibility="Column">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Binding="{Binding Id}" Foreground="#FF1D1616" />
+                        <DataGridTextColumn Header="Naam" Binding="{Binding Name}" Width="*" />
+                        <DataGridTextColumn Header="Phone Number" Binding="{Binding PhoneNumber}" Width="*" />
+                        <DataGridTextColumn Header="Emailadres" Binding="{Binding Email}" Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+            <StackPanel Height="50">
+                <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
+                    <Button Content="Annuleer" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Verwijder" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DeleteCustomerCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Accepteer" Command="{Binding SaveChangesCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                </DockPanel>
+            </StackPanel>
         </StackPanel>
     </StackPanel>
 

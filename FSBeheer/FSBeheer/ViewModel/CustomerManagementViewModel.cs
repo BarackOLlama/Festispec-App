@@ -16,7 +16,8 @@ namespace FSBeheer.ViewModel
         public RelayCommand EditCustomerWindowCommand { get; set; }
 
         public RelayCommand CreateCustomerWindowCommand { get; set; }
-        public RelayCommand DeleteCommand { get; set; }
+
+        public RelayCommand SearchTextCommand { get; set; }
 
         private CustomerVM _selectedCustomer { get; set; } 
 
@@ -38,7 +39,6 @@ namespace FSBeheer.ViewModel
             Init();
             CreateCustomerWindowCommand = new RelayCommand(OpenCreateCustomer);
             EditCustomerWindowCommand = new RelayCommand(OpenEditCustomer);
-            DeleteCommand = new RelayCommand(DeleteCustomer);
         }
 
         internal void Init()
@@ -62,15 +62,6 @@ namespace FSBeheer.ViewModel
             else
             {
                 new CreateEditCustomerView(_selectedCustomer).Show();
-            }
-        }
-
-        private void DeleteCustomer()
-        {
-            if (SelectedCustomer != null)
-            {
-                CustomFSContext.CustomerCrud.Delete(SelectedCustomer);
-                Customers.Remove(SelectedCustomer);
             }
         }
     }
