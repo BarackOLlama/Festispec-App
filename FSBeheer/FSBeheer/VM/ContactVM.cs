@@ -28,18 +28,47 @@ namespace FSBeheer.VM
             return _contact;
         }
 
-        // Properties of Quiz (Database)
-        //public int Id
-        //{
-        //    get { return _customer.Id; }
-        //}
+        // Properties of Contact (Database)
+        public int Id
+        {
+            get { return _contact.Id; }
+        }
 
-        //public string Name
-        //{
-        //    get { return _customer.Name; }
-        //    set { _customer.Name = value; RaisePropertyChanged("Name"); }
-        //}
+        public string Name
+        {
+            get { return _contact.Name; }
+            set { _contact.Name = value; RaisePropertyChanged(nameof(Name)); }
+        }
 
+        public string Email
+        {
+            get { return _contact.Email; }
+            set { _contact.Email = value; RaisePropertyChanged(nameof(Email)); }
+        }
+
+        public string PhoneNumber
+        {
+            get { return _contact.PhoneNumber; }
+            set { _contact.PhoneNumber = value; RaisePropertyChanged(nameof(PhoneNumber)); }
+        }
+
+        public string Note
+        {
+            get { return _contact.Note; }
+            set { _contact.Note = value; RaisePropertyChanged(nameof(Note)); }
+        }
+
+        public int? CustomerId
+        {
+            get { return _contact.Customer.Id; }
+            set { _contact.CustomerId = value; RaisePropertyChanged(nameof(CustomerId)); } 
+        }
+
+        public bool IsDeleted
+        {
+            get { return _contact.IsDeleted; }
+            set { _contact.IsDeleted = value; RaisePropertyChanged(nameof(IsDeleted)); }
+        }
 
     }
 }

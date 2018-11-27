@@ -1,7 +1,6 @@
 ﻿using FSBeheer.VM;
 using System;
 using System.Collections.ObjectModel;
-using System.Data.Entity;
 using System.Linq;
 
 namespace FSBeheer.Crud
@@ -22,6 +21,7 @@ namespace FSBeheer.Crud
         {
             var customer = CustomFSContext.Customers
                .ToList()
+               .Where(c => c.IsDeleted == false)
                .Select(c => new CustomerVM(c));
             var _customers = new ObservableCollection<CustomerVM>(customer);
 
@@ -57,7 +57,7 @@ namespace FSBeheer.Crud
                .FirstOrDefault(c => c.Id == customer_id));
         }
 
-        public void Delete(CustomerVM _customer)
+        public void SetDeleted(CustomerVM _customer)
         {
             // isDeleted is true veld check zo ja dan krijg je alle deleted terug!
         }
