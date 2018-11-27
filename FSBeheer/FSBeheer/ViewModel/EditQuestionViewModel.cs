@@ -10,9 +10,10 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.ViewModel
 {
-    //vragen aanpassen (de content zelf)
-    //antwoorden toevoegen
-    //antwoorden wijzigen (content)
+    /// <summary>
+    /// The responsibility of this class and the view is to edit questions in the database.
+    /// It is not responsible for deletion of questions.
+    /// </summary>
     public class EditQuestionViewModel :ViewModelBase
     {
         private QuestionVM _question;
@@ -42,13 +43,14 @@ namespace FSBeheer.ViewModel
 
         private CustomFSContext _context;
         public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
-
         public RelayCommand SaveQuestionChangesCommand { get; set; }
         public RelayCommand DiscardQuestionChangesCommand { get; set; }
         public EditQuestionViewModel(QuestionVM question)
         {
             _context = new CustomFSContext();
             _question = question;
+            //var questionEntity = _context.Questions.ToList().Where(e => e.Id == question.Id).FirstOrDefault();
+            //_question = new QuestionVM(questionEntity);
             var temp = _context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
             QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
             SaveQuestionChangesCommand = new RelayCommand(SaveQuestionChanges);
@@ -59,7 +61,6 @@ namespace FSBeheer.ViewModel
         public void SaveQuestionChanges()
         {
             //_context.QuestionCrud.GetAllQuestionVMs().Add(_question);
-            _context.ChangeTracker.DetectChanges();
             _context.SaveChanges();
         }
 

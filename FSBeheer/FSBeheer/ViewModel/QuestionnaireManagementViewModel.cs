@@ -23,6 +23,7 @@ namespace FSBeheer.ViewModel
             ShowEditQuestionnaireViewCommand = new RelayCommand(ShowEditQuestionnaireView);
             CreateQuestionnaireCommand = new RelayCommand(CreateQuestionnaire);
             SelectedQuestionnaire = Questionnaires?.First();
+            //_context.Dispose();
         }
         public QuestionnaireVM SelectedQuestionnaire
         {

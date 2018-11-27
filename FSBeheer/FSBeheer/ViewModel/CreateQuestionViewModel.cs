@@ -66,24 +66,23 @@ namespace FSBeheer.ViewModel
 
         public void AddQuestion()
         {
-            using (var context = new CustomFSContext())
-                //clear irrelevant fields to avoid confusion in case the user mistakenly filled them in.
-                if (SelectedQuestionType.Name == "Multiple Choice Vraag")
-                {//clear columns
-                    Question.Columns = null;
-                }
-                else if (SelectedQuestionType.Name == "Open Vraag")
-                {//clear options and columns
-                    Question.Columns = null;
-                    Question.Options = null;
-                }
-                else if (SelectedQuestionType.Name == "Open Tabelvraag")
-                {//clear options
-                    Question.Options = null;
-                }
-                context.Questions.Add(Question.ToModel());
-                context.SaveChanges();
+
+            //clear irrelevant fields to avoid confusion in case the user mistakenly filled them in.
+            if (SelectedQuestionType.Name == "Multiple Choice Vraag")
+            {//clear columns
+                Question.Columns = null;
             }
+            else if (SelectedQuestionType.Name == "Open Vraag")
+            {//clear options and columns
+                Question.Columns = null;
+                Question.Options = null;
+            }
+            else if (SelectedQuestionType.Name == "Open Tabelvraag")
+            {//clear options
+                Question.Options = null;
+            }
+            _context.Questions.Add(Question.ToModel());
+            _context.SaveChanges();
         }
 
         public bool CanAddQuestion()

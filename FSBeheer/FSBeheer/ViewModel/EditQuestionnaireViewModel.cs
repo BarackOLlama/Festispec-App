@@ -59,7 +59,10 @@ namespace FSBeheer.ViewModel
         public EditQuestionnaireViewModel(QuestionnaireVM questionnaire)
         {
             _context = new CustomFSContext();
-            _questionnaire = questionnaire;
+            //_questionnaire = questionnaire;
+            var questionnaireEntity = _context.Questionnaires.ToList().Where(e => e.Id == questionnaire.Id).FirstOrDefault();
+            _questionnaire = new QuestionnaireVM(questionnaireEntity);
+
             var questions = _context.Questions
                 .Include("QuestionType")
                 .ToList()
@@ -83,8 +86,6 @@ namespace FSBeheer.ViewModel
 
         private void SaveQuestionnaireChanges()
         {
-            _context.QuestionnaireCrud.GetAllQuestionnaireVMs().Add(_questionnaire);
-            var temp = _context.QuestionnaireCrud.GetAllQuestionnaireVMs();
             _context.SaveChanges();
             //Messenger.Default.Send(true, "UpdateQuestionnaires"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
             //^is used in the CreateEditCustomerViewModel
