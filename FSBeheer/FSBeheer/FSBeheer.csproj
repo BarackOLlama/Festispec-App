@@ -93,7 +93,7 @@
     <Compile Include="Crud\AccountCrud.cs" />
     <Compile Include="Crud\AnswerCrud.cs" />
     <Compile Include="Crud\ContactCrud.cs" />
-	<Compile Include="Crud\AvailabilityCrud.cs" />
+    <Compile Include="Crud\AvailabilityCrud.cs" />
     <Compile Include="Crud\CustomerCrud.cs" />
     <Compile Include="Crud\InspectionCrud.cs" />
     <Compile Include="Crud\InspectionDateCrud.cs" />
@@ -123,7 +123,7 @@
     <Compile Include="Model\Role.cs" />
     <Compile Include="ViewModel\AvailableInspectorViewModel.cs" />
     <Compile Include="ViewModel\CreateEditInspectionViewModel.cs" />
-	<Compile Include="ViewModel\CreateEditContactViewModel.cs" />
+    <Compile Include="ViewModel\CreateEditContactViewModel.cs" />
     <Compile Include="ViewModel\CreateQuestionnaireViewModel.cs" />
     <Compile Include="ViewModel\EditInspectorViewModel.cs" />
     <Compile Include="ViewModel\EditQuestionnaireViewModel.cs" />
@@ -138,8 +138,7 @@
     <Compile Include="View\CreateQuestionView.xaml.cs">
       <DependentUpon>CreateQuestionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VM\QuestionnaireVM.cs" />
-	<Compile Include="View\CreateEditContactView.xaml.cs">
+    <Compile Include="View\CreateEditContactView.xaml.cs">
       <DependentUpon>CreateEditContactView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CreateEditInspectorView.xaml.cs">
@@ -240,14 +239,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\AvailableInspectorsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-	<Page Include="View\CreateEditContactView.xaml">
+    <Page Include="View\CreateEditContactView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
