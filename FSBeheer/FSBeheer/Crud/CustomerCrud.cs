@@ -57,9 +57,28 @@ namespace FSBeheer.Crud
                .FirstOrDefault(c => c.Id == customer_id));
         }
 
-        public void SetDeleted(CustomerVM _customer)
+        public ObservableCollection<CustomerVM> GetFilteredCustomersByString(string must_contain)
         {
-            // isDeleted is true veld check zo ja dan krijg je alle deleted terug!
+            if (must_contain == null)
+            {
+                throw new ArgumentNullException(nameof(must_contain));
+            }
+            var customers = CustomFSContext.Customers
+                .ToList()
+                .Where(c =>
+                c.Name.Contains(must_contain) ||
+                c.City.Contains(must_contain) ||
+                c.ChamberOfCommerceNumber.ToString().Contains(must_contain) ||
+                c.Adres.Contains(must_contain) ||
+                c.Id.ToString().Contains(must_contain) ||
+                c.StartingDate.ToString().Contains(must_contain)
+                ).Distinct()
+                .Select(c => new CustomerVM(c));
+            var _customers = new ObservableCollection<CustomerVM>(customers);
+
+            return _customers;
+
         }
+
     }
 }

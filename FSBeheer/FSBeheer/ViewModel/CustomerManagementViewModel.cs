@@ -41,6 +41,12 @@ namespace FSBeheer.ViewModel
             EditCustomerWindowCommand = new RelayCommand(OpenEditCustomer);
         }
 
+        // not implemented yet (Bart)
+        public void FilterList(string filter)
+        {
+            Customers = CustomFSContext.CustomerCrud.GetFilteredCustomersByString(filter);
+        }
+
         internal void Init()
         {
             CustomFSContext = new CustomFSContext();
