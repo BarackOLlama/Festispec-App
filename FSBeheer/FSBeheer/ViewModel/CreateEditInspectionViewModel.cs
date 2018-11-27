@@ -1,4 +1,5 @@
-﻿using FSBeheer.VM;
+﻿using FSBeheer.View;
+using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using System;
@@ -26,6 +27,8 @@ namespace FSBeheer.ViewModel
         public StatusVM SelectedStatus { get; set; }
         public RelayCommand CancelInspectionCommand { get; set; }
         public RelayCommand AddInspectionCommand { get; set; }
+
+        public RelayCommand PickInspectorsCommand { get; set; }
 
         public CreateEditInspectionViewModel(InspectionManagementViewModel inspectionManagementViewModel)
         {
@@ -55,6 +58,8 @@ namespace FSBeheer.ViewModel
             {
                 SelectedInspection = _InspectionManagementViewModel.SelectedInspection;
             };
+
+            PickInspectorsCommand = new RelayCommand(OpenAvailable);
         }
 
         public void AddInspection()
@@ -65,6 +70,11 @@ namespace FSBeheer.ViewModel
         public void CancelInspection()
         {
             // CreateInspectionView sluiten en veranderingen ongedaan maken
+        }
+
+        public void OpenAvailable()
+        {
+            new AvailableInspectorsView().Show();
         }
     }
 }

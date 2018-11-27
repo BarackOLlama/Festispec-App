@@ -150,9 +150,9 @@
                             <DatePicker Grid.Row="1" Grid.Column="1" SelectedDateFormat="Short" SelectedDate="{Binding NewEndDate, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding NewStartTime, StringFormat=HH:mm, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NewEndTime, StringFormat=HH:mm, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1">
-                            <TextBox Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
-                            <Button HorizontalAlignment="Center" Content="+" Command="{Binding PickInspectorsCommand}"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center">
+                            <TextBox Width="335" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
+                            <Button HorizontalAlignment="Center" Content="+" Padding="0" Height="18" Width="15" Command="{Binding PickInspectorsCommand}"/>
                             </StackPanel>
                             <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding StatusNames, Mode=TwoWay}" SelectedItem="{Binding SelectedStatus}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
 

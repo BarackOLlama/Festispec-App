@@ -120,6 +120,7 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Quotation.cs" />
     <Compile Include="Model\Role.cs" />
+    <Compile Include="ViewModel\AvailableInspectorViewModel.cs" />
     <Compile Include="ViewModel\CreateEditInspectionViewModel.cs" />
     <Compile Include="ViewModel\CreateQuestionnaireViewModel.cs" />
     <Compile Include="ViewModel\EditInspectorViewModel.cs" />
@@ -129,6 +130,9 @@
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
+    <Compile Include="View\AvailableInspectorsView.xaml.cs">
+      <DependentUpon>AvailableInspectorsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CreateQuestionView.xaml.cs">
       <DependentUpon>CreateQuestionView.xaml</DependentUpon>
     </Compile>
@@ -233,6 +237,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\AvailableInspectorsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CreateEditInspectorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
