@@ -21,12 +21,12 @@ namespace FSBeheer.VM
             get { return _InspectionDate.Id; }
         }
 
-        public DateTime? StartDate
+        public DateTime StartDate
         {
             get { return _InspectionDate.StartDate; }
         }
 
-        public DateTime? EndDate
+        public DateTime EndDate
         {
             get { return _InspectionDate.EndDate; }
         }

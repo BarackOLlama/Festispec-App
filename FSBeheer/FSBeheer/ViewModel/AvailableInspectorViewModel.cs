@@ -61,7 +61,8 @@ namespace FSBeheer.ViewModel
             _selectedInspection = CustomFSContext.InspectionCrud.GetInspectionById(inspectionId);
             AvailableInspectors = CustomFSContext.InspectorCrud.GetAllInspectorsFilteredByAvailability(
                 new List<DateTime>{
-                    //_selectedInspection.
+                    _selectedInspection.InspectionDate.StartDate,
+                    _selectedInspection.InspectionDate.EndDate
                 });
             RaisePropertyChanged(nameof(AvailableInspectors));
         }
