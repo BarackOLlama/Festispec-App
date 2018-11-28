@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FSBeheer.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +18,12 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for AvailableInspectorsView.xaml
     /// </summary>
-    public partial class AvailableInspectorsView : Window
+    public partial class AvailableInspectorView : Window
     {
-        public AvailableInspectorsView()
+        public AvailableInspectorView(int inspectionId)
         {
             InitializeComponent();
+            (DataContext as AvailableInspectorViewModel).SetInspection(inspectionId);
         }
     }
 }

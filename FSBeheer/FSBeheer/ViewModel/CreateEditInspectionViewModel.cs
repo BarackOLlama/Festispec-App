@@ -74,7 +74,7 @@ namespace FSBeheer.ViewModel
 
         public void OpenAvailable()
         {
-            new AvailableInspectorsView().Show();
+            new AvailableInspectorView(SelectedInspection.Id).Show();
         }
     }
 }

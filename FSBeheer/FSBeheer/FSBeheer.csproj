@@ -136,8 +136,8 @@
     <Compile Include="View\EditQuestionView.xaml.cs">
       <DependentUpon>EditQuestionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\AvailableInspectorsView.xaml.cs">
-      <DependentUpon>AvailableInspectorsView.xaml</DependentUpon>
+    <Compile Include="View\AvailableInspectorView.xaml.cs">
+      <DependentUpon>AvailableInspectorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CreateQuestionView.xaml.cs">
       <DependentUpon>CreateQuestionView.xaml</DependentUpon>
@@ -241,7 +241,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\AvailableInspectorsView.xaml">
+    <Page Include="View\AvailableInspectorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

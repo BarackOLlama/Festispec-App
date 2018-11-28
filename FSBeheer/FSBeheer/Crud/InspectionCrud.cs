@@ -24,16 +24,10 @@ namespace FSBeheer.Crud
             return _inspections;
         }
 
-        public InspectionVM GetInspectionWithInspectionId(InspectionVM inspectionVM)
+        public InspectionVM GetInspectionById(int inspectionId)
         {
-            foreach (InspectionVM inspection in GetInspections())
-            {
-                if (inspection.Id.Equals(inspectionVM.Id))
-                {
-                    return inspection;
-                }
-            }
-            return null;
+            var inspection = CustomFSContext.Inspections.ToList().FirstOrDefault(i => i.Id == inspectionId);
+            return new InspectionVM(inspection);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<Window x:Class="FSBeheer.View.AvailableInspectorsView"
+﻿<Window x:Class="FSBeheer.View.AvailableInspectorView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Name="AvailableInspectorName"
         DataContext="{Binding AvailableInspector, Source={StaticResource Locator}}"
-        Title="AvailableInspectorsView" Height="500" Width="950">
+        Title="AvailableInspectorView" Height="500" Width="950">
     <!-- baseview resources (Bart) in progress no need to define them here -->
 
     <StackPanel Orientation="Horizontal">

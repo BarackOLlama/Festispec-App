@@ -16,7 +16,7 @@ namespace FSBeheer.ViewModel
     {
         private CustomFSContext CustomFSContext;
 
-        public ObservableCollection<AvailabilityVM> AvailableInspectors { get; set; }
+        public ObservableCollection<InspectorVM> AvailableInspectors { get; set; }
 
         public ObservableCollection<AvailabilityVM> ChosenInspectors { get; set; }
 
@@ -29,6 +29,8 @@ namespace FSBeheer.ViewModel
         public RelayCommand<Window> DiscardChangesCommand { get; set; }
 
         private InspectorVM _selectedInspector { get; set; }
+
+        private InspectionVM _selectedInspection { get; set; }
 
         public AvailableInspectorViewModel()
         {
@@ -52,7 +54,15 @@ namespace FSBeheer.ViewModel
         internal void Init()
         {
             CustomFSContext = new CustomFSContext();
-            AvailableInspectors = CustomFSContext.AvailabilityCrud.GetAvailabilities();
+        }
+
+        public void SetInspection(int inspectionId)
+        {
+            _selectedInspection = CustomFSContext.InspectionCrud.GetInspectionById(inspectionId);
+            AvailableInspectors = CustomFSContext.InspectorCrud.GetAllInspectorsFilteredByAvailability(
+                new List<DateTime>{
+                    //_selectedInspection.
+                });
             RaisePropertyChanged(nameof(AvailableInspectors));
         }
 
