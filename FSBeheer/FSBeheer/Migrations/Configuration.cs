@@ -326,19 +326,6 @@ namespace FSBeheer.Migrations
                 }
             };
             context.Events.AddRange(events);
-
-            var inspections = new List<Inspection>
-            {
-                new Inspection()
-                    {
-                        Name = "EersteInspectie",
-                        Event = events[1],
-                        Status = statuses[3],
-                        Notes = "Minstens 4 inspecteurs",
-                        IsDeleted = false
-                    }
-            };
-            context.Inspections.AddRange(inspections);
             
             var inspectiondates = new List<InspectionDate>
             {
@@ -348,11 +335,24 @@ namespace FSBeheer.Migrations
                     EndDate = new DateTime(2018, 12, 15),
                     StartTime = new TimeSpan(14, 0, 0),
                     EndTime = new TimeSpan(2, 0, 0),
-                    Inspection = inspections[0],
                     IsDeleted = false
                 }
             };
             context.InspectionDates.AddRange(inspectiondates);
+
+            var inspections = new List<Inspection>
+            {
+                new Inspection()
+                    {
+                        Name = "EersteInspectie",
+                        Event = events[1],
+                        Status = statuses[3],
+                        Notes = "Minstens 4 inspecteurs",
+                        InspectionDate = inspectiondates[0],
+                        IsDeleted = false
+                    }
+            };
+            context.Inspections.AddRange(inspections);
 
             var questionnaires = new List<Questionnaire>
             {
