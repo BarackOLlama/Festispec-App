@@ -25,21 +25,48 @@ namespace FSBeheer.Crud
             return new ObservableCollection<InspectorVM>(inspectors);
         }
 
-        public ObservableCollection<InspectorVM> GetAllInspectorsFilteredByAvailability(DateTime date)
+        public ObservableCollection<InspectorVM> GetAllInspectorsFilteredByAvailability(List<DateTime> dateRange) //Startdate and enddate of the inspection
         {
             var inspectors = CustomFSContext.Inspectors
                 .ToList()
+                .Where(i => IsAvailable(
+                    new ObservableCollection<AvailabilityVM>(
+                        i.Availabilities.ToList()
+                        .Select(a => new AvailabilityVM(a))
+                    ),
+                    dateRange))
                 .Select(i => new InspectorVM(i));
             return new ObservableCollection<InspectorVM>(inspectors);
         }
 
+        private bool IsAvailable(ObservableCollection<AvailabilityVM> availabilities, List<DateTime> dateRange)
+        {
+            List<bool> availableList = new List<bool>();
+            foreach(AvailabilityVM availability in availabilities)
+            {
+                if(availability.Date > dateRange[0] && availability.Date < dateRange[1])
+                {
+                    if(availability.Scheduled == false)
+                    {
+                        availableList.Add(true);
+                    }
+                    else
+                    {
+                        availableList.Add(false);
+                    }
+                }
+            }
+
+            return !availableList.Contains(false);
+        }
+
         //public void Add(InspectorVM _inspector) => CustomFSContext.Inspectors.Add(_inspector.ToModel());
 
-        public void Modify(InspectorVM _inspector)
-        {
-            CustomFSContext.Entry(_inspector?.ToModel()).State = EntityState.Modified;
-            CustomFSContext.SaveChanges();
-        }
+        //public void Modify(InspectorVM _inspector)
+        //{
+        //    CustomFSContext.Entry(_inspector?.ToModel()).State = EntityState.Modified;
+        //    CustomFSContext.SaveChanges();
+        //}
 
         public void Delete(InspectorVM _inspector)
         {
