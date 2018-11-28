@@ -26,6 +26,8 @@ namespace FSBeheer.Crud
             return _availability;
         }
 
+
+
         public ObservableCollection<AvailabilityVM> GetUnavailable()
         {
             var availability = CustomFSContext.Availabilities
