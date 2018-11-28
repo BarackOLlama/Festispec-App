@@ -15,7 +15,7 @@ namespace FSBeheer.ViewModel
         public ChooseInspectorViewModel()
         {
             _Context = new CustomFSContext();
-            Inspections = _Context.InspectionCrud.GetInspections();
+            Inspections = _Context.InspectionCrud.GetAllInspectionVMs();
             Availabilities = _Context.AvailabilityCrud.GetAvailabilities();
         }
 

@@ -130,7 +130,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new CreateEditInspectionViewModel(_InspectionManagementViewModel);
+                return new CreateEditInspectionViewModel();
             }
         }
 
