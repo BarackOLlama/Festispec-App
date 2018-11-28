@@ -11,6 +11,7 @@ namespace FSBeheer.ViewModel
     {
         private QuestionnaireManagementViewModel _questionnaireManagementViewModel;
         private EditQuestionnaireViewModel _questionnaireViewModel;
+        private InspectionManagementViewModel _InspectionManagementViewModel;
 
         public ViewModelLocator()
         {
@@ -48,7 +49,8 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new InspectionManagementViewModel();
+                _InspectionManagementViewModel = new InspectionManagementViewModel();
+                return _InspectionManagementViewModel;
             }
         }
 
@@ -133,14 +135,6 @@ namespace FSBeheer.ViewModel
             get
             {
                 return new EditQuestionViewModel(_questionnaireViewModel.SelectedQuestion);
-            }
-        }
-
-        public ChooseInspectorViewModel ChooseInspector
-        {
-            get
-            {
-                return new ChooseInspectorViewModel();
             }
         }
 

@@ -35,7 +35,7 @@ namespace FSBeheer.ViewModel
             _Context = new CustomFSContext();
             Customers = _Context.CustomerCrud.GetAllCustomerVMs();
 
-            Events = _Context.EventCrud.GetAllEventVMs();
+            Events = _Context.EventCrud.GetAllEvents();
             ObservableCollection<string> _EventList = new ObservableCollection<string>();
             foreach (EventVM eventVM in Events)
             {
