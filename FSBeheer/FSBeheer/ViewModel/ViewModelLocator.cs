@@ -2,13 +2,15 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using CommonServiceLocator;
 using System;
+using FSBeheer.VM;
+using System.Collections.ObjectModel;
 
 namespace FSBeheer.ViewModel
 {
     public class ViewModelLocator
     {
-        private QuestionnaireManagementViewModel _questionListViewModel;
-        private InspectionManagementViewModel _InspectionManagementViewModel;
+        private QuestionnaireManagementViewModel _questionnaireManagementViewModel;
+        private EditQuestionnaireViewModel _questionnaireViewModel;
 
         public ViewModelLocator()
         {
@@ -46,8 +48,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                _InspectionManagementViewModel = new InspectionManagementViewModel();
-                return _InspectionManagementViewModel;
+                return new InspectionManagementViewModel();
             }
         }
 
@@ -97,8 +98,8 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                _questionListViewModel = new QuestionnaireManagementViewModel();
-                return _questionListViewModel;   
+                _questionnaireManagementViewModel = new QuestionnaireManagementViewModel();
+                return _questionnaireManagementViewModel;   
             }
         }
 
@@ -110,11 +111,12 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public QuestionnaireViewModel QuestionnaireManagement
+        public EditQuestionnaireViewModel EditQuestionnaireViewModel
         {
             get
             {
-                return new QuestionnaireViewModel(_questionListViewModel.SelectedQuestionnaire);
+                _questionnaireViewModel = new EditQuestionnaireViewModel(_questionnaireManagementViewModel.SelectedQuestionnaire);
+                return _questionnaireViewModel;
             }
         }
 
@@ -122,7 +124,15 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new CreateQuestionViewModel(_questionListViewModel.SelectedQuestionnaire);
+                return new CreateQuestionViewModel(_questionnaireManagementViewModel.SelectedQuestionnaire);
+            }
+        }
+
+        public EditQuestionViewModel EditQuestion
+        {
+            get
+            {
+                return new EditQuestionViewModel(_questionnaireViewModel.SelectedQuestion);
             }
         }
 
