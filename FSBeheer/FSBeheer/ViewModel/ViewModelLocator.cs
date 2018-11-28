@@ -11,6 +11,7 @@ namespace FSBeheer.ViewModel
     {
         private QuestionnaireManagementViewModel _questionnaireManagementViewModel;
         private EditQuestionnaireViewModel _questionnaireViewModel;
+        private InspectorManagementViewModel _inspectorManagementViewModel;
 
         public ViewModelLocator()
         {

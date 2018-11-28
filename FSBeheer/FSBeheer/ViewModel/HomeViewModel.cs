@@ -90,11 +90,6 @@ namespace FSBeheer.ViewModel
             throw new NotImplementedException();
         }
 
-        private void ShowQuestionnaireListView()
-        {
-            new QuestionnaireListView().ShowDialog();
-        }
-
         private void ShowCreateEditInspectionView()
         {
            new EditInspectionView().Show();
