@@ -13,8 +13,19 @@ namespace FSBeheer.ViewModel
     public class HomeViewModel : ViewModelBase
     {
         private CustomFSContext _Context;
-        public AccountVM Account { get; set; }
-
+        private AccountVM _account;
+        public AccountVM Account
+        {
+            get
+            {
+                return _account;
+            }
+            set
+            {
+                _account = value;
+                base.RaisePropertyChanged("Account");
+            }
+        }
         public ObservableCollection<QuestionVM> Questions;
 
         public RelayCommand ShowCustomerViewCommand { get; set; }
@@ -24,9 +35,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowQuotationViewCommand { get; set; }
         public RelayCommand ShowQuestionnaireManagementViewCommand { get; set; }
         public RelayCommand ShowCreateEditViewCommand { get; set; }
-        public RelayCommand ShowQuestionnairesViewCommand { get; set; }
         public RelayCommand ShowLoginViewCommand { get; set; }
-        public RelayCommand ShowQuestionnaireListViewCommand { get; set; }
 
         public HomeViewModel()
         {
@@ -38,9 +47,8 @@ namespace FSBeheer.ViewModel
             ShowInspectorViewCommand = new RelayCommand(ShowInspectorView);
             ShowQuotationViewCommand = new RelayCommand(ShowQuotationView);
             ShowLoginViewCommand = new RelayCommand(ShowLoginView);
-            ShowQuestionnaireListViewCommand = new RelayCommand(ShowQuestionnaireListView);
-
             ShowCreateEditViewCommand = new RelayCommand(ShowCreateEditInspectionView);
+            ShowQuestionnaireManagementViewCommand = new RelayCommand(ShowQuestionnaireManagementView);
 
             // Tests to make sure everything is working
             _Context = new CustomFSContext();
@@ -84,13 +92,16 @@ namespace FSBeheer.ViewModel
 
         private void ShowQuestionnaireListView()
         {
-            new QuestionnaireListView();
+            new QuestionnaireListView().ShowDialog();
         }
 
         private void ShowCreateEditInspectionView()
         {
            new EditInspectionView().Show();
-
+        }
+        private void ShowQuestionnaireManagementView()
+        {
+            new QuestionnaireManagementView().ShowDialog();
         }
     }
 }

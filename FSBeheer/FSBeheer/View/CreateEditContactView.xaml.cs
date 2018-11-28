@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FSBeheer.ViewModel;
+using FSBeheer.VM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,19 +12,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace FSBeheer.View
 {
     /// <summary>
-    /// Interaction logic for EventManagementView.xaml
+    /// Interaction logic for CreateEditContactView.xaml
     /// </summary>
-    public partial class EventManagementView : BaseView
+    public partial class CreateEditContactView : Window
     {
-        public EventManagementView()
+        public CreateEditContactView(ContactVM contact = null, CustomerVM customer = null)
         {
             InitializeComponent();
+            (DataContext as CreateEditContactViewModel).SetContact(contact, customer);
         }
     }
 }

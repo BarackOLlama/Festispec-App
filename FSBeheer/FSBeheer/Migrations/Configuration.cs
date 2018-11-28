@@ -23,7 +23,9 @@ namespace FSBeheer.Migrations
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.QuestionTypes', RESEED, 0)");
             context.Questionnaires.RemoveRange(context.Questionnaires);
             context.Inspections.RemoveRange(context.Inspections);
+            context.InspectionDates.RemoveRange(context.InspectionDates);
             context.Inspectors.RemoveRange(context.Inspectors);
+            context.Availabilities.RemoveRange(context.Availabilities);
             context.Accounts.RemoveRange(context.Accounts);
             context.Roles.RemoveRange(context.Roles);
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.Roles', RESEED, 0)");
@@ -41,7 +43,7 @@ namespace FSBeheer.Migrations
 
             var questiontypes = new List<QuestionType>
             {
-                new QuestionType() { Name = "Open vraag" },
+                new QuestionType() { Name = "Open Vraag" },
                 new QuestionType() { Name = "Multiple Choice vraag" },
                 new QuestionType() { Name = "Open Tabelvraag" },
                 new QuestionType() { Name = "Multiple Choice Tabelvraag" }
@@ -164,8 +166,67 @@ namespace FSBeheer.Migrations
                     IsDeleted = false
                 }
             };
-
             context.Inspectors.AddRange(inspectors);
+
+            var availabilities = new List<Availability>
+            {
+                new Availability()
+                {
+                    Inspector = inspectors[0],
+                    Date = new DateTime(2018, 3, 1),
+                    Scheduled = false,
+                    IsDeleted = false
+                },
+                new Availability()
+                {
+                    Inspector = inspectors[0],
+                    Date = new DateTime(2018, 3, 5),
+                    Scheduled = true,
+                    ScheduleStartTime = new TimeSpan(22, 0, 0),
+                    ScheduleEndTime = new TimeSpan(3, 0, 0),
+                    IsDeleted = false
+                },
+                new Availability()
+                {
+                    Inspector = inspectors[1],
+                    Date = new DateTime(2018, 12, 3),
+                    Scheduled = false,
+                    IsDeleted = false
+                },
+                new Availability()
+                {
+                    Inspector = inspectors[1],
+                    Date = new DateTime(2018, 11, 21),
+                    Scheduled = true,
+                    ScheduleStartTime = new TimeSpan(20, 0, 0),
+                    ScheduleEndTime = new TimeSpan(23, 0, 0),
+                    IsDeleted = false
+                },
+                new Availability()
+                {
+                    Inspector = inspectors[2],
+                    Date = new DateTime(2018, 12, 20),
+                    Scheduled = false,
+                    IsDeleted = false
+                },
+                new Availability()
+                {
+                    Inspector = inspectors[3],
+                    Date = new DateTime(2018, 12, 10),
+                    Scheduled = false,
+                    IsDeleted = false
+                },
+                new Availability()
+                {
+                    Inspector = inspectors[3],
+                    Date = new DateTime(2018, 12, 5),
+                    Scheduled = true,
+                    ScheduleStartTime = new TimeSpan(20, 0, 0),
+                    ScheduleEndTime = new TimeSpan(23, 0, 0),
+                    IsDeleted = false
+                }
+            };
+            context.Availabilities.AddRange(availabilities);
 
             var statuses = new List<Status>
             {
@@ -196,17 +257,102 @@ namespace FSBeheer.Migrations
             };
             context.Statuses.AddRange(statuses);
 
+            var customers = new List<Customer>
+            {
+                new Customer()
+                {
+                    Name = "BermDingetje",
+                    City = "Den Haag",
+                    IsDeleted = false
+                },
+                new Customer()
+                {
+                    Name = "Festispec",
+                    City = "Den Bosch",
+                    IsDeleted = false
+                }
+            };
+            context.Customers.AddRange(customers);
+
+            var contacts = new List<Contact>
+            {
+                new Contact()
+                {
+                    Name = "Darjush Kolahi",
+                    PhoneNumber = "12345898765",
+                    Email = "dkolahi@gmail.com",
+                    Customer = customers[0],
+                    IsDeleted = false
+                },
+                new Contact()
+                {
+                    Name = "Mitchell Appelman",
+                    PhoneNumber = "678765356",
+                    Email = "mappelman@gmail.com",
+                    Customer = customers[1],
+                    IsDeleted = false
+                }
+            };
+            context.Contacts.AddRange(contacts);
+
+            var events = new List<Event>
+            {
+                new Event()
+                {
+                    Name = "Pinkpop",
+                    Address = "Megaland",
+                    City = "Landgraaf",
+                    Zipcode = "6372 XC",
+                    Customer = customers[0],
+                    IsDeleted = false
+                },
+                new Event()
+                {
+                    Name = "Appelpop",
+                    Address = "Grasweide 15",
+                    City = "Heusde",
+                    Zipcode = "1234 AB",
+                    Customer = customers[0],
+                    IsDeleted = false
+                },
+                new Event()
+                {
+                    Name = "Zwarte Cross",
+                    Address = "Zandweggetje 4",
+                    City = "Lichtervoorde",
+                    Zipcode = "2753 HG",
+                    Customer = customers[1],
+                    IsDeleted = false
+                }
+            };
+            context.Events.AddRange(events);
+
             var inspections = new List<Inspection>
             {
                 new Inspection()
                     {
                         Name = "EersteInspectie",
+                        Event = events[1],
                         Status = statuses[3],
                         Notes = "Minstens 4 inspecteurs",
                         IsDeleted = false
                     }
             };
             context.Inspections.AddRange(inspections);
+            
+            var inspectiondates = new List<InspectionDate>
+            {
+                new InspectionDate()
+                {
+                    StartDate = new DateTime(2018, 12, 1),
+                    EndDate = new DateTime(2018, 12, 15),
+                    StartTime = new TimeSpan(14, 0, 0),
+                    EndTime = new TimeSpan(2, 0, 0),
+                    Inspection = inspections[0],
+                    IsDeleted = false
+                }
+            };
+            context.InspectionDates.AddRange(inspectiondates);
 
             var questionnaires = new List<Questionnaire>
             {
@@ -375,73 +521,6 @@ namespace FSBeheer.Migrations
                 }
             };
             context.Answers.AddRange(answers);
-
-            var customers = new List<Customer>
-            {
-                new Customer()
-                {
-                    Name = "BermDingetje",
-                    City = "Den Haag",
-                    IsDeleted = false
-                },
-                new Customer()
-                {
-                    Name = "Festispec",
-                    City = "Den Bosch",
-                    IsDeleted = false
-                }
-            };
-            context.Customers.AddRange(customers);
-
-            var contacts = new List<Contact>
-            {
-                new Contact()
-                {
-                    Name = "Darjush Kolahi",
-                    PhoneNumber = "12345898765",
-                    Email = "dkolahi@gmail.com",
-                    Customer = customers[0],
-                    IsDeleted = false
-                },
-                new Contact()
-                {
-                    Name = "Mitchell Appelman",
-                    PhoneNumber = "678765356",
-                    Email = "mappelman@gmail.com",
-                    Customer = customers[1],
-                    IsDeleted = false
-                }
-            };
-            context.Contacts.AddRange(contacts);
-
-            var events = new List<Event>
-            {
-                new Event()
-                {
-                    Name = "Pinkpop",
-                    Address = "Megaland",
-                    City = "Landgraaf",
-                    Customer = customers[0],
-                    IsDeleted = false
-                },
-                new Event()
-                {
-                    Name = "Appelpop",
-                    Address = "Grasweide 15",
-                    City = "Heusde",
-                    Customer = customers[0],
-                    IsDeleted = false
-                },
-                new Event()
-                {
-                    Name = "Zwarte Cross",
-                    Address = "Zandweggetje 4",
-                    City = "Lichtervoorde",
-                    Customer = customers[1],
-                    IsDeleted = false
-                }
-            };
-            context.Events.AddRange(events);
         }
     }
 }
