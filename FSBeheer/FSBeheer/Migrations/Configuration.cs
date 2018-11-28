@@ -23,7 +23,9 @@ namespace FSBeheer.Migrations
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.QuestionTypes', RESEED, 0)");
             context.Questionnaires.RemoveRange(context.Questionnaires);
             context.Inspections.RemoveRange(context.Inspections);
+            context.InspectionDates.RemoveRange(context.InspectionDates);
             context.Inspectors.RemoveRange(context.Inspectors);
+            context.Availabilities.RemoveRange(context.Availabilities);
             context.Accounts.RemoveRange(context.Accounts);
             context.Roles.RemoveRange(context.Roles);
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.Roles', RESEED, 0)");
@@ -41,7 +43,7 @@ namespace FSBeheer.Migrations
 
             var questiontypes = new List<QuestionType>
             {
-                new QuestionType() { Name = "Open vraag" },
+                new QuestionType() { Name = "Open Vraag" },
                 new QuestionType() { Name = "Multiple Choice vraag" },
                 new QuestionType() { Name = "Open Tabelvraag" },
                 new QuestionType() { Name = "Multiple Choice Tabelvraag" }
@@ -164,8 +166,67 @@ namespace FSBeheer.Migrations
                     IsDeleted = false
                 }
             };
-
             context.Inspectors.AddRange(inspectors);
+
+            var availabilities = new List<Availability>
+            {
+                new Availability()
+                {
+                    Inspector = inspectors[0],
+                    Date = new DateTime(2018, 3, 1),
+                    Scheduled = false,
+                    IsDeleted = false
+                },
+                new Availability()
+                {
+                    Inspector = inspectors[0],
+                    Date = new DateTime(2018, 3, 5),
+                    Scheduled = true,
+                    ScheduleStartTime = new TimeSpan(22, 0, 0),
+                    ScheduleEndTime = new TimeSpan(3, 0, 0),
+                    IsDeleted = false
+                },
+                new Availability()
+                {
+                    Inspector = inspectors[1],
+                    Date = new DateTime(2018, 12, 3),
+                    Scheduled = false,
+                    IsDeleted = false
+                },
+                new Availability()
+                {
+                    Inspector = inspectors[1],
+                    Date = new DateTime(2018, 11, 21),
+                    Scheduled = true,
+                    ScheduleStartTime = new TimeSpan(20, 0, 0),
+                    ScheduleEndTime = new TimeSpan(23, 0, 0),
+                    IsDeleted = false
+                },
+                new Availability()
+                {
+                    Inspector = inspectors[2],
+                    Date = new DateTime(2018, 12, 20),
+                    Scheduled = false,
+                    IsDeleted = false
+                },
+                new Availability()
+                {
+                    Inspector = inspectors[3],
+                    Date = new DateTime(2018, 12, 10),
+                    Scheduled = false,
+                    IsDeleted = false
+                },
+                new Availability()
+                {
+                    Inspector = inspectors[3],
+                    Date = new DateTime(2018, 12, 5),
+                    Scheduled = true,
+                    ScheduleStartTime = new TimeSpan(20, 0, 0),
+                    ScheduleEndTime = new TimeSpan(23, 0, 0),
+                    IsDeleted = false
+                }
+            };
+            context.Availabilities.AddRange(availabilities);
 
             var statuses = new List<Status>
             {
@@ -278,6 +339,20 @@ namespace FSBeheer.Migrations
                     }
             };
             context.Inspections.AddRange(inspections);
+            
+            var inspectiondates = new List<InspectionDate>
+            {
+                new InspectionDate()
+                {
+                    StartDate = new DateTime(2018, 12, 1),
+                    EndDate = new DateTime(2018, 12, 15),
+                    StartTime = new TimeSpan(14, 0, 0),
+                    EndTime = new TimeSpan(2, 0, 0),
+                    Inspection = inspections[0],
+                    IsDeleted = false
+                }
+            };
+            context.InspectionDates.AddRange(inspectiondates);
 
             var questionnaires = new List<Questionnaire>
             {

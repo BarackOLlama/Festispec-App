@@ -51,6 +51,11 @@ namespace FSBeheer.VM
             }
         }
 
+        public override string ToString()
+        {
+            return _event.Name;
+        }
+
         internal Event ToModel()
         {
             return _event;
