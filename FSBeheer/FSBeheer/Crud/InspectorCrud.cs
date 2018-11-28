@@ -57,6 +57,10 @@ namespace FSBeheer.Crud
                 }
             }
 
+            if(availableList.Count == 0)
+            {
+                return false;
+            }
             return !availableList.Contains(false);
         }
 
