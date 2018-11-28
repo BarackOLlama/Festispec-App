@@ -27,7 +27,7 @@ namespace FSBeheer.Model
         public virtual ObservableCollection<Questionnaire> Questionnaires { get; set; }
         public virtual ObservableCollection<Inspector> Inspectors { get; set; }
         public int? InspectionDateId { get; set; }
-        public InspectionDate InspectionDate { get; set; }
+        public virtual InspectionDate InspectionDate { get; set; }
         public bool IsDeleted { get; set; }
     }
 }
