@@ -17,26 +17,23 @@ namespace FSBeheer.Crud
 
         }
 
-        public ObservableCollection<InspectorVM> GetInspectors()
+        public ObservableCollection<InspectorVM> GetAllInspectors()
         {
-            var inspector = CustomFSContext.Inspectors
+            var inspectors = CustomFSContext.Inspectors
                 .ToList()
                 .Select(i => new InspectorVM(i));
-            var _inspectors = new ObservableCollection<InspectorVM>(inspector);
-            return _inspectors;
+            return new ObservableCollection<InspectorVM>(inspectors);
         }
 
-        public void Add(InspectorVM _inspector) => CustomFSContext.Inspectors.Add(_inspector.ToModel());
-
-        public ObservableCollection<InspectorVM> GetAllInspectorVMs()
+        public ObservableCollection<InspectorVM> GetAllInspectorsFilteredByAvailability(DateTime date)
         {
-            var inspector = CustomFSContext.Inspectors
-               .ToList()
-               .Select(c => new InspectorVM(c));
-            var _inspectors = new ObservableCollection<InspectorVM>(inspector);
-
-            return _inspectors;
+            var inspectors = CustomFSContext.Inspectors
+                .ToList()
+                .Select(i => new InspectorVM(i));
+            return new ObservableCollection<InspectorVM>(inspectors);
         }
+
+        //public void Add(InspectorVM _inspector) => CustomFSContext.Inspectors.Add(_inspector.ToModel());
 
         public void Modify(InspectorVM _inspector)
         {
