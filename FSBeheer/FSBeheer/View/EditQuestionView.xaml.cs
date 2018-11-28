@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace FSBeheer.View
 {
     /// <summary>
-    /// Interaction logic for QuestionnaireEditView.xaml
+    /// Interaction logic for EditQuestionView.xaml
     /// </summary>
-    public partial class QuestionnaireEditView : Window
+    public partial class EditQuestionView : Window
     {
-        public QuestionnaireEditView()
+        public EditQuestionView()
         {
             InitializeComponent();
         }
