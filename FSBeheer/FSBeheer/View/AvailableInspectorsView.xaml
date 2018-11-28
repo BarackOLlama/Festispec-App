@@ -7,14 +7,15 @@
         mc:Ignorable="d"
         Name="AvailableInspectorName"
         DataContext="{Binding AvailableInspector, Source={StaticResource Locator}}"
-        Title="AvailableInspectorsView" Height="600" Width="950">
+        Title="AvailableInspectorsView" Height="500" Width="950">
     <!-- baseview resources (Bart) in progress no need to define them here -->
+
     <StackPanel Orientation="Horizontal">
         <StackPanel Orientation="Vertical">
             <StackPanel>
                 <TextBlock Text="Beschikbare Inspecteurs" FontSize="28" FontWeight="ExtraBold" Margin="10,10,10,0"/>
             </StackPanel>
-            <StackPanel Margin="10,5,10,10" Width="400">
+            <StackPanel Margin="10,5,10,10" Width="400" Height="360">
                 <StackPanel Name="spContent" Margin="0,0,0,2">
                     <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedInspector, Mode=TwoWay}" 
                       ItemsSource="{Binding AvailableInspectors}" Margin="0,6,0,0" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" BorderBrush="#FF979494"
@@ -36,17 +37,23 @@
             <StackPanel>
                 <TextBlock Text="Gekozen Inspecteurs" FontSize="28" FontWeight="ExtraBold" Margin="10,10,10,0"/>
             </StackPanel>
-            <StackPanel Width="400" Margin="10,5,10,10">
-                <StackPanel Name="spConstent" Margin="0,0,0,2">
-                    <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedInspector, Mode=TwoWay}" 
+            <StackPanel Orientation="Vertical">
+                <StackPanel Width="400" Height="360" Margin="10,5,10,10">
+                    <StackPanel Name="spConstent" Margin="0,0,0,2">
+                        <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedInspector, Mode=TwoWay}" 
                       ItemsSource="{Binding ChosenInspectors}" Margin="0,6,0,0" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" BorderBrush="#FF979494"
                       GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFF0E0E0" HeadersVisibility="Column">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Foreground="#FF1D1616" />
-                            <DataGridTextColumn Header="Naam" Binding="{Binding Name}" Width="*" />
-                            <DataGridTextColumn Header="Distance" Binding="{Binding Distance}" Width="100"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Foreground="#FF1D1616" />
+                                <DataGridTextColumn Header="Naam" Binding="{Binding Name}" Width="*" />
+                                <DataGridTextColumn Header="Distance" Binding="{Binding Distance}" Width="100"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal" Margin="15,10,25,10">
+                    <Button Content="Annuleer" Margin="5" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}"></Button>
+                    <Button Content="Accepteer" Margin="5" Command="{Binding SaveChangesCommand}" ></Button>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

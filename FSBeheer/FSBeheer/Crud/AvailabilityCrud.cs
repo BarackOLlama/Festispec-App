@@ -15,12 +15,12 @@ namespace FSBeheer.Crud
         {
 
         }
-        // TODO waarom zijn ze allemaal true op Scheduled?
+
         public ObservableCollection<AvailabilityVM> GetAvailabilities()
         {
             var availability = CustomFSContext.Availabilities
                 .ToList()
-                .Where(s => s.Scheduled = false)
+                .Where(s => s.Scheduled == false)
                 .Select(i => new AvailabilityVM(i));
             var _availability = new ObservableCollection<AvailabilityVM>(availability);
             return _availability;
@@ -30,7 +30,7 @@ namespace FSBeheer.Crud
         {
             var availability = CustomFSContext.Availabilities
                 .ToList()
-                .Where(s => s.Scheduled = true)
+                .Where(s => s.Scheduled == true)
                 .Select(i => new AvailabilityVM(i));
             var _availability = new ObservableCollection<AvailabilityVM>(availability);
             return _availability;
