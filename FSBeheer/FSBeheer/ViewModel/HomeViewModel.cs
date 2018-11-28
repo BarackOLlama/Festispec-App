@@ -84,7 +84,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowQuestionnaireListView()
         {
-            new QuestionnaireListView().ShowDialog();
+            new QuestionnaireListView();
         }
 
         private void ShowCreateEditInspectionView()

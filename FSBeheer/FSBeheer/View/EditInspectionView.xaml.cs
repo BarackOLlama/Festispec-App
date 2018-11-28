@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 namespace FSBeheer.View
 {
     /// <summary>
-    /// Interaction logic for AddCustomerWindow.xaml
+    /// Interaction logic for EditCustomerView.xaml
     /// </summary>
     public partial class EditInspectionView : Window
     {

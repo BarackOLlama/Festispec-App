@@ -34,6 +34,7 @@ namespace FSBeheer.ViewModel
             {
                 return _selectedQuestionnaire;
             }
+
             set
             {
                 _selectedQuestionnaire = value;

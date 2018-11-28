@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        x:Name="InspectionManagementViewName"
         Title="InspectionManagementView" Height="450" Width="800"
         DataContext="{Binding InspectionManagement, Source={StaticResource Locator}}">
     

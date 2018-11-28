@@ -31,51 +31,55 @@ namespace FSBeheer.VM
         public string Name
         {
             get { return _inspector.Name; }
+            set { _inspector.Name = value; }
         }
 
         public string Address
         {
             get { return _inspector.Address; }
+            set { _inspector.Address = value; }
         }
 
         public string City
         {
             get { return _inspector.City; }
-        }
-
-        public string AddressAndCity
-        {
-            get { return _inspector.Address + " " + _inspector.City; }
+            set { _inspector.City = value; }
         }
 
         public string Zipcode
         {
             get { return _inspector.Zipcode; }
+            set { _inspector.Zipcode = value; }
         }
 
         public string Email
         {
             get { return _inspector.Email; }
+            set { _inspector.Email = value; }
         }
 
         public string PhoneNumber
         {
             get { return _inspector.PhoneNumber; }
+            set { _inspector.PhoneNumber = value; }
         }
 
         public DateTime? CertificationDate
         {
             get { return _inspector.CertificationDate; }
+            set { _inspector.CertificationDate = value; }
         }
 
         public DateTime? InvalidDate
         {
             get { return _inspector.InvalidDate; }
+            set { _inspector.InvalidDate = value; }
         }
 
         public string BankNumber
         {
             get { return _inspector.BankNumber; }
+            set { _inspector.BankNumber = value; }
         }
 
         public int? AccountId
