@@ -16,7 +16,6 @@ namespace FSBeheer.ViewModel
     public class CreateQuestionViewModel : ViewModelBase
     {
         private QuestionVM _questionVM;
-
         public QuestionVM Question
         {
             get
@@ -31,6 +30,8 @@ namespace FSBeheer.ViewModel
         }
         private QuestionnaireVM _selectedQuestionnaireVM;
         private QuestionTypeVM _selectedQuestionType;
+        private CustomFSContext _context;
+
         public QuestionTypeVM SelectedQuestionType
         {
             get
@@ -51,40 +52,37 @@ namespace FSBeheer.ViewModel
         {
             _selectedQuestionnaireVM = selectedQuestionnaireVM;
             _questionVM = new QuestionVM();
+            _context = new CustomFSContext();
 
-            using (var context = new CustomFSContext())
-            {
-                var temp = context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
-                QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
-                SelectedQuestionType = QuestionTypes?[1];
-            }
+            var temp = _context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
+            QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
+            SelectedQuestionType = QuestionTypes?[1];
 
             AddQuestionCommand = new RelayCommand(AddQuestion, CanAddQuestion);
             Question = new QuestionVM();
             Question.Type = _selectedQuestionType.ToModel();
-            //TODO there should be a cleaner way to do this.
             Question.QuestionnaireId = selectedQuestionnaireVM.Id;
         }
 
         public void AddQuestion()
         {
-            using (var context = new CustomFSContext())
-            {
-                //TODO hard coded, dirty.
-                if (SelectedQuestionType.Name == "Multiple Choice Vraag")
-                {//clear columns
-                    Question.Columns = null;
-                } else if (SelectedQuestionType.Name == "Open vraag")
-                {//clear options and columns
-                    Question.Columns = null;
-                    Question.Options = null;
-                } else if (SelectedQuestionType.Name == "Open Tabelvraag")
-                {//clear options
-                    Question.Options = null;
-                }
-                context.Questions.Add(Question.ToModel());
-                context.SaveChanges();
+
+            //clear irrelevant fields to avoid confusion in case the user mistakenly filled them in.
+            if (SelectedQuestionType.Name == "Multiple Choice Vraag")
+            {//clear columns
+                Question.Columns = null;
             }
+            else if (SelectedQuestionType.Name == "Open Vraag")
+            {//clear options and columns
+                Question.Columns = null;
+                Question.Options = null;
+            }
+            else if (SelectedQuestionType.Name == "Open Tabelvraag")
+            {//clear options
+                Question.Options = null;
+            }
+            _context.Questions.Add(Question.ToModel());
+            _context.SaveChanges();
         }
 
         public bool CanAddQuestion()

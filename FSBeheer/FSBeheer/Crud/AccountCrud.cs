@@ -15,14 +15,32 @@ namespace FSBeheer.Crud
         {
         }
 
-        public ObservableCollection<AccountVM> GetAccounts()
+        public ObservableCollection<AccountVM> GetAllAccounts()
         {
-            var Account = CustomFSContext.Accounts
+            var accounts = CustomFSContext.Accounts
                 .ToList()
                 .Select(i => new AccountVM(i));
-            var _Accounts = new ObservableCollection<AccountVM>(Account);
-            return _Accounts;
+            return new ObservableCollection<AccountVM>(accounts);
         }
 
+        public ObservableCollection<AccountVM> GetAllAccountsFiltered(string must_contain)
+        {
+            if (string.IsNullOrEmpty(must_contain))
+            {
+                throw new ArgumentNullException(nameof(must_contain));
+            }
+
+            must_contain = must_contain.ToLower();
+
+            var accounts = CustomFSContext.Accounts
+                .ToList()
+                .Where(a =>
+                a.Id.ToString().ToLower().Contains(must_contain) ||
+                a.Username.ToLower().Contains(must_contain) ||
+                a.Role.Content.ToLower().Contains(must_contain)
+                ).Distinct()
+                .Select(a => new AccountVM(a));
+            return new ObservableCollection<AccountVM>(accounts);
+        }
     }
 }

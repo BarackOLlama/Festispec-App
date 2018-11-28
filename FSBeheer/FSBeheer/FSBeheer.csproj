@@ -121,11 +121,16 @@
     <Compile Include="ViewModel\CreateEditContactViewModel.cs" />
     <Compile Include="ViewModel\CreateQuestionnaireViewModel.cs" />
     <Compile Include="ViewModel\EditInspectorViewModel.cs" />
-    <Compile Include="ViewModel\EditQuestionnaireViewModel.cs" />
     <Compile Include="ViewModel\CreateQuestionViewModel.cs" />
+    <Compile Include="ViewModel\EditQuestionViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
+    <Compile Include="ViewModel\QuestionnaireVM.cs" />
+    <Compile Include="View\BaseView.cs" />
+    <Compile Include="View\EditQuestionView.xaml.cs">
+      <DependentUpon>EditQuestionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CreateEditContactView.xaml.cs">
       <DependentUpon>CreateEditContactView.xaml</DependentUpon>
     </Compile>
@@ -143,7 +148,7 @@
     </Compile>
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\QuestionnaireManagementViewModel.cs" />
-    <Compile Include="ViewModel\QuestionnaireViewModel.cs" />
+    <Compile Include="ViewModel\EditQuestionnaireViewModel.cs" />
     <Compile Include="View\CreateQuestionView.xaml.cs">
       <DependentUpon>CreateQuestionView.xaml</DependentUpon>
     </Compile>
@@ -168,9 +173,6 @@
     </Compile>
     <Compile Include="View\NullVisibilityConverter.cs" />
     <Compile Include="VM\AccountVM.cs" />
-    <Compile Include="View\QuestionnaireEditView.xaml.cs">
-      <DependentUpon>QuestionnaireEditView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\QuestionnaireManagementView.xaml.cs">
       <DependentUpon>QuestionnaireManagementView.xaml</DependentUpon>
     </Compile>
@@ -195,7 +197,6 @@
     <Compile Include="VM\EventVM.cs" />
     <Compile Include="VM\InspectionVM.cs" />
     <Compile Include="VM\InspectorVM.cs" />
-    <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="VM\QuestionTypeVM.cs" />
     <Compile Include="VM\QuestionVM.cs" />
   </ItemGroup>
@@ -259,6 +260,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\EditQuestionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\EventManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -280,10 +285,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LoginView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\QuestionnaireEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

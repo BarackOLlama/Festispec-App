@@ -43,7 +43,7 @@ namespace FSBeheer.Migrations
 
             var questiontypes = new List<QuestionType>
             {
-                new QuestionType() { Name = "Open vraag" },
+                new QuestionType() { Name = "Open Vraag" },
                 new QuestionType() { Name = "Multiple Choice vraag" },
                 new QuestionType() { Name = "Open Tabelvraag" },
                 new QuestionType() { Name = "Multiple Choice Tabelvraag" }
