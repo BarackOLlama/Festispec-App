@@ -25,21 +25,30 @@ namespace FSBeheer.ViewModel
             get;
             set; }
         public TimeSpan? NewEndTime { get; set; }
-        public EventVM SelectedEvent { get; set; }
-        private string _SelectedStatusName { get; set; }
-        public string SelectedStatusName {
+        private EventVM _SelectedEvent { get; set; }
+        public EventVM SelectedEvent {
             get
             {
-                return _SelectedStatusName;
+                return _SelectedEvent;
             }
             set
             {
-                SelectedStatusName = value;
+                _SelectedEvent = value;
+                Inspection.Event = value.ToModel();
             }
         }
+        private StatusVM _SelectedStatus { get; set; }
         public StatusVM SelectedStatus {
-            get;
-            set; }
+            get
+            {
+                return _SelectedStatus;
+            }
+            set
+            {
+                _SelectedStatus = value;
+                Inspection.Status = _SelectedStatus.ToModel();
+            }
+        }
         public InspectionVM Inspection { get; set; }
         public RelayCommand CancelInspectionCommand { get; set; }
         public RelayCommand AddInspectionCommand { get; set; }
@@ -48,6 +57,7 @@ namespace FSBeheer.ViewModel
         {
             _Context = new CustomFSContext();
             Customers = _Context.CustomerCrud.GetAllCustomerVMs();
+            Events = _Context.EventCrud.GetAllEvents();
             Statuses = _Context.StatusCrud.GetAllStatusVMs();
 
             CancelInspectionCommand = new RelayCommand(CancelInspection);

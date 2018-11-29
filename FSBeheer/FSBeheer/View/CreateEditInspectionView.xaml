@@ -64,11 +64,11 @@
                                     <Label Grid.Row="4" Grid.Column="0" Content="Datum:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
 
-                                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedInspection.Event.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedInspection.Event.Address}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedInspection.Event.City}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding SelectedInspection.Event.Zipcode}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="4" Grid.Column="1" Content="{Binding SelectedInspection.Event.EventDates}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding Inspection.Event.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding Inspection.Event.Address}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding Inspection.Event.City}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding Inspection.Event.Zipcode}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="4" Grid.Column="1" Content="{Binding Inspection.Event.EventDates}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                                 </Grid>
 
@@ -106,9 +106,9 @@
 
 
 
-                                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedInspection.Event.Customer.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedInspection.Event.Customer.Adres}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedInspection.Event.Customer.ZipCode}" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding Inspection.Event.Customer.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding Inspection.Event.Customer.Adres}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding Inspection.Event.Customer.ZipCode}" VerticalAlignment="Center"/>
 
                                 </Grid>
                             </StackPanel>

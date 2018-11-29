@@ -26,5 +26,10 @@ namespace FSBeheer.VM
             get { return _Status.StatusName; }
             set { _Status.StatusName = value; }
         }
+
+        internal Status ToModel()
+        {
+            return _Status;
+        }
     }
 }

@@ -47,6 +47,7 @@ namespace FSBeheer.VM
         public Event Event
         {
             get { return _inspection.Event; }
+            set { _inspection.Event = value; }
         }
 
         public int? StatusId
@@ -54,16 +55,10 @@ namespace FSBeheer.VM
             get { return _inspection.StatusId; }
         }
 
-        public string StatusName
-        {
-            get { return Status.StatusName; }
-            set { Status.StatusName = value; }
-        }
-
         public Status Status
         {
             get { return _inspection.Status; }
-            set {  }
+            set { _inspection.Status = value; }
         }
     }
 }
