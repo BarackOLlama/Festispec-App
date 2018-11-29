@@ -3,6 +3,7 @@ using FSBeheer.Model;
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -83,6 +84,7 @@ namespace FSBeheer.ViewModel
             }
             _context.Questions.Add(Question.ToModel());
             _context.SaveChanges();
+            Messenger.Default.Send(true, "UpdateQuestions");
         }
 
         public bool CanAddQuestion()

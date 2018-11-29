@@ -1,6 +1,7 @@
 ﻿using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -48,9 +49,12 @@ namespace FSBeheer.ViewModel
         public EditQuestionViewModel(QuestionVM question)
         {
             _context = new CustomFSContext();
-            _question = question;
-            //var questionEntity = _context.Questions.ToList().Where(e => e.Id == question.Id).FirstOrDefault();
-            //_question = new QuestionVM(questionEntity);
+            var questionEntity = _context.Questions.ToList().Where(e => e.Id == question.Id).FirstOrDefault();
+            //the QuestionVM question is passed through the constructor, but this entity is not observed by the current context
+            //so changes made here do not register to the current context, only to the previous.
+            //This means that changint the VM and calling savechanges won't register it as changed and therefore not
+            //update the database.
+            _question = new QuestionVM(questionEntity);
             var temp = _context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
             QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
             SaveQuestionChangesCommand = new RelayCommand(SaveQuestionChanges);
@@ -60,8 +64,8 @@ namespace FSBeheer.ViewModel
 
         public void SaveQuestionChanges()
         {
-            //_context.QuestionCrud.GetAllQuestionVMs().Add(_question);
             _context.SaveChanges();
+            Messenger.Default.Send(true, "UpdateQuestions"); 
         }
 
         public void DiscardQuestionChanges()

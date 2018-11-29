@@ -2,8 +2,10 @@
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
@@ -12,19 +14,26 @@ namespace FSBeheer.ViewModel
         private QuestionnaireVM _selectedQuestionnaire;
         private CustomFSContext _context;
         public ObservableCollection<QuestionnaireVM> Questionnaires { get; set; }
-
         public RelayCommand ShowEditQuestionnaireViewCommand { get; set; }
         public RelayCommand CreateQuestionnaireCommand { get; set; }
         public QuestionnaireManagementViewModel()
         {
-            _context = new CustomFSContext();
+            Messenger.Default.Register<bool>(this, "UpdateQuestionnaires", cl => Init());
+            Init();
             Questionnaires = _context.QuestionnaireCrud.GetAllQuestionnaireVMs();
-
             ShowEditQuestionnaireViewCommand = new RelayCommand(ShowEditQuestionnaireView);
             CreateQuestionnaireCommand = new RelayCommand(CreateQuestionnaire);
             SelectedQuestionnaire = Questionnaires?.First();
-            //_context.Dispose();
         }
+
+        internal void Init()
+        {
+            _context = new CustomFSContext();
+            var questionnaires = _context.Questionnaires.ToList().Select(e => new QuestionnaireVM(e));
+            Questionnaires = new ObservableCollection<QuestionnaireVM>(questionnaires);
+            RaisePropertyChanged("Questionnaires");
+        }
+
         public QuestionnaireVM SelectedQuestionnaire
         {
             get { return _selectedQuestionnaire; }
@@ -37,12 +46,19 @@ namespace FSBeheer.ViewModel
 
         public void ShowEditQuestionnaireView()
         {
-            new EditQuestionnaireView().ShowDialog();
+            if (_selectedQuestionnaire == null)
+            {
+                MessageBox.Show("Geen vragenlijst geselecteerd.");
+            }
+            else
+            {
+                new EditQuestionnaireView().ShowDialog();
+            }
         }
 
         public void CreateQuestionnaire()
         {
-            new CreateQuestionnaireView().Show();
+            new CreateQuestionnaireView().ShowDialog();
         }
     }
 }

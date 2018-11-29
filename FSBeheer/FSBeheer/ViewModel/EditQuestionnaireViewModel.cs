@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
+using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
@@ -28,7 +29,8 @@ namespace FSBeheer.ViewModel
         }
 
         private QuestionVM _selectedQuestion;
-        public QuestionVM SelectedQuestion {
+        public QuestionVM SelectedQuestion
+        {
             get
             {
                 return _selectedQuestion;
@@ -58,8 +60,8 @@ namespace FSBeheer.ViewModel
 
         public EditQuestionnaireViewModel(QuestionnaireVM questionnaire)
         {
-            _context = new CustomFSContext();
-            //_questionnaire = questionnaire;
+            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => Init());
+            Init();
             var questionnaireEntity = _context.Questionnaires.ToList().Where(e => e.Id == questionnaire.Id).FirstOrDefault();
             _questionnaire = new QuestionnaireVM(questionnaireEntity);
 
@@ -83,12 +85,19 @@ namespace FSBeheer.ViewModel
             SelectedQuestion = questions.FirstOrDefault();
         }
 
+        internal void Init()
+        {
+            _context = new CustomFSContext();
+            var questions = _context.Questions.ToList().Select(e => new QuestionVM(e));
+            Questions = new ObservableCollection<QuestionVM>(questions);
+            base.RaisePropertyChanged("Questions");
+        }
+
 
         private void SaveQuestionnaireChanges()
         {
             _context.SaveChanges();
-            //Messenger.Default.Send(true, "UpdateQuestionnaires"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
-            //^is used in the CreateEditCustomerViewModel
+            Messenger.Default.Send(true, "UpdateQuestionnaires");
         }
 
         public void OpenCreateQuestionView()
@@ -98,8 +107,19 @@ namespace FSBeheer.ViewModel
 
         private void OpenEditQuestionView()
         {
-            new EditQuestionView().ShowDialog();
+            if (_selectedQuestion == null)
+            {
+                MessageBox.Show("Geen vraag geselecteerd.");
+            }else
+            {
+                new EditQuestionView().ShowDialog();
+            }
         }
 
+        public void UpdateQuestions()
+        {
+            var questions = _context.Questions.ToList().Select(e => new QuestionVM(e));
+            Questions = new ObservableCollection<QuestionVM>(questions);
+        }
     }
 }
