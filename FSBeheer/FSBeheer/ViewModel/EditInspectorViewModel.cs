@@ -89,8 +89,9 @@ namespace FSBeheer.ViewModel
 
         private void ModifyInspector()
         {
+            Console.WriteLine("ja");
             SelectedInspector.Name = Name;
-            SelectedInspector.Address = Inspector.Address;
+            SelectedInspector.Address = Address;
             SelectedInspector.City = Inspector.City;
             SelectedInspector.Zipcode = Inspector.Zipcode;
             SelectedInspector.Email = Inspector.Email;

@@ -2,6 +2,7 @@
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,9 +16,9 @@ namespace FSBeheer.ViewModel
     public class InspectorManagementViewModel : ViewModelBase
     {
 
-        private CustomFSContext _Context;
+        private CustomFSContext _customFSContext;
         private InspectorVM _selectedInspector;
-        public ObservableCollection<InspectorVM> Inspectors { get; }
+        public ObservableCollection<InspectorVM> Inspectors { get; set; }
         public RelayCommand<Window> BackHomeCommand { get; set; }
         public RelayCommand ShowEditInspectorViewCommand { get; set; }
         public RelayCommand ShowCreateInspectorViewCommand { get; set; }
@@ -25,12 +26,22 @@ namespace FSBeheer.ViewModel
 
         public InspectorManagementViewModel()
         {
-            _Context = new CustomFSContext();
-            Inspectors = _Context.InspectorCrud.GetInspectors();
+            Messenger.Default.Register<bool>(this, "UpdateCustomerList", cl => Init()); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
+
+            Init();
+            
+            
             BackHomeCommand = new RelayCommand<Window>(CloseAction);
             ShowEditInspectorViewCommand = new RelayCommand(ShowEditInspectorView);
             ShowCreateInspectorViewCommand = new RelayCommand(ShowCreateInspectorView);
             SelectedInspector = Inspectors?.First();
+        }
+
+        private void Init()
+        {
+            _customFSContext = new CustomFSContext();
+            Inspectors = _customFSContext.InspectorCrud.GetInspectors();
+            RaisePropertyChanged(nameof(Inspectors));
         }
 
         public InspectorVM SelectedInspector
