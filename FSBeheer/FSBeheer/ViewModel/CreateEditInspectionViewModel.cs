@@ -15,16 +15,27 @@ namespace FSBeheer.ViewModel
 
         public ObservableCollection<CustomerVM> Customers { get; }
         public ObservableCollection<EventVM> Events { get; set; }
-        public ObservableCollection<string> EventNames { get; set; }
+        //public ObservableCollection<string> EventNames { get; set; }
         public ObservableCollection<StatusVM> Statuses { get; set; }
-        public ObservableCollection<string> StatusNames { get; set; }
+        //public ObservableCollection<string> StatusNames { get; set; }
         
-        public DateTime? NewStartDate { get; set; }
-        public DateTime? NewEndDate { get; set; }
-        public TimeSpan? NewStartTime {
-            get;
-            set; }
-        public TimeSpan? NewEndTime { get; set; }
+        //public DateTime? NewStartDate { get; set; }
+        //public DateTime? NewEndDate { get; set; }
+        //public TimeSpan? NewStartTime { get; set; }
+        //public TimeSpan? NewEndTime { get; set; }
+        private DateTime? _StartDate { get; set; }
+        public DateTime? StartDate
+        {
+            get
+            {
+                return _StartDate;
+            }
+            set
+            {
+                _StartDate = value;
+                //Inspection.InspectionDate.StartDate = value;
+            }
+        }
         private EventVM _SelectedEvent { get; set; }
         public EventVM SelectedEvent {
             get

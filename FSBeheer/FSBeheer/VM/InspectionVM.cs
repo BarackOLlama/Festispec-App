@@ -18,12 +18,6 @@ namespace FSBeheer.VM
             _inspection = inspection;
         }
 
-        // useful?
-        internal Inspection ToModel()
-        {
-            return _inspection;
-        }
-
         public int Id
         {
             get { return _inspection.Id; }
@@ -59,6 +53,17 @@ namespace FSBeheer.VM
         {
             get { return _inspection.Status; }
             set { _inspection.Status = value; }
+        }
+
+        public InspectionDate InspectionDate
+        {
+            get { return _inspection.InspectionDate; }
+            set { _inspection.InspectionDate = value; }
+        }
+
+        internal Inspection ToModel()
+        {
+            return _inspection;
         }
     }
 }
