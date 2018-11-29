@@ -34,7 +34,7 @@
                     <DataGridTextColumn Header="Inspectienummer" Binding="{Binding Id}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Evenement" Binding="{Binding EventId}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Status" Binding="{Binding StatusId}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Prijs" Binding="{Binding }"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Statusnaam" Binding="{Binding StatusName}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

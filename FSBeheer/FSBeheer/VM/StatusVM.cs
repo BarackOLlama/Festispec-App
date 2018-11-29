@@ -24,6 +24,7 @@ namespace FSBeheer.VM
         public string StatusName
         {
             get { return _Status.StatusName; }
+            set { _Status.StatusName = value; }
         }
     }
 }

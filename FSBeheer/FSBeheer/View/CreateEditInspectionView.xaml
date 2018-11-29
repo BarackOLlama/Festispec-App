@@ -20,7 +20,7 @@
 
         <StackPanel Name="EventSelection" Margin="0,30,0,0">
 
-            <ComboBox ItemsSource="{Binding EventNames}" SelectedItem="SelectedEvent" Width="500" HorizontalAlignment="Left" Height="30" Margin="20,0,0,0"/>
+            <ComboBox ItemsSource="{Binding Events}" SelectedItem="SelectedEvent" DisplayMemberPath="Name" Width="500" HorizontalAlignment="Left" Height="30" Margin="20,0,0,0"/>
 
         </StackPanel>
 
@@ -151,7 +151,7 @@
                             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding NewStartTime, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding NewEndTime, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <TextBox Grid.Row="4" Grid.Column="1" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
-                            <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding StatusNames, Mode=TwoWay}" SelectedItem="{Binding SelectedStatus}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
+                            <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding Statuses, Mode=TwoWay}" SelectedItem="{Binding SelectedStatus}" DisplayMemberPath="StatusName"  Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
 
                         </Grid>
                     </Border>

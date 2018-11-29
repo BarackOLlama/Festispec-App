@@ -54,9 +54,16 @@ namespace FSBeheer.VM
             get { return _inspection.StatusId; }
         }
 
+        public string StatusName
+        {
+            get { return Status.StatusName; }
+            set { Status.StatusName = value; }
+        }
+
         public Status Status
         {
             get { return _inspection.Status; }
+            set {  }
         }
     }
 }

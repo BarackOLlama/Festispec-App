@@ -12,7 +12,6 @@ namespace FSBeheer.ViewModel
     public class CreateEditInspectionViewModel : ViewModelBase
     {
         private CustomFSContext _Context;
-        private InspectionManagementViewModel _InspectionManagementViewModel;
 
         public ObservableCollection<CustomerVM> Customers { get; }
         public ObservableCollection<EventVM> Events { get; set; }
@@ -27,6 +26,17 @@ namespace FSBeheer.ViewModel
             set; }
         public TimeSpan? NewEndTime { get; set; }
         public EventVM SelectedEvent { get; set; }
+        private string _SelectedStatusName { get; set; }
+        public string SelectedStatusName {
+            get
+            {
+                return _SelectedStatusName;
+            }
+            set
+            {
+                SelectedStatusName = value;
+            }
+        }
         public StatusVM SelectedStatus {
             get;
             set; }
@@ -38,22 +48,7 @@ namespace FSBeheer.ViewModel
         {
             _Context = new CustomFSContext();
             Customers = _Context.CustomerCrud.GetAllCustomerVMs();
-
-            Events = _Context.EventCrud.GetAllEventVMs();
-            ObservableCollection<string> _EventList = new ObservableCollection<string>();
-            foreach (EventVM eventVM in Events)
-            {
-                _EventList.Add(eventVM.Name);
-            }
-            EventNames = _EventList;
-
             Statuses = _Context.StatusCrud.GetAllStatusVMs();
-            ObservableCollection<string> _StatusList = new ObservableCollection<string>();
-            foreach (StatusVM statusVM in Statuses)
-            {
-                _StatusList.Add(statusVM.StatusName);
-            }
-            StatusNames = _StatusList;
 
             CancelInspectionCommand = new RelayCommand(CancelInspection);
             AddInspectionCommand = new RelayCommand(AddInspection);
