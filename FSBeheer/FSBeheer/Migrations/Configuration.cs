@@ -32,6 +32,8 @@ namespace FSBeheer.Migrations
             context.Contacts.RemoveRange(context.Contacts);
             context.Customers.RemoveRange(context.Customers);
             context.Events.RemoveRange(context.Events);
+            context.Statuses.RemoveRange(context.Statuses);
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.Statuses', RESEED, 0)");
 
             var roles = new List<Role>
             {
@@ -43,7 +45,7 @@ namespace FSBeheer.Migrations
 
             var questiontypes = new List<QuestionType>
             {
-                new QuestionType() { Name = "Open vraag" },
+                new QuestionType() { Name = "Open Vraag" },
                 new QuestionType() { Name = "Multiple Choice vraag" },
                 new QuestionType() { Name = "Open Tabelvraag" },
                 new QuestionType() { Name = "Multiple Choice Tabelvraag" }
@@ -326,19 +328,6 @@ namespace FSBeheer.Migrations
                 }
             };
             context.Events.AddRange(events);
-
-            var inspections = new List<Inspection>
-            {
-                new Inspection()
-                    {
-                        Name = "EersteInspectie",
-                        Event = events[1],
-                        Status = statuses[3],
-                        Notes = "Minstens 4 inspecteurs",
-                        IsDeleted = false
-                    }
-            };
-            context.Inspections.AddRange(inspections);
             
             var inspectiondates = new List<InspectionDate>
             {
@@ -348,11 +337,24 @@ namespace FSBeheer.Migrations
                     EndDate = new DateTime(2018, 12, 15),
                     StartTime = new TimeSpan(14, 0, 0),
                     EndTime = new TimeSpan(2, 0, 0),
-                    Inspection = inspections[0],
                     IsDeleted = false
                 }
             };
             context.InspectionDates.AddRange(inspectiondates);
+
+            var inspections = new List<Inspection>
+            {
+                new Inspection()
+                    {
+                        Name = "EersteInspectie",
+                        Event = events[1],
+                        Status = statuses[3],
+                        Notes = "Minstens 4 inspecteurs",
+                        InspectionDate = inspectiondates[0],
+                        IsDeleted = false
+                    }
+            };
+            context.Inspections.AddRange(inspections);
 
             var questionnaires = new List<Questionnaire>
             {

@@ -15,28 +15,30 @@ namespace FSBeheer.Crud
         /**
          * This method needs to be edited and tested, used .ToString() without testing.
          */
-        public ObservableCollection<AnswerVM> GetFilteredAnswersByString(string must_contain)
+        public ObservableCollection<AnswerVM> GetAllAnswersFiltered(string must_contain)
         {
             if (must_contain == null)
             {
                 throw new ArgumentNullException(nameof(must_contain));
             }
+            must_contain = must_contain.ToLower();
+
             var _answers = CustomFSContext.Answers
                 .ToList()
-                .Where(c =>
-                c.ToString().Contains(must_contain)
+                .Where(a =>
+                a.Id.ToString().ToLower().Contains(must_contain) ||
+                a.Content.Contains(must_contain) ||
+                a.Inspector.Name.ToLower().Contains(must_contain) ||
+                a.Question.Content.ToLower().Contains(must_contain)
                 ).Distinct()
-                .Select(c => new AnswerVM(c));
-            var _answer = new ObservableCollection<AnswerVM>(_answers);
-
-            return _answer;
-
+                .Select(a => new AnswerVM(a));
+            return new ObservableCollection<AnswerVM>(_answers);
         }
         /*
          * Returns all AnswerVMs
          */
 
-        public ObservableCollection<AnswerVM> GetAllAnswerVMs()
+        public ObservableCollection<AnswerVM> GetAllAnswers()
         {
             var _result = CustomFSContext.Answers
                .ToList()

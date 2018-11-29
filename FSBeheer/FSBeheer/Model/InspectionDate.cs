@@ -11,12 +11,10 @@ namespace FSBeheer.Model
     {
         [Key]
         public int Id { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public TimeSpan? StartTime { get; set; }
         public TimeSpan? EndTime { get; set; }
-        public int? InspectionId { get; set; }
-        public virtual Inspection Inspection { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

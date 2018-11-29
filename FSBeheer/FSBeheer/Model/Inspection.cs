@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FSBeheer.Model
 {
@@ -14,7 +9,6 @@ namespace FSBeheer.Model
         {
             Questionnaires = new ObservableCollection<Questionnaire>();
             Inspectors = new ObservableCollection<Inspector>();
-            InspectionDates = new ObservableCollection<InspectionDate>();
         }
 
         [Key]
@@ -27,7 +21,8 @@ namespace FSBeheer.Model
         public virtual Status Status { get; set; }
         public virtual ObservableCollection<Questionnaire> Questionnaires { get; set; }
         public virtual ObservableCollection<Inspector> Inspectors { get; set; }
-        public virtual ObservableCollection<InspectionDate> InspectionDates { get; set; }
+        public int? InspectionDateId { get; set; }
+        public virtual InspectionDate InspectionDate { get; set; }
         public bool IsDeleted { get; set; }
     }
 }
