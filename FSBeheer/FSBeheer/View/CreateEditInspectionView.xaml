@@ -196,8 +196,7 @@
                     Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,20,0">
 
             <Button Content="Opslaan" Command="{Binding AddInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>
-            <Button Content="Verwijderen" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DeleteInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>
-            <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding CancelInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>
+            <!--<Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding CancelInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>-->
 
         </StackPanel>
     </StackPanel>

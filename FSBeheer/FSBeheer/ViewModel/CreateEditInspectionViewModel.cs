@@ -107,7 +107,6 @@ namespace FSBeheer.ViewModel
         }
 
         public RelayCommand<Window> CancelInspectionCommand { get; set; }
-        public RelayCommand<Window> DeleteInspectionCommand { get; set; }
         public RelayCommand AddInspectionCommand { get; set; }
 
         public CreateEditInspectionViewModel()
@@ -122,7 +121,6 @@ namespace FSBeheer.ViewModel
             SelectedStatus = Statuses.ElementAtOrDefault(2);
 
             CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
-            DeleteInspectionCommand = new RelayCommand<Window>(DeleteInspection);
             AddInspectionCommand = new RelayCommand(AddInspection);
         }
 
@@ -160,18 +158,6 @@ namespace FSBeheer.ViewModel
                 _Context.Dispose();
                 Inspection = null;
                 window.Close();
-            }
-        }
-
-        private void DeleteInspection(Window window)
-        {
-            MessageBoxResult result = MessageBox.Show("Weet u zeker dat u deze inspectie wilt verwijderen?", "Bevestig verwijdering inspectie", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
-            {
-                Inspection.IsDeleted = true;
-                _Context.SaveChanges();
-                window.Close();
-                Messenger.Default.Send(true, "UpdateInspectionList");
             }
         }
 
