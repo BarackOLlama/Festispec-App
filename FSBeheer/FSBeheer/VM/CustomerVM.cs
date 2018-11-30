@@ -40,10 +40,10 @@ namespace FSBeheer.VM
             set { _customer.Name = value; RaisePropertyChanged(nameof(Name)); }
         }
 
-        public string Adres
+        public string Address
         {
             get { return _customer.Address; }
-            set { _customer.Address = value; RaisePropertyChanged(nameof(Adres)); }
+            set { _customer.Address = value; RaisePropertyChanged(nameof(Address)); }
         }
 
         public string City

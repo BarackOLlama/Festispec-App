@@ -16,6 +16,11 @@ namespace FSBeheer.VM
             _InspectionDate = inspectionDate;
         }
 
+        internal InspectionDate ToModel()
+        {
+            return _InspectionDate;
+        }
+
         public int Id
         {
             get { return _InspectionDate.Id; }

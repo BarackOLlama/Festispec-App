@@ -33,7 +33,7 @@ namespace FSBeheer.ViewModel
         public CreateEditInspectionViewModel(InspectionManagementViewModel inspectionManagementViewModel)
         {
             _Context = new CustomFSContext();
-            Customers = _Context.CustomerCrud.GetAllCustomerVMs();
+            Customers = _Context.CustomerCrud.GetAllCustomers();
 
             Events = _Context.EventCrud.GetAllEvents();
             ObservableCollection<string> _EventList = new ObservableCollection<string>();
