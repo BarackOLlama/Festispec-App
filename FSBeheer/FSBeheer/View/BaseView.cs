@@ -10,7 +10,7 @@ namespace FSBeheer.View
     {
         public BaseView()
         {
-            double DefaultFontSize = 15; //Default "small" FontSize value
+            double DefaultFontSize = 12; //Default "small" FontSize value
 
             var InterfaceButtonFactory = new FrameworkElementFactory(typeof(Button));
             InterfaceButtonFactory.SetValue(ContentProperty, new TemplateBindingExtension(ContentProperty));
@@ -38,20 +38,20 @@ namespace FSBeheer.View
             FilteredComboBoxFactory.SetValue(FilteredComboBox.StaysOpenOnEditProperty, true);
             FilteredComboBoxFactory.SetValue(FilteredComboBox.ItemsPanelProperty, new ItemsPanelTemplate() { VisualTree = ItemsPanelFactory });
             FilteredComboBoxFactory.SetValue(FilteredComboBox.WidthProperty, (double)250);
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.FontSizeProperty, (double)12);
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.FontSizeProperty, DefaultFontSize);
 
             var CreateEditLabelFactory = new FrameworkElementFactory(typeof(Label));
             CreateEditLabelFactory.SetValue(Label.ContentProperty, new TemplateBindingExtension(Label.ContentProperty));
             CreateEditLabelFactory.SetValue(Label.HorizontalContentAlignmentProperty, HorizontalAlignment.Right);
             CreateEditLabelFactory.SetValue(Label.VerticalContentAlignmentProperty, VerticalAlignment.Center);
-            CreateEditLabelFactory.SetValue(Label.FontSizeProperty, (double)12);
+            CreateEditLabelFactory.SetValue(Label.FontSizeProperty, DefaultFontSize);
             CreateEditLabelFactory.SetValue(Label.WidthProperty, (double)75);
 
             var CreateEditTextBoxFactory = new FrameworkElementFactory(typeof(TextBox));
             CreateEditTextBoxFactory.SetValue(TextBox.TextProperty, new TemplateBindingExtension(TextBox.TextProperty));
             CreateEditTextBoxFactory.SetValue(TextBox.HorizontalAlignmentProperty, HorizontalAlignment.Left);
             CreateEditTextBoxFactory.SetValue(TextBox.PaddingProperty, new Thickness(3));
-            CreateEditTextBoxFactory.SetValue(TextBox.FontSizeProperty, (double)12);
+            CreateEditTextBoxFactory.SetValue(TextBox.FontSizeProperty, DefaultFontSize);
             CreateEditTextBoxFactory.SetValue(TextBox.WidthProperty, (double)250);
 
 

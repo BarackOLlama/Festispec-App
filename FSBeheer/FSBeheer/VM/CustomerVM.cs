@@ -42,8 +42,8 @@ namespace FSBeheer.VM
 
         public string Adres
         {
-            get { return _customer.Adres; }
-            set { _customer.Adres = value; RaisePropertyChanged(nameof(Adres)); }
+            get { return _customer.Address; }
+            set { _customer.Address = value; RaisePropertyChanged(nameof(Adres)); }
         }
 
         public string City
