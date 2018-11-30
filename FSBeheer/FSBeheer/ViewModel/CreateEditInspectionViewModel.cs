@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
@@ -13,18 +14,13 @@ namespace FSBeheer.ViewModel
     {
         private CustomFSContext _Context;
 
+        public InspectionVM Inspection { get; set; }
         public ObservableCollection<CustomerVM> Customers { get; }
         public ObservableCollection<EventVM> Events { get; set; }
-        //public ObservableCollection<string> EventNames { get; set; }
         public ObservableCollection<StatusVM> Statuses { get; set; }
-        //public ObservableCollection<string> StatusNames { get; set; }
-        
-        //public DateTime? NewStartDate { get; set; }
-        //public DateTime? NewEndDate { get; set; }
-        //public TimeSpan? NewStartTime { get; set; }
-        //public TimeSpan? NewEndTime { get; set; }
-        private DateTime? _StartDate { get; set; }
-        public DateTime? StartDate
+
+        private DateTime _StartDate { get; set; }
+        public DateTime StartDate
         {
             get
             {
@@ -33,7 +29,48 @@ namespace FSBeheer.ViewModel
             set
             {
                 _StartDate = value;
-                //Inspection.InspectionDate.StartDate = value;
+                Inspection.InspectionDate.StartDate = value;
+                RaisePropertyChanged(nameof(StartDate));
+            }
+        }
+        private DateTime _EndDate { get; set; }
+        public DateTime EndDate
+        {
+            get
+            {
+                return _EndDate;
+            }
+            set
+            {
+                _EndDate = value;
+                Inspection.InspectionDate.EndDate = value;
+                RaisePropertyChanged(nameof(EndDate));
+            }
+        }
+        private TimeSpan? _StartTime { get; set; }
+        public TimeSpan? StartTime {
+            get
+            {
+                return _StartTime;
+            }
+            set
+            {
+                _StartTime = value;
+                Inspection.InspectionDate.StartTime = value;
+                RaisePropertyChanged(nameof(StartTime));
+            }
+        }
+        private TimeSpan? _EndTime { get; set; }
+        public TimeSpan? EndTime {
+            get
+            {
+                return _EndTime;
+            }
+            set
+            {
+                _EndTime = value;
+                Inspection.InspectionDate.EndTime = value;
+                RaisePropertyChanged(nameof(EndTime));
             }
         }
         private EventVM _SelectedEvent { get; set; }
@@ -45,7 +82,11 @@ namespace FSBeheer.ViewModel
             set
             {
                 _SelectedEvent = value;
-                Inspection.Event = value.ToModel();
+                if (Inspection != null)
+                {
+                    Inspection.Event = value.ToModel();
+                }
+                RaisePropertyChanged(nameof(SelectedEvent));
             }
         }
         private StatusVM _SelectedStatus { get; set; }
@@ -57,11 +98,16 @@ namespace FSBeheer.ViewModel
             set
             {
                 _SelectedStatus = value;
-                Inspection.Status = _SelectedStatus.ToModel();
+                if (Inspection != null)
+                {
+                    Inspection.Status = value.ToModel();
+                }
+                RaisePropertyChanged(nameof(SelectedStatus));
             }
         }
-        public InspectionVM Inspection { get; set; }
-        public RelayCommand CancelInspectionCommand { get; set; }
+
+        public RelayCommand<Window> CancelInspectionCommand { get; set; }
+        public RelayCommand<Window> DeleteInspectionCommand { get; set; }
         public RelayCommand AddInspectionCommand { get; set; }
 
         public CreateEditInspectionViewModel()
@@ -71,7 +117,12 @@ namespace FSBeheer.ViewModel
             Events = _Context.EventCrud.GetAllEvents();
             Statuses = _Context.StatusCrud.GetAllStatusVMs();
 
-            CancelInspectionCommand = new RelayCommand(CancelInspection);
+            // niet netjes, maar anders heeft de Event combobox in het begin helemaal geen waarde, mede omdat de SetInspection na de InitializeComponent wordt uitgevoerd
+            SelectedEvent = Events.ElementAtOrDefault(2);
+            SelectedStatus = Statuses.ElementAtOrDefault(2);
+
+            CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
+            DeleteInspectionCommand = new RelayCommand<Window>(DeleteInspection);
             AddInspectionCommand = new RelayCommand(AddInspection);
         }
 
@@ -79,7 +130,10 @@ namespace FSBeheer.ViewModel
         {
             if (inspection == null)
             {
-                Inspection = new InspectionVM(new Inspection());
+                Inspection = new InspectionVM(new Inspection())
+                {
+                    InspectionDate = new InspectionDate()
+                };
                 _Context.Inspections.Add(Inspection.ToModel());
                 RaisePropertyChanged(nameof(Inspection));
             }
@@ -87,7 +141,37 @@ namespace FSBeheer.ViewModel
             {
                 Inspection = new InspectionVM(_Context.Inspections
                     .FirstOrDefault(i => i.Id == inspection.Id));
+                SelectedEvent = _Context.EventCrud.GetEventById(Inspection.Event.Id);
+                SelectedStatus = _Context.StatusCrud.GetStatusById(Inspection.Status.Id);
+                StartDate = Inspection.InspectionDate.StartDate;
+                EndDate = Inspection.InspectionDate.EndDate;
+                StartTime = Inspection.InspectionDate.StartTime;
+                EndTime = Inspection.InspectionDate.EndTime;
                 RaisePropertyChanged(nameof(Inspection));
+            }
+        }
+
+        private void CancelInspection(Window window)
+        {
+            // CreateInspectionView sluiten en veranderingen ongedaan maken
+            MessageBoxResult result = MessageBox.Show("Weet u zeker dat u deze inspectie wilt annuleren?", "Bevestig annulering inspectie", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                _Context.Dispose();
+                Inspection = null;
+                window.Close();
+            }
+        }
+
+        private void DeleteInspection(Window window)
+        {
+            MessageBoxResult result = MessageBox.Show("Weet u zeker dat u deze inspectie wilt verwijderen?", "Bevestig verwijdering inspectie", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                Inspection.IsDeleted = true;
+                _Context.SaveChanges();
+                window.Close();
+                Messenger.Default.Send(true, "UpdateInspectionList");
             }
         }
 
@@ -98,11 +182,6 @@ namespace FSBeheer.ViewModel
             _Context.SaveChanges();
 
             Messenger.Default.Send(true, "UpdateInspectionList");
-        }
-
-        public void CancelInspection()
-        {
-            // CreateInspectionView sluiten en veranderingen ongedaan maken
         }
     }
 }

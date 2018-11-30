@@ -51,6 +51,11 @@ namespace FSBeheer.VM
             }
         }
 
+        public Customer Customer
+        {
+            get { return _event.Customer; }
+        }
+
         public override string ToString()
         {
             return _event.Name;

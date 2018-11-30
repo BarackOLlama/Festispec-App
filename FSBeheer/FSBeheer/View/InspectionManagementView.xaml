@@ -18,14 +18,7 @@
     </Window.Resources>
 
     <StackPanel Margin="20">
-        <StackPanel Name="spBackButton" HorizontalAlignment="Left">
-            <Button Content="Back" 
-                    Command="{Binding WORKINPROGRESS}" 
-                    CommandParameter="{Binding ElementName=InspectionManagementViewName}" 
-                    Template="{StaticResource InterfaceButtonTemplate}">
-                
-            </Button>
-        </StackPanel>
+        
 
 
         <StackPanel Name="spContent" Margin="30">

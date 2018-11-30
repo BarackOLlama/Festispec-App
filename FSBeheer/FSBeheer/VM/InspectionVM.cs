@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.VM
 {
-    public class InspectionVM
+    public class InspectionVM : ViewModelBase
     {
         private Inspection _inspection;
 
@@ -59,6 +59,12 @@ namespace FSBeheer.VM
         {
             get { return _inspection.InspectionDate; }
             set { _inspection.InspectionDate = value; }
+        }
+
+        public bool IsDeleted
+        {
+            get { return _inspection.IsDeleted; }
+            set { _inspection.IsDeleted = value; RaisePropertyChanged(nameof(IsDeleted)); }
         }
 
         internal Inspection ToModel()
