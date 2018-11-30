@@ -61,5 +61,10 @@ namespace FSBeheer.VM
         {
             get { return _Availability.Inspector; }
         }
+
+        public bool IsDeleted
+        {
+            get { return _Availability.IsDeleted; }
+        }
     }
 }

@@ -146,11 +146,11 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public ChooseInspectorViewModel ChooseInspector
+        public AvailableInspectorViewModel AvailableInspector
         {
             get
             {
-                return new ChooseInspectorViewModel();
+                return new AvailableInspectorViewModel();
             }
         }
 

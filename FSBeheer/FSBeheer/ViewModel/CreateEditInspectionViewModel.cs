@@ -171,5 +171,10 @@ namespace FSBeheer.ViewModel
 
             Messenger.Default.Send(true, "UpdateInspectionList");
         }
+
+        public void OpenAvailable()
+        {
+            new AvailableInspectorView(SelectedInspection.Id).Show();
+        }
     }
 }

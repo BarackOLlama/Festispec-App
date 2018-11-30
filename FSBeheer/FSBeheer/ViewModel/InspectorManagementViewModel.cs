@@ -23,7 +23,7 @@ namespace FSBeheer.ViewModel
         public InspectorManagementViewModel()
         {
             _Context = new CustomFSContext();
-            Inspectors = _Context.InspectorCrud.GetInspectors();
+            Inspectors = _Context.InspectorCrud.GetAllInspectors();
             BackHomeCommand = new RelayCommand<Window>(CloseAction);
             ShowEditInspectorViewCommand = new RelayCommand(ShowEditInspectorView);
             ShowCreateInspectorViewCommand = new RelayCommand(ShowCreateInspectorView);
