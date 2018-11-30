@@ -17,7 +17,7 @@ namespace FSBeheer.Crud
          * Returns all customers
          */
 
-        public ObservableCollection<CustomerVM> GetAllCustomerVMs()
+        public ObservableCollection<CustomerVM> GetAllCustomers()
         {
             var customer = CustomFSContext.Customers
                .ToList()
