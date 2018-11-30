@@ -18,6 +18,7 @@ namespace FSBeheer.View
             InterfaceButtonFactory.SetValue(Button.CommandParameterProperty, new TemplateBindingExtension(Button.CommandParameterProperty));
             InterfaceButtonFactory.SetValue(FontSizeProperty, DefaultFontSize);
             InterfaceButtonFactory.SetValue(MarginProperty, new Thickness(5));
+            InterfaceButtonFactory.SetValue(PaddingProperty, new Thickness(3));
 
             var SearchTextBoxFactory = new FrameworkElementFactory(typeof(FilterTextBox));
             SearchTextBoxFactory.SetValue(FontSizeProperty, DefaultFontSize);
@@ -30,19 +31,21 @@ namespace FSBeheer.View
             var FilteredComboBoxFactory = new FrameworkElementFactory(typeof(FilteredComboBox));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.ItemsSourceProperty, new TemplateBindingExtension(FilteredComboBox.ItemsSourceProperty));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedItemProperty, new TemplateBindingExtension(FilteredComboBox.SelectedItemProperty));
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedIndexProperty, new TemplateBindingExtension(FilteredComboBox.SelectedIndexProperty));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.DisplayMemberPathProperty, new TemplateBindingExtension(FilteredComboBox.DisplayMemberPathProperty));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.IsEditableProperty, true);
             FilteredComboBoxFactory.SetValue(FilteredComboBox.IsTextSearchEnabledProperty, false);
             FilteredComboBoxFactory.SetValue(FilteredComboBox.StaysOpenOnEditProperty, true);
             FilteredComboBoxFactory.SetValue(FilteredComboBox.ItemsPanelProperty, new ItemsPanelTemplate() { VisualTree = ItemsPanelFactory });
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.WidthProperty, (double)400);
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.FontSizeProperty, (double)20);
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.WidthProperty, (double)250);
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.FontSizeProperty, (double)12);
 
             var CreateEditLabelFactory = new FrameworkElementFactory(typeof(Label));
             CreateEditLabelFactory.SetValue(Label.ContentProperty, new TemplateBindingExtension(Label.ContentProperty));
-            CreateEditLabelFactory.SetValue(Label.HorizontalAlignmentProperty, HorizontalAlignment.Right);
-            CreateEditLabelFactory.SetValue(Label.VerticalAlignmentProperty, VerticalAlignment.Center);
+            CreateEditLabelFactory.SetValue(Label.HorizontalContentAlignmentProperty, HorizontalAlignment.Right);
+            CreateEditLabelFactory.SetValue(Label.VerticalContentAlignmentProperty, VerticalAlignment.Center);
             CreateEditLabelFactory.SetValue(Label.FontSizeProperty, (double)12);
+            CreateEditLabelFactory.SetValue(Label.WidthProperty, (double)75);
 
             var CreateEditTextBoxFactory = new FrameworkElementFactory(typeof(TextBox));
             CreateEditTextBoxFactory.SetValue(TextBox.TextProperty, new TemplateBindingExtension(TextBox.TextProperty));

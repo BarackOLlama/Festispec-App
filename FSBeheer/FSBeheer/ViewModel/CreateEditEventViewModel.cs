@@ -16,6 +16,7 @@ namespace FSBeheer.ViewModel
     public class CreateEditEventViewModel : ViewModelBase
     {
         private CustomFSContext _Context { get; set; }
+        public string Title { get; set; }
         public EventVM Event { get; set; }
         public ObservableCollection<CustomerVM> Customers { get; set; }
         public CustomerVM SelectedCustomer { get; set; }
@@ -44,14 +45,17 @@ namespace FSBeheer.ViewModel
                 Event = new EventVM(new Event());
                 _Context.Events.Add(Event.ToModel());
                 SelectedCustomer = null;
+                Title = "Evenement aanmaken";
             }
             else
             {
                 Event = _Context.EventCrud.GetEventById(eventId);
                 SelectedCustomer = _Context.CustomerCrud.GetCustomerById(Event.Customer.Id);
+                Title = "Evenement wijzigen";
             }
             RaisePropertyChanged(nameof(Event));
             RaisePropertyChanged(nameof(SelectedCustomer));
+            RaisePropertyChanged(nameof(Title));
         }
 
         private void CloseAction(Window window)

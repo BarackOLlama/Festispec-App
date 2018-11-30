@@ -5,36 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="CreateEditEventView" Height="450" Width="800"
+        Title="{Binding Title}" Height="400" Width="500"
         DataContext="{Binding CreateEditEvent, Source={StaticResource Locator}}">
-    <StackPanel>
-        <StackPanel Margin="50,20" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Label Content="Klant: " Template="{DynamicResource CreateEditLabel}"/>
-            <local:FilteredComboBox ItemsSource="{Binding Customers}"
-                                    SelectedItem="{Binding SelectedCustomer}"
-                                    DisplayMemberPath="Name"
-                                    Template="{DynamicResource FilteredComboBox}">
-                <local:FilteredComboBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel VirtualizationMode="Recycling"/>
-                    </ItemsPanelTemplate>
-                </local:FilteredComboBox.ItemsPanel>
-            </local:FilteredComboBox>
-        </StackPanel>
-        
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <StackPanel>
-                <Label Content="Naam: " Template="{DynamicResource CreateEditLabel}"/>
-                <Label Content="Adres: " Template="{DynamicResource CreateEditLabel}"/>
-                <Label Content="Plaats: " Template="{DynamicResource CreateEditLabel}"/>
-                <Label Content="Postcode: " Template="{DynamicResource CreateEditLabel}"/>
+    <Grid>
+        <StackPanel Margin="0,20,0,0">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Label Content="Klant: " Template="{DynamicResource CreateEditLabel}"/>
+                    <local:FilteredComboBox ItemsSource="{Binding Customers}"
+                                        SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}"
+                                        SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+                                        DisplayMemberPath="Name"
+                                        Template="{DynamicResource FilteredComboBox}">
+                        <local:FilteredComboBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel VirtualizationMode="Recycling"/>
+                            </ItemsPanelTemplate>
+                        </local:FilteredComboBox.ItemsPanel>
+                    </local:FilteredComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Label Content="Naam: " Template="{DynamicResource CreateEditLabel}"/>
+                    <TextBox Text="{Binding Event.Name}" Template="{DynamicResource CreateEditTextBox}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Label Content="Adres: " Template="{DynamicResource CreateEditLabel}"/>
+                    <TextBox Text="{Binding Event.Address}" Template="{DynamicResource CreateEditTextBox}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Label Content="Plaats: " Template="{DynamicResource CreateEditLabel}"/>
+                    <TextBox Text="{Binding Event.City}" Template="{DynamicResource CreateEditTextBox}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Label Content="Postcode: " Template="{DynamicResource CreateEditLabel}"/>
+                    <TextBox Text="{Binding Event.Zipcode}" Template="{DynamicResource CreateEditTextBox}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Label Content="Startdatum: " Template="{DynamicResource CreateEditLabel}"/>
+                    <TextBox Text="{Binding Event.Zipcode}" Template="{DynamicResource CreateEditTextBox}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <Label Content="Einddatum: " Template="{DynamicResource CreateEditLabel}"/>
+                    <TextBox Text="{Binding Event.Zipcode}" Template="{DynamicResource CreateEditTextBox}"/>
+                </StackPanel>
             </StackPanel>
             <StackPanel>
-                <TextBox Text="{Binding Event.Name}" Template="{DynamicResource CreateEditTextBox}"/>
-                <TextBox Text="{Binding Event.Address}" Template="{DynamicResource CreateEditTextBox}"/>
-                <TextBox Text="{Binding Event.City}" Template="{DynamicResource CreateEditTextBox}"/>
-                <TextBox Text="{Binding Event.Zipcode}" Template="{DynamicResource CreateEditTextBox}"/>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="20">
+                    <Button Content="Opslaan" Template="{DynamicResource InterfaceButton}"/>
+                    <Button Content="Annuleren" Template="{DynamicResource InterfaceButton}"/>
+                    <Button Content="Verwijderen" Template="{DynamicResource InterfaceButton}"/>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
-    </StackPanel>
+    </Grid>
 </local:BaseView>
