@@ -12,7 +12,6 @@ namespace FSBeheer.Model
     {
         public Event()
         {
-            EventDates = new ObservableCollection<EventDate>();
             Inspections = new ObservableCollection<Inspection>();
         }
 
@@ -24,7 +23,8 @@ namespace FSBeheer.Model
         public string Zipcode { get; set; }
         public int? CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
-        public virtual ObservableCollection<EventDate> EventDates { get; set; }
+        public int? EventDateId { get; set; }
+        public virtual EventDate EventDate { get; set; }
         public virtual ObservableCollection<Inspection> Inspections { get; set; }
         public bool IsDeleted { get; set; }
     }

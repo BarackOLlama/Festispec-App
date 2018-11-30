@@ -31,8 +31,8 @@ namespace FSBeheer.View
             var FilteredComboBoxFactory = new FrameworkElementFactory(typeof(FilteredComboBox));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.ItemsSourceProperty, new TemplateBindingExtension(FilteredComboBox.ItemsSourceProperty));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedItemProperty, new TemplateBindingExtension(FilteredComboBox.SelectedItemProperty));
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedIndexProperty, new TemplateBindingExtension(FilteredComboBox.SelectedIndexProperty));
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.DisplayMemberPathProperty, new TemplateBindingExtension(FilteredComboBox.DisplayMemberPathProperty));
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedValueProperty, new TemplateBindingExtension(FilteredComboBox.SelectedValueProperty));
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedValuePathProperty, new TemplateBindingExtension(FilteredComboBox.SelectedValuePathProperty));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.IsEditableProperty, true);
             FilteredComboBoxFactory.SetValue(FilteredComboBox.IsTextSearchEnabledProperty, false);
             FilteredComboBoxFactory.SetValue(FilteredComboBox.StaysOpenOnEditProperty, true);
@@ -145,13 +145,32 @@ namespace FSBeheer.View
                 default:
                     if (Text != oldFilter)
                     {
-                        RefreshFilter();
+                        var temp = Text;
+                        RefreshFilter(); //RefreshFilter will change Text property
+                        Text = temp;
+
+                        if (SelectedIndex != -1 && Text != Items[SelectedIndex].ToString())
+                        {
+                            SelectedIndex = -1; //Clear selection. This line will also clear Text property
+                            Text = temp;
+                        }
+
+
                         IsDropDownOpen = true;
 
-                        EditableTextBox.SelectionStart = int.MaxValue;
+                        if(EditableTextBox != null)
+                            EditableTextBox.SelectionStart = int.MaxValue;
+                    }
+
+                    //automatically select the item when the input text matches it
+                    for (int i = 0; i < Items.Count; i++)
+                    {
+                        if (Text == Items[i].ToString())
+                            SelectedIndex = i;
                     }
 
                     base.OnKeyUp(e);
+                    e.Handled = true;
                     currentFilter = Text;
                     break;
             }
