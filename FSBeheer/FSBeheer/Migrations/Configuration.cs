@@ -4,6 +4,7 @@ namespace FSBeheer.Migrations
     using FSBeheer.Model;
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
@@ -328,7 +329,7 @@ namespace FSBeheer.Migrations
                 }
             };
             context.Events.AddRange(events);
-            
+
             var inspectiondates = new List<InspectionDate>
             {
                 new InspectionDate()
@@ -338,6 +339,14 @@ namespace FSBeheer.Migrations
                     StartTime = new TimeSpan(14, 0, 0),
                     EndTime = new TimeSpan(2, 0, 0),
                     IsDeleted = false
+                },
+                new InspectionDate()
+                {
+                    StartDate = new DateTime(2018, 12, 20),
+                    EndDate = new DateTime(2018, 12, 20),
+                    StartTime = new TimeSpan(22, 0, 0),
+                    EndTime = new TimeSpan(4, 0, 0),
+                    IsDeleted = false
                 }
             };
             context.InspectionDates.AddRange(inspectiondates);
@@ -345,14 +354,28 @@ namespace FSBeheer.Migrations
             var inspections = new List<Inspection>
             {
                 new Inspection()
+                {
+                    Name = "EersteInspectie",
+                    Event = events[1],
+                    Status = statuses[3],
+                    Notes = "Minstens 4 inspecteurs",
+                    InspectionDate = inspectiondates[0],
+                    IsDeleted = false
+                },
+                new Inspection()
+                {
+                    Name = "TweedeInspectie",
+                    Event = events[0],
+                    Status = statuses[3],
+                    Notes = "",
+                    InspectionDate = inspectiondates[1],
+                    Inspectors = new ObservableCollection<Inspector>
                     {
-                        Name = "EersteInspectie",
-                        Event = events[1],
-                        Status = statuses[3],
-                        Notes = "Minstens 4 inspecteurs",
-                        InspectionDate = inspectiondates[0],
-                        IsDeleted = false
-                    }
+                        inspectors[2],
+                        inspectors[3]
+                    },
+                    IsDeleted = false                    
+                }
             };
             context.Inspections.AddRange(inspections);
 
