@@ -31,6 +31,7 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Width="500" FlowDirection="RightToLeft" >
             <Button Content="Nieuw" Command="{Binding CreateQuestionnaireCommand}" HorizontalAlignment="Right" Height="60" Margin="0,0,10,0" VerticalAlignment="Bottom" Width="60"/>
+            <Button Content="Verwijder" Command="{Binding DeleteQuestionnaireCommand}" HorizontalAlignment="Right" Height="60" Margin="0,0,10,0" VerticalAlignment="Bottom" Width="60"/>
             <Button Content="Bewerken" Command="{Binding ShowEditQuestionnaireViewCommand}" HorizontalAlignment="Right" Height="60" Margin="0,0,10,0" VerticalAlignment="Bottom" Width="60"/>
         </StackPanel>
     </StackPanel>

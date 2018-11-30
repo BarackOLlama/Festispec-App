@@ -16,6 +16,7 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<QuestionnaireVM> Questionnaires { get; set; }
         public RelayCommand ShowEditQuestionnaireViewCommand { get; set; }
         public RelayCommand CreateQuestionnaireCommand { get; set; }
+        public RelayCommand DeleteQuestionnaireCommand { get; set; }
         public QuestionnaireManagementViewModel()
         {
             Messenger.Default.Register<bool>(this, "UpdateQuestionnaires", e => Init());
@@ -23,6 +24,7 @@ namespace FSBeheer.ViewModel
             Questionnaires = _context.QuestionnaireCrud.GetAllQuestionnaireVMs();
             ShowEditQuestionnaireViewCommand = new RelayCommand(ShowEditQuestionnaireView);
             CreateQuestionnaireCommand = new RelayCommand(CreateQuestionnaire);
+            DeleteQuestionnaireCommand = new RelayCommand(DeleteQuestionnaire);
             SelectedQuestionnaire = Questionnaires?.First();
         }
 
@@ -61,7 +63,19 @@ namespace FSBeheer.ViewModel
 
         public void DeleteQuestionnaire()
         {
-
+            if (_selectedQuestionnaire == null || _selectedQuestionnaire.IsDeleted)
+            {
+                MessageBox.Show("Geen vragenlijst geselecteerd");
+            }else
+            {
+                var result = MessageBox.Show("Vraag verwijderen?", "Verwijder", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    _selectedQuestionnaire.IsDeleted = true;
+                    _context.SaveChanges();
+                    Init();
+                }
+            }
         }
 
         public void CreateQuestionnaire()

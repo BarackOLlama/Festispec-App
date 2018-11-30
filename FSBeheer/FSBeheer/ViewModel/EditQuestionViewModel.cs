@@ -77,6 +77,10 @@ namespace FSBeheer.ViewModel
         public void DiscardQuestionChanges(Window window)
         {
             MessageBoxResult result = MessageBox.Show("Aanpassing annuleren?", "Bevestig", MessageBoxButton.OKCancel);
+            if(result == MessageBoxResult.OK)
+            {
+                window.Close();
+            }
             //Must close the window it's opened upon confirmation
             //no need to discard changes as the context is separate from the previous window's.
         }
