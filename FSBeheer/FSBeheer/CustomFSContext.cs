@@ -18,8 +18,11 @@ namespace FSBeheer
         public QuestionCrud QuestionCrud;
         public InspectionCrud InspectionCrud;
         public InspectorCrud InspectorCrud;
+        public AvailabilityCrud AvailabilityCrud;
+        public InspectionDateCrud InspectionDateCrud;
         public QuestionnaireCrud QuestionnaireCrud;
         public ContactCrud ContactCrud;
+        public StatusCrud StatusCrud;
 
         public CustomFSContext() : base()
         {
@@ -32,8 +35,11 @@ namespace FSBeheer
             QuestionCrud = new QuestionCrud(this);
             InspectionCrud = new InspectionCrud(this);
             InspectorCrud = new InspectorCrud(this);
+            AvailabilityCrud = new AvailabilityCrud(this);
+            InspectionDateCrud = new InspectionDateCrud(this);
             QuestionnaireCrud = new QuestionnaireCrud(this);
             ContactCrud = new ContactCrud(this);
+            StatusCrud = new StatusCrud(this);
         }
     }
 }

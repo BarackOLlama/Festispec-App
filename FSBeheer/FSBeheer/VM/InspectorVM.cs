@@ -1,5 +1,6 @@
 ﻿using FSBeheer.Model;
 using System;
+using System.Collections.ObjectModel;
 
 namespace FSBeheer.VM
 {
@@ -82,5 +83,9 @@ namespace FSBeheer.VM
             get { return _inspector.AccountId; }
         }
 
+        public ObservableCollection<Availability> Availabilities
+        {
+            get { return _inspector.Availabilities; }
+        }
     }
 }
