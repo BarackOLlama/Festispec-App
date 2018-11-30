@@ -57,8 +57,15 @@ namespace FSBeheer.ViewModel
             MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                _Context.ContactCrud.GetAllContactVMs().Add(Contact);
-                _Context.SaveChanges();
+                // TODO: Als je nieuw klant aanmaakt en niet saved en dan contact aanmaakt zit hij nog niet in de database en krijg je een error
+                try
+                {
+                    _Context.ContactCrud.GetAllContactVMs().Add(Contact);
+                    _Context.SaveChanges();
+                } catch
+                {
+                    return;
+                }
 
                 Messenger.Default.Send(true, "UpdateContactList");
             }
@@ -81,7 +88,7 @@ namespace FSBeheer.ViewModel
             if (result == MessageBoxResult.OK)
             {
                 Contact.IsDeleted = true;
-                _Context.SaveChanges(); 
+                _Context.SaveChanges();
                 window.Close();
 
                 Messenger.Default.Send(true, "UpdateContactList");

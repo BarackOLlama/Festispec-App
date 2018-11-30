@@ -17,7 +17,7 @@
             </StackPanel>
             <StackPanel Margin="10,5,10,10" Width="400" Height="360">
                 <StackPanel Name="spContent" Margin="0,0,0,2">
-                    <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedInspector, Mode=TwoWay}" 
+                    <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedAvailaibleInspector, Mode=TwoWay}" 
                       ItemsSource="{Binding AvailableInspectors}" Margin="0,6,0,0" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" BorderBrush="#FF979494"
                       GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFF0E0E0" HeadersVisibility="Column">
                         <DataGrid.Columns>
@@ -40,7 +40,7 @@
             <StackPanel Orientation="Vertical">
                 <StackPanel Width="400" Height="360" Margin="10,5,10,10">
                     <StackPanel Name="spConstent" Margin="0,0,0,2">
-                        <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedInspector, Mode=TwoWay}" 
+                        <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedChosenInspector, Mode=TwoWay}" 
                       ItemsSource="{Binding ChosenInspectors}" Margin="0,6,0,0" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" BorderBrush="#FF979494"
                       GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFF0E0E0" HeadersVisibility="Column">
                             <DataGrid.Columns>
@@ -52,8 +52,8 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal" Margin="15,10,25,10">
-                    <Button Content="Annuleer" Margin="5" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}"></Button>
-                    <Button Content="Accepteer" Margin="5" Command="{Binding SaveChangesCommand}" ></Button>
+                    <Button Content="Annuleer" Margin="5" CommandParameter="{Binding ElementName=AvailableInspectorName}" Command="{Binding DiscardChangesCommand}"></Button>
+                    <Button Content="Accepteer" Margin="5" CommandParameter="{Binding ElementName=AvailableInspectorName}" Command="{Binding SaveChangesCommand}" ></Button>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

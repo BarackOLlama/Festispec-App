@@ -18,36 +18,51 @@ namespace FSBeheer.ViewModel
 
         public ObservableCollection<InspectorVM> AvailableInspectors { get; set; }
 
-        public ObservableCollection<AvailabilityVM> ChosenInspectors { get; set; }
+        public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
 
         public RelayCommand<InspectorVM> SetInspectorCommand { get; set; }
 
         public RelayCommand<InspectorVM> RemoveInspectorCommand { get; set; }
 
-        public RelayCommand SaveChangesCommand { get; set; }
+        public RelayCommand<Window> SaveChangesCommand { get; set; }
 
         public RelayCommand<Window> DiscardChangesCommand { get; set; }
 
-        private InspectorVM _selectedInspector { get; set; }
+        private InspectorVM _selectedAvailaibleInspector { get; set; }
+
+        private InspectorVM _selectedChosenInspector { get; set; }
 
         private InspectionVM _selectedInspection { get; set; }
 
         public AvailableInspectorViewModel()
         {
             Init();
+
+            ChosenInspectors = new ObservableCollection<InspectorVM>();
+
             SetInspectorCommand = new RelayCommand<InspectorVM>(AddInspector);
-            RemoveInspectorCommand = new RelayCommand<InspectorVM>(DummyMethod);
-            SaveChangesCommand = new RelayCommand(SaveChanges);
+            RemoveInspectorCommand = new RelayCommand<InspectorVM>(RemoveInspector);
+            SaveChangesCommand = new RelayCommand<Window>(SaveChanges);
             DiscardChangesCommand = new RelayCommand<Window>(Discard);
         }
 
-        public InspectorVM SelectedInspector
+        public InspectorVM SelectedAvailaibleInspector
         {
-            get { return _selectedInspector; }
+            get { return _selectedAvailaibleInspector; }
             set
             {
-                _selectedInspector = value;
-                base.RaisePropertyChanged(nameof(SelectedInspector));
+                _selectedAvailaibleInspector = value;
+                base.RaisePropertyChanged(nameof(SelectedAvailaibleInspector));
+            }
+        }
+
+        public InspectorVM SelectedChosenInspector
+        {
+            get { return _selectedChosenInspector; }
+            set
+            {
+                _selectedChosenInspector = value;
+                base.RaisePropertyChanged(nameof(SelectedChosenInspector));
             }
         }
 
@@ -67,25 +82,42 @@ namespace FSBeheer.ViewModel
             RaisePropertyChanged(nameof(AvailableInspectors));
         }
 
-        private void AddInspector(InspectorVM commandParameter)
+        private void AddInspector(InspectorVM inspectorAvailable)
         {
-
+            if (inspectorAvailable != null)
+            {
+                ChosenInspectors.Add(inspectorAvailable);
+                AvailableInspectors.Remove(inspectorAvailable);
+            } else
+            {
+                MessageBox.Show("No inspector selected");
+            }
         }
 
-        private void DummyMethod(InspectorVM commandParameter)
+        private void RemoveInspector(InspectorVM inspectorChosen)
         {
-            // iets
+            if (inspectorChosen != null)
+            {
+                ChosenInspectors.Remove(inspectorChosen);
+                AvailableInspectors.Add(inspectorChosen);
+            } else
+            {
+                MessageBox.Show("No inspector selected");
+            }
         }
 
-        private void SaveChanges()
+        private void SaveChanges(Window window)
         {
             MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                // CustomFSContext.AvailabilityCrud.GetAvailabilities().Add(Inspector);
+                // TODO:
+                // Add Chosen Inspectors to Observable collection of meesturen via messenger en zelf laten afhandelen
                 CustomFSContext.SaveChanges();
+                window.Close();
 
-                Messenger.Default.Send(true, "UpdateAvailableList"); 
+                // Update to previous 
+                Messenger.Default.Send(true, "UpdateAvailableList");
             }
         }
 
@@ -95,7 +127,7 @@ namespace FSBeheer.ViewModel
             if (result == MessageBoxResult.OK)
             {
                 CustomFSContext.Dispose();
-                // Inspector = null;
+                ChosenInspectors = null;
                 window.Close();
             }
         }
