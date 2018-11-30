@@ -62,9 +62,10 @@ namespace FSBeheer.ViewModel
         public EditQuestionnaireViewModel(QuestionnaireVM questionnaire)
         {
             Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => Init());
-            Init();
+            _context = new CustomFSContext();
             var questionnaireEntity = _context.Questionnaires.ToList().Where(e => e.Id == questionnaire.Id).FirstOrDefault();
             _questionnaire = new QuestionnaireVM(questionnaireEntity);
+            Init();
 
             var questions = _context.Questions
                 .Include("QuestionType")
@@ -90,7 +91,10 @@ namespace FSBeheer.ViewModel
         internal void Init()
         {
             _context = new CustomFSContext();
-            var questions = _context.Questions.ToList().Select(e => new QuestionVM(e));
+            var questions = _context.Questions
+                .ToList()
+                .Where(e=> e.QuestionnaireId == _questionnaire.Id && !e.IsDeleted)
+                .Select(e => new QuestionVM(e));
             Questions = new ObservableCollection<QuestionVM>(questions);
             base.RaisePropertyChanged("Questions");
         }
