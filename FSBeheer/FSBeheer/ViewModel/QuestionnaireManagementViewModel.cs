@@ -18,7 +18,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand CreateQuestionnaireCommand { get; set; }
         public QuestionnaireManagementViewModel()
         {
-            Messenger.Default.Register<bool>(this, "UpdateQuestionnaires", cl => Init());
+            Messenger.Default.Register<bool>(this, "UpdateQuestionnaires", e => Init());
             Init();
             Questionnaires = _context.QuestionnaireCrud.GetAllQuestionnaireVMs();
             ShowEditQuestionnaireViewCommand = new RelayCommand(ShowEditQuestionnaireView);
