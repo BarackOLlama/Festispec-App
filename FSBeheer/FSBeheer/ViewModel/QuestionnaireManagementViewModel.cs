@@ -29,7 +29,10 @@ namespace FSBeheer.ViewModel
         internal void Init()
         {
             _context = new CustomFSContext();
-            var questionnaires = _context.Questionnaires.ToList().Select(e => new QuestionnaireVM(e));
+            var questionnaires = _context.Questionnaires.
+                ToList().
+                Where(e=>!e.IsDeleted).
+                Select(e => new QuestionnaireVM(e));
             Questionnaires = new ObservableCollection<QuestionnaireVM>(questionnaires);
             RaisePropertyChanged("Questionnaires");
         }
@@ -46,7 +49,7 @@ namespace FSBeheer.ViewModel
 
         public void ShowEditQuestionnaireView()
         {
-            if (_selectedQuestionnaire == null)
+            if (_selectedQuestionnaire == null || _selectedQuestionnaire.IsDeleted)
             {
                 MessageBox.Show("Geen vragenlijst geselecteerd.");
             }
@@ -54,6 +57,11 @@ namespace FSBeheer.ViewModel
             {
                 new EditQuestionnaireView().ShowDialog();
             }
+        }
+
+        public void DeleteQuestionnaire()
+        {
+
         }
 
         public void CreateQuestionnaire()

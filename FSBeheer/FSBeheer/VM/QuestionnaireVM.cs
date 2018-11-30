@@ -90,6 +90,12 @@ namespace FSBeheer.VM
             }
         }
 
+        public bool IsDeleted
+        {
+            get { return _questionnaire.IsDeleted; }
+            set { _questionnaire.IsDeleted = value; }
+        }
+
         internal Questionnaire ToModel()
         {
             return _questionnaire;

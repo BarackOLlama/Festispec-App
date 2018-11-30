@@ -28,6 +28,7 @@
             <StackPanel Orientation="Horizontal">
                 <Button Content="Bewerken" Command="{Binding OpenEditQuestionViewCommand}" HorizontalAlignment="Right" Height="60" Margin="0,0,10,0" VerticalAlignment="Bottom" Width="60"/>
                 <Button Content="Nieuw" Command="{Binding OpenCreateQuestionViewCommand}" HorizontalAlignment="Right" Height="60" Margin="0,0,10,0" VerticalAlignment="Bottom" Width="60"/>
+                <Button Content="Verwijder vraag" Command="{Binding DeleteQuestionCommand}" HorizontalAlignment="Right" Height="60" Margin="0,0,10,0" VerticalAlignment="Bottom" Width="60"/>
                 <Button Content="Annuleren" HorizontalAlignment="Right" Height="60" Margin="0" VerticalAlignment="Bottom" Width="60"/>
             </StackPanel>
             <StackPanel Margin="240,0,0,0">

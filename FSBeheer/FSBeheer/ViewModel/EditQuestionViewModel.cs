@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
@@ -45,7 +46,7 @@ namespace FSBeheer.ViewModel
         private CustomFSContext _context;
         public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
         public RelayCommand SaveQuestionChangesCommand { get; set; }
-        public RelayCommand DiscardQuestionChangesCommand { get; set; }
+        public RelayCommand<Window> DiscardQuestionChangesCommand { get; set; }
         public EditQuestionViewModel(QuestionVM question)
         {
             _context = new CustomFSContext();
@@ -58,19 +59,26 @@ namespace FSBeheer.ViewModel
             var temp = _context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
             QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
             SaveQuestionChangesCommand = new RelayCommand(SaveQuestionChanges);
-            DiscardQuestionChangesCommand = new RelayCommand(DiscardQuestionChanges);
+            DiscardQuestionChangesCommand = new RelayCommand<Window>(DiscardQuestionChanges);
             SelectedQuestionType = QuestionTypes.FirstOrDefault();
         }
 
         public void SaveQuestionChanges()
         {
-            _context.SaveChanges();
-            Messenger.Default.Send(true, "UpdateQuestions"); 
+            MessageBoxResult result = MessageBox.Show("Opslaan?", "Bevestig", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK) 
+            {
+                _context.SaveChanges();
+                Messenger.Default.Send(true, "UpdateQuestions");
+            }
+
         }
 
-        public void DiscardQuestionChanges()
+        public void DiscardQuestionChanges(Window window)
         {
-            throw new NotImplementedException();
+            MessageBoxResult result = MessageBox.Show("Aanpassing annuleren?", "Bevestig", MessageBoxButton.OKCancel);
+            //Must close the window it's opened upon confirmation
+            //no need to discard changes as the context is separate from the previous window's.
         }
     }
 }

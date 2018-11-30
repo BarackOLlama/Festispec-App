@@ -57,6 +57,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand OpenCreateQuestionViewCommand { get; set; }
         public RelayCommand SaveQuestionnaireChangesCommand { get; set; }
         public RelayCommand OpenEditQuestionViewCommand { get; set; }
+        public RelayCommand DeleteQuestionCommand { get; set; }
 
         public EditQuestionnaireViewModel(QuestionnaireVM questionnaire)
         {
@@ -68,7 +69,7 @@ namespace FSBeheer.ViewModel
             var questions = _context.Questions
                 .Include("QuestionType")
                 .ToList()
-                .Where(e => e.QuestionnaireId == _questionnaire.Id)
+                .Where(e => e.QuestionnaireId == _questionnaire.Id && !e.IsDeleted)
                 .Select(e => new QuestionVM(e));
             Questions = new ObservableCollection<QuestionVM>(questions);
 
@@ -82,6 +83,7 @@ namespace FSBeheer.ViewModel
             OpenCreateQuestionViewCommand = new RelayCommand(OpenCreateQuestionView);
             SaveQuestionnaireChangesCommand = new RelayCommand(SaveQuestionnaireChanges);
             OpenEditQuestionViewCommand = new RelayCommand(OpenEditQuestionView);
+            DeleteQuestionCommand = new RelayCommand(DeleteQuestion);
             SelectedQuestion = questions.FirstOrDefault();
         }
 
@@ -96,8 +98,12 @@ namespace FSBeheer.ViewModel
 
         private void SaveQuestionnaireChanges()
         {
-            _context.SaveChanges();
-            Messenger.Default.Send(true, "UpdateQuestionnaires");
+            MessageBoxResult result = MessageBox.Show("Opslaan?", "Bevestig", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                _context.SaveChanges();
+                Messenger.Default.Send(true, "UpdateQuestionnaires");
+            }
         }
 
         public void OpenCreateQuestionView()
@@ -110,7 +116,8 @@ namespace FSBeheer.ViewModel
             if (_selectedQuestion == null)
             {
                 MessageBox.Show("Geen vraag geselecteerd.");
-            }else
+            }
+            else
             {
                 new EditQuestionView().ShowDialog();
             }
@@ -120,6 +127,23 @@ namespace FSBeheer.ViewModel
         {
             var questions = _context.Questions.ToList().Select(e => new QuestionVM(e));
             Questions = new ObservableCollection<QuestionVM>(questions);
+        }
+
+        public void DeleteQuestion()
+        {
+            if (_selectedQuestion == null || _selectedQuestion.IsDeleted)
+            {
+                MessageBox.Show("Geen vraag geselecteerd.");
+            }else
+            {
+                var result = MessageBox.Show("Vraag verwijderen?", "Verwijder", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    _selectedQuestion.IsDeleted = true;
+                    _context.SaveChanges();
+                    this.Init();
+                }
+            }
         }
     }
 }
