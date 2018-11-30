@@ -16,7 +16,8 @@ namespace FSBeheer.Crud
         {
             var events = CustomFSContext.Events
                .ToList()
-               .Select(c => new EventVM(c));
+               .Where(e => e.IsDeleted == false)
+               .Select(e => new EventVM(e));
             var _events = new ObservableCollection<EventVM>(events);
 
             return _events;
@@ -33,6 +34,7 @@ namespace FSBeheer.Crud
 
             var events = CustomFSContext.Events
                 .ToList()
+                .Where(c => c.IsDeleted = false)
                 .Where(e =>
                 e.Id.ToString().ToLower().Contains(must_contain) ||
                 e.Name.ToLower().Contains(must_contain) ||
@@ -43,7 +45,6 @@ namespace FSBeheer.Crud
                 .Select(e => new EventVM(e));
             return new ObservableCollection<EventVM>(events);
         }
-        //public void Add(EventVM _event) => CustomFSContext.Events.Add(_event.ToModel());
 
         public EventVM GetEventById(int eventId)
         {
@@ -52,16 +53,10 @@ namespace FSBeheer.Crud
                .FirstOrDefault(e => e.Id == eventId);
             return new EventVM(customer);
         }
-        //public void Modify(EventVM _event)
-        //{
-        //    CustomFSContext.Entry(_event?.ToModel()).State = EntityState.Modified;
-        //    CustomFSContext.SaveChanges();
-        //}
 
         public void Delete(EventVM _event)
         {
-            CustomFSContext.Events.Attach(_event?.ToModel());
-            CustomFSContext.Events.Remove(_event?.ToModel());
+            _event.SetDeleted();
             CustomFSContext.SaveChanges();
         }
     }
