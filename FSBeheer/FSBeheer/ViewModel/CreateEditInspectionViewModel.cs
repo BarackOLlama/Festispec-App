@@ -1,4 +1,5 @@
 ﻿using FSBeheer.Model;
+using FSBeheer.View;
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -174,7 +175,7 @@ namespace FSBeheer.ViewModel
 
         public void OpenAvailable()
         {
-            new AvailableInspectorView(SelectedInspection.Id).Show();
+            new AvailableInspectorView(Inspection.Id).Show();
         }
     }
 }
