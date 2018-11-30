@@ -22,7 +22,7 @@
 
         <StackPanel Name="EventSelection" Margin="0,30,0,0">
 
-            <ComboBox ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedEvent, Mode=TwoWay}" DisplayMemberPath="Name" Width="500" HorizontalAlignment="Left" Height="30" Margin="20,0,0,0"/>
+            <ComboBox ItemsSource="{Binding Events}" SelectedValue="{Binding SelectedEvent, Mode=TwoWay}" DisplayMemberPath="Name" Width="500" HorizontalAlignment="Left" Height="30" Margin="20,0,0,0"/>
 
         </StackPanel>
 
@@ -38,8 +38,6 @@
                                 <StackPanel>
                                     <Label Height="50" Content="Evenementgegevens" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="18"></Label>
                                 </StackPanel>
-
-
 
                                 <Grid Height="140">
                                     <Grid.ColumnDefinitions>

@@ -117,8 +117,8 @@ namespace FSBeheer.ViewModel
             Statuses = _Context.StatusCrud.GetAllStatusVMs();
 
             // niet netjes, maar anders heeft de Event combobox in het begin helemaal geen waarde, mede omdat de SetInspection na de InitializeComponent wordt uitgevoerd
-            SelectedEvent = Events.ElementAtOrDefault(2);
-            SelectedStatus = Statuses.ElementAtOrDefault(2);
+            //SelectedEvent = Events.ElementAtOrDefault(2);
+            //SelectedStatus = Statuses.ElementAtOrDefault(2);
 
             CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
             AddInspectionCommand = new RelayCommand(AddInspection);
@@ -132,6 +132,8 @@ namespace FSBeheer.ViewModel
                 {
                     InspectionDate = new InspectionDate()
                 };
+                StartDate = new DateTime(2000, 01, 01);
+                EndDate = new DateTime(2000, 01, 01);
                 _Context.Inspections.Add(Inspection.ToModel());
                 RaisePropertyChanged(nameof(Inspection));
             }
