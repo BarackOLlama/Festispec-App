@@ -71,10 +71,5 @@ namespace FSBeheer.VM
         {
             return _inspection;
         }
-
-        public InspectionDateVM InspectionDate
-        {
-            get { return new InspectionDateVM(_inspection.InspectionDate); }
-        }
     }
 }
