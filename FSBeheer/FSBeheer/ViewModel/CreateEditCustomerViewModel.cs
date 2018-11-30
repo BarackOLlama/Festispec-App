@@ -101,7 +101,7 @@ namespace FSBeheer.ViewModel
             MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                _Context.CustomerCrud.GetAllCustomerVMs().Add(Customer);
+                _Context.CustomerCrud.GetAllCustomers().Add(Customer);
                 _Context.SaveChanges();
 
                 Messenger.Default.Send(true, "UpdateCustomerList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
