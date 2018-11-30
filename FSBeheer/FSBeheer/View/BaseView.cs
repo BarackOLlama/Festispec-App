@@ -32,6 +32,7 @@ namespace FSBeheer.View
             FilteredComboBoxFactory.SetValue(FilteredComboBox.ItemsSourceProperty, new TemplateBindingExtension(FilteredComboBox.ItemsSourceProperty));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedItemProperty, new TemplateBindingExtension(FilteredComboBox.SelectedItemProperty));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedValueProperty, new TemplateBindingExtension(FilteredComboBox.SelectedValueProperty));
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.DisplayMemberPathProperty, new TemplateBindingExtension(FilteredComboBox.DisplayMemberPathProperty));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedValuePathProperty, new TemplateBindingExtension(FilteredComboBox.SelectedValuePathProperty));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.IsEditableProperty, true);
             FilteredComboBoxFactory.SetValue(FilteredComboBox.IsTextSearchEnabledProperty, false);
@@ -88,6 +89,12 @@ namespace FSBeheer.View
         private string currentFilter = string.Empty;
 
         protected TextBox EditableTextBox => GetTemplateChild("PART_EditableTextBox") as TextBox;
+
+        protected override void OnSelectionChanged(SelectionChangedEventArgs e)
+        {
+            base.OnSelectionChanged(e);
+            e.Handled = true;
+        }
 
         protected override void OnItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
         {
