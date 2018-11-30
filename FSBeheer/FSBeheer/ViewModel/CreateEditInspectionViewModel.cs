@@ -112,7 +112,7 @@ namespace FSBeheer.ViewModel
         public CreateEditInspectionViewModel()
         {
             _Context = new CustomFSContext();
-            Customers = _Context.CustomerCrud.GetAllCustomerVMs();
+            Customers = _Context.CustomerCrud.GetAllCustomers();
             Events = _Context.EventCrud.GetAllEvents();
             Statuses = _Context.StatusCrud.GetAllStatusVMs();
 

@@ -161,7 +161,6 @@
     </Compile>
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\QuestionnaireManagementViewModel.cs" />
-    <Compile Include="ViewModel\EditQuestionnaireViewModel.cs" />
     <Compile Include="View\CreateQuestionView.xaml.cs">
       <DependentUpon>CreateQuestionView.xaml</DependentUpon>
     </Compile>
