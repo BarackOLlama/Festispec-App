@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FSBeheer.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,13 +16,14 @@ using System.Windows.Shapes;
 namespace FSBeheer.View
 {
     /// <summary>
-    /// Interaction logic for Home.xaml
+    /// Interaction logic for CreateEditEventView.xaml
     /// </summary>
-    public partial class HomeView : BaseView
+    public partial class CreateEditEventView : BaseView
     {
-        public HomeView()
+        public CreateEditEventView(int eventId = -1)
         {
             InitializeComponent();
+            (DataContext as CreateEditEventViewModel).SetEvent(eventId);
         }
     }
 }

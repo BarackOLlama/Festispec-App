@@ -122,6 +122,7 @@
     <Compile Include="Model\Quotation.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="ViewModel\CreateEditContactViewModel.cs" />
+    <Compile Include="ViewModel\CreateEditEventViewModel.cs" />
     <Compile Include="ViewModel\CreateEditInspectionViewModel.cs" />
     <Compile Include="ViewModel\CreateQuestionnaireViewModel.cs" />
     <Compile Include="ViewModel\EditInspectorViewModel.cs" />
@@ -134,6 +135,9 @@
     <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
     <Compile Include="ViewModel\QuestionnaireVM.cs" />
     <Compile Include="View\BaseView.cs" />
+    <Compile Include="View\CreateEditEventView.xaml.cs">
+      <DependentUpon>CreateEditEventView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\EditQuestionView.xaml.cs">
       <DependentUpon>EditQuestionView.xaml</DependentUpon>
     </Compile>
@@ -157,6 +161,7 @@
     </Compile>
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\QuestionnaireManagementViewModel.cs" />
+    <Compile Include="ViewModel\EditQuestionnaireViewModel.cs" />
     <Compile Include="View\CreateQuestionView.xaml.cs">
       <DependentUpon>CreateQuestionView.xaml</DependentUpon>
     </Compile>
@@ -237,6 +242,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\CreateEditContactView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CreateEditEventView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

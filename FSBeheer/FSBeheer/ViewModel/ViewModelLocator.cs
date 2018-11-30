@@ -45,6 +45,14 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public CreateEditEventViewModel CreateEditEvent
+        {
+            get
+            {
+                return new CreateEditEventViewModel();
+            }
+        }
+
         public InspectionManagementViewModel InspectionManagement
         {
             get
