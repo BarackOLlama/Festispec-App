@@ -44,7 +44,7 @@ namespace FSBeheer.ViewModel
         internal void Init()
         {
             CustomFSContext = new CustomFSContext();
-            Customers = CustomFSContext.CustomerCrud.GetAllCustomerVMs();
+            Customers = CustomFSContext.CustomerCrud.GetAllCustomers();
             RaisePropertyChanged(nameof(Customers));
         }
 

@@ -1,0 +1,40 @@
+﻿<local:BaseView x:Class="FSBeheer.View.CreateEditEventView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FSBeheer.View"
+        mc:Ignorable="d"
+        Title="CreateEditEventView" Height="450" Width="800"
+        DataContext="{Binding CreateEditEvent, Source={StaticResource Locator}}">
+    <StackPanel>
+        <StackPanel Margin="50,20" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Label Content="Klant: " Template="{DynamicResource CreateEditLabel}"/>
+            <local:FilteredComboBox ItemsSource="{Binding Customers}"
+                                    SelectedItem="{Binding SelectedCustomer}"
+                                    DisplayMemberPath="Name"
+                                    Template="{DynamicResource FilteredComboBox}">
+                <local:FilteredComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel VirtualizationMode="Recycling"/>
+                    </ItemsPanelTemplate>
+                </local:FilteredComboBox.ItemsPanel>
+            </local:FilteredComboBox>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <StackPanel>
+                <Label Content="Naam: " Template="{DynamicResource CreateEditLabel}"/>
+                <Label Content="Adres: " Template="{DynamicResource CreateEditLabel}"/>
+                <Label Content="Plaats: " Template="{DynamicResource CreateEditLabel}"/>
+                <Label Content="Postcode: " Template="{DynamicResource CreateEditLabel}"/>
+            </StackPanel>
+            <StackPanel>
+                <TextBox Text="{Binding Event.Name}" Template="{DynamicResource CreateEditTextBox}"/>
+                <TextBox Text="{Binding Event.Address}" Template="{DynamicResource CreateEditTextBox}"/>
+                <TextBox Text="{Binding Event.City}" Template="{DynamicResource CreateEditTextBox}"/>
+                <TextBox Text="{Binding Event.Zipcode}" Template="{DynamicResource CreateEditTextBox}"/>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</local:BaseView>

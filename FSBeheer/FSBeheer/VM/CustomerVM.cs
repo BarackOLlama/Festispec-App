@@ -70,6 +70,11 @@ namespace FSBeheer.VM
             set { _customer.ChamberOfCommerceNumber = value; RaisePropertyChanged(nameof(ChamberOfCommerceNumber)); }
         }
 
+        public override string ToString()
+        {
+            return _customer.Name;
+        }
+
         public bool IsDeleted
         {
             get { return _customer.IsDeleted; }
