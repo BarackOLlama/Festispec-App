@@ -64,13 +64,13 @@ namespace FSBeheer.Crud
             return !availableList.Contains(false);
         }
 
-        //public void Add(InspectorVM _inspector) => CustomFSContext.Inspectors.Add(_inspector.ToModel());
+        public void Add(InspectorVM _inspector) => CustomFSContext.Inspectors.Add(_inspector.ToModel());
 
-        //public void Modify(InspectorVM _inspector)
-        //{
-        //    CustomFSContext.Entry(_inspector?.ToModel()).State = EntityState.Modified;
-        //    CustomFSContext.SaveChanges();
-        //}
+        public void Modify(InspectorVM _inspector)
+        {
+            CustomFSContext.Entry(_inspector?.ToModel()).State = EntityState.Modified;
+            CustomFSContext.SaveChanges();
+        }
 
         public void Delete(InspectorVM _inspector)
         {

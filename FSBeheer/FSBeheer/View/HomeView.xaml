@@ -44,4 +44,4 @@
 
     </StackPanel>
 
-</Window>
+</local:BaseView>

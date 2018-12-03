@@ -72,7 +72,7 @@ namespace FSBeheer.ViewModel
         private void AddInspector()
         {
 
-            _Context.InspectorCrud.GetAllInspectorVMs().Add(Inspector);
+            _Context.InspectorCrud.GetAllInspectors().Add(Inspector);
             _Context.InspectorCrud.Add(Inspector);
         }
 
@@ -98,7 +98,7 @@ namespace FSBeheer.ViewModel
             MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                _Context.InspectorCrud.GetAllInspectorVMs().Add(Inspector);
+                _Context.InspectorCrud.GetAllInspectors().Add(Inspector);
                 _Context.SaveChanges();
 
                 Messenger.Default.Send(true, "UpdateInspectorList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II

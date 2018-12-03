@@ -40,7 +40,7 @@ namespace FSBeheer.ViewModel
         private void Init()
         {
             _customFSContext = new CustomFSContext();
-            Inspectors = _customFSContext.InspectorCrud.GetInspectors();
+            Inspectors = _customFSContext.InspectorCrud.GetAllInspectors();
             RaisePropertyChanged(nameof(Inspectors));
         }
 
