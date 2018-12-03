@@ -34,6 +34,7 @@ namespace FSBeheer.View
             FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedValueProperty, new TemplateBindingExtension(FilteredComboBox.SelectedValueProperty));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.DisplayMemberPathProperty, new TemplateBindingExtension(FilteredComboBox.DisplayMemberPathProperty));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedValuePathProperty, new TemplateBindingExtension(FilteredComboBox.SelectedValuePathProperty));
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.IsSynchronizedWithCurrentItemProperty, new TemplateBindingExtension(FilteredComboBox.IsSynchronizedWithCurrentItemProperty));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.IsEditableProperty, true);
             FilteredComboBoxFactory.SetValue(FilteredComboBox.IsTextSearchEnabledProperty, false);
             FilteredComboBoxFactory.SetValue(FilteredComboBox.StaysOpenOnEditProperty, true);
@@ -88,6 +89,8 @@ namespace FSBeheer.View
 
         private string currentFilter = string.Empty;
 
+        private bool runItemsSourceChanged = true;
+
         protected TextBox EditableTextBox => GetTemplateChild("PART_EditableTextBox") as TextBox;
 
         protected override void OnSelectionChanged(SelectionChangedEventArgs e)
@@ -98,22 +101,25 @@ namespace FSBeheer.View
 
         protected override void OnItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
         {
-            System.Diagnostics.Debug.WriteLine(SelectedItem.ToString());
-            System.Diagnostics.Debug.WriteLine(SelectedValue.ToString());
+                //for (int i = 0; i < Items.Count; i++)
+                //{
+                //    if (SelectedValue.ToString() == Items[i].ToString())
+                //        SelectedIndex = i;
+                //}
 
-            if (newValue != null)
-            {
-                var view = CollectionViewSource.GetDefaultView(newValue);
-                view.Filter += FilterItem;
-            }
+                if (newValue != null)
+                {
+                    var view = CollectionViewSource.GetDefaultView(newValue);
+                    view.Filter += FilterItem;
+                }
 
-            if (oldValue != null)
-            {
-                var view = CollectionViewSource.GetDefaultView(oldValue);
-                if (view != null) view.Filter -= FilterItem;
-            }
+                if (oldValue != null)
+                {
+                    var view = CollectionViewSource.GetDefaultView(oldValue);
+                    if (view != null) view.Filter -= FilterItem;
+                }
 
-            base.OnItemsSourceChanged(oldValue, newValue);
+                base.OnItemsSourceChanged(oldValue, newValue);
         }
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)

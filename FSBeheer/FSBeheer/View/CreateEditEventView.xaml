@@ -15,7 +15,9 @@
                     <Label Content="Klant: " Template="{DynamicResource CreateEditLabel}"/>
                     <local:FilteredComboBox ItemsSource="{Binding Customers}"
                                             SelectedItem="{Binding Event.Customer}"
+                                            SelectedValue="{Binding Event.Customer.Name}"
                                             DisplayMemberPath="Name"
+                                            IsSynchronizedWithCurrentItem="False"
                                             Template="{DynamicResource FilteredComboBox}">
                         <local:FilteredComboBox.ItemsPanel>
                             <ItemsPanelTemplate>

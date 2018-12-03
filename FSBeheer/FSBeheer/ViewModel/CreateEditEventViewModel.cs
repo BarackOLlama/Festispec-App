@@ -44,7 +44,9 @@ namespace FSBeheer.ViewModel
                 Event = _Context.EventCrud.GetEventById(eventId);
                 Title = "Evenement wijzigen";
             }
+            Customers = _Context.CustomerCrud.GetAllCustomers();
             RaisePropertyChanged(nameof(Event));
+            RaisePropertyChanged(nameof(Customers));
             RaisePropertyChanged(nameof(Title));
         }
 
