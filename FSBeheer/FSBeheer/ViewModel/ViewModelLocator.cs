@@ -62,11 +62,11 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public EditInspectorViewModel CreateEditInspector
+        public CreateEditInspectorViewModel CreateEditInspector
         {
             get
             {
-                return new EditInspectorViewModel(_inspectorManagementViewModel.SelectedInspector);
+                return new CreateEditInspectorViewModel(_inspectorManagementViewModel.SelectedInspector);
             }
         }
 

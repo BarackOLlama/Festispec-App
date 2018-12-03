@@ -1,10 +1,11 @@
 ﻿using FSBeheer.Model;
+using GalaSoft.MvvmLight;
 using System;
 using System.Collections.ObjectModel;
 
 namespace FSBeheer.VM
 {
-    public class InspectorVM
+    public class InspectorVM : ViewModelBase
     {
         private Inspector _inspector;
 
@@ -90,6 +91,12 @@ namespace FSBeheer.VM
         public ObservableCollection<Inspection> Inspection
         {
             get { return _inspector.Inspections; }
+        }
+
+        public bool IsDeleted
+        {
+            get { return _inspector.IsDeleted; }
+            set { _inspector.IsDeleted = value; RaisePropertyChanged(nameof(IsDeleted)); }
         }
     }
 }

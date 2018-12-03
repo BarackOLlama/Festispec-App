@@ -120,7 +120,7 @@
     <Compile Include="Model\Role.cs" />
     <Compile Include="ViewModel\CreateEditContactViewModel.cs" />
     <Compile Include="ViewModel\CreateQuestionnaireViewModel.cs" />
-    <Compile Include="ViewModel\EditInspectorViewModel.cs" />
+    <Compile Include="ViewModel\CreateEditInspectorViewModel.cs" />
     <Compile Include="ViewModel\CreateQuestionViewModel.cs" />
     <Compile Include="ViewModel\EditQuestionViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />

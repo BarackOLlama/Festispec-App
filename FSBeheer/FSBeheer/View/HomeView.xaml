@@ -9,8 +9,11 @@
         Title="Home" Height="450" Width="600">
 
     <StackPanel Background="White" Height="420">
-
-        <StackPanel VerticalAlignment="Center" Height="220" Margin="0,50,0,0">
+        <StackPanel>
+            <Button Command="{Binding ShowLoginViewCommand}">Log in</Button>
+            <TextBlock Text="{Binding Account.Username, StringFormat=Naam:{0},  FallbackValue='Niet ingelogd'}" HorizontalAlignment="Right" Width="592"></TextBlock>
+        </StackPanel>
+        <StackPanel VerticalAlignment="Center" Height="220" Margin="0,30,0,0">
             <Grid Margin="50">
                 <Grid.RowDefinitions>
                     <RowDefinition/>

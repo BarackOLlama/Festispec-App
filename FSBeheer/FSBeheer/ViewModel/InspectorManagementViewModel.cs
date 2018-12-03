@@ -26,7 +26,7 @@ namespace FSBeheer.ViewModel
 
         public InspectorManagementViewModel()
         {
-            Messenger.Default.Register<bool>(this, "UpdateCustomerList", cl => Init()); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
+            Messenger.Default.Register<bool>(this, "UpdateInspectorList", il => Init()); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
 
             Init();
             
@@ -34,7 +34,7 @@ namespace FSBeheer.ViewModel
             BackHomeCommand = new RelayCommand<Window>(CloseAction);
             ShowEditInspectorViewCommand = new RelayCommand(ShowEditInspectorView);
             ShowCreateInspectorViewCommand = new RelayCommand(ShowCreateInspectorView);
-            SelectedInspector = Inspectors?.First();
+            
         }
 
         private void Init()
@@ -65,7 +65,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowEditInspectorView()
         {
-            new CreateEditInspectorView().Show();
+            new CreateEditInspectorView(SelectedInspector).Show();
         }
 
         private void CloseAction(Window window)

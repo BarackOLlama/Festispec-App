@@ -36,78 +36,78 @@
 
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
 
 
                     <Border Grid.Column="0" Grid.Row="0" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <Label Foreground="Black" FontSize="12" Content="ID:"></Label>
+                        <Label Foreground="Black" FontSize="12" Content="ID:" HorizontalAlignment="Right"></Label>
                     </Border>
                     <Border Grid.Column="0" Grid.Row="1" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <Label Foreground="Black" FontSize="12" Content="AccountID:" VerticalAlignment="Center"></Label>
+                        <Label Foreground="Black" FontSize="12" Content="AccountID:" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
                     </Border>
                     <Border Grid.Column="0" Grid.Row="2" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <Label Foreground="Black" FontSize="12" Content="Naam:"></Label>
+                        <Label Foreground="Black" FontSize="12" Content="Naam:" HorizontalAlignment="Right"></Label>
                     </Border>
                     <Border Grid.Column="0" Grid.Row="3" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <Label Foreground="Black" FontSize="12" Content="Adres:" VerticalAlignment="Center"></Label>
+                        <Label Foreground="Black" FontSize="12" Content="Adres:" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
                     </Border>
                     <Border Grid.Column="0" Grid.Row="4" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <Label Foreground="Black" FontSize="12" Content="Plaats:" VerticalAlignment="Center"></Label>
+                        <Label Foreground="Black" FontSize="12" Content="Plaats:" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
                     </Border>
                     <Border Grid.Column="0" Grid.Row="5" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <Label Foreground="Black" FontSize="12" Content="Postcode:" VerticalAlignment="Center"></Label>
+                        <Label Foreground="Black" FontSize="12" Content="Postcode:" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
                     </Border>
                     <Border Grid.Column="0" Grid.Row="6" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <Label Foreground="Black" FontSize="12" Content="E-mail:" VerticalAlignment="Center"></Label>
+                        <Label Foreground="Black" FontSize="12" Content="E-mail:" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
                     </Border>
                     <Border Grid.Column="0" Grid.Row="7" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <Label Foreground="Black" FontSize="12" Content="Telefoon:" VerticalAlignment="Center"></Label>
+                        <Label Foreground="Black" FontSize="12" Content="Telefoon:" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
                     </Border>
                     <Border Grid.Column="0" Grid.Row="8" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <Label Foreground="Black" FontSize="12" Content="Certificatie ingangsdatum" VerticalAlignment="Center"></Label>
+                        <Label Foreground="Black" FontSize="12" Content="Certificatie ingangsdatum:" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
                     </Border>
                     <Border Grid.Column="0" Grid.Row="9" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <Label Foreground="Black" FontSize="12" Content="Certificatie  vervaldatum:" VerticalAlignment="Center"></Label>
+                        <Label Foreground="Black" FontSize="12" Content="Certificatie  vervaldatum:" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
                     </Border>
                     <Border Grid.Column="0" Grid.Row="10" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <Label Foreground="Black" FontSize="12" Content="IBAN:" VerticalAlignment="Center"></Label>
+                        <Label Foreground="Black" FontSize="12" Content="IBAN:" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
                     </Border>
 
 
                     <Border Grid.Column="1" Grid.Row="0" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Text="{Binding SelectedInspector.Id, Mode=OneWay}" FontSize="12" IsReadOnly="True"></TextBox>
+                        <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.Id, Mode=OneWay}" FontSize="12" IsReadOnly="True"></TextBox>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="1" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Text="{Binding SelectedInspector.AccountId, Mode=OneWay}" FontSize="12" IsReadOnly="True"></TextBox>
+                        <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.AccountId, Mode=OneWay}" FontSize="12" IsReadOnly="True"></TextBox>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="2" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Text="{Binding Name, Mode=TwoWay}" FontSize="12"></TextBox>
+                        <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.Name, Mode=TwoWay}" FontSize="12"></TextBox>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="3" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Text="{Binding Address, Mode=TwoWay}" FontSize="12"></TextBox>
+                        <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.Address, Mode=TwoWay}" FontSize="12"></TextBox>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="4" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Text="{Binding Inspector.City, Mode=TwoWay}" FontSize="12"></TextBox>
+                        <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.City, Mode=TwoWay}" FontSize="12"></TextBox>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="5" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Text="{Binding Inspector.Zipcode, Mode=TwoWay}" FontSize="12"></TextBox>
+                        <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.Zipcode, Mode=TwoWay}" FontSize="12"></TextBox>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="6" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Text="{Binding Inspector.Email, Mode=TwoWay}" FontSize="12"></TextBox>
+                        <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.Email, Mode=TwoWay}" FontSize="12"></TextBox>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="7" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Text="{Binding Inspector.PhoneNumber, Mode=TwoWay}" FontSize="12"></TextBox>
+                        <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.PhoneNumber, Mode=TwoWay}" FontSize="12"></TextBox>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="8" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Text="{Binding Inspector.CertificationDate, Mode=TwoWay}" FontSize="12"></TextBox>
+                        <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.CertificationDate, Mode=TwoWay}" FontSize="12"></TextBox>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="9" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Text="{Binding Inspector.InvalidDate, Mode=TwoWay}" FontSize="12"></TextBox>
+                        <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.InvalidDate, Mode=TwoWay}" FontSize="12"></TextBox>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="10" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Text="{Binding Inspector.BankNumber, Mode=TwoWay}" FontSize="12"></TextBox>
+                        <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.BankNumber, Mode=TwoWay}" FontSize="12"></TextBox>
                     </Border>
                     
                 </Grid>
@@ -116,7 +116,7 @@
             <StackPanel Margin="5" >
                 <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
                     <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditInspectorView}" Command="{Binding DiscardCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                    <Button Content="Bevestig" Command="{Binding AddInspectorCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Bevestig" Command="{Binding SaveChangesCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
                 </DockPanel>
             </StackPanel>
 
