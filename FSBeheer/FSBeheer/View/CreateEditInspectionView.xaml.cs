@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FSBeheer.ViewModel;
+using FSBeheer.VM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,13 +17,14 @@ using System.Windows.Shapes;
 namespace FSBeheer.View
 {
     /// <summary>
-    /// Interaction logic for QuestionnairesView.xaml
+    /// Interaction logic for CreateEditInspectionView.xaml
     /// </summary>
-    public partial class QuestionnairesView : Window
+    public partial class CreateEditInspectionView : Window
     {
-        public QuestionnairesView()
+        public CreateEditInspectionView(InspectionVM inspection = null)
         {
             InitializeComponent();
+            (DataContext as CreateEditInspectionViewModel).SetInspection(inspection);
         }
     }
 }

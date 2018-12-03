@@ -28,7 +28,7 @@ namespace FSBeheer.ViewModel
         public EditInspectorViewModel(InspectorVM SelectedInspector)
         {
             _Context = new CustomFSContext();
-            EditCommand = new RelayCommand(ModifyInspector);
+            //EditCommand = new RelayCommand(ModifyInspector);
             AddCommand = new RelayCommand(AddInspector);
             DiscardCommand = new RelayCommand<Window>(Discard);
 
@@ -48,12 +48,12 @@ namespace FSBeheer.ViewModel
         private void AddInspector()
         {
             // not tested yet
-            _Context.InspectorCrud.GetAllInspectorVMs().Add(Inspector);
-            _Context.InspectorCrud.Add(Inspector);
+            _Context.InspectorCrud.GetAllInspectors().Add(Inspector);
+            //_Context.InspectorCrud.Add(Inspector);
         }
 
         // Not tested yet
-        private void ModifyInspector() => _Context.InspectorCrud.Modify(Inspector);
+        //private void ModifyInspector() => _Context.InspectorCrud.Modify(Inspector);
 
 
         // Not tested yet

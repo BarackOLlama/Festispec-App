@@ -13,7 +13,7 @@ namespace FSBeheer.ViewModel
         public InspectorSelectionViewModel()
         {
             _Context = new CustomFSContext();
-            _InspectorVM = _Context.InspectorCrud.GetInspectors();
+            _InspectorVM = _Context.InspectorCrud.GetAllInspectors();
         }
     }
 }
