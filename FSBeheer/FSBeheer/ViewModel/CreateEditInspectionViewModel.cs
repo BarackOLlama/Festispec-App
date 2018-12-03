@@ -109,6 +109,8 @@ namespace FSBeheer.ViewModel
 
         public RelayCommand<Window> CancelInspectionCommand { get; set; }
         public RelayCommand AddInspectionCommand { get; set; }
+        public RelayCommand PickInspectorsCommand { get; set; }
+
 
         public CreateEditInspectionViewModel()
         {
@@ -123,6 +125,7 @@ namespace FSBeheer.ViewModel
 
             CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
             AddInspectionCommand = new RelayCommand(AddInspection);
+            PickInspectorsCommand = new RelayCommand(OpenAvailable);
         }
 
         public void SetInspection(InspectionVM inspection)
