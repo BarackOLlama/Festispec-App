@@ -10,7 +10,7 @@ namespace FSBeheer.View
     {
         public BaseView()
         {
-            double DefaultFontSize = 15; //Default "small" FontSize value
+            double DefaultFontSize = 12; //Default "small" FontSize value
 
             var InterfaceButtonFactory = new FrameworkElementFactory(typeof(Button));
             InterfaceButtonFactory.SetValue(ContentProperty, new TemplateBindingExtension(ContentProperty));
@@ -18,17 +18,42 @@ namespace FSBeheer.View
             InterfaceButtonFactory.SetValue(Button.CommandParameterProperty, new TemplateBindingExtension(Button.CommandParameterProperty));
             InterfaceButtonFactory.SetValue(FontSizeProperty, DefaultFontSize);
             InterfaceButtonFactory.SetValue(MarginProperty, new Thickness(5));
+            InterfaceButtonFactory.SetValue(PaddingProperty, new Thickness(3));
 
             var SearchTextBoxFactory = new FrameworkElementFactory(typeof(FilterTextBox));
             SearchTextBoxFactory.SetValue(FontSizeProperty, DefaultFontSize);
             SearchTextBoxFactory.SetValue(WidthProperty, (double)300);
             SearchTextBoxFactory.SetValue(FilterTextBox.TextProperty, new TemplateBindingExtension(FilterTextBox.TextProperty));
 
-            var SearchButtonFactory = new FrameworkElementFactory(typeof(Button));
-            SearchButtonFactory.SetValue(ContentProperty, new TemplateBindingExtension(ContentProperty));
-            SearchButtonFactory.SetValue(Button.CommandProperty, new TemplateBindingExtension(Button.CommandProperty));
-            SearchButtonFactory.SetValue(Button.CommandParameterProperty, new TemplateBindingExtension(Button.CommandParameterProperty));
-            SearchButtonFactory.SetValue(FontSizeProperty, DefaultFontSize);
+            var ItemsPanelFactory = new FrameworkElementFactory(typeof(VirtualizingStackPanel));
+            ItemsPanelFactory.SetValue(VirtualizingStackPanel.VirtualizationModeProperty, VirtualizationMode.Recycling);
+
+            var FilteredComboBoxFactory = new FrameworkElementFactory(typeof(FilteredComboBox));
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.ItemsSourceProperty, new TemplateBindingExtension(FilteredComboBox.ItemsSourceProperty));
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedItemProperty, new TemplateBindingExtension(FilteredComboBox.SelectedItemProperty));
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedValueProperty, new TemplateBindingExtension(FilteredComboBox.SelectedValueProperty));
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedValuePathProperty, new TemplateBindingExtension(FilteredComboBox.SelectedValuePathProperty));
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.IsEditableProperty, true);
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.IsTextSearchEnabledProperty, false);
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.StaysOpenOnEditProperty, true);
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.ItemsPanelProperty, new ItemsPanelTemplate() { VisualTree = ItemsPanelFactory });
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.WidthProperty, (double)250);
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.FontSizeProperty, DefaultFontSize);
+
+            var CreateEditLabelFactory = new FrameworkElementFactory(typeof(Label));
+            CreateEditLabelFactory.SetValue(Label.ContentProperty, new TemplateBindingExtension(Label.ContentProperty));
+            CreateEditLabelFactory.SetValue(Label.HorizontalContentAlignmentProperty, HorizontalAlignment.Right);
+            CreateEditLabelFactory.SetValue(Label.VerticalContentAlignmentProperty, VerticalAlignment.Center);
+            CreateEditLabelFactory.SetValue(Label.FontSizeProperty, DefaultFontSize);
+            CreateEditLabelFactory.SetValue(Label.WidthProperty, (double)75);
+
+            var CreateEditTextBoxFactory = new FrameworkElementFactory(typeof(TextBox));
+            CreateEditTextBoxFactory.SetValue(TextBox.TextProperty, new TemplateBindingExtension(TextBox.TextProperty));
+            CreateEditTextBoxFactory.SetValue(TextBox.HorizontalAlignmentProperty, HorizontalAlignment.Left);
+            CreateEditTextBoxFactory.SetValue(TextBox.PaddingProperty, new Thickness(3));
+            CreateEditTextBoxFactory.SetValue(TextBox.FontSizeProperty, DefaultFontSize);
+            CreateEditTextBoxFactory.SetValue(TextBox.WidthProperty, (double)250);
+
 
             this.Resources = new ResourceDictionary
             {
@@ -41,8 +66,16 @@ namespace FSBeheer.View
                     new ControlTemplate{ VisualTree = SearchTextBoxFactory }
                 },
                 {
-                    "SearchButton",
-                    new ControlTemplate { VisualTree = SearchButtonFactory }
+                    "FilteredComboBox",
+                    new ControlTemplate{ VisualTree = FilteredComboBoxFactory }
+                },
+                {
+                    "CreateEditLabel",
+                    new ControlTemplate{ VisualTree = CreateEditLabelFactory }
+                },
+                {
+                    "CreateEditTextBox",
+                    new ControlTemplate{ VisualTree = CreateEditTextBoxFactory }
                 }
             };
         }
@@ -112,13 +145,32 @@ namespace FSBeheer.View
                 default:
                     if (Text != oldFilter)
                     {
-                        RefreshFilter();
+                        var temp = Text;
+                        RefreshFilter(); //RefreshFilter will change Text property
+                        Text = temp;
+
+                        if (SelectedIndex != -1 && Text != Items[SelectedIndex].ToString())
+                        {
+                            SelectedIndex = -1; //Clear selection. This line will also clear Text property
+                            Text = temp;
+                        }
+
+
                         IsDropDownOpen = true;
 
-                        EditableTextBox.SelectionStart = int.MaxValue;
+                        if(EditableTextBox != null)
+                            EditableTextBox.SelectionStart = int.MaxValue;
+                    }
+
+                    //automatically select the item when the input text matches it
+                    for (int i = 0; i < Items.Count; i++)
+                    {
+                        if (Text == Items[i].ToString())
+                            SelectedIndex = i;
                     }
 
                     base.OnKeyUp(e);
+                    e.Handled = true;
                     currentFilter = Text;
                     break;
             }
@@ -168,7 +220,8 @@ namespace FSBeheer.View
         private void Filter(string f)
         {
             var method = DataContext.GetType().GetMethod("FilterList"); // find method FilterList in your xaml's viewmodel
-            if (method != null) { // if method exists
+            if (method != null)
+            { // if method exists
                 method.Invoke(DataContext, new object[] { f }); // run it with parameter f
             }
         }

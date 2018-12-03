@@ -15,13 +15,19 @@ namespace FSBeheer.Crud
         {
         }
 
-        public ObservableCollection<InspectionVM> GetInspections()
+        public ObservableCollection<InspectionVM> GetAllInspectionVMs()
         {
             var inspection = CustomFSContext.Inspections
                 .ToList()
                 .Select(i => new InspectionVM(i));
             var _inspections = new ObservableCollection<InspectionVM>(inspection);
             return _inspections;
+        }
+
+        public InspectionVM GetInspectionById(int inspectionId)
+        {
+            var inspection = CustomFSContext.Inspections.ToList().FirstOrDefault(i => i.Id == inspectionId);
+            return new InspectionVM(inspection);
         }
     }
 }

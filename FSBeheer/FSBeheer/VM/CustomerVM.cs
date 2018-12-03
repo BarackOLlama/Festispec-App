@@ -40,10 +40,10 @@ namespace FSBeheer.VM
             set { _customer.Name = value; RaisePropertyChanged(nameof(Name)); }
         }
 
-        public string Adres
+        public string Address
         {
-            get { return _customer.Adres; }
-            set { _customer.Adres = value; RaisePropertyChanged(nameof(Adres)); }
+            get { return _customer.Address; }
+            set { _customer.Address = value; RaisePropertyChanged(nameof(Address)); }
         }
 
         public string City
@@ -68,6 +68,11 @@ namespace FSBeheer.VM
         {
             get { return _customer.ChamberOfCommerceNumber; }
             set { _customer.ChamberOfCommerceNumber = value; RaisePropertyChanged(nameof(ChamberOfCommerceNumber)); }
+        }
+
+        public override string ToString()
+        {
+            return _customer.Name;
         }
 
         public bool IsDeleted

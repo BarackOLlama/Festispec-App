@@ -17,7 +17,7 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for Home.xaml
     /// </summary>
-    public partial class HomeView : Window
+    public partial class HomeView : BaseView
     {
         public HomeView()
         {

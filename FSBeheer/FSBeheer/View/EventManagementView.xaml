@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
       xmlns:local="clr-namespace:FSBeheer.View"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -21,32 +22,26 @@
             <StackPanel Name="spFilter" Orientation="Horizontal" Margin="0,0,0,10">
                 <local:FilterTextBox x:Name="txtSearchInput"
                                      Template="{DynamicResource SearchTextBox}"/>
-                <Button Content="Filter"
-                        Command="{Binding FilterListCommand}"
-                        Template="{DynamicResource SearchButton}"/>
             </StackPanel>
-            <local:FilteredComboBox ItemsSource="{Binding Events}"
-                                    SelectedItem="{Binding SelectedEvent}"
-                                    DisplayMemberPath="Name"
-                                    IsEditable="True"
-                                    IsTextSearchEnabled="False"
-                                    StaysOpenOnEdit="True">
-                <local:FilteredComboBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel VirtualizationMode="Recycling"/>
-                    </ItemsPanelTemplate>
-                </local:FilteredComboBox.ItemsPanel>
-            </local:FilteredComboBox>
-            <DataGrid  ItemsSource="{Binding Events}" MaxHeight="250" AutoGenerateColumns="False">
+            <DataGrid  ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedEvent}" MaxHeight="250" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Naam" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Adres" Binding="{Binding Address}"/>
+                    <DataGridTextColumn Header="Plaats" Binding="{Binding City}"/>
+                    <DataGridTextColumn Header="Postcode" Binding="{Binding Zipcode}"/>
+                    <DataGridTextColumn Header="Klant" Binding="{Binding Customer.Name}"/>
                 </DataGrid.Columns>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding CanExecuteChangedCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </DataGrid>
         </StackPanel>
         <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"                    
                     Orientation="Horizontal" Margin="0,0,25,0">
-            <Button Content="Edit" Template="{DynamicResource InterfaceButton}"></Button>
-            <Button Content="New" Template="{DynamicResource InterfaceButton}"></Button>
+            <Button Content="Wijzig" Command="{Binding EditEventCommand}" Template="{DynamicResource InterfaceButton}"></Button>
+            <Button Content="Nieuw evenement" Command="{Binding CreateEventCommand}" Template="{DynamicResource InterfaceButton}"></Button>
         </StackPanel>
     </StackPanel>
 </local:BaseView>
