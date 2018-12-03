@@ -36,7 +36,7 @@
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Naam:"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Adres:"></TextBox>
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Address:"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="City:"></TextBox>
@@ -59,7 +59,7 @@
                 <TextBox Foreground="Black" Text="{Binding Customer.Name}" FontSize="12"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox Foreground="Black" Text="{Binding Customer.Adres}" FontSize="12"></TextBox>
+                <TextBox Foreground="Black" Text="{Binding Customer.Address}" FontSize="12"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox Foreground="Black" Text="{Binding Customer.City}" FontSize="12"></TextBox>
