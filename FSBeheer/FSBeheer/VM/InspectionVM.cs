@@ -61,6 +61,11 @@ namespace FSBeheer.VM
             set { _inspection.InspectionDate = value; }
         }
 
+        public ObservableCollection<Inspector> Inspectors
+        {
+            get { return _inspection.Inspectors; }
+        }
+
         public bool IsDeleted
         {
             get { return _inspection.IsDeleted; }
