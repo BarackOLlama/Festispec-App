@@ -14,19 +14,6 @@ namespace FSBeheer.ViewModel
         public string Title { get; set; }
         public EventVM Event { get; set; }
         public ObservableCollection<CustomerVM> Customers { get; set; }
-        private CustomerVM _selectedCustomer;
-        public CustomerVM SelectedCustomer
-        {
-            get { return _selectedCustomer; }
-            set
-            {
-                _selectedCustomer = value;
-                if(value != null && Event != null)
-                {
-                    Event.Customer = value;
-                }
-            }
-        }
         public string WarningText { get; set; }
 
         public RelayCommand<Window> SaveChangesCommand { get; set; }
@@ -37,7 +24,6 @@ namespace FSBeheer.ViewModel
         public CreateEditEventViewModel()
         {
             _Context = new CustomFSContext();
-            Customers = _Context.CustomerCrud.GetAllCustomers();
 
             SaveChangesCommand = new RelayCommand<Window>(SaveChanges, SaveAllowed);
             DiscardChangesCommand = new RelayCommand<Window>(DiscardChanges);
@@ -56,11 +42,9 @@ namespace FSBeheer.ViewModel
             else
             {
                 Event = _Context.EventCrud.GetEventById(eventId);
-                SelectedCustomer = _Context.CustomerCrud.GetCustomerById(Event.Customer.Id);
                 Title = "Evenement wijzigen";
             }
             RaisePropertyChanged(nameof(Event));
-            RaisePropertyChanged(nameof(SelectedCustomer));
             RaisePropertyChanged(nameof(Title));
         }
 

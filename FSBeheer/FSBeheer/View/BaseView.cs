@@ -98,6 +98,9 @@ namespace FSBeheer.View
 
         protected override void OnItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
         {
+            System.Diagnostics.Debug.WriteLine(SelectedItem.ToString());
+            System.Diagnostics.Debug.WriteLine(SelectedValue.ToString());
+
             if (newValue != null)
             {
                 var view = CollectionViewSource.GetDefaultView(newValue);

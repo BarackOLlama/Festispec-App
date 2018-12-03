@@ -14,8 +14,7 @@
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Klant: " Template="{DynamicResource CreateEditLabel}"/>
                     <local:FilteredComboBox ItemsSource="{Binding Customers}"
-                                            SelectedItem="{Binding SelectedCustomer}"
-                                            SelectedValue="{Binding SelectedCustomer.SelectedCustomerId, Mode=OneWay}"
+                                            SelectedItem="{Binding Event.Customer}"
                                             DisplayMemberPath="Name"
                                             Template="{DynamicResource FilteredComboBox}">
                         <local:FilteredComboBox.ItemsPanel>
