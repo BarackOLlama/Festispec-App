@@ -45,8 +45,8 @@ namespace FSBeheer.ViewModel
 
         private CustomFSContext _context;
         public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
-        public RelayCommand SaveQuestionChangesCommand { get; set; }
-        public RelayCommand<Window> DiscardQuestionChangesCommand { get; set; }
+        public RelayCommand<Window> SaveQuestionChangesCommand { get; set; }
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
         public EditQuestionViewModel(QuestionVM question)
         {
             _context = new CustomFSContext();
@@ -58,23 +58,24 @@ namespace FSBeheer.ViewModel
             _question = new QuestionVM(questionEntity);
             var temp = _context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
             QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
-            SaveQuestionChangesCommand = new RelayCommand(SaveQuestionChanges);
-            DiscardQuestionChangesCommand = new RelayCommand<Window>(DiscardQuestionChanges);
+            SaveQuestionChangesCommand = new RelayCommand<Window>(SaveQuestionChanges);
+            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             SelectedQuestionType = QuestionTypes.FirstOrDefault();
         }
 
-        public void SaveQuestionChanges()
+        public void SaveQuestionChanges(Window window)
         {
             MessageBoxResult result = MessageBox.Show("Opslaan?", "Bevestig", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK) 
             {
                 _context.SaveChanges();
                 Messenger.Default.Send(true, "UpdateQuestions");
+                window.Close();
             }
 
         }
 
-        public void DiscardQuestionChanges(Window window)
+        public void CloseWindow(Window window)
         {
             MessageBoxResult result = MessageBox.Show("Aanpassing annuleren?", "Bevestig", MessageBoxButton.OKCancel);
             if(result == MessageBoxResult.OK)

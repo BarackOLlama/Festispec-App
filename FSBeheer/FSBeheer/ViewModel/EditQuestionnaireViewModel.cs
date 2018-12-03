@@ -55,9 +55,10 @@ namespace FSBeheer.ViewModel
         }
 
         public RelayCommand OpenCreateQuestionViewCommand { get; set; }
-        public RelayCommand SaveQuestionnaireChangesCommand { get; set; }
+        public RelayCommand<Window> SaveQuestionnaireChangesCommand { get; set; }
         public RelayCommand OpenEditQuestionViewCommand { get; set; }
         public RelayCommand DeleteQuestionCommand { get; set; }
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
 
         public EditQuestionnaireViewModel(QuestionnaireVM questionnaire)
         {
@@ -82,10 +83,20 @@ namespace FSBeheer.ViewModel
             _selectedInspectionNumber = inspectionNumbers.FirstOrDefault();
 
             OpenCreateQuestionViewCommand = new RelayCommand(OpenCreateQuestionView);
-            SaveQuestionnaireChangesCommand = new RelayCommand(SaveQuestionnaireChanges);
+            SaveQuestionnaireChangesCommand = new RelayCommand<Window>(SaveQuestionnaireChanges);
             OpenEditQuestionViewCommand = new RelayCommand(OpenEditQuestionView);
             DeleteQuestionCommand = new RelayCommand(DeleteQuestion);
+            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             SelectedQuestion = questions.FirstOrDefault();
+        }
+
+        private void CloseWindow(Window window)
+        {
+            var result = MessageBox.Show("Terug gaan zonder wijzigingen op te slaan?","", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                window.Close();
+            }
         }
 
         internal void Init()
@@ -100,13 +111,14 @@ namespace FSBeheer.ViewModel
         }
 
 
-        private void SaveQuestionnaireChanges()
+        private void SaveQuestionnaireChanges(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Opslaan?", "Bevestig", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Opslaan wijzigingen?", "Bevestiging", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
                 _context.SaveChanges();
                 Messenger.Default.Send(true, "UpdateQuestionnaires");
+                window.Close();
             }
         }
 

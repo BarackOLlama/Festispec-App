@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System;
 
 namespace FSBeheer.ViewModel
 {
@@ -17,6 +18,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowEditQuestionnaireViewCommand { get; set; }
         public RelayCommand CreateQuestionnaireCommand { get; set; }
         public RelayCommand DeleteQuestionnaireCommand { get; set; }
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
         public QuestionnaireManagementViewModel()
         {
             Messenger.Default.Register<bool>(this, "UpdateQuestionnaires", e => Init());
@@ -25,7 +27,13 @@ namespace FSBeheer.ViewModel
             ShowEditQuestionnaireViewCommand = new RelayCommand(ShowEditQuestionnaireView);
             CreateQuestionnaireCommand = new RelayCommand(CreateQuestionnaire);
             DeleteQuestionnaireCommand = new RelayCommand(DeleteQuestionnaire);
+            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             SelectedQuestionnaire = Questionnaires?.First();
+        }
+
+        private void CloseWindow(Window obj)
+        {
+            obj.Close();
         }
 
         internal void Init()

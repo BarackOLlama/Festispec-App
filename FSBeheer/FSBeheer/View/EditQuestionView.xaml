@@ -24,9 +24,9 @@
         <TextBlock Text="Kolommen"></TextBlock>
         <TextBox Text="{Binding Question.Columns}"></TextBox>
         <Grid>
-            <Button Content="Opslaan" Command="{Binding SaveQuestionChangesCommand}" CommandParameter="{Binding AddQuestionCommand}"
+            <Button Content="Opslaan" Command="{Binding SaveQuestionChangesCommand}" CommandParameter="{Binding ElementName=EditWindow}"
                     Width="100"  HorizontalAlignment="Left" Margin="5,5,0,0" />
-            <Button Content="Annuleren" Command="{Binding DiscardQuestionChangesCommand}" CommandParameter="{Binding ElementName=EditWindow}" Width="100" HorizontalAlignment="Left" Margin="120, 5,5 , 0"></Button>
+            <Button Content="Annuleren" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=EditWindow}" Width="100" HorizontalAlignment="Left" Margin="120, 5,5 , 0"></Button>
         </Grid>
     </StackPanel>
 </Window>
