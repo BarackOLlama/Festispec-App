@@ -36,7 +36,7 @@
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Naam:"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Address:"></TextBox>
+                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Adres:"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="City:"></TextBox>
