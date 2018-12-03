@@ -40,8 +40,9 @@
         </StackPanel>
         <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"
                     Orientation="Horizontal" Margin="0,0,25,0">
-            <Button Content="Edit" Command="{Binding ShowEditInspectorViewCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
             <Button Content="New" Command="{Binding ShowCreateInspectorViewCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+            <Button Content="Edit" Command="{Binding ShowEditInspectorViewCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+            <Button Content="Delete" Command="{Binding DeleteInspectorCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
         </StackPanel>
     </StackPanel>
 </Window>

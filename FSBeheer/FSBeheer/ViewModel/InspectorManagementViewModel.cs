@@ -22,6 +22,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand<Window> BackHomeCommand { get; set; }
         public RelayCommand ShowEditInspectorViewCommand { get; set; }
         public RelayCommand ShowCreateInspectorViewCommand { get; set; }
+        public RelayCommand DeleteInspectorCommand { get; set; }
 
 
         public InspectorManagementViewModel()
@@ -34,7 +35,7 @@ namespace FSBeheer.ViewModel
             BackHomeCommand = new RelayCommand<Window>(CloseAction);
             ShowEditInspectorViewCommand = new RelayCommand(ShowEditInspectorView);
             ShowCreateInspectorViewCommand = new RelayCommand(ShowCreateInspectorView);
-            
+            DeleteInspectorCommand = new RelayCommand(DeleteInspector);
         }
 
         private void Init()
@@ -73,5 +74,17 @@ namespace FSBeheer.ViewModel
             window.Close();
         }
 
+        private void DeleteInspector()
+        {
+            MessageBoxResult result = MessageBox.Show("Delete the selected inspector?", "Confirm Delete", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                SelectedInspector.IsDeleted = true;
+                _customFSContext.SaveChanges();
+                
+
+                Messenger.Default.Send(true, "UpdateInspectorList");
+            }
+        }
     }
 }

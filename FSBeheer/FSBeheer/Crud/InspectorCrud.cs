@@ -21,6 +21,7 @@ namespace FSBeheer.Crud
         {
             var inspectors = CustomFSContext.Inspectors
                 .ToList()
+                .Where(i => i.IsDeleted == false)
                 .Select(i => new InspectorVM(i));
             return new ObservableCollection<InspectorVM>(inspectors);
         }
