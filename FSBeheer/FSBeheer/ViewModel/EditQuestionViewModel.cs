@@ -49,17 +49,20 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
         public RelayCommand<Window> SaveQuestionChangesCommand { get; set; }
         public RelayCommand<Window> CloseWindowCommand { get; set; }
-        public EditQuestionViewModel(QuestionVM question)
+        public EditQuestionViewModel(int questionId)
         {
             _context = new CustomFSContext();
-            var questionEntity = _context.Questions.ToList().Where(e => e.Id == question.Id).FirstOrDefault();
-            //the QuestionVM question is passed through the constructor, but this entity is not observed by the current context
-            //so changes made here do not register to the current context, only to the previous.
-            //This means that changint the VM and calling savechanges won't register it as changed and therefore not
-            //update the database.
+            var questionEntity = _context.Questions
+                .ToList()
+                .Where(e => e.Id == questionId)
+                .FirstOrDefault();
             _question = new QuestionVM(questionEntity);
-            var temp = _context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
-            QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
+
+            var types = _context.QuestionTypes
+                .ToList()
+                .Select(e => new QuestionTypeVM(e));
+            QuestionTypes = new ObservableCollection<QuestionTypeVM>(types);
+
             SaveQuestionChangesCommand = new RelayCommand<Window>(SaveQuestionChanges);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             SelectedQuestionType = QuestionTypes.FirstOrDefault();
@@ -67,7 +70,7 @@ namespace FSBeheer.ViewModel
 
         public void SaveQuestionChanges(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Opslaan?", "Bevestig", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Opslaan wijzigingen?", "Bevestiging", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK) 
             {
                 _context.SaveChanges();

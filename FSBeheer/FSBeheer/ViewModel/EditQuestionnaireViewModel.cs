@@ -18,6 +18,22 @@ namespace FSBeheer.ViewModel
     {
         private QuestionnaireVM _questionnaire;
         private CustomFSContext _context;
+        private int _questionnaireId;
+        private int QuestionnaireId
+        {
+            get
+            {
+                if (Questionnaire != null)
+                {
+                    return Questionnaire.Id;
+                }
+                return _questionnaireId;
+            }
+            set
+            {
+                _questionnaireId = value;
+            }
+        }
         public QuestionnaireVM Questionnaire
         {
             get { return _questionnaire; }
@@ -60,13 +76,13 @@ namespace FSBeheer.ViewModel
         public RelayCommand DeleteQuestionCommand { get; set; }
         public RelayCommand<Window> CloseWindowCommand { get; set; }
 
-        public EditQuestionnaireViewModel(QuestionnaireVM questionnaire)
+        public EditQuestionnaireViewModel(int questionnaireId)
         {
+            QuestionnaireId = questionnaireId;
             Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => Init());
-            _context = new CustomFSContext();
-            var questionnaireEntity = _context.Questionnaires.ToList().Where(e => e.Id == questionnaire.Id).FirstOrDefault();
-            _questionnaire = new QuestionnaireVM(questionnaireEntity);
             Init();
+            var questionnaireEntity = _context.Questionnaires.ToList().Where(e => e.Id == questionnaireId).FirstOrDefault();
+            Questionnaire = new QuestionnaireVM(questionnaireEntity);
 
             var questions = _context.Questions
                 .Include("QuestionType")
@@ -89,28 +105,25 @@ namespace FSBeheer.ViewModel
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             SelectedQuestion = questions.FirstOrDefault();
         }
-
-        private void CloseWindow(Window window)
-        {
-            var result = MessageBox.Show("Terug gaan zonder wijzigingen op te slaan?","", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
-            {
-                window.Close();
-            }
-        }
-
         internal void Init()
         {
             _context = new CustomFSContext();
             var questions = _context.Questions
                 .ToList()
-                .Where(e=> e.QuestionnaireId == _questionnaire.Id && !e.IsDeleted)
+                .Where(e=> e.QuestionnaireId == QuestionnaireId && !e.IsDeleted)
                 .Select(e => new QuestionVM(e));
             Questions = new ObservableCollection<QuestionVM>(questions);
             base.RaisePropertyChanged("Questions");
         }
 
-
+        private void CloseWindow(Window window)
+        {
+            var result = MessageBox.Show("Terug gaan zonder wijzigingen op te slaan?", "", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                window.Close();
+            }
+        }
         private void SaveQuestionnaireChanges(Window window)
         {
             MessageBoxResult result = MessageBox.Show("Opslaan wijzigingen?", "Bevestiging", MessageBoxButton.OKCancel);
