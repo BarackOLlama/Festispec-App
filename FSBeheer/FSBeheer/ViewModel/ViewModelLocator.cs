@@ -146,19 +146,19 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public CreateEditInspectionViewModel CreateEditInspection
-        {
-            get
-            {
-                return new CreateEditInspectionViewModel(_InspectionManagementViewModel);
-            }
-        }
-
         public AvailableInspectorViewModel AvailableInspector
         {
             get
             {
                 return new AvailableInspectorViewModel();
+            }
+        }
+
+        public CreateEditInspectionViewModel CreateEditInspection
+        {
+            get
+            {
+                return new CreateEditInspectionViewModel();
             }
         }
 

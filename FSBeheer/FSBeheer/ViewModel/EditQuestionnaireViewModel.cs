@@ -28,7 +28,8 @@ namespace FSBeheer.ViewModel
         }
 
         private QuestionVM _selectedQuestion;
-        public QuestionVM SelectedQuestion {
+        public QuestionVM SelectedQuestion
+        {
             get
             {
                 return _selectedQuestion;

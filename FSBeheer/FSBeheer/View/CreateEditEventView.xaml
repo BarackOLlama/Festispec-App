@@ -13,10 +13,10 @@
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Klant: " Template="{DynamicResource CreateEditLabel}"/>
                     <local:FilteredComboBox ItemsSource="{Binding Customers}"
-                                        SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}"
-                                        SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
-                                        DisplayMemberPath="Name"
-                                        Template="{DynamicResource FilteredComboBox}">
+                                            SelectedItem="{Binding SelectedCustomer}"
+                                            SelectedValue="{Binding SelectedCustomer.Name}"
+                                            SelectedValuePath="Name"
+                                            Template="{DynamicResource FilteredComboBox}">
                         <local:FilteredComboBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel VirtualizationMode="Recycling"/>

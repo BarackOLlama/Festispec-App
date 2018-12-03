@@ -15,7 +15,7 @@ namespace FSBeheer.Crud
         {
         }
 
-        public ObservableCollection<InspectionVM> GetInspections()
+        public ObservableCollection<InspectionVM> GetAllInspectionVMs()
         {
             var inspection = CustomFSContext.Inspections
                 .ToList()

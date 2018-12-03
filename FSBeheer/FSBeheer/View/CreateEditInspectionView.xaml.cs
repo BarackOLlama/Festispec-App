@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FSBeheer.ViewModel;
+using FSBeheer.VM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,10 @@ namespace FSBeheer.View
     /// </summary>
     public partial class CreateEditInspectionView : Window
     {
-        public CreateEditInspectionView()
+        public CreateEditInspectionView(InspectionVM inspection = null)
         {
             InitializeComponent();
+            (DataContext as CreateEditInspectionViewModel).SetInspection(inspection);
         }
     }
 }
