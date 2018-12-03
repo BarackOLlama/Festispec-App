@@ -9,19 +9,13 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.VM
 {
-    public class InspectionVM
+    public class InspectionVM : ViewModelBase
     {
         private Inspection _inspection;
 
         public InspectionVM(Inspection inspection)
         {
             _inspection = inspection;
-        }
-
-        // useful?
-        internal Inspection ToModel()
-        {
-            return _inspection;
         }
 
         public int Id
@@ -47,6 +41,7 @@ namespace FSBeheer.VM
         public Event Event
         {
             get { return _inspection.Event; }
+            set { _inspection.Event = value; }
         }
 
         public int? StatusId
@@ -57,11 +52,24 @@ namespace FSBeheer.VM
         public Status Status
         {
             get { return _inspection.Status; }
+            set { _inspection.Status = value; }
         }
 
-        public InspectionDateVM InspectionDate
+        public InspectionDate InspectionDate
         {
-            get { return new InspectionDateVM(_inspection.InspectionDate); }
+            get { return _inspection.InspectionDate; }
+            set { _inspection.InspectionDate = value; }
+        }
+
+        public bool IsDeleted
+        {
+            get { return _inspection.IsDeleted; }
+            set { _inspection.IsDeleted = value; RaisePropertyChanged(nameof(IsDeleted)); }
+        }
+
+        internal Inspection ToModel()
+        {
+            return _inspection;
         }
     }
 }

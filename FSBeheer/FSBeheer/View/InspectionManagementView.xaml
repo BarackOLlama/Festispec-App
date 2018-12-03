@@ -18,14 +18,7 @@
     </Window.Resources>
 
     <StackPanel Margin="20">
-        <StackPanel Name="spBackButton" HorizontalAlignment="Left">
-            <Button Content="Back" 
-                    Command="{Binding WORKINPROGRESS}" 
-                    CommandParameter="{Binding ElementName=InspectionManagementViewName}" 
-                    Template="{StaticResource InterfaceButtonTemplate}">
-                
-            </Button>
-        </StackPanel>
+        
 
 
         <StackPanel Name="spContent" Margin="30">
@@ -34,14 +27,14 @@
                     <DataGridTextColumn Header="Inspectienummer" Binding="{Binding Id}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Evenement" Binding="{Binding EventId}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Status" Binding="{Binding StatusId}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Prijs" Binding="{Binding }"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Statusnaam" Binding="{Binding StatusName}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
         <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"
                     Orientation="Horizontal" Margin="0,0,25,0">
-            <Button Content="Wijzig" Command="{Binding ShowCreateEditInspectionViewCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-            <Button Content="Nieuw" Command="{Binding ShowCreateEditInspectionViewCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+            <Button Content="Wijzig" Command="{Binding ShowEditInspectionViewCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+            <Button Content="Nieuw" Command="{Binding ShowCreateInspectionViewCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
         </StackPanel>
     </StackPanel>
 </Window>

@@ -14,10 +14,12 @@ namespace FSBeheer.ViewModel
     /// The responsibility of this class and the view is to edit questions in the database.
     /// It is not responsible for deletion of questions.
     /// </summary>
-    public class EditQuestionViewModel :ViewModelBase
+    public class EditQuestionViewModel : ViewModelBase
     {
         private QuestionVM _question;
-        public QuestionVM Question { get
+        public QuestionVM Question
+        {
+            get
             {
                 return _question;
             }

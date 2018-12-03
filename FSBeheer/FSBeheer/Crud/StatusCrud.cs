@@ -25,5 +25,13 @@ namespace FSBeheer.Crud
             return _statuses;
         }
 
+        public StatusVM GetStatusById(int statusId)
+        {
+            var status = CustomFSContext.Statuses
+                .ToList()
+                .FirstOrDefault(s => s.Id == statusId);
+            return new StatusVM(status);
+        }
+
     }
 }
