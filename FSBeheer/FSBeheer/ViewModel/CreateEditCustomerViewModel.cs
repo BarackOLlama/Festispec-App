@@ -63,6 +63,8 @@ namespace FSBeheer.ViewModel
             new CreateEditContactView(null, Customer).Show();
         }
 
+        // TODO: Found bug when making a contact it loses the selected customer
+
         private void OpenEditContact()
         {
             if (_selectedContact == null)
