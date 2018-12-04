@@ -26,10 +26,9 @@ namespace FSBeheer.VM
                 var questions = context.Questions
                     .Include("QuestionType")
                     .ToList()
-                    .Where(e => e.QuestionnaireId == _questionnaire.Id)
+                    .Where(e => e.QuestionnaireId == _questionnaire.Id && !e.IsDeleted)
                     .Select(e => new QuestionVM(e));
                 Questions = new ObservableCollection<QuestionVM>(questions);
-                context.Dispose();
             }
         }
 
@@ -90,12 +89,48 @@ namespace FSBeheer.VM
 
                 using(var context = new CustomFSContext())
                 {
-                    amount = context.Questions.Where(e => e.QuestionnaireId == _questionnaire.Id).Count();
+                    amount = context.Questions.Where(e => e.QuestionnaireId == _questionnaire.Id && !e.IsDeleted).Count();
                 }
 
                 return amount;
             }
         }
+
+        //for QuestionnaireManagementViewModel
+        public string EventName
+        {
+            get
+            {
+                string eventName = "unknown";
+                if (_questionnaire.InspectionId != null)
+                {
+                    using(var context = new CustomFSContext())
+                    {
+                        var result = context.Events.ToList().Where(e => e.Id == _questionnaire.InspectionId).FirstOrDefault();
+                        if(result != null)
+                        {
+                            eventName = result.Name;
+                        }
+                    }
+                }
+
+                return eventName;
+            }
+        }
+        
+        //for QuestionnaireManagementViewModel
+        public string InspectionNumber
+        {
+            get
+            {
+                if (_questionnaire.InspectionId == null)
+                {
+                    return "unknown";
+                }
+                return _questionnaire.InspectionId.ToString();
+            }
+        }
+
 
         public bool IsDeleted
         {
