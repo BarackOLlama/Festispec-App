@@ -108,9 +108,10 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public RelayCommand<Window> CancelInspectionCommand { get; set; }
-        public RelayCommand<Window> AddInspectionCommand { get; set; }
-        public RelayCommand CanExecuteChangedCommand { get; set; }
+        //public RelayCommand<Window> CancelInspectionCommand { get; set; }
+        //public RelayCommand<Window> AddInspectionCommand { get; set; }
+        public RelayCommand AddInspectionCommand { get; set; }
+        //public RelayCommand CanExecuteChangedCommand { get; set; }
         public RelayCommand PickInspectorsCommand { get; set; }
 
         public CreateEditInspectionViewModel()
@@ -120,9 +121,10 @@ namespace FSBeheer.ViewModel
             Events = _Context.EventCrud.GetAllEvents();
             Statuses = _Context.StatusCrud.GetAllStatusVMs();
 
-            CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
-            AddInspectionCommand = new RelayCommand<Window>(AddInspection, CheckSaveAllowed);
-            CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
+            //CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
+            //AddInspectionCommand = new RelayCommand<Window>(AddInspection, CheckSaveAllowed);
+            AddInspectionCommand = new RelayCommand(AddInspection);
+            //CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
             PickInspectorsCommand = new RelayCommand(OpenAvailable);
         }
 
@@ -153,30 +155,37 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        private void CloseAction(Window window)
-        {
-            _Context.Dispose();
-            window.Close();
-        }
+        //private void CloseAction(Window window)
+        //{
+        //    _Context.Dispose();
+        //    window.Close();
+        //}
 
-        private void CancelInspection(Window window)
-        {
-            // CreateInspectionView sluiten en veranderingen ongedaan maken
-            MessageBoxResult result = MessageBox.Show("Weet u zeker dat u deze inspectie wilt annuleren?", "Bevestig annulering inspectie", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
-            {
-                CloseAction(window);
-            }
-        }
+        //private void CancelInspection(Window window)
+        //{
+        //    // CreateInspectionView sluiten en veranderingen ongedaan maken
+        //    MessageBoxResult result = MessageBox.Show("Weet u zeker dat u deze inspectie wilt annuleren?", "Bevestig annulering inspectie", MessageBoxButton.OKCancel);
+        //    if (result == MessageBoxResult.OK)
+        //    {
+        //        CloseAction(window);
+        //    }
+        //}
 
-        public void AddInspection(Window window)
+        //public void AddInspection(Window window)
+        //{
+        //    _Context.InspectionCrud.GetAllInspectionVMs().Add(Inspection);
+        //    _Context.SaveChanges();
+
+        //    Messenger.Default.Send(true, "UpdateInspectionList");
+        //    CloseAction(window);
+        //}
+
+        public void AddInspection()
         {
-            // Inspectie aanmaken in de database met alle velden die ingevuld zijn
             _Context.InspectionCrud.GetAllInspectionVMs().Add(Inspection);
             _Context.SaveChanges();
 
             Messenger.Default.Send(true, "UpdateInspectionList");
-            CloseAction(window);
         }
 
         public void OpenAvailable()
@@ -184,35 +193,35 @@ namespace FSBeheer.ViewModel
             new AvailableInspectorView(Inspection.Id).Show();
         }
 
-        private void CanExecuteChanged()
-        {
-            AddInspectionCommand.RaiseCanExecuteChanged();
-        }
+        //private void CanExecuteChanged()
+        //{
+        //    AddInspectionCommand.RaiseCanExecuteChanged();
+        //}
 
-        private bool CheckSaveAllowed(Window window)
-        {
-            if (Inspection == null)
-            {
-                return false;
-            }else if (string.IsNullOrEmpty(Inspection.Name))
-            {
-                WarningText = "Het veld Naam mag niet leeg zijn";
-                RaisePropertyChanged(nameof(WarningText));
-                return false;
-            }
-            else if (Inspection.Inspectors == null)
-            {
-                WarningText = "Het veld Inspecteur(s) mag niet leeg zijn";
-                RaisePropertyChanged(nameof(WarningText));
-                return false;
-            }
-            else
-            {
-                WarningText = "";
-                RaisePropertyChanged(nameof(WarningText));
-                return true;
-            }
-        }
+        //private bool CheckSaveAllowed(Window window)
+        //{
+        //    if (Inspection == null)
+        //    {
+        //        return false;
+        //    }else if (string.IsNullOrEmpty(Inspection.Name))
+        //    {
+        //        WarningText = "Het veld Naam mag niet leeg zijn";
+        //        RaisePropertyChanged(nameof(WarningText));
+        //        return false;
+        //    }
+        //    else if (Inspection.Inspectors == null)
+        //    {
+        //        WarningText = "Het veld Inspecteur(s) mag niet leeg zijn";
+        //        RaisePropertyChanged(nameof(WarningText));
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        WarningText = "";
+        //        RaisePropertyChanged(nameof(WarningText));
+        //        return true;
+        //    }
+        //}
 
     }
 }
