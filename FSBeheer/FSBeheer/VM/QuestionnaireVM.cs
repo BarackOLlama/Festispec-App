@@ -86,7 +86,14 @@ namespace FSBeheer.VM
         {
             get
             {
-                return 0;
+                int amount = 0;
+
+                using(var context = new CustomFSContext())
+                {
+                    amount = context.Questions.Where(e => e.QuestionnaireId == _questionnaire.Id).Count();
+                }
+
+                return amount;
             }
         }
 
