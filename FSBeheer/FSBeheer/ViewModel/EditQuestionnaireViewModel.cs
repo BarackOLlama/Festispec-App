@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
+using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
@@ -17,6 +18,22 @@ namespace FSBeheer.ViewModel
     {
         private QuestionnaireVM _questionnaire;
         private CustomFSContext _context;
+        private int _questionnaireId;
+        private int QuestionnaireId
+        {
+            get
+            {
+                if (Questionnaire != null)
+                {
+                    return Questionnaire.Id;
+                }
+                return _questionnaireId;
+            }
+            set
+            {
+                _questionnaireId = value;
+            }
+        }
         public QuestionnaireVM Questionnaire
         {
             get { return _questionnaire; }
@@ -54,20 +71,23 @@ namespace FSBeheer.ViewModel
         }
 
         public RelayCommand OpenCreateQuestionViewCommand { get; set; }
-        public RelayCommand SaveQuestionnaireChangesCommand { get; set; }
+        public RelayCommand<Window> SaveQuestionnaireChangesCommand { get; set; }
         public RelayCommand OpenEditQuestionViewCommand { get; set; }
+        public RelayCommand DeleteQuestionCommand { get; set; }
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
 
-        public EditQuestionnaireViewModel(QuestionnaireVM questionnaire)
+        public EditQuestionnaireViewModel(int questionnaireId)
         {
-            _context = new CustomFSContext();
-            //_questionnaire = questionnaire;
-            var questionnaireEntity = _context.Questionnaires.ToList().Where(e => e.Id == questionnaire.Id).FirstOrDefault();
-            _questionnaire = new QuestionnaireVM(questionnaireEntity);
+            QuestionnaireId = questionnaireId;
+            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => Init());
+            Init();
+            var questionnaireEntity = _context.Questionnaires.ToList().Where(e => e.Id == questionnaireId).FirstOrDefault();
+            Questionnaire = new QuestionnaireVM(questionnaireEntity);
 
             var questions = _context.Questions
                 .Include("QuestionType")
                 .ToList()
-                .Where(e => e.QuestionnaireId == _questionnaire.Id)
+                .Where(e => e.QuestionnaireId == _questionnaire.Id && !e.IsDeleted)
                 .Select(e => new QuestionVM(e));
             Questions = new ObservableCollection<QuestionVM>(questions);
 
@@ -79,17 +99,40 @@ namespace FSBeheer.ViewModel
             _selectedInspectionNumber = inspectionNumbers.FirstOrDefault();
 
             OpenCreateQuestionViewCommand = new RelayCommand(OpenCreateQuestionView);
-            SaveQuestionnaireChangesCommand = new RelayCommand(SaveQuestionnaireChanges);
+            SaveQuestionnaireChangesCommand = new RelayCommand<Window>(SaveQuestionnaireChanges);
             OpenEditQuestionViewCommand = new RelayCommand(OpenEditQuestionView);
+            DeleteQuestionCommand = new RelayCommand(DeleteQuestion);
+            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             SelectedQuestion = questions.FirstOrDefault();
         }
-
-
-        private void SaveQuestionnaireChanges()
+        internal void Init()
         {
-            _context.SaveChanges();
-            //Messenger.Default.Send(true, "UpdateQuestionnaires"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
-            //^is used in the CreateEditCustomerViewModel
+            _context = new CustomFSContext();
+            var questions = _context.Questions
+                .ToList()
+                .Where(e=> e.QuestionnaireId == QuestionnaireId && !e.IsDeleted)
+                .Select(e => new QuestionVM(e));
+            Questions = new ObservableCollection<QuestionVM>(questions);
+            base.RaisePropertyChanged("Questions");
+        }
+
+        private void CloseWindow(Window window)
+        {
+            var result = MessageBox.Show("Terug gaan zonder wijzigingen op te slaan?", "", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                window.Close();
+            }
+        }
+        private void SaveQuestionnaireChanges(Window window)
+        {
+            MessageBoxResult result = MessageBox.Show("Opslaan wijzigingen?", "Bevestiging", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                _context.SaveChanges();
+                Messenger.Default.Send(true, "UpdateQuestionnaires");
+                window.Close();
+            }
         }
 
         public void OpenCreateQuestionView()
@@ -99,8 +142,37 @@ namespace FSBeheer.ViewModel
 
         private void OpenEditQuestionView()
         {
-            new EditQuestionView().ShowDialog();
+            if (_selectedQuestion == null)
+            {
+                MessageBox.Show("Geen vraag geselecteerd.");
+            }
+            else
+            {
+                new EditQuestionView().ShowDialog();
+            }
         }
 
+        public void UpdateQuestions()
+        {
+            var questions = _context.Questions.ToList().Select(e => new QuestionVM(e));
+            Questions = new ObservableCollection<QuestionVM>(questions);
+        }
+
+        public void DeleteQuestion()
+        {
+            if (_selectedQuestion == null || _selectedQuestion.IsDeleted)
+            {
+                MessageBox.Show("Geen vraag geselecteerd.");
+            }else
+            {
+                var result = MessageBox.Show("Vraag verwijderen?", "Verwijder", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    _selectedQuestion.IsDeleted = true;
+                    _context.SaveChanges();
+                    this.Init();
+                }
+            }
+        }
     }
 }
