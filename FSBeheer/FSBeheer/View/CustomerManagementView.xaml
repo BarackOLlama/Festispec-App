@@ -15,7 +15,7 @@
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Name="spBackButton" Height="Auto" Orientation="Horizontal">
-                        <Button Content="Back" Template="{DynamicResource InterfaceButton}"></Button>
+                        <Button Content="Back" Template="{DynamicResource InterfaceButton}" CommandParameter="{Binding ElementName=ManageWindow}" Command="{Binding CloseWindowCommand}"></Button>
                         <TextBlock Text="Klantenbeheer" FontSize="28" FontWeight="ExtraBold" Margin="15,6,0,0"/>
                     </StackPanel>
                 </StackPanel>

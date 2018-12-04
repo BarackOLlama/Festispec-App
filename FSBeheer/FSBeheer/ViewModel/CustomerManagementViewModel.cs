@@ -13,6 +13,8 @@ namespace FSBeheer.ViewModel
         private CustomFSContext CustomFSContext;
         public ObservableCollection<CustomerVM> Customers { get; set; }
 
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
+
         public RelayCommand EditCustomerWindowCommand { get; set; }
 
         public RelayCommand CreateCustomerWindowCommand { get; set; }
@@ -39,6 +41,7 @@ namespace FSBeheer.ViewModel
             Init();
             CreateCustomerWindowCommand = new RelayCommand(OpenCreateCustomer);
             EditCustomerWindowCommand = new RelayCommand(OpenEditCustomer);
+            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
         internal void Init()
@@ -63,6 +66,11 @@ namespace FSBeheer.ViewModel
             {
                 new CreateEditCustomerView(_selectedCustomer).Show();
             }
+        }
+
+        private void CloseWindow(Window window)
+        {
+            window.Close();
         }
     }
 }
