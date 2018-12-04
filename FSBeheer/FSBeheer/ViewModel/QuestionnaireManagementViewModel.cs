@@ -2,8 +2,11 @@
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
+using System;
 
 namespace FSBeheer.ViewModel
 {
@@ -12,19 +15,38 @@ namespace FSBeheer.ViewModel
         private QuestionnaireVM _selectedQuestionnaire;
         private CustomFSContext _context;
         public ObservableCollection<QuestionnaireVM> Questionnaires { get; set; }
-
         public RelayCommand ShowEditQuestionnaireViewCommand { get; set; }
         public RelayCommand CreateQuestionnaireCommand { get; set; }
+        public RelayCommand DeleteQuestionnaireCommand { get; set; }
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
         public QuestionnaireManagementViewModel()
         {
-            _context = new CustomFSContext();
+            Messenger.Default.Register<bool>(this, "UpdateQuestionnaires", e => Init());
+            Init();
             Questionnaires = _context.QuestionnaireCrud.GetAllQuestionnaireVMs();
-
             ShowEditQuestionnaireViewCommand = new RelayCommand(ShowEditQuestionnaireView);
             CreateQuestionnaireCommand = new RelayCommand(CreateQuestionnaire);
+            DeleteQuestionnaireCommand = new RelayCommand(DeleteQuestionnaire);
+            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             SelectedQuestionnaire = Questionnaires?.First();
-            //_context.Dispose();
         }
+
+        private void CloseWindow(Window obj)
+        {
+            obj.Close();
+        }
+
+        internal void Init()
+        {
+            _context = new CustomFSContext();
+            var questionnaires = _context.Questionnaires.
+                ToList().
+                Where(e=>!e.IsDeleted).
+                Select(e => new QuestionnaireVM(e));
+            Questionnaires = new ObservableCollection<QuestionnaireVM>(questionnaires);
+            RaisePropertyChanged("Questionnaires");
+        }
+
         public QuestionnaireVM SelectedQuestionnaire
         {
             get { return _selectedQuestionnaire; }
@@ -37,12 +59,36 @@ namespace FSBeheer.ViewModel
 
         public void ShowEditQuestionnaireView()
         {
-            new EditQuestionnaireView().ShowDialog();
+            if (_selectedQuestionnaire == null || _selectedQuestionnaire.IsDeleted)
+            {
+                MessageBox.Show("Geen vragenlijst geselecteerd.");
+            }
+            else
+            {
+                new EditQuestionnaireView().ShowDialog();
+            }
+        }
+
+        public void DeleteQuestionnaire()
+        {
+            if (_selectedQuestionnaire == null || _selectedQuestionnaire.IsDeleted)
+            {
+                MessageBox.Show("Geen vragenlijst geselecteerd");
+            }else
+            {
+                var result = MessageBox.Show("Vraag verwijderen?", "Verwijder", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    _selectedQuestionnaire.IsDeleted = true;
+                    _context.SaveChanges();
+                    Init();
+                }
+            }
         }
 
         public void CreateQuestionnaire()
         {
-            new CreateQuestionnaireView().Show();
+            new CreateQuestionnaireView().ShowDialog();
         }
     }
 }

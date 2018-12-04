@@ -125,7 +125,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                _questionnaireViewModel = new EditQuestionnaireViewModel(_questionnaireManagementViewModel.SelectedQuestionnaire);
+                _questionnaireViewModel = new EditQuestionnaireViewModel(_questionnaireManagementViewModel.SelectedQuestionnaire.Id);
                 return _questionnaireViewModel;
             }
         }
@@ -134,7 +134,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new CreateQuestionViewModel(_questionnaireManagementViewModel.SelectedQuestionnaire);
+                return new CreateQuestionViewModel(_questionnaireManagementViewModel.SelectedQuestionnaire.Id);
             }
         }
 
@@ -142,7 +142,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new EditQuestionViewModel(_questionnaireViewModel.SelectedQuestion);
+                return new EditQuestionViewModel(_questionnaireViewModel.SelectedQuestion.Id);
             }
         }
 

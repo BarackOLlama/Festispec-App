@@ -58,6 +58,7 @@ namespace FSBeheer.ViewModel
 
             // Place brakepoint here
             Console.WriteLine("");
+            //this.ShowLoginView();
         }
 
         private void ShowLoginView()

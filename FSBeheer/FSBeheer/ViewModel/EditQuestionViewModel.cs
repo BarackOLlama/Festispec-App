@@ -1,12 +1,14 @@
 ﻿using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
@@ -45,30 +47,48 @@ namespace FSBeheer.ViewModel
 
         private CustomFSContext _context;
         public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
-        public RelayCommand SaveQuestionChangesCommand { get; set; }
-        public RelayCommand DiscardQuestionChangesCommand { get; set; }
-        public EditQuestionViewModel(QuestionVM question)
+        public RelayCommand<Window> SaveQuestionChangesCommand { get; set; }
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
+        public EditQuestionViewModel(int questionId)
         {
             _context = new CustomFSContext();
-            _question = question;
-            //var questionEntity = _context.Questions.ToList().Where(e => e.Id == question.Id).FirstOrDefault();
-            //_question = new QuestionVM(questionEntity);
-            var temp = _context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
-            QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
-            SaveQuestionChangesCommand = new RelayCommand(SaveQuestionChanges);
-            DiscardQuestionChangesCommand = new RelayCommand(DiscardQuestionChanges);
+            var questionEntity = _context.Questions
+                .ToList()
+                .Where(e => e.Id == questionId)
+                .FirstOrDefault();
+            _question = new QuestionVM(questionEntity);
+
+            var types = _context.QuestionTypes
+                .ToList()
+                .Select(e => new QuestionTypeVM(e));
+            QuestionTypes = new ObservableCollection<QuestionTypeVM>(types);
+
+            SaveQuestionChangesCommand = new RelayCommand<Window>(SaveQuestionChanges);
+            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             SelectedQuestionType = QuestionTypes.FirstOrDefault();
         }
 
-        public void SaveQuestionChanges()
+        public void SaveQuestionChanges(Window window)
         {
-            //_context.QuestionCrud.GetAllQuestionVMs().Add(_question);
-            _context.SaveChanges();
+            MessageBoxResult result = MessageBox.Show("Opslaan wijzigingen?", "Bevestiging", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK) 
+            {
+                _context.SaveChanges();
+                Messenger.Default.Send(true, "UpdateQuestions");
+                window.Close();
+            }
+
         }
 
-        public void DiscardQuestionChanges()
+        public void CloseWindow(Window window)
         {
-            throw new NotImplementedException();
+            MessageBoxResult result = MessageBox.Show("Aanpassing annuleren?", "Bevestig", MessageBoxButton.OKCancel);
+            if(result == MessageBoxResult.OK)
+            {
+                window.Close();
+            }
+            //Must close the window it's opened upon confirmation
+            //no need to discard changes as the context is separate from the previous window's.
         }
     }
 }

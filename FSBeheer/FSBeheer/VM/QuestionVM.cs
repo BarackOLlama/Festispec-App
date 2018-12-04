@@ -19,6 +19,7 @@ namespace FSBeheer.VM
         public QuestionVM()
         {
             _question = new Question();
+            _question.IsDeleted = false;
         }
 
         public int Id
@@ -64,6 +65,12 @@ namespace FSBeheer.VM
         {
             get { return _question.Comments; }
             set { _question.Comments = value; }
+        }
+
+        public bool IsDeleted
+        {
+            get { return _question.IsDeleted; }
+            set { _question.IsDeleted = value; }
         }
 
         internal Question ToModel()
