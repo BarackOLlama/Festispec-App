@@ -45,7 +45,7 @@ namespace FSBeheer.ViewModel
 
         private bool CanOpenCreateContact()
         {
-            return this.Customer?.Id != 0;
+            return Customer?.Id != 0;
         }
 
         internal void Init()
@@ -101,6 +101,10 @@ namespace FSBeheer.ViewModel
             }
             Contacts = _Context.ContactCrud.GetContactByCustomer(Customer); // TODO kan beter
             RaisePropertyChanged(nameof(Contacts));
+
+
+            // TODO: Try Savechanges before to prevent issue with making contact first?
+            // _Context.SaveChanges();
         }
 
         private void SaveChanges()
