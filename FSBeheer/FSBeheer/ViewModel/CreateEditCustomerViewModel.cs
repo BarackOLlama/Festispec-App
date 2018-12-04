@@ -3,6 +3,7 @@ using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -37,8 +38,14 @@ namespace FSBeheer.ViewModel
             SaveChangesCommand = new RelayCommand(SaveChanges);
             DiscardCommand = new RelayCommand<Window>(Discard);
             DeleteCustomerCommand = new RelayCommand<Window>(DeleteCustomer);
-            CreateContactWindowCommand = new RelayCommand(OpenCreateContact);
+            CreateContactWindowCommand = new RelayCommand(OpenCreateContact, CanOpenCreateContact);
             EditContactWindowCommand = new RelayCommand(OpenEditContact);
+            //EditContactWindowCommand.RaiseCanExecuteChanged(); deze moet je ooit nog een keer aanroepen, zodat hij opnieuw de check CanOpenCreateContact uitvoert!
+        }
+
+        private bool CanOpenCreateContact()
+        {
+            return Customer?.Id != 0;
         }
 
         internal void Init()
@@ -55,6 +62,8 @@ namespace FSBeheer.ViewModel
         {
             new CreateEditContactView(null, Customer).Show();
         }
+
+        // TODO: Found bug when making a contact it loses the selected customer
 
         private void OpenEditContact()
         {
@@ -94,6 +103,10 @@ namespace FSBeheer.ViewModel
             }
             Contacts = _Context.ContactCrud.GetContactByCustomer(Customer); // TODO kan beter
             RaisePropertyChanged(nameof(Contacts));
+
+
+            // TODO: Try Savechanges before to prevent issue with making contact first?
+            // _Context.SaveChanges();
         }
 
         private void SaveChanges()

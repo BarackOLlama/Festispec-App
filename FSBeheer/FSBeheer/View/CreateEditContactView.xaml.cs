@@ -19,7 +19,7 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for CreateEditContactView.xaml
     /// </summary>
-    public partial class CreateEditContactView : Window
+    public partial class CreateEditContactView : BaseView
     {
         public CreateEditContactView(ContactVM contact = null, CustomerVM customer = null)
         {
