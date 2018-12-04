@@ -15,15 +15,9 @@
                     <Label Content="Klant: " Template="{DynamicResource CreateEditLabel}"/>
                     <local:FilteredComboBox ItemsSource="{Binding Customers}"
                                             SelectedItem="{Binding Event.Customer}"
-                                            SelectedValue="{Binding Event.Customer.Name}"
+                                            SelectedIndex="{Binding SelectedIndex}"
                                             DisplayMemberPath="Name"
-                                            IsSynchronizedWithCurrentItem="False"
-                                            Template="{DynamicResource FilteredComboBox}">
-                        <local:FilteredComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel VirtualizationMode="Recycling"/>
-                            </ItemsPanelTemplate>
-                        </local:FilteredComboBox.ItemsPanel>
+                                            Width="200">
                     </local:FilteredComboBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">

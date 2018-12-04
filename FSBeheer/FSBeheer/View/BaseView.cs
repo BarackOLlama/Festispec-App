@@ -89,25 +89,21 @@ namespace FSBeheer.View
 
         private string currentFilter = string.Empty;
 
-        private bool runItemsSourceChanged = true;
-
         protected TextBox EditableTextBox => GetTemplateChild("PART_EditableTextBox") as TextBox;
 
         protected override void OnSelectionChanged(SelectionChangedEventArgs e)
         {
+            //set SelectedItem on initialization
+            if (SelectedIndex != -1)
+                SelectedItem = Items[SelectedIndex];
+
             base.OnSelectionChanged(e);
             e.Handled = true;
         }
 
         protected override void OnItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
         {
-                //for (int i = 0; i < Items.Count; i++)
-                //{
-                //    if (SelectedValue.ToString() == Items[i].ToString())
-                //        SelectedIndex = i;
-                //}
-
-                if (newValue != null)
+            if (newValue != null)
                 {
                     var view = CollectionViewSource.GetDefaultView(newValue);
                     view.Filter += FilterItem;

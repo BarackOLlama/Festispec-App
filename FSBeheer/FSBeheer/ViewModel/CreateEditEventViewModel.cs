@@ -3,6 +3,7 @@ using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 
@@ -14,6 +15,7 @@ namespace FSBeheer.ViewModel
         public string Title { get; set; }
         public EventVM Event { get; set; }
         public ObservableCollection<CustomerVM> Customers { get; set; }
+        public int SelectedIndex { get; set; }
         public string WarningText { get; set; }
 
         public RelayCommand<Window> SaveChangesCommand { get; set; }
@@ -45,9 +47,19 @@ namespace FSBeheer.ViewModel
                 Title = "Evenement wijzigen";
             }
             Customers = _Context.CustomerCrud.GetAllCustomers();
-            RaisePropertyChanged(nameof(Event));
+            SelectedIndex = GetIndex(Event.Customer, Customers);
+            RaisePropertyChanged(nameof(SelectedIndex));
             RaisePropertyChanged(nameof(Customers));
+            RaisePropertyChanged(nameof(Event));
             RaisePropertyChanged(nameof(Title));
+        }
+
+        private int GetIndex(CustomerVM Obj, ObservableCollection<CustomerVM> List)
+        {
+            for (int i = 0; i < List.Count; i++)
+                if (List[i].Id == Obj.Id)
+                    return i;
+            return -1;
         }
 
         private void CloseAction(Window window)
