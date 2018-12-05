@@ -211,10 +211,10 @@ namespace FSBeheer.View
 
     public class FilterTextBox : TextBox
     {
-        protected override void OnKeyUp(KeyEventArgs e)
+        protected override void OnTextChanged(TextChangedEventArgs e)
         {
             Filter(Text);
-            e.Handled = true;
+            base.OnTextChanged(e);
         }
 
         private void Filter(string f)
