@@ -131,9 +131,7 @@
     <Compile Include="ViewModel\EditQuestionViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
-    <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
     <Compile Include="VM\QuestionnaireVM.cs" />
-    <Compile Include="ViewModel\QuestionnaireVM.cs" />
     <Compile Include="View\BaseView.cs" />
     <Compile Include="View\CreateEditEventView.xaml.cs">
       <DependentUpon>CreateEditEventView.xaml</DependentUpon>
@@ -177,9 +175,6 @@
     <Compile Include="ViewModel\EventManagementViewModel.cs" />
     <Compile Include="View\EventManagementView.xaml.cs">
       <DependentUpon>EventManagementView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\InspectorSelectionView.xaml.cs">
-      <DependentUpon>InspectorSelectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\InspectorManagementView.xaml.cs">
       <DependentUpon>InspectorManagementView.xaml</DependentUpon>
