@@ -75,7 +75,7 @@ namespace FSBeheer.Crud
                 i.Name != null && i.Name.ToLower().Contains(must_contain) ||
                 i.Address != null && i.Address.ToLower().Contains(must_contain) ||
                 i.City != null && i.City.ToLower().Contains(must_contain) ||
-                i.StartingDate != null && i.StartingDate.ToString().ToLower().Contains(must_contain)
+                (i.StartingDate != null && i.StartingDate.ToString().ToLower().Contains(must_contain))
                 ).Distinct()
                 .Select(i => new CustomerVM(i));
             var _customers = new ObservableCollection<CustomerVM>(customers);
