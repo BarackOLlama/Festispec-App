@@ -176,9 +176,6 @@
     <Compile Include="View\EventManagementView.xaml.cs">
       <DependentUpon>EventManagementView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\InspectorSelectionView.xaml.cs">
-      <DependentUpon>InspectorSelectionView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\InspectorManagementView.xaml.cs">
       <DependentUpon>InspectorManagementView.xaml</DependentUpon>
     </Compile>
