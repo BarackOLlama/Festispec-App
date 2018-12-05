@@ -31,10 +31,8 @@ namespace FSBeheer.View
             var FilteredComboBoxFactory = new FrameworkElementFactory(typeof(FilteredComboBox));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.ItemsSourceProperty, new TemplateBindingExtension(FilteredComboBox.ItemsSourceProperty));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedItemProperty, new TemplateBindingExtension(FilteredComboBox.SelectedItemProperty));
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedValueProperty, new TemplateBindingExtension(FilteredComboBox.SelectedValueProperty));
+            FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedIndexProperty, new TemplateBindingExtension(FilteredComboBox.SelectedIndexProperty));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.DisplayMemberPathProperty, new TemplateBindingExtension(FilteredComboBox.DisplayMemberPathProperty));
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedValuePathProperty, new TemplateBindingExtension(FilteredComboBox.SelectedValuePathProperty));
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.IsSynchronizedWithCurrentItemProperty, new TemplateBindingExtension(FilteredComboBox.IsSynchronizedWithCurrentItemProperty));
             FilteredComboBoxFactory.SetValue(FilteredComboBox.IsEditableProperty, true);
             FilteredComboBoxFactory.SetValue(FilteredComboBox.IsTextSearchEnabledProperty, false);
             FilteredComboBoxFactory.SetValue(FilteredComboBox.StaysOpenOnEditProperty, true);
@@ -91,31 +89,22 @@ namespace FSBeheer.View
 
         protected TextBox EditableTextBox => GetTemplateChild("PART_EditableTextBox") as TextBox;
 
-        protected override void OnSelectionChanged(SelectionChangedEventArgs e)
-        {
-            //set SelectedItem on initialization
-            if (SelectedIndex != -1)
-                SelectedItem = Items[SelectedIndex];
-
-            base.OnSelectionChanged(e);
-            e.Handled = true;
-        }
 
         protected override void OnItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
         {
             if (newValue != null)
-                {
-                    var view = CollectionViewSource.GetDefaultView(newValue);
-                    view.Filter += FilterItem;
-                }
+            {
+                var view = CollectionViewSource.GetDefaultView(newValue);
+                view.Filter += FilterItem;
+            }
 
-                if (oldValue != null)
-                {
-                    var view = CollectionViewSource.GetDefaultView(oldValue);
-                    if (view != null) view.Filter -= FilterItem;
-                }
+            if (oldValue != null)
+            {
+                var view = CollectionViewSource.GetDefaultView(oldValue);
+                if (view != null) view.Filter -= FilterItem;
+            }
 
-                base.OnItemsSourceChanged(oldValue, newValue);
+            base.OnItemsSourceChanged(oldValue, newValue);
         }
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
@@ -170,8 +159,7 @@ namespace FSBeheer.View
 
                         IsDropDownOpen = true;
 
-                        if(EditableTextBox != null)
-                            EditableTextBox.SelectionStart = int.MaxValue;
+                        EditableTextBox.SelectionStart = int.MaxValue;
                     }
 
                     //automatically select the item when the input text matches it
@@ -182,7 +170,6 @@ namespace FSBeheer.View
                     }
 
                     base.OnKeyUp(e);
-                    e.Handled = true;
                     currentFilter = Text;
                     break;
             }
