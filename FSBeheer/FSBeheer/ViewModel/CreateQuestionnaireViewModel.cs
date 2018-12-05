@@ -35,7 +35,7 @@ namespace FSBeheer.ViewModel
         public CreateQuestionnaireViewModel(int QuestionID)
         {
             _Context = new CustomFSContext();
-            Questionnaires = _Context.QuestionnaireCrud.GetAllQuestionnaireVMs();
+            Questionnaires = _Context.QuestionnaireCrud.GetAllQuestionnaires();
 
             AddQuestionnaireCommand = new RelayCommand(AddQuestionnaire);
             _questionnaire = new QuestionnaireVM();
@@ -44,7 +44,7 @@ namespace FSBeheer.ViewModel
         public CreateQuestionnaireViewModel()
         {
             _Context = new CustomFSContext();
-            Questionnaires = _Context.QuestionnaireCrud.GetAllQuestionnaireVMs();
+            Questionnaires = _Context.QuestionnaireCrud.GetAllQuestionnaires();
 
             AddQuestionnaireCommand = new RelayCommand(AddQuestionnaire);
             _questionnaire = new QuestionnaireVM();
@@ -52,7 +52,7 @@ namespace FSBeheer.ViewModel
 
         private void AddQuestionnaire()
         {
-            _Context.QuestionnaireCrud.GetAllQuestionnaireVMs().Add(Questionnaire);
+            _Context.QuestionnaireCrud.GetAllQuestionnaires().Add(Questionnaire);
             _Context.QuestionnaireCrud.Add(Questionnaire);
             _Context.SaveChanges();
             Messenger.Default.Send(true, "UpdateQuestionnaires");

@@ -17,7 +17,7 @@ namespace FSBeheer.Crud
 
         }
 
-        public ObservableCollection<QuestionnaireVM> GetAllQuestionnaireVMs()
+        public ObservableCollection<QuestionnaireVM> GetAllQuestionnaires()
         {
             var questionnaire = CustomFSContext.Questionnaires
                 .ToList()
@@ -32,5 +32,25 @@ namespace FSBeheer.Crud
             CustomFSContext.SaveChanges();
         }
 
+        public ObservableCollection<QuestionnaireVM> GetAllQuestionnairesFiltered(string must_contain)
+        {
+            if (string.IsNullOrEmpty(must_contain))
+            {
+                throw new ArgumentNullException(nameof(must_contain));
+            }
+
+            must_contain = must_contain.ToLower();
+
+            var questionnaires = CustomFSContext.Questionnaires
+                .ToList()
+                .Where(c => c.IsDeleted == false)
+                .Where(e =>
+                e.Id.ToString().ToLower().Contains(must_contain) ||
+                e.Name.ToLower().Contains(must_contain) ||
+                e.Version.ToString().ToLower().Contains(must_contain)
+                ).Distinct()
+                .Select(e => new QuestionnaireVM(e));
+            return new ObservableCollection<QuestionnaireVM>(questionnaires);
+        }
     }
 }

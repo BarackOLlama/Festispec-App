@@ -72,5 +72,18 @@ namespace FSBeheer.ViewModel
         {
             window.Close();
         }
+
+        public void FilterList(string filter)
+        {
+            if (string.IsNullOrEmpty(filter))
+            {
+                Customers = CustomFSContext.CustomerCrud.GetAllCustomers();
+            }
+            else
+            {
+                Customers = CustomFSContext.CustomerCrud.GetAllCustomersFiltered(filter);
+            }
+            RaisePropertyChanged(nameof(Customers));
+        }
     }
 }

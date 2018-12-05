@@ -23,7 +23,7 @@ namespace FSBeheer.ViewModel
         {
             Messenger.Default.Register<bool>(this, "UpdateQuestionnaires", e => Init());
             Init();
-            Questionnaires = _context.QuestionnaireCrud.GetAllQuestionnaireVMs();
+            Questionnaires = _context.QuestionnaireCrud.GetAllQuestionnaires();
             ShowEditQuestionnaireViewCommand = new RelayCommand(ShowEditQuestionnaireView);
             CreateQuestionnaireCommand = new RelayCommand(CreateQuestionnaire);
             DeleteQuestionnaireCommand = new RelayCommand(DeleteQuestionnaire);
@@ -89,6 +89,19 @@ namespace FSBeheer.ViewModel
         public void CreateQuestionnaire()
         {
             new CreateQuestionnaireView().ShowDialog();
+        }
+
+        public void FilterList(string filter)
+        {
+            if (string.IsNullOrEmpty(filter))
+            {
+                Questionnaires = _context.QuestionnaireCrud.GetAllQuestionnaires();
+            }
+            else
+            {
+                Questionnaires = _context.QuestionnaireCrud.GetAllQuestionnairesFiltered(filter);
+            }
+            RaisePropertyChanged(nameof(Questionnaires));
         }
     }
 }
