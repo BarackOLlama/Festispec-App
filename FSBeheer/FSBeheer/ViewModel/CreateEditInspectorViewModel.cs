@@ -43,14 +43,6 @@ namespace FSBeheer.ViewModel
             _Context = new CustomFSContext();
         }
 
-        private void AddInspector()
-        {
-
-            _Context.InspectorCrud.GetAllInspectors().Add(Inspector);
-            _Context.InspectorCrud.Add(Inspector);
-        }
-
-
         private void SaveChanges()
         {
             MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
@@ -69,13 +61,12 @@ namespace FSBeheer.ViewModel
             {
                 Inspector = new InspectorVM();
                 _Context.Inspectors.Add(Inspector.ToModel());
-                RaisePropertyChanged(nameof(Inspector)); // a sign that a property has changed for viewing
             }
             else
             {
                 Inspector = new InspectorVM(_Context.Inspectors.FirstOrDefault(c => c.Id == inspector.Id));
-                RaisePropertyChanged(nameof(inspector));
             }
+            RaisePropertyChanged(nameof(Inspector)); // a sign that a property has changed for viewing
         }
 
         private void Discard(Window window)

@@ -86,5 +86,18 @@ namespace FSBeheer.ViewModel
                 Messenger.Default.Send(true, "UpdateInspectorList");
             }
         }
+
+        public void FilterList(string filter)
+        {
+            if (string.IsNullOrEmpty(filter))
+            {
+                Inspectors = _customFSContext.InspectorCrud.GetAllInspectors();
+            }
+            else
+            {
+                Inspectors = _customFSContext.InspectorCrud.GetAllInspectorsFiltered(filter);
+            }
+            RaisePropertyChanged(nameof(Inspectors));
+        }
     }
 }

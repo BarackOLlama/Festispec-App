@@ -182,7 +182,7 @@ namespace FSBeheer.ViewModel
         public void AddInspection()
         {
             // Inspectie aanmaken in de database met alle velden die ingevuld zijn
-            _Context.InspectionCrud.GetAllInspectionVMs().Add(Inspection);
+            _Context.InspectionCrud.GetAllInspections().Add(Inspection);
             _Context.SaveChanges();
 
             Messenger.Default.Send(true, "UpdateInspectionList");

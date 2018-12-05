@@ -22,6 +22,9 @@
 
 
         <StackPanel Name="spContent" Margin="30">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <local:FilterTextBox Template="{DynamicResource SearchTextBoxTemplate}"/>
+            </StackPanel>
             <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Inspections}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedInspection}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Inspectienummer" Binding="{Binding Id}"></DataGridTextColumn>

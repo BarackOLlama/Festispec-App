@@ -42,7 +42,7 @@ namespace FSBeheer.ViewModel
         internal void Init()
         {
             _Context = new CustomFSContext();
-            Inspections = _Context.InspectionCrud.GetAllInspectionVMs();
+            Inspections = _Context.InspectionCrud.GetAllInspections();
             RaisePropertyChanged(nameof(Inspections));
         }
 
@@ -66,6 +66,19 @@ namespace FSBeheer.ViewModel
         private void ShowCreateInspectionView()
         {
             new CreateEditInspectionView().Show();                                                                                                                                                                                 
+        }
+
+        public void FilterList(string filter)
+        {
+            if (string.IsNullOrEmpty(filter))
+            {
+                Inspections = _Context.InspectionCrud.GetAllInspections();
+            }
+            else
+            {
+                Inspections = _Context.InspectionCrud.GetAllInspectionsFiltered(filter);
+            }
+            RaisePropertyChanged(nameof(Inspections));
         }
     }
 }

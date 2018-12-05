@@ -97,6 +97,12 @@ namespace FSBeheer.VM
             }
         }
 
+        public int Version
+        {
+            get { return _questionnaire.Version; }
+            set { _questionnaire.Version = value; }
+        }
+
         public bool IsDeleted
         {
             get { return _questionnaire.IsDeleted; }
