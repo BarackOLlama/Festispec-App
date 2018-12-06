@@ -111,13 +111,11 @@ namespace FSBeheer.ViewModel
             MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                // TODO:
-                // Add Chosen Inspectors to Observable collection of meesturen via messenger en zelf laten afhandelen
                 CustomFSContext.SaveChanges();
                 window.Close();
 
-                // Update to previous 
-                Messenger.Default.Send(true, "UpdateAvailableList");
+                // Update
+                Messenger.Default.Send(ChosenInspectors, "UpdateAvailableList");
             }
         }
 

@@ -19,6 +19,7 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<CustomerVM> Customers { get; }
         public ObservableCollection<EventVM> Events { get; set; }
         public ObservableCollection<StatusVM> Statuses { get; set; }
+        public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
 
         public string WarningText { get; set; }
         private DateTime _StartDate { get; set; }
@@ -121,6 +122,9 @@ namespace FSBeheer.ViewModel
 
         public CreateEditInspectionViewModel()
         {
+            // Darjush laten weten
+            Messenger.Default.Register<ObservableCollection<InspectorVM>>(this, "UpdateAvailableList", cl => SetInspectors(cl));
+
             _Context = new CustomFSContext();
             Customers = _Context.CustomerCrud.GetAllCustomers();
             Events = _Context.EventCrud.GetAllEvents();
@@ -130,6 +134,14 @@ namespace FSBeheer.ViewModel
             AddInspectionCommand = new RelayCommand<Window>(AddInspection, CheckSaveAllowed);
             CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
             PickInspectorsCommand = new RelayCommand(OpenAvailable);
+        }
+
+        public void SetInspectors(ObservableCollection<InspectorVM> SelectedInspectors)
+        {
+            // TODO: Not in memory/database after reopening the screen
+
+            ChosenInspectors = new ObservableCollection<InspectorVM>(SelectedInspectors);
+            RaisePropertyChanged(nameof(ChosenInspectors)); 
         }
 
         public void SetInspection(InspectionVM inspection)
