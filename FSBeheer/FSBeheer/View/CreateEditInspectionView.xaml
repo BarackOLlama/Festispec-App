@@ -150,7 +150,19 @@
                             <DatePicker Grid.Row="1" Grid.Column="1" SelectedDateFormat="Short" SelectedDate="{Binding EndDate, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding StartTime, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding EndTime, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
-                            <TextBox Grid.Row="4" Grid.Column="1" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center">
+                                
+                                <!-- TODO: Make it less ugly  -->
+
+                                <ListBox Height="25" DisplayMemberPath="Name" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="335" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8" ItemsSource="{Binding ChosenInspectors, UpdateSourceTrigger=PropertyChanged}">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel IsItemsHost="True"/> 
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                </ListBox>
+                                <Button HorizontalAlignment="Center" Content="+" Padding="0" Height="25" Width="15" Command="{Binding PickInspectorsCommand}"/>
+                            </StackPanel>
                             <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding Statuses, Mode=TwoWay}" SelectedItem="{Binding SelectedStatus}" DisplayMemberPath="StatusName" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
 
                         </Grid>

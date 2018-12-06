@@ -1,6 +1,7 @@
 ﻿using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -53,6 +54,8 @@ namespace FSBeheer.ViewModel
         {
             _Context.QuestionnaireCrud.GetAllQuestionnaireVMs().Add(Questionnaire);
             _Context.QuestionnaireCrud.Add(Questionnaire);
+            _Context.SaveChanges();
+            Messenger.Default.Send(true, "UpdateQuestionnaires");
         }
     }
 }

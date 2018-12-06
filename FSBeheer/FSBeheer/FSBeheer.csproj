@@ -126,12 +126,13 @@
     <Compile Include="ViewModel\CreateEditContactViewModel.cs" />
     <Compile Include="ViewModel\CreateEditEventViewModel.cs" />
     <Compile Include="ViewModel\CreateQuestionnaireViewModel.cs" />
-    <Compile Include="ViewModel\EditInspectorViewModel.cs" />
+    <Compile Include="ViewModel\CreateEditInspectorViewModel.cs" />
     <Compile Include="ViewModel\CreateQuestionViewModel.cs" />
     <Compile Include="ViewModel\EditQuestionViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
+    <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="ViewModel\QuestionnaireVM.cs" />
     <Compile Include="View\BaseView.cs" />
     <Compile Include="View\CreateEditEventView.xaml.cs">
