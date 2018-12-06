@@ -131,9 +131,7 @@
     <Compile Include="ViewModel\EditQuestionViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
-    <Compile Include="ViewModel\InspectorSelectionViewModel.cs" />
     <Compile Include="VM\QuestionnaireVM.cs" />
-    <Compile Include="ViewModel\QuestionnaireVM.cs" />
     <Compile Include="View\BaseView.cs" />
     <Compile Include="View\CreateEditEventView.xaml.cs">
       <DependentUpon>CreateEditEventView.xaml</DependentUpon>
