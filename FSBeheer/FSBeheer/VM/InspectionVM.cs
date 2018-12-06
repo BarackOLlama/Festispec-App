@@ -38,10 +38,10 @@ namespace FSBeheer.VM
             get { return _inspection.EventId; }
         }
 
-        public Event Event
+        public EventVM Event
         {
-            get { return _inspection.Event; }
-            set { _inspection.Event = value; }
+            get { return new EventVM(_inspection.Event); }
+            set { Event = value; }
         }
 
         public int? StatusId
@@ -49,16 +49,21 @@ namespace FSBeheer.VM
             get { return _inspection.StatusId; }
         }
 
-        public Status Status
+        public StatusVM Status
         {
-            get { return _inspection.Status; }
-            set { _inspection.Status = value; }
+            get { return new StatusVM(_inspection.Status); }
+            set { Status = value; }
         }
 
-        public InspectionDate InspectionDate
+        public InspectionDateVM InspectionDate
         {
-            get { return _inspection.InspectionDate; }
-            set { _inspection.InspectionDate = value; }
+            get { return new InspectionDateVM(_inspection.InspectionDate); }
+            set { InspectionDate = value; }
+        }
+
+        public ObservableCollection<InspectorVM> Inspectors
+        {
+            get { return new ObservableCollection<InspectorVM>(Inspectors); }
         }
 
         public bool IsDeleted
