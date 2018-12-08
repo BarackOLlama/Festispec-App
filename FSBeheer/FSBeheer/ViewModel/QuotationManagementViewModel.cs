@@ -58,7 +58,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowCreateQuotationView()
         {
-
+            new CreateEditQuotationView().Show();
         }
     }
 }

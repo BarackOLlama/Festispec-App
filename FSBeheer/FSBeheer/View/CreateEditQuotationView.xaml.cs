@@ -1,4 +1,5 @@
-﻿using FSBeheer.VM;
+﻿using FSBeheer.ViewModel;
+using FSBeheer.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
