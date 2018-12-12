@@ -95,29 +95,12 @@ namespace FSBeheer.VM
                 return amount;
             }
         }
-
-        //for QuestionnaireManagementViewModel
-        public string EventName
-        {
-            get
-            {
-                string eventName = "unknown";
-                if (_questionnaire.InspectionId != null)
-                {
-                    using(var context = new CustomFSContext())
-                    {
-                        var result = context.Events.ToList().Where(e => e.Id == _questionnaire.InspectionId).FirstOrDefault();
-                        if(result != null)
-                        {
-                            eventName = result.Name;
-                        }
-                    }
-                }
-
-                return eventName;
-            }
-        }
         
+        public Event Event
+        {
+            get { return _questionnaire.Inspection.Event; }
+        }
+
         //for QuestionnaireManagementViewModel
         public string InspectionNumber
         {

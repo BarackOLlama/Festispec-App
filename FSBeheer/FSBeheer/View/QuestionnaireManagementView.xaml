@@ -24,7 +24,7 @@
                     <DataGridTextColumn Header="Vragenlijstnummer" Binding="{Binding Id}" Width="130"></DataGridTextColumn>
                     <DataGridTextColumn Header="Naam" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="Inspectienummer" Binding="{Binding InspectionNumber}" Width="*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Evenement" Binding="{Binding EventName}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Evenement" Binding="{Binding Event.Name}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="Aantal vragen" Binding="{Binding QuestionCount}" Width="*"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
