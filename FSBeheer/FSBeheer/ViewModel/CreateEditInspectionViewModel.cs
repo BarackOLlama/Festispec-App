@@ -19,7 +19,6 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<CustomerVM> Customers { get; }
         public ObservableCollection<EventVM> Events { get; set; }
         public ObservableCollection<StatusVM> Statuses { get; set; }
-        public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
 
         private DateTime _StartDate { get; set; }
         public DateTime StartDate
@@ -136,8 +135,11 @@ namespace FSBeheer.ViewModel
         {
             // TODO: Not in memory/database after reopening the screen
 
-            ChosenInspectors = new ObservableCollection<InspectorVM>(SelectedInspectors);
-            RaisePropertyChanged(nameof(ChosenInspectors)); 
+            if (Inspection != null)
+            {
+                Inspection.Inspectors =  SelectedInspectors;
+                RaisePropertyChanged(nameof(Inspection));
+            }
         }
 
         public void SetInspection(InspectionVM inspection)
