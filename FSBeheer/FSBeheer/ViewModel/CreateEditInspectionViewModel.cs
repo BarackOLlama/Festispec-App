@@ -189,7 +189,7 @@ namespace FSBeheer.ViewModel
 
        public void AddInspection(Window window)
        {
-           _Context.InspectionCrud.GetAllInspectionVMs().Add(Inspection);
+           _Context.InspectionCrud.GetAllInspections().Add(Inspection);
            _Context.SaveChanges();
 
            Messenger.Default.Send(true, "UpdateInspectionList");

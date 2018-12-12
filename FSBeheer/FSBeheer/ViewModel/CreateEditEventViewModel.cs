@@ -37,7 +37,9 @@ namespace FSBeheer.ViewModel
         {
             if (eventId == -1)
             {
-                Event = new EventVM(new Event());
+                Event = new EventVM(new Event() {
+                    Customer = new Customer()
+                });
                 _Context.Events.Add(Event.ToModel());
                 Title = "Evenement aanmaken";
             }
