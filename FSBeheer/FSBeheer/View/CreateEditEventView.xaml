@@ -17,7 +17,7 @@
                                             SelectedItem="{Binding Event.Customer}"
                                             SelectedIndex="{Binding SelectedIndex}"
                                             DisplayMemberPath="Name"
-                                            Template="{DynamicResource FilteredComboBox}"/>
+                                            Template="{DynamicResource FilteredComboBoxTemplate}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Naam: " Template="{DynamicResource CreateEditLabelTemplate}"/>

@@ -15,7 +15,11 @@
 
         <StackPanel Name="EventSelection" Margin="0,30,0,0">
 
-            <ComboBox ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedEvent, Mode=TwoWay}" DisplayMemberPath="Name" Width="500" HorizontalAlignment="Left" Height="30" Margin="20,0,0,0"/>
+            <local:FilteredComboBox ItemsSource="{Binding Events}"
+                      SelectedItem="{Binding SelectedEvent}"
+                      SelectedIndex="{Binding SelectedIndex}"
+                      DisplayMemberPath="Name"
+                      Template="{DynamicResource FilteredComboBoxTemplate}"/>
 
         </StackPanel>
 
