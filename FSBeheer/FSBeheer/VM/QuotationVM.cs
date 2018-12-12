@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.VM
 {
-    class QuotationVM : ViewModelBase
+    public class QuotationVM : ViewModelBase
     {
         private Quotation _Quotation;
 

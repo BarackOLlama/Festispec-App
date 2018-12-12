@@ -24,25 +24,25 @@ namespace FSBeheer.VM
         public DateTime StartDate
         {
             get { return _InspectionDate.StartDate; }
-            set { StartDate = value; }
+            set { _InspectionDate.StartDate = value; }
         }
 
         public DateTime EndDate
         {
             get { return _InspectionDate.EndDate; }
-            set { EndDate = value; }
+            set { _InspectionDate.EndDate = value; }
         }
 
         public TimeSpan? StartTime
         {
             get { return _InspectionDate.StartTime; }
-            set { StartTime = value; }
+            set { _InspectionDate.StartTime = value; }
         }
 
         public TimeSpan? EndTime
         {
             get { return _InspectionDate.EndTime; }
-            set { EndTime = value; }
+            set { _InspectionDate.EndTime = value; }
         }
 
         internal InspectionDate ToModel()

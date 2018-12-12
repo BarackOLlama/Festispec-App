@@ -52,18 +52,18 @@ namespace FSBeheer.VM
         public StatusVM Status
         {
             get { return new StatusVM(_inspection.Status); }
-            set { Status = value; }
+            set { _inspection.Status = value.ToModel(); }
         }
 
         public InspectionDateVM InspectionDate
         {
             get { return new InspectionDateVM(_inspection.InspectionDate); }
-            set { InspectionDate = value; }
+            set { _inspection.InspectionDate = value.ToModel(); }
         }
 
         public ObservableCollection<InspectorVM> Inspectors
         {
-            get { return new ObservableCollection<InspectorVM>(Inspectors); }
+            get { return new ObservableCollection<InspectorVM>(_inspection.Inspectors.Select(i => new InspectorVM(i))); }
         }
 
         public bool IsDeleted

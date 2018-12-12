@@ -13,7 +13,7 @@ using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
-    class QuotationManagementViewModel : ViewModelBase
+    public class QuotationManagementViewModel : ViewModelBase
     {
         private CustomFSContext _Context;
 

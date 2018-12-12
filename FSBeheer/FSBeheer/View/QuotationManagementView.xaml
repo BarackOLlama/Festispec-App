@@ -25,13 +25,10 @@
             <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Quotations}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedQuotation}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="50"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Datum" Binding="{Binding Date}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="KlantId" Binding="{Binding Customer.Id}" Width="50"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Datum" Binding="{Binding Date}" Width="150"></DataGridTextColumn>
                     <DataGridTextColumn Header="Klantnaam" Binding="{Binding Customer.Name}" Width="*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="InspectieId" Binding="{Binding Inspection.Id}" Width="70"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Inspectienaam" Binding="{Binding Inspection.Name}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Inspectienaam" Binding="{Binding Inspection.Event.Name}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="Prijs" Binding="{Binding Price}" Width="100"></DataGridTextColumn>
-
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

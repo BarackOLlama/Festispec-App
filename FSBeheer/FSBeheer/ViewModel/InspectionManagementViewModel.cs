@@ -59,7 +59,7 @@ namespace FSBeheer.ViewModel
             }
             else
             {
-                new CreateEditInspectionView(_SelectedInspection).Show();
+                new CreateEditInspectionView(_SelectedInspection.Id).Show();
             }
         }
 

@@ -5,8 +5,139 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="CreateEditQuotationView" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Offerte toevoegen/wijzigen" Height="800" Width="600">
+
+    <StackPanel>
+        <StackPanel Width="550" HorizontalAlignment="Center" Margin="0,20,0,20">
+            <ComboBox ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}" DisplayMemberPath="Name" Width="400" Height="30" Margin="0,0,0,0"/>
+        </StackPanel>
+
+        <StackPanel Width="500" HorizontalAlignment="Center" Margin="0,0,0,0" >
+            <Border BorderBrush="Black" BorderThickness="1" Padding="0" VerticalAlignment="Top">
+                <StackPanel>
+
+                    <StackPanel>
+                        <Label Height="50" Content="Offertegegevens" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="18"></Label>
+                    </StackPanel>
+
+                    <Grid Height="140">
+                        <Grid.ColumnDefinitions>
+
+                            <ColumnDefinition Width="110" />
+                            <ColumnDefinition Width="*" />
+
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+
+
+                        <Label Grid.Row="0" Grid.Column="0" Content="Nummer:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <Label Grid.Row="1" Grid.Column="0" Content="Klantnaam:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <Label Grid.Row="2" Grid.Column="0" Content="E-mailadres:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <Label Grid.Row="3" Grid.Column="0" Content="Telefoonnummer:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <Label Grid.Row="4" Grid.Column="0" Content="Postcode:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+
+                        <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedCustomer.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedCustomer.Address}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedCustomer.City}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Label Grid.Row="3" Grid.Column="1" Content="{Binding SelectedCustomer.Zipcode}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Label Grid.Row="4" Grid.Column="1" Content="{Binding }" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                    </Grid>
+
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <StackPanel Width="550" HorizontalAlignment="Center" Margin="0,20,0,20">
+            <ComboBox ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}" DisplayMemberPath="Name" Width="400" Height="30" Margin="0,0,0,0"/>
+        </StackPanel>
+
+        <StackPanel Width="500" HorizontalAlignment="Center" Margin="0,0,0,0" >
+            <Border BorderBrush="Black" BorderThickness="1" Padding="0" VerticalAlignment="Top">
+                <StackPanel>
+                    <StackPanel>
+                        <Label Height="50" Content="Inspectiegegevens" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="18"></Label>
+                    </StackPanel>
+
+                    <StackPanel>
+                        <WrapPanel>
+                            <Grid Height="140" Width="249" HorizontalAlignment="Left">
+                                <Grid.ColumnDefinitions>
+
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="*" />
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+
+
+                                <Label Grid.Row="0" Grid.Column="0" Content="Status:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                <Label Grid.Row="1" Grid.Column="0" Content="Begindatum:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                <Label Grid.Row="2" Grid.Column="0" Content="Einddatum:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                <Label Grid.Row="3" Grid.Column="0" Content="Starttijd:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                <Label Grid.Row="4" Grid.Column="0" Content="Prijs:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+
+                                <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedCustomer.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedCustomer.Address}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedCustomer.City}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <Label Grid.Row="3" Grid.Column="1" Content="{Binding SelectedCustomer.Zipcode}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <Label Grid.Row="4" Grid.Column="1" Content="{Binding }" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                            </Grid>
+
+                            <Grid Height="140" Width="249" HorizontalAlignment="Right">
+                                <Grid.ColumnDefinitions>
+
+                                    <ColumnDefinition Width="150" />
+                                    <ColumnDefinition Width="*" />
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+
+
+                                <Label Grid.Row="0" Grid.Column="0" Content="Aantal inspecteurs:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                <Label Grid.Row="1" Grid.Column="0" Content="Evenementnaam:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                <Label Grid.Row="2" Grid.Column="0" Content="Evenement begindatum:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                <Label Grid.Row="3" Grid.Column="0" Content="Evenement einddatum:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                <Label Grid.Row="4" Grid.Column="0" Content="Datum:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+
+
+                                <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedCustomer.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedCustomer.Address}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedCustomer.City}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <Label Grid.Row="3" Grid.Column="1" Content="{Binding SelectedCustomer.Zipcode}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <Label Grid.Row="4" Grid.Column="1" Content="{Binding }" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            </Grid>
+                        </WrapPanel>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </StackPanel>
 </Window>
