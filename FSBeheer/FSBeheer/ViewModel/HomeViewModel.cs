@@ -36,6 +36,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowQuestionnaireManagementViewCommand { get; set; }
         public RelayCommand ShowCreateEditViewCommand { get; set; }
         public RelayCommand ShowLoginViewCommand { get; set; }
+        public RelayCommand ShowBusinessDataViewCommand { get; set; }
 
         public HomeViewModel()
         {
@@ -49,6 +50,7 @@ namespace FSBeheer.ViewModel
             ShowLoginViewCommand = new RelayCommand(ShowLoginView);
             ShowCreateEditViewCommand = new RelayCommand(ShowCreateEditInspectionView);
             ShowQuestionnaireManagementViewCommand = new RelayCommand(ShowQuestionnaireManagementView);
+            ShowBusinessDataViewCommand = new RelayCommand(ShowBusinessDataView);
 
             // Tests to make sure everything is working
             _Context = new CustomFSContext();
@@ -59,6 +61,11 @@ namespace FSBeheer.ViewModel
             // Place brakepoint here
             Console.WriteLine("");
             //this.ShowLoginView();
+        }
+
+        private void ShowBusinessDataView()
+        {
+            new BusinessDataView().ShowDialog();
         }
 
         private void ShowLoginView()
