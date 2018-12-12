@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System;
+using FSBeheer.Model;
 
 namespace FSBeheer.ViewModel
 {
@@ -39,10 +40,11 @@ namespace FSBeheer.ViewModel
         internal void Init()
         {
             _context = new CustomFSContext();
-            var questionnaires = _context.Questionnaires.
-                ToList().
-                Where(e=>!e.IsDeleted).
-                Select(e => new QuestionnaireVM(e));
+            var questionnaires = _context.Questionnaires
+                .Include(nameof(Inspection))
+                .ToList()
+                .Where(e=>!e.IsDeleted)
+                .Select(e => new QuestionnaireVM(e));
             Questionnaires = new ObservableCollection<QuestionnaireVM>(questionnaires);
             RaisePropertyChanged("Questionnaires");
         }
