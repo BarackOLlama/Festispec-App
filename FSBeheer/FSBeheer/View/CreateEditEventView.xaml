@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
+        x:Name="CreateEditEvent"
         Title="{Binding Title}" Height="400" Width="500"
         DataContext="{Binding CreateEditEvent, Source={StaticResource Locator}}">
     <Grid>
@@ -13,16 +14,10 @@
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Klant: " Template="{DynamicResource CreateEditLabelTemplate}"/>
                     <local:FilteredComboBox ItemsSource="{Binding Customers}"
-                                            SelectedItem="{Binding SelectedCustomer}"
-                                            SelectedValue="{Binding SelectedCustomer.Name}"
-                                            SelectedValuePath="Name"
-                                            Template="{DynamicResource FilteredComboBoxTemplate}">
-                        <local:FilteredComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel VirtualizationMode="Recycling"/>
-                            </ItemsPanelTemplate>
-                        </local:FilteredComboBox.ItemsPanel>
-                    </local:FilteredComboBox>
+                                            SelectedItem="{Binding Event.Customer}"
+                                            SelectedIndex="{Binding SelectedIndex}"
+                                            DisplayMemberPath="Name"
+                                            Template="{DynamicResource FilteredComboBox}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Naam: " Template="{DynamicResource CreateEditLabelTemplate}"/>

@@ -21,6 +21,7 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<StatusVM> Statuses { get; set; }
         public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
 
+        public string WarningText { get; set; }
         private DateTime _StartDate { get; set; }
         public DateTime StartDate
         {
@@ -33,6 +34,7 @@ namespace FSBeheer.ViewModel
                 _StartDate = value;
                 Inspection.InspectionDate.StartDate = value;
                 RaisePropertyChanged(nameof(StartDate));
+                CanExecuteChanged();
             }
         }
         private DateTime _EndDate { get; set; }
@@ -47,6 +49,7 @@ namespace FSBeheer.ViewModel
                 _EndDate = value;
                 Inspection.InspectionDate.EndDate = value;
                 RaisePropertyChanged(nameof(EndDate));
+                CanExecuteChanged();
             }
         }
         private TimeSpan? _StartTime { get; set; }
@@ -60,6 +63,7 @@ namespace FSBeheer.ViewModel
                 _StartTime = value;
                 Inspection.InspectionDate.StartTime = value;
                 RaisePropertyChanged(nameof(StartTime));
+                CanExecuteChanged();
             }
         }
         private TimeSpan? _EndTime { get; set; }
@@ -73,6 +77,7 @@ namespace FSBeheer.ViewModel
                 _EndTime = value;
                 Inspection.InspectionDate.EndTime = value;
                 RaisePropertyChanged(nameof(EndTime));
+                CanExecuteChanged();
             }
         }
         private EventVM _SelectedEvent { get; set; }
@@ -86,9 +91,10 @@ namespace FSBeheer.ViewModel
                 _SelectedEvent = value;
                 if (Inspection != null)
                 {
-                    Inspection.Event = value.ToModel();
+                    Inspection.Event = value;
                 }
                 RaisePropertyChanged(nameof(SelectedEvent));
+                CanExecuteChanged();
             }
         }
         private StatusVM _SelectedStatus { get; set; }
@@ -102,16 +108,17 @@ namespace FSBeheer.ViewModel
                 _SelectedStatus = value;
                 if (Inspection != null)
                 {
-                    Inspection.Status = value.ToModel();
+                    Inspection.Status = value;
                 }
                 RaisePropertyChanged(nameof(SelectedStatus));
+                CanExecuteChanged();
             }
         }
 
         public RelayCommand<Window> CancelInspectionCommand { get; set; }
-        public RelayCommand AddInspectionCommand { get; set; }
+        public RelayCommand<Window> AddInspectionCommand { get; set; }
+        public RelayCommand CanExecuteChangedCommand { get; set; }
         public RelayCommand PickInspectorsCommand { get; set; }
-
 
         public CreateEditInspectionViewModel()
         {
@@ -123,12 +130,9 @@ namespace FSBeheer.ViewModel
             Events = _Context.EventCrud.GetAllEvents();
             Statuses = _Context.StatusCrud.GetAllStatusVMs();
 
-            // niet netjes, maar anders heeft de Event combobox in het begin helemaal geen waarde, mede omdat de SetInspection na de InitializeComponent wordt uitgevoerd
-            //SelectedEvent = Events.ElementAtOrDefault(2);
-            //SelectedStatus = Statuses.ElementAtOrDefault(2);
-
             CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
-            AddInspectionCommand = new RelayCommand(AddInspection);
+            AddInspectionCommand = new RelayCommand<Window>(AddInspection, CheckSaveAllowed);
+            CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
             PickInspectorsCommand = new RelayCommand(OpenAvailable);
         }
 
@@ -146,7 +150,7 @@ namespace FSBeheer.ViewModel
             {
                 Inspection = new InspectionVM(new Inspection())
                 {
-                    InspectionDate = new InspectionDate()
+                    InspectionDate = new InspectionDateVM(new InspectionDate())
                 };
                 StartDate = new DateTime(2000, 01, 01);
                 EndDate = new DateTime(2000, 01, 01);
@@ -167,30 +171,66 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        private void CancelInspection(Window window)
-        {
-            // CreateInspectionView sluiten en veranderingen ongedaan maken
-            MessageBoxResult result = MessageBox.Show("Weet u zeker dat u deze inspectie wilt annuleren?", "Bevestig annulering inspectie", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
-            {
-                _Context.Dispose();
-                Inspection = null;
-                window.Close();
-            }
-        }
+       private void CloseAction(Window window)
+       {
+           _Context.Dispose();
+           window.Close();
+       }
 
-        public void AddInspection()
-        {
-            // Inspectie aanmaken in de database met alle velden die ingevuld zijn
-            _Context.InspectionCrud.GetAllInspections().Add(Inspection);
-            _Context.SaveChanges();
+       private void CancelInspection(Window window)
+       {
+           MessageBoxResult result = MessageBox.Show("Weet u zeker dat u deze inspectie wilt annuleren?", "Bevestig annulering inspectie", MessageBoxButton.OKCancel);
+           if (result == MessageBoxResult.OK)
+           {
+               CloseAction(window);
+           }
+            CanExecuteChanged();
+       }
 
-            Messenger.Default.Send(true, "UpdateInspectionList");
-        }
+       public void AddInspection(Window window)
+       {
+           _Context.InspectionCrud.GetAllInspectionVMs().Add(Inspection);
+           _Context.SaveChanges();
+
+           Messenger.Default.Send(true, "UpdateInspectionList");
+           CloseAction(window);
+            CanExecuteChanged();
+       }
 
         public void OpenAvailable()
         {
             new AvailableInspectorView(Inspection.Id).Show();
         }
+
+       private void CanExecuteChanged()
+       {
+           AddInspectionCommand.RaiseCanExecuteChanged();
+       }
+
+       private bool CheckSaveAllowed(Window window)
+       {
+           if (Inspection == null)
+           {
+               return false;
+           }else if (string.IsNullOrEmpty(Inspection.Name))
+           {
+               WarningText = "Het veld Naam mag niet leeg zijn";
+               RaisePropertyChanged(nameof(WarningText));
+               return false;
+           }
+           else if (Inspection.Inspectors == null)
+           {
+               WarningText = "Het veld Inspecteur(s) mag niet leeg zijn";
+               RaisePropertyChanged(nameof(WarningText));
+               return false;
+           }
+           else
+           {
+               WarningText = "";
+               RaisePropertyChanged(nameof(WarningText));
+               return true;
+           }
+       }
+
     }
 }

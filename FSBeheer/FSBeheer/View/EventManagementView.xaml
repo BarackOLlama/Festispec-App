@@ -25,11 +25,11 @@
             </StackPanel>
             <DataGrid  ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedEvent}" MaxHeight="250" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Naam" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="Adres" Binding="{Binding Address}"/>
-                    <DataGridTextColumn Header="Plaats" Binding="{Binding City}"/>
-                    <DataGridTextColumn Header="Postcode" Binding="{Binding Zipcode}"/>
-                    <DataGridTextColumn Header="Klant" Binding="{Binding Customer.Name}"/>
+                    <DataGridTextColumn Header="Naam" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="Adres" Binding="{Binding Address}" Width="*"/>
+                    <DataGridTextColumn Header="Plaats" Binding="{Binding City}" Width="*"/>
+                    <DataGridTextColumn Header="Postcode" Binding="{Binding Zipcode}" Width="*"/>
+                    <DataGridTextColumn Header="Klant" Binding="{Binding Customer.Name}" Width="*"/>
                 </DataGrid.Columns>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">

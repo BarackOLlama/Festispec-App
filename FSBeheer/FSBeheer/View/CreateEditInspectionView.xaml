@@ -4,6 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
@@ -156,7 +157,11 @@
                                 <Button HorizontalAlignment="Center" Content="+" Padding="0" Height="25" Width="15" Command="{Binding PickInspectorsCommand}"/>
                             </StackPanel>
                             <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding Statuses, Mode=TwoWay}" SelectedItem="{Binding SelectedStatus}" DisplayMemberPath="StatusName" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
-
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding CanExecuteChangedCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Grid>
                     </Border>
                 </StackPanel>
@@ -196,9 +201,10 @@
 
         <StackPanel x:Name="spInterfaceButtons" VerticalAlignment="Bottom"
                     Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,20,0">
-
+            
+            <TextBlock Foreground="Red" Text="{Binding WarningText}"/>
             <Button Content="Opslaan" Command="{Binding AddInspectionCommand}" Template="{DynamicResource InterfaceButtonTemplate}"/>
-            <!--<Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding CancelInspectionCommand}" Template="{DynamicResource InterfaceButtonTemplate}"/>-->
+            <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding CancelInspectionCommand}" Template="{DynamicResource InterfaceButtonTemplate}"/>
 
         </StackPanel>
     </StackPanel>
