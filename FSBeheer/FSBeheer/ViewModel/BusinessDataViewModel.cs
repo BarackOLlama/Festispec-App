@@ -71,31 +71,40 @@ namespace FSBeheer.ViewModel
                 Inspectors = new ObservableCollection<InspectorVM>(inspectors);
 
                 NewInspectorsCount = inspectors.Where(e => e.CertificationDate?
-                .Date >= GetLowerDateBound() && e.CertificationDate?.Date <= GetUpperDateBound()).Count();
+                .Date >= GetLowerDateBound() && 
+                e.CertificationDate?.Date <= GetUpperDateBound()).Count();
 
-                ActiveInspectorsCount = inspectors.Where(e => e.Inspection != null).Count();
-                InactiveInspectorsCount = inspectors.Where(e => e.Inspection == null).Count();
+                var availableInspectors = context.InspectorCrud.GetAllInspectorsFilteredByAvailability(new List<DateTime>()
+                {
+                    GetLowerDateBound(),
+                    GetUpperDateBound()
+                });
 
-                var questionnaires = context
-                    .Questionnaires
-                    .ToList()
-                    .Where(e => !e.IsDeleted)
-                    .Select(e => new QuestionnaireVM(e));
-                Questionnares = new ObservableCollection<QuestionnaireVM>(questionnaires);
+                ActiveInspectorsCount = availableInspectors.Count();
 
-                var questions = context
-                    .Questions
-                    .ToList()
-                    .Where(e => !e.IsDeleted)
-                    .Select(e => new QuestionVM(e));
-                Questions = new ObservableCollection<QuestionVM>(questions);
+                InactiveInspectorsCount = inspectors.Count() - ActiveInspectorsCount;
 
-                var answers = context
-                    .Answers
-                    .ToList()
-                    .Where(e => !e.IsDeleted)
-                    .Select(e => new AnswerVM(e));
-                Answers = new ObservableCollection<AnswerVM>(answers);
+
+                //var questionnaires = context
+                //    .Questionnaires
+                //    .ToList()
+                //    .Where(e => !e.IsDeleted)
+                //    .Select(e => new QuestionnaireVM(e));
+                //Questionnares = new ObservableCollection<QuestionnaireVM>(questionnaires);
+
+                //var questions = context
+                //    .Questions
+                //    .ToList()
+                //    .Where(e => !e.IsDeleted)
+                //    .Select(e => new QuestionVM(e));
+                //Questions = new ObservableCollection<QuestionVM>(questions);
+
+                //var answers = context
+                //    .Answers
+                //    .ToList()
+                //    .Where(e => !e.IsDeleted)
+                //    .Select(e => new AnswerVM(e));
+                //Answers = new ObservableCollection<AnswerVM>(answers);
 
                 var inspections = context
                     .Inspections
