@@ -53,9 +53,9 @@ namespace FSBeheer.ViewModel
             ShowBusinessDataViewCommand = new RelayCommand(ShowBusinessDataView);
 
             // Tests to make sure everything is working
-            _Context = new CustomFSContext();
-            ObservableCollection<CustomerVM> test = _Context.CustomerCrud.GetAllCustomers();
-            ObservableCollection<CustomerVM> test2 = _Context.CustomerCrud.GetFilteredCustomerBasedOnName("F");
+            //_Context = new CustomFSContext();
+            //ObservableCollection<CustomerVM> test = _Context.CustomerCrud.GetAllCustomers();
+            //ObservableCollection<CustomerVM> test2 = _Context.CustomerCrud.GetFilteredCustomerBasedOnName("F");
             // ObservableCollection<CustomerVM> test3 = _Context.CustomerCrud.GetCustomerById(51);
 
             // Place brakepoint here

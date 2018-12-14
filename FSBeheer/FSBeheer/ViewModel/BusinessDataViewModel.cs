@@ -65,18 +65,23 @@ namespace FSBeheer.ViewModel
                 var inspectors = context
                     .Inspectors
                     .ToList()
-                    .Where(e => !e.IsDeleted && e.InvalidDate < GetUpperDateBound())
+                    .Where(e => !e.IsDeleted && e.InvalidDate > GetUpperDateBound())
                     .Select(e => new InspectorVM(e));
                 Inspectors = new ObservableCollection<InspectorVM>(inspectors);
+
+                var tempins = context.Inspectors.ToList().Select(e => new InspectorVM(e));
 
                 NewInspectorsCount = inspectors
                     .Where(e => e.CertificationDate >= GetLowerDateBound() && 
                     e.CertificationDate <= GetUpperDateBound())
                     .Count();
 
-                //NewInspectorsCount
-                //ActiveInspectorsCount
-                //InactiveInspectorsCount
+                InactiveInspectorsCount = context.InspectorCrud.GetAllInspectorsFilteredByAvailability(new List<DateTime>() {
+                    GetLowerDateBound(),
+                    GetUpperDateBound()
+                }).Count();
+
+                ActiveInspectorsCount = inspectors.Count() - InactiveInspectorsCount;
 
                 //var questionnaires = context
                 //    .Questionnaires
@@ -115,7 +120,10 @@ namespace FSBeheer.ViewModel
                     .Select(e => new CustomerVM(e));
                 Customers = new ObservableCollection<CustomerVM>(customers);
 
-                NewCustomersCount = customers.Where(e => e?.StartingDate >= GetLowerDateBound() && e?.StartingDate <= GetUpperDateBound()).Count();
+                NewCustomersCount = customers
+                    .Where(e => e?.StartingDate >= GetLowerDateBound() &&
+                    e?.StartingDate <= GetUpperDateBound())
+                    .Count();
             }
         }
 
