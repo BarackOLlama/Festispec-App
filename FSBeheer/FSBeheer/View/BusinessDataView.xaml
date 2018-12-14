@@ -20,12 +20,12 @@
             <Label Content="{Binding Inspections.Count, FallbackValue=0}"></Label>
             <TextBlock>Number of customers</TextBlock>
             <Label Content="{Binding Customers.Count, FallbackValue=0}" ></Label>
-            <TextBlock>Number of questionnaires</TextBlock>
+            <!--<TextBlock>Number of questionnaires</TextBlock>
             <Label Content="{Binding Questionnares.Count, FallbackValue=0}"></Label>
             <TextBlock>Number of questions</TextBlock>
             <Label Content="{Binding Questions.Count, FallbackValue=0}"></Label>
             <TextBlock>Number of answers</TextBlock>
-            <Label Content="{Binding Answers.Count, FallbackValue=0}"></Label>
+            <Label Content="{Binding Answers.Count, FallbackValue=0}"></Label>-->
         </StackPanel>
         <StackPanel HorizontalAlignment="Right" Width="225">
             <TextBlock>Nieuwe klanten:</TextBlock>

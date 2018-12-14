@@ -38,9 +38,9 @@ namespace FSBeheer.ViewModel
 
         //collections
         public ObservableCollection<InspectorVM> Inspectors { get; set; }
-        public ObservableCollection<QuestionnaireVM> Questionnares { get; set; }
-        public ObservableCollection<QuestionVM> Questions { get; set; }
-        public ObservableCollection<AnswerVM> Answers { get; set; }
+        //public ObservableCollection<QuestionnaireVM> Questionnares { get; set; }
+        //public ObservableCollection<QuestionVM> Questions { get; set; }
+        //public ObservableCollection<AnswerVM> Answers { get; set; }
         public ObservableCollection<InspectionVM> Inspections { get; set; }
         //public ObservableCollection<QuotationVM> Quotations { get; set; }
         public ObservableCollection<CustomerVM> Customers { get; set; }
@@ -61,29 +61,22 @@ namespace FSBeheer.ViewModel
 
             using (var context = new CustomFSContext())
             {
+
                 var inspectors = context
                     .Inspectors
-                    .Include("InspectionInspectors")
                     .ToList()
-                    .Where(e => !e.IsDeleted)
-                    .Where(e=> e?.InvalidDate <= GetUpperDateBound())
+                    .Where(e => !e.IsDeleted && e.InvalidDate < GetUpperDateBound())
                     .Select(e => new InspectorVM(e));
                 Inspectors = new ObservableCollection<InspectorVM>(inspectors);
 
-                NewInspectorsCount = inspectors.Where(e => e.CertificationDate?
-                .Date >= GetLowerDateBound() && 
-                e.CertificationDate?.Date <= GetUpperDateBound()).Count();
+                NewInspectorsCount = inspectors
+                    .Where(e => e.CertificationDate >= GetLowerDateBound() && 
+                    e.CertificationDate <= GetUpperDateBound())
+                    .Count();
 
-                var availableInspectors = context.InspectorCrud.GetAllInspectorsFilteredByAvailability(new List<DateTime>()
-                {
-                    GetLowerDateBound(),
-                    GetUpperDateBound()
-                });
-
-                ActiveInspectorsCount = availableInspectors.Count();
-
-                InactiveInspectorsCount = inspectors.Count() - ActiveInspectorsCount;
-
+                //NewInspectorsCount
+                //ActiveInspectorsCount
+                //InactiveInspectorsCount
 
                 //var questionnaires = context
                 //    .Questionnaires
@@ -107,10 +100,10 @@ namespace FSBeheer.ViewModel
                 //Answers = new ObservableCollection<AnswerVM>(answers);
 
                 var inspections = context
-                    .Inspections
-                    .ToList()
-                    .Where(e => !e.IsDeleted)
-                    .Select(e => new InspectionVM(e));
+                            .Inspections
+                            .ToList()
+                            .Where(e => !e.IsDeleted)
+                            .Select(e => new InspectionVM(e));
                 Inspections = new ObservableCollection<InspectionVM>(inspections);
 
                 NewInspectionsCount = inspections.Where(e => e.InspectionDate?.StartDate.Date >= GetLowerDateBound()).Count();
