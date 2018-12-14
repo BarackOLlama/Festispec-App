@@ -9,36 +9,29 @@
         DataContext="{Binding BusinessData, Source={StaticResource Locator}}">
     <Grid>
         <StackPanel HorizontalAlignment="Left" Width="225">
-            <!--Make it work, then make it shine.-->
             <TextBlock FontSize="20">Kwartaal Jaar</TextBlock>
-            <Label Content="{Binding Year, FallbackValue=error}"></Label>
-            <TextBlock FontSize="20">Kwartaal nummer</TextBlock>
-            <Label Content="{Binding QuarterNumber, FallbackValue=error}"></Label>
-            <TextBlock>Number of inspectors</TextBlock>
+            <Label Content="{Binding Year, FallbackValue=error}" FontSize="15"></Label>
+            <Separator/>
+            <TextBlock>Aantal inspecteurs:</TextBlock>
             <Label Content="{Binding Inspectors.Count, FallbackValue=0}"></Label>
-            <TextBlock>Number of inspections</TextBlock>
+            <TextBlock>Aantal inspecties:</TextBlock>
             <Label Content="{Binding Inspections.Count, FallbackValue=0}"></Label>
-            <TextBlock>Number of customers</TextBlock>
+            <TextBlock>Aantal klanten:</TextBlock>
             <Label Content="{Binding Customers.Count, FallbackValue=0}" ></Label>
-            <!--<TextBlock>Number of questionnaires</TextBlock>
-            <Label Content="{Binding Questionnares.Count, FallbackValue=0}"></Label>
-            <TextBlock>Number of questions</TextBlock>
-            <Label Content="{Binding Questions.Count, FallbackValue=0}"></Label>
-            <TextBlock>Number of answers</TextBlock>
-            <Label Content="{Binding Answers.Count, FallbackValue=0}"></Label>-->
-        </StackPanel>
-        <StackPanel HorizontalAlignment="Right" Width="225">
             <TextBlock>Nieuwe klanten:</TextBlock>
             <Label Content="{Binding NewCustomersCount, FallbackValue=0}"></Label>
-            <TextBlock>Inspecteurs</TextBlock>
-            <Label Content="{Binding Inspectors.Count, FallbackValue=0}"></Label>
-            <TextBlock>Nieuwe inspecteurs</TextBlock>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right" Width="225">
+            <TextBlock FontSize="20">Kwartaal Nummer</TextBlock>
+            <Label Content="{Binding QuarterNumber, FallbackValue=error}" FontSize="15"></Label>
+            <Separator/>
+            <TextBlock>Nieuwe inspecteurs:</TextBlock>
             <Label Content="{Binding NewInspectorsCount, FallbackValue=0}"></Label>
-            <TextBlock>Actieve inspecteurs</TextBlock>
+            <TextBlock>Actieve inspecteurs:</TextBlock>
             <Label Content="{Binding ActiveInspectorsCount, FallbackValue=0}"></Label>
-            <TextBlock>Inactieve inspecteurs</TextBlock>
+            <TextBlock>Inactieve inspecteurs:</TextBlock>
             <Label Content="{Binding InactiveInspectorsCount, FallbackValue=0}"></Label>
-            <TextBlock>Nieuwe inspecties</TextBlock>
+            <TextBlock>Nieuwe inspecties:</TextBlock>
             <Label Content="{Binding NewInspectionsCount, FallbackValue=0}"></Label>
         </StackPanel>
     </Grid>
