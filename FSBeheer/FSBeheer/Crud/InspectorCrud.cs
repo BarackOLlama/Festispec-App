@@ -60,7 +60,7 @@ namespace FSBeheer.Crud
 
             if(availableList.Count == 0)
             {
-                return false;
+                return true;
             }
             return !availableList.Contains(false);
         }

@@ -1,5 +1,5 @@
 ﻿<Window x:Class="FSBeheer.View.CreateEditInspectionView"
-        Name="CreateEditWindow"
+        Name="CreateEditInspectionWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -209,12 +209,10 @@
 
         <StackPanel x:Name="spInterfaceButtons" VerticalAlignment="Bottom"
                     Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,20,0">
-            
+
             <TextBlock Foreground="Red" Text="{Binding WarningText}"/>
-            <!--<Button Content="Opslaan" Command="{Binding AddInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>-->
-            <Button Content="Opslaan" Command="{Binding AddInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>
-            <!--<Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding CancelInspectionCommand}" Template="{StaticResource InterfaceButtonTemplate}"/>-->
-            <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Template="{StaticResource InterfaceButtonTemplate}"/>
+            <Button Content="Opslaan" Command="{Binding AddInspectionCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{StaticResource InterfaceButtonTemplate}"/>
+            <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{StaticResource InterfaceButtonTemplate}"/>
         </StackPanel>
     </StackPanel>
 </Window>

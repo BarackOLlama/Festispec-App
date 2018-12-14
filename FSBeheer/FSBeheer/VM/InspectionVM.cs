@@ -64,6 +64,7 @@ namespace FSBeheer.VM
         public ObservableCollection<InspectorVM> Inspectors
         {
             get { return new ObservableCollection<InspectorVM>(_inspection.Inspectors.Select(i => new InspectorVM(i))); }
+            set { _inspection.Inspectors = new ObservableCollection<Inspector>(value.Select(i => i.ToModel())); }
         }
 
         public bool IsDeleted

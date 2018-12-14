@@ -23,99 +23,7 @@ namespace FSBeheer.ViewModel
         public string Title { get; set; }
 
         public string WarningText { get; set; }
-        //private DateTime _StartDate { get; set; }
-        //public DateTime StartDate
-        //{
-        //    get
-        //    {
-        //        return _StartDate;
-        //    }
-        //    set
-        //    {
-        //        _StartDate = value;
-        //        Inspection.InspectionDate.StartDate = value;
-        //        RaisePropertyChanged(nameof(StartDate));
-        //        CanExecuteChanged();
-        //    }
-        //}
-        //private DateTime _EndDate { get; set; }
-        //public DateTime EndDate
-        //{
-        //    get
-        //    {
-        //        return _EndDate;
-        //    }
-        //    set
-        //    {
-        //        _EndDate = value;
-        //        Inspection.InspectionDate.EndDate = value;
-        //        RaisePropertyChanged(nameof(EndDate));
-        //        CanExecuteChanged();
-        //    }
-        //}
-        //private TimeSpan? _StartTime { get; set; }
-        //public TimeSpan? StartTime {
-        //    get
-        //    {
-        //        return _StartTime;
-        //    }
-        //    set
-        //    {
-        //        _StartTime = value;
-        //        Inspection.InspectionDate.StartTime = value;
-        //        RaisePropertyChanged(nameof(StartTime));
-        //        CanExecuteChanged();
-        //    }
-        //}
-        //private TimeSpan? _EndTime { get; set; }
-        //public TimeSpan? EndTime {
-        //    get
-        //    {
-        //        return _EndTime;
-        //    }
-        //    set
-        //    {
-        //        _EndTime = value;
-        //        Inspection.InspectionDate.EndTime = value;
-        //        RaisePropertyChanged(nameof(EndTime));
-        //        CanExecuteChanged();
-        //    }
-        //}
-        //private EventVM _SelectedEvent { get; set; }
-        //public EventVM SelectedEvent {
-        //    get
-        //    {
-        //        return _SelectedEvent;
-        //    }
-        //    set
-        //    {
-        //        _SelectedEvent = value;
-        //        if (Inspection != null)
-        //        {
-        //            Inspection.Event = value;
-        //        }
-        //        RaisePropertyChanged(nameof(SelectedEvent));
-        //        CanExecuteChanged();
-        //    }
-        //}
-        //private StatusVM _SelectedStatus { get; set; }
-        //public StatusVM SelectedStatus {
-        //    get
-        //    {
-        //        return _SelectedStatus;
-        //    }
-        //    set
-        //    {
-        //        _SelectedStatus = value;
-        //        if (Inspection != null)
-        //        {
-        //            Inspection.Status = value;
-        //        }
-        //        RaisePropertyChanged(nameof(SelectedStatus));
-        //        CanExecuteChanged();
-        //    }
-        //}
-
+        
         public RelayCommand<Window> CancelInspectionCommand { get; set; }
         public RelayCommand<Window> AddInspectionCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
@@ -142,7 +50,8 @@ namespace FSBeheer.ViewModel
             // TODO: Not in memory/database after reopening the screen
 
             ChosenInspectors = new ObservableCollection<InspectorVM>(SelectedInspectors);
-            RaisePropertyChanged(nameof(ChosenInspectors)); 
+            RaisePropertyChanged(nameof(ChosenInspectors));
+            Inspection.Inspectors = ChosenInspectors;
         }
 
         public void SetInspection(int inspectionId)
@@ -158,79 +67,106 @@ namespace FSBeheer.ViewModel
             }
             else
             {
-                //Inspection = new InspectionVM(_Context.Inspections
-                //    .FirstOrDefault(i => i.Id == inspection.Id));
                 Inspection = _Context.InspectionCrud.GetInspectionById(inspectionId);
-                //SelectedEvent = Inspection.Event;
-                //SelectedStatus = _Context.StatusCrud.GetStatusById(Inspection.Status.Id);
-                //StartDate = Inspection.InspectionDate.StartDate;
-                //EndDate = Inspection.InspectionDate.EndDate;
-                //StartTime = Inspection.InspectionDate.StartTime;
-                //EndTime = Inspection.InspectionDate.EndTime;
                 Title = "Inspectie wijzigen";
             }
+
+            RaisePropertyChanged(nameof(Inspection));
         }
 
-       private void CloseAction(Window window)
-       {
-           _Context.Dispose();
-           window.Close();
-       }
+        private void CloseAction(Window window)
+        {
+            _Context.Dispose();
+            window.Close();
+        }
 
-       private void CancelInspection(Window window)
-       {
-           MessageBoxResult result = MessageBox.Show("Weet u zeker dat u deze inspectie wilt annuleren?", "Bevestig annulering inspectie", MessageBoxButton.OKCancel);
-           if (result == MessageBoxResult.OK)
-           {
-               CloseAction(window);
-           }
+        private void CancelInspection(Window window)
+        {
+            MessageBoxResult result = MessageBox.Show("Weet u zeker dat u deze inspectie wilt annuleren?", "Bevestig annulering inspectie", MessageBoxButton.OKCancel);
+            if (result == MessageBoxResult.OK)
+            {
+                CloseAction(window);
+            }
             CanExecuteChanged();
-       }
+        }
 
-       public void AddInspection(Window window)
-       {
-           _Context.InspectionCrud.GetAllInspectionVMs().Add(Inspection);
-           _Context.SaveChanges();
+        public void AddInspection(Window window)
+        {
+            // TODO:
+            // if inspectors.count != 0
+            //      for each inspector
+                //      new availability
+                //            isscheduled = true
+                //            startdate = inspection.startdate
+                //            enddate = inspection.enddate
+                //            inspector = inspection.inspector
+            if (CheckStartDateValidity())
+            {
+                _Context.SaveChanges();
 
-           Messenger.Default.Send(true, "UpdateInspectionList");
-           CloseAction(window);
-            CanExecuteChanged();
-       }
+                Messenger.Default.Send(true, "UpdateInspectionList");
+                CloseAction(window);
+            }
+            else
+            {
+                MessageBox.Show("De ingevulde datums zijn niet correct. Voer correcte begin- en einddatums in en probeer het opnieuw.");
+                return;
+            }            
+        }
 
         public void OpenAvailable()
         {
-            new AvailableInspectorView(Inspection.Id).Show();
+            if (CheckStartDateValidity())
+            {
+                new AvailableInspectorView(Inspection.Id).Show();
+            }
+            else
+            {
+                MessageBox.Show("De ingevulde datums zijn niet correct. Voer correcte begin- en einddatums in en probeer het opnieuw.");
+            }
         }
 
-       private void CanExecuteChanged()
-       {
-           AddInspectionCommand.RaiseCanExecuteChanged();
-       }
+        private void CanExecuteChanged()
+        {
+            AddInspectionCommand.RaiseCanExecuteChanged();
+        }
 
-       private bool CheckSaveAllowed(Window window)
-       {
-           if (Inspection == null)
-           {
-               return false;
-           }else if (string.IsNullOrEmpty(Inspection.Name))
-           {
-               WarningText = "Het veld Naam mag niet leeg zijn";
-               RaisePropertyChanged(nameof(WarningText));
-               return false;
-           }
-           else if (Inspection.Inspectors == null)
-           {
-               WarningText = "Het veld Inspecteur(s) mag niet leeg zijn";
-               RaisePropertyChanged(nameof(WarningText));
-               return false;
-           }
-           else
-           {
-               WarningText = "";
-               RaisePropertyChanged(nameof(WarningText));
-               return true;
-           }
-       }
+        private bool CheckSaveAllowed(Window window)
+        {
+            if (Inspection != null)
+            {
+                if (string.IsNullOrEmpty(Inspection.Name))
+                {
+                    WarningText = "Het veld Naam mag niet leeg zijn";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return false;
+                }
+                else if (Inspection.Inspectors == null)
+                {
+                    WarningText = "Het veld Inspecteur(s) mag niet leeg zijn";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return false;
+                }
+                else
+                {
+                    WarningText = "";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }                
+        }
 
+        private bool CheckStartDateValidity()
+        {
+            if (Inspection.InspectionDate.StartDate >= new DateTime(1753, 1, 1))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
