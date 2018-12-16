@@ -164,6 +164,14 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public TestPDFViewModel TestPDF
+        {
+            get
+            {
+                return new TestPDFViewModel();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

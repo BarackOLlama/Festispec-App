@@ -37,9 +37,13 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowCreateEditViewCommand { get; set; }
         public RelayCommand ShowLoginViewCommand { get; set; }
 
+        public RelayCommand ShowPDFViewCommand { get; set; }
+
         public HomeViewModel()
         {
             _Context = new CustomFSContext();
+
+            ShowPDFViewCommand = new RelayCommand(ShowPDFView);
 
             ShowCustomerViewCommand = new RelayCommand(ShowCustomerView);
             ShowInspectionViewCommand = new RelayCommand(ShowInspectionView);
@@ -59,6 +63,11 @@ namespace FSBeheer.ViewModel
             // Place brakepoint here
             Console.WriteLine("");
             //this.ShowLoginView();
+        }
+
+        private void ShowPDFView()
+        {
+            new TestPDFView().Show();
         }
 
         private void ShowLoginView()
