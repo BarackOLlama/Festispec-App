@@ -172,6 +172,14 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public BusinessDataViewModel BusinessData
+        {
+            get
+            {
+                return new BusinessDataViewModel();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

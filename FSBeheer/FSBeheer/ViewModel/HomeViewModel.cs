@@ -36,6 +36,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowQuestionnaireManagementViewCommand { get; set; }
         public RelayCommand ShowCreateEditViewCommand { get; set; }
         public RelayCommand ShowLoginViewCommand { get; set; }
+        public RelayCommand ShowBusinessDataViewCommand { get; set; }
 
         public RelayCommand ShowPDFViewCommand { get; set; }
 
@@ -53,11 +54,12 @@ namespace FSBeheer.ViewModel
             ShowLoginViewCommand = new RelayCommand(ShowLoginView);
             ShowCreateEditViewCommand = new RelayCommand(ShowCreateEditInspectionView);
             ShowQuestionnaireManagementViewCommand = new RelayCommand(ShowQuestionnaireManagementView);
+            ShowBusinessDataViewCommand = new RelayCommand(ShowBusinessDataView);
 
             // Tests to make sure everything is working
-            _Context = new CustomFSContext();
-            ObservableCollection<CustomerVM> test = _Context.CustomerCrud.GetAllCustomers();
-            ObservableCollection<CustomerVM> test2 = _Context.CustomerCrud.GetFilteredCustomerBasedOnName("F");
+            //_Context = new CustomFSContext();
+            //ObservableCollection<CustomerVM> test = _Context.CustomerCrud.GetAllCustomers();
+            //ObservableCollection<CustomerVM> test2 = _Context.CustomerCrud.GetFilteredCustomerBasedOnName("F");
             // ObservableCollection<CustomerVM> test3 = _Context.CustomerCrud.GetCustomerById(51);
 
             // Place brakepoint here
@@ -68,6 +70,11 @@ namespace FSBeheer.ViewModel
         private void ShowPDFView()
         {
             new TestPDFView().Show();
+        }
+
+        private void ShowBusinessDataView()
+        {
+            new BusinessDataView().ShowDialog();
         }
 
         private void ShowLoginView()

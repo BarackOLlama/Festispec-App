@@ -138,6 +138,7 @@
     <Compile Include="Model\Quotation.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="ViewModel\AvailableInspectorViewModel.cs" />
+    <Compile Include="ViewModel\BusinessDataViewModel.cs" />
     <Compile Include="ViewModel\CreateEditInspectionViewModel.cs" />
     <Compile Include="ViewModel\CreateEditContactViewModel.cs" />
     <Compile Include="ViewModel\CreateEditEventViewModel.cs" />
@@ -150,6 +151,9 @@
     <Compile Include="ViewModel\TestPDFViewModel.cs" />
     <Compile Include="View\TestPDFView.xaml.cs">
       <DependentUpon>TestPDFView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BusinessDataView.xaml.cs">
+      <DependentUpon>BusinessDataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="View\BaseView.cs" />
@@ -262,6 +266,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\AvailableInspectorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BusinessDataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -10,12 +10,12 @@
 
     <StackPanel Background="White" Height="420">
         <StackPanel>
-            <Button Command="{Binding ShowLoginViewCommand}">Log in</Button>
             <TextBlock Text="{Binding Account.Username, StringFormat=Naam:{0},  FallbackValue='Niet ingelogd'}" HorizontalAlignment="Right" Width="592"></TextBlock>
         </StackPanel>
         <StackPanel VerticalAlignment="Center" Height="220" Margin="0,30,0,0">
             <Grid Margin="50">
                 <Grid.RowDefinitions>
+                    <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
@@ -30,6 +30,8 @@
                 <Button Grid.Row="1" Grid.Column="0" Content="Inspecteurs" Command="{Binding ShowInspectorViewCommand}"  Background="LightBlue" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="120" Height="30"/>
                 <Button Grid.Row="1" Grid.Column="1" Content="Offertes" Background="LightBlue" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Width="120" Height="30"/>
                 <Button Grid.Row="1" Grid.Column="2" Content="Vragenlijsten" Command="{Binding ShowQuestionnaireManagementViewCommand}" Background="LightBlue" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="120" Height="30" Margin="0,20,0,0"/>
+                <Button Grid.Row="2" Grid.Column="0" Content="Data" Command="{Binding ShowBusinessDataViewCommand}" Background="LightBlue" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="120" Height="30" Margin="0,20,0,0"></Button>
+                <Button Grid.Row="2" Grid.Column="1" Content="Login" Background="LightBlue" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="30" Width="120" Command="{Binding ShowLoginViewCommand}"></Button>
             </Grid>
         </StackPanel>
         <StackPanel>
