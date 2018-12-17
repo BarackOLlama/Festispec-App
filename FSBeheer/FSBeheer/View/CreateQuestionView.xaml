@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="CreateQuestionWindow" Height="300" Width="300"
         ResizeMode="NoResize"
-        DataContext="{Binding NewQuestionCreationViewModel, Source={StaticResource Locator}}">
+        DataContext="{Binding CreateQuestion, Source={StaticResource Locator}}">
     <StackPanel>
 
         <TextBlock Text="Vraag toevoegen" FontSize="28"/>

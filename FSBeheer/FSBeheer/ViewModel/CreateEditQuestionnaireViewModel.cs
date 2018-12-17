@@ -1,20 +1,19 @@
-﻿using FSBeheer.Model;
-using FSBeheer.View;
+﻿using FSBeheer.View;
 using FSBeheer.VM;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using System.Collections;
+using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Input;
-using System;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Messaging;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
-    public class EditQuestionnaireViewModel : ViewModelBase
+    public class CreateEditQuestionnaireViewModel :ViewModelBase
     {
         private QuestionnaireVM _questionnaire;
         private CustomFSContext _context;
@@ -73,11 +72,14 @@ namespace FSBeheer.ViewModel
         public RelayCommand OpenCreateQuestionViewCommand { get; set; }
         public RelayCommand<Window> SaveQuestionnaireChangesCommand { get; set; }
         public RelayCommand OpenEditQuestionViewCommand { get; set; }
+        public RelayCommand CreateQuestionnaireCommand { get; set; }
+
         public RelayCommand DeleteQuestionCommand { get; set; }
         public RelayCommand<Window> CloseWindowCommand { get; set; }
 
-        public EditQuestionnaireViewModel(int questionnaireId)
+        public CreateEditQuestionnaireViewModel(int questionnaireId)
         {
+            //edit
             QuestionnaireId = questionnaireId;
             Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => Init());
             Init();
@@ -97,20 +99,40 @@ namespace FSBeheer.ViewModel
                 .Select(e => (int?)e.Id);
             InspectionNumbers = new ObservableCollection<int?>(inspectionNumbers);
             _selectedInspectionNumber = inspectionNumbers.FirstOrDefault();
+            SelectedQuestion = questions.FirstOrDefault();
 
+            InitializeCommands();
+        }
+
+        public CreateEditQuestionnaireViewModel()
+        {
+            //create
+            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => Init());
+            Init();
+            _context = new CustomFSContext();
+            _questionnaire = new QuestionnaireVM();
+            InitializeCommands();
+        }
+
+        //methods
+
+        private void InitializeCommands()
+        {
             OpenCreateQuestionViewCommand = new RelayCommand(OpenCreateQuestionView);
             SaveQuestionnaireChangesCommand = new RelayCommand<Window>(SaveQuestionnaireChanges);
             OpenEditQuestionViewCommand = new RelayCommand(OpenEditQuestionView);
             DeleteQuestionCommand = new RelayCommand(DeleteQuestion);
+            CreateQuestionnaireCommand = new RelayCommand(CreateQuestionnaire);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
-            SelectedQuestion = questions.FirstOrDefault();
+
         }
+
         internal void Init()
         {
             _context = new CustomFSContext();
             var questions = _context.Questions
                 .ToList()
-                .Where(e=> e.QuestionnaireId == QuestionnaireId && !e.IsDeleted)
+                .Where(e => e.QuestionnaireId == QuestionnaireId && !e.IsDeleted)
                 .Select(e => new QuestionVM(e));
             Questions = new ObservableCollection<QuestionVM>(questions);
             base.RaisePropertyChanged("Questions");
@@ -158,12 +180,20 @@ namespace FSBeheer.ViewModel
             Questions = new ObservableCollection<QuestionVM>(questions);
         }
 
+        private void CreateQuestionnaire()
+        {
+            _context.Questionnaires.Add(Questionnaire.ToModel());
+            _context.SaveChanges();
+            Messenger.Default.Send(true, "UpdateQuestionnaires");
+        }
+
         public void DeleteQuestion()
         {
             if (_selectedQuestion == null || _selectedQuestion.IsDeleted)
             {
                 MessageBox.Show("Geen vraag geselecteerd.");
-            }else
+            }
+            else
             {
                 var result = MessageBox.Show("Vraag verwijderen?", "Verwijder", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
