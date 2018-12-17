@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,7 +15,6 @@ namespace FSBeheer.ViewModel
 {
     public class CreateEditQuestionViewModel : ViewModelBase
     {
-
         //variables and properties
         private CustomFSContext _context;
         public QuestionVM Question { get; set; }
@@ -39,6 +39,13 @@ namespace FSBeheer.ViewModel
         public RelayCommand<Window> CreateQuestionCommand { get; set; }
 
         public RelayCommand<Window> CloseWindowCommand { get; set; }
+
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
 
         //constructors
         public CreateEditQuestionViewModel(int questionnaireId)
@@ -87,40 +94,49 @@ namespace FSBeheer.ViewModel
         }
         public void SaveQuestionChanges(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestiging", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
+            if (IsInternetConnected())
             {
-                _context.SaveChanges();
-                Messenger.Default.Send(true, "UpdateQuestions");
-                window.Close();
+                MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestiging", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    _context.SaveChanges();
+                    Messenger.Default.Send(true, "UpdateQuestions");
+                    window.Close();
+                }
             }
-
         }
 
         public void CreateQuestion(Window window)
         {
-            var result = MessageBox.Show("Opslaan?", "Bevestiging", MessageBoxButton.OKCancel);
-
-            if (result == MessageBoxResult.OK)
+            if (IsInternetConnected())
             {
-                //clear irrelevant fields to avoid confusion in case the user mistakenly filled them in.
-                if (SelectedQuestionType.Name == "Multiple Choice Vraag")
-                {//clear columns
-                    Question.Columns = null;
+                var result = MessageBox.Show("Opslaan?", "Bevestiging", MessageBoxButton.OKCancel);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    //clear irrelevant fields to avoid confusion in case the user mistakenly filled them in.
+                    if (SelectedQuestionType.Name == "Multiple Choice Vraag")
+                    {//clear columns
+                        Question.Columns = null;
+                    }
+                    else if (SelectedQuestionType.Name == "Open Vraag")
+                    {//clear options and columns
+                        Question.Columns = null;
+                        Question.Options = null;
+                    }
+                    else if (SelectedQuestionType.Name == "Open Tabelvraag")
+                    {//clear options
+                        Question.Options = null;
+                    }
+                    _context.Questions.Add(Question.ToModel());
+                    _context.SaveChanges();
+                    Messenger.Default.Send(true, "UpdateQuestions");
+                    window.Close();
                 }
-                else if (SelectedQuestionType.Name == "Open Vraag")
-                {//clear options and columns
-                    Question.Columns = null;
-                    Question.Options = null;
-                }
-                else if (SelectedQuestionType.Name == "Open Tabelvraag")
-                {//clear options
-                    Question.Options = null;
-                }
-                _context.Questions.Add(Question.ToModel());
-                _context.SaveChanges();
-                Messenger.Default.Send(true, "UpdateQuestions");
-                window.Close();
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
         

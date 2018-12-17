@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -52,6 +53,13 @@ namespace FSBeheer.ViewModel
         public RelayCommand DeleteQuestionCommand { get; set; }
         public RelayCommand<Window> CloseWindowCommand { get; set; }
 
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
+
         public CreateEditQuestionnaireViewModel(int questionnaireId)
         {
             //edit
@@ -92,7 +100,6 @@ namespace FSBeheer.ViewModel
             DeleteQuestionCommand = new RelayCommand(DeleteQuestion);
             CreateQuestionnaireCommand = new RelayCommand<Window>(SaveQuestionnaire);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
-
         }
 
         internal void Init()
@@ -112,26 +119,43 @@ namespace FSBeheer.ViewModel
         }
         private void SaveQuestionnaireChanges(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Opslaan wijzigingen?", "Bevestiging", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
+            if (IsInternetConnected())
             {
-                _context.SaveChanges();
-                Messenger.Default.Send(true, "UpdateQuestionnaires");
-                window.Close();
+                MessageBoxResult result = MessageBox.Show("Opslaan wijzigingen?", "Bevestiging", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    _context.SaveChanges();
+                    Messenger.Default.Send(true, "UpdateQuestionnaires");
+                    window.Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
 
         public void OpenCreateQuestionView()
         {
-            new CreateQuestionView().ShowDialog();
+            if(IsInternetConnected())
+                new CreateQuestionView().ShowDialog();
+            else
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
 
         private void OpenEditQuestionView()
         {
-            if (_selectedQuestion == null)
-                MessageBox.Show("Geen vraag geselecteerd.");
+            if (IsInternetConnected())
+            {
+                if (_selectedQuestion == null)
+                    MessageBox.Show("Geen vraag geselecteerd.");
+                else
+                    new EditQuestionView().ShowDialog();
+            }
             else
-                new EditQuestionView().ShowDialog();
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
+            }
         }
 
         public void UpdateQuestions()
@@ -142,27 +166,39 @@ namespace FSBeheer.ViewModel
 
         private void SaveQuestionnaire(Window window)
         {
-            _context.Questionnaires.Add(Questionnaire.ToModel());
-            _context.SaveChanges();
-            Messenger.Default.Send(true, "UpdateQuestionnaires");
-            window.Close();
+            if (IsInternetConnected())
+            {
+                _context.Questionnaires.Add(Questionnaire.ToModel());
+                _context.SaveChanges();
+                Messenger.Default.Send(true, "UpdateQuestionnaires");
+                window.Close();
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
+            }
         }
 
         public void DeleteQuestion()
         {
-            if (_selectedQuestion == null || _selectedQuestion.IsDeleted)
+            if (IsInternetConnected())
             {
-                MessageBox.Show("Geen vraag geselecteerd.");
+                if (_selectedQuestion == null || _selectedQuestion.IsDeleted)
+                    MessageBox.Show("Geen vraag geselecteerd.");
+                else
+                {
+                    var result = MessageBox.Show("Vraag verwijderen?", "Verwijder", MessageBoxButton.OKCancel);
+                    if (result == MessageBoxResult.OK)
+                    {
+                        _selectedQuestion.IsDeleted = true;
+                        _context.SaveChanges();
+                        this.Init();
+                    }
+                }
             }
             else
             {
-                var result = MessageBox.Show("Vraag verwijderen?", "Verwijder", MessageBoxButton.OKCancel);
-                if (result == MessageBoxResult.OK)
-                {
-                    _selectedQuestion.IsDeleted = true;
-                    _context.SaveChanges();
-                    this.Init();
-                }
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
     }

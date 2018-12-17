@@ -50,6 +50,7 @@ namespace FSBeheer.Crud
         {
             var _event = CustomFSContext.Events
                .ToList()
+                .Where(e => e.IsDeleted == false)
                .FirstOrDefault(e => e.Id == eventId);
             return new EventVM(_event);
         }

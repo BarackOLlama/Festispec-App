@@ -64,7 +64,7 @@ namespace FSBeheer.ViewModel
             };
             if (IsInternetConnected())
             {
-                Inspections = _Context.InspectionCrud.GetAllInspectionVMs();
+                Inspections = _Context.InspectionCrud.GetAllInspections();
                 cache.Set("inspections", Inspections, policy);
             }
             else
