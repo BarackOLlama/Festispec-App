@@ -48,10 +48,10 @@ namespace FSBeheer.Crud
 
         public EventVM GetEventById(int eventId)
         {
-            var customer = CustomFSContext.Events
+            var _event = CustomFSContext.Events
                .ToList()
                .FirstOrDefault(e => e.Id == eventId);
-            return new EventVM(customer);
+            return new EventVM(_event);
         }
 
         public void Delete(EventVM _event)

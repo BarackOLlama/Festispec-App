@@ -30,32 +30,11 @@ namespace FSBeheer.ViewModel
         private CustomFSContext _Context;
         public ObservableCollection<QuestionnaireVM> Questionnaires { get; }
 
-        public RelayCommand AddQuestionnaireCommand { get; set; }
+        public RelayCommand CreateQuestionnaireCommand { get; set; }
 
-        public CreateQuestionnaireViewModel(int QuestionID)
-        {
-            _Context = new CustomFSContext();
-            Questionnaires = _Context.QuestionnaireCrud.GetAllQuestionnaireVMs();
 
-            AddQuestionnaireCommand = new RelayCommand(AddQuestionnaire);
-            _questionnaire = new QuestionnaireVM();
-        }
 
-        public CreateQuestionnaireViewModel()
-        {
-            _Context = new CustomFSContext();
-            Questionnaires = _Context.QuestionnaireCrud.GetAllQuestionnaireVMs();
 
-            AddQuestionnaireCommand = new RelayCommand(AddQuestionnaire);
-            _questionnaire = new QuestionnaireVM();
-        }
 
-        private void AddQuestionnaire()
-        {
-            _Context.QuestionnaireCrud.GetAllQuestionnaireVMs().Add(Questionnaire);
-            _Context.QuestionnaireCrud.Add(Questionnaire);
-            _Context.SaveChanges();
-            Messenger.Default.Send(true, "UpdateQuestionnaires");
-        }
     }
 }

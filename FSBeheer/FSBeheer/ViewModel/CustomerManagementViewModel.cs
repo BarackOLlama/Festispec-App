@@ -5,6 +5,9 @@ using FSBeheer.View;
 using GalaSoft.MvvmLight;
 using System.Windows;
 using GalaSoft.MvvmLight.Messaging;
+using System.Runtime.InteropServices;
+using System.Runtime.Caching;
+using System;
 
 namespace FSBeheer.ViewModel
 {
@@ -33,6 +36,12 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
 
         public CustomerManagementViewModel()
         {
@@ -47,24 +56,57 @@ namespace FSBeheer.ViewModel
         internal void Init()
         {
             CustomFSContext = new CustomFSContext();
-            Customers = CustomFSContext.CustomerCrud.GetAllCustomers();
+            GetData();
+        }
+
+        private void GetData()
+        {
+            ObjectCache cache = MemoryCache.Default;
+            CacheItemPolicy policy = new CacheItemPolicy
+            {
+                AbsoluteExpiration = DateTimeOffset.Now.AddDays(1)
+            };
+            if (IsInternetConnected())
+            {
+                Customers = CustomFSContext.CustomerCrud.GetAllCustomers();
+                cache.Set("customers", Customers, policy);
+            }
+            else
+            {
+                Customers = cache["customers"] as ObservableCollection<CustomerVM>;
+                if (Customers == null)
+                {
+                    Customers = new ObservableCollection<CustomerVM>();
+                }
+            }
             RaisePropertyChanged(nameof(Customers));
         }
 
         // Standard way of doing this
         private void OpenCreateCustomer()
         {
-            new CreateEditCustomerView().Show();
+            if(IsInternetConnected())
+                new CreateEditCustomerView().Show();
+            else
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
+
         private void OpenEditCustomer()
         {
-            if (_selectedCustomer == null)
+            if (IsInternetConnected())
             {
-                MessageBox.Show("No customer selected");
+                if (_selectedCustomer == null)
+                {
+                    MessageBox.Show("No customer selected");
+                }
+                else
+                {
+                    new CreateEditCustomerView(_selectedCustomer).Show();
+                }
             }
             else
             {
-                new CreateEditCustomerView(_selectedCustomer).Show();
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
 

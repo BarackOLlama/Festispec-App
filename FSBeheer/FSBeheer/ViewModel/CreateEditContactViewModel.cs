@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,6 +25,13 @@ namespace FSBeheer.ViewModel
         public RelayCommand<Window> DeleteContactCommand { get; set; }
 
         private CustomFSContext _Context;
+
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
 
         public CreateEditContactViewModel()
         {
@@ -54,20 +62,28 @@ namespace FSBeheer.ViewModel
 
         private void SaveChangesContact()
         {
-            MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
+            if (IsInternetConnected())
             {
-                // TODO: Als je nieuw klant aanmaakt en niet saved en dan contact aanmaakt zit hij nog niet in de database en krijg je een error
-                try
+                MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
                 {
-                    _Context.ContactCrud.GetAllContactVMs().Add(Contact);
-                    _Context.SaveChanges();
-                } catch
-                {
-                    return;
-                }
+                    // TODO: Als je nieuw klant aanmaakt en niet saved en dan contact aanmaakt zit hij nog niet in de database en krijg je een error
+                    try
+                    {
+                        _Context.ContactCrud.GetAllContactVMs().Add(Contact);
+                        _Context.SaveChanges();
+                    }
+                    catch
+                    {
+                        return;
+                    }
 
-                Messenger.Default.Send(true, "UpdateContactList");
+                    Messenger.Default.Send(true, "UpdateContactList");
+                }
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
 
@@ -84,14 +100,21 @@ namespace FSBeheer.ViewModel
 
         private void DeleteContact(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Delete the selected contactperson?", "Confirm Delete", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
+            if (IsInternetConnected())
             {
-                Contact.IsDeleted = true;
-                _Context.SaveChanges();
-                window.Close();
+                MessageBoxResult result = MessageBox.Show("Delete the selected contactperson?", "Confirm Delete", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    Contact.IsDeleted = true;
+                    _Context.SaveChanges();
+                    window.Close();
 
-                Messenger.Default.Send(true, "UpdateContactList");
+                    Messenger.Default.Send(true, "UpdateContactList");
+                }
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
     }
