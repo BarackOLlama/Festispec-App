@@ -18,6 +18,7 @@ namespace FSBeheer.ViewModel
         public InspectionVM Inspection { get; set; }
         public ObservableCollection<CustomerVM> Customers { get; }
         public ObservableCollection<EventVM> Events { get; set; }
+        public int SelectedIndex { get; set; }
         public ObservableCollection<StatusVM> Statuses { get; set; }
         public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
 
@@ -161,7 +162,6 @@ namespace FSBeheer.ViewModel
             {
                 Inspection = new InspectionVM(_Context.Inspections
                     .FirstOrDefault(i => i.Id == inspection.Id));
-                SelectedEvent = _Context.EventCrud.GetEventById(Inspection.Event.Id);
                 SelectedStatus = _Context.StatusCrud.GetStatusById(Inspection.Status.Id);
                 StartDate = Inspection.InspectionDate.StartDate;
                 EndDate = Inspection.InspectionDate.EndDate;
@@ -169,9 +169,21 @@ namespace FSBeheer.ViewModel
                 EndTime = Inspection.InspectionDate.EndTime;
                 RaisePropertyChanged(nameof(Inspection));
             }
+            Events = _Context.EventCrud.GetAllEvents();
+            SelectedIndex = GetIndex(Inspection.Event, Events);
+            RaisePropertyChanged(nameof(Events));
+            RaisePropertyChanged(nameof(SelectedIndex));
         }
 
-       private void CloseAction(Window window)
+        private int GetIndex(EventVM Obj, ObservableCollection<EventVM> List)
+        {
+            for (int i = 0; i < List.Count; i++)
+                if (List[i].Id == Obj.Id)
+                    return i;
+            return -1;
+        }
+
+        private void CloseAction(Window window)
        {
            _Context.Dispose();
            window.Close();
