@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
-    public class CreateEditQuestionViewModel :ViewModelBase
+    public class CreateEditQuestionViewModel : ViewModelBase
     {
 
         //variables and properties
@@ -57,50 +57,46 @@ namespace FSBeheer.ViewModel
         {
             //create
             _context = new CustomFSContext();
-            var questionnaire = _context.Questionnaires.ToList().Where(e => e.Id == questionnaireId).FirstOrDefault();
             _question = new QuestionVM();
+            _question.Type = _selectedQuestionType.ToModel();
+            _question.QuestionnaireId = questionnaireId;
 
-            var temp = _context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
-            QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
-            _selectedQuestionType = QuestionTypes.FirstOrDefault();
-            base.RaisePropertyChanged(nameof(SelectedQuestionType));
-
-            Question = new QuestionVM();
-            Question.Type = _selectedQuestionType.ToModel();
-            Question.QuestionnaireId = questionnaireId;
-
+            InitializeQuestionTypes();
             InitializeCommands();
         }
 
         public CreateEditQuestionViewModel(int questionnaireId, int questionId)
         {
+            //edit
             _context = new CustomFSContext();
-            var questionEntity = _context.Questions
+            var question = _context.Questions
                 .ToList()
                 .Where(e => e.Id == questionId)
                 .FirstOrDefault();
-            _question = new QuestionVM(questionEntity);
+            _question = new QuestionVM(question);
 
-            var types = _context.QuestionTypes
-                .ToList()
-                .Select(e => new QuestionTypeVM(e));
-            QuestionTypes = new ObservableCollection<QuestionTypeVM>(types);
-
-            _selectedQuestionType = QuestionTypes.FirstOrDefault();
-            base.RaisePropertyChanged(nameof(QuestionTypes));
-
+            InitializeQuestionTypes();
             InitializeCommands();
         }
 
-        public void InitializeCommands()
+        //methods
+        private void InitializeCommands()
         {
             SaveQuestionChangesCommand = new RelayCommand<Window>(SaveQuestionChanges);
             CreateQuestionCommand = new RelayCommand<Window>(CreateQuestion);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
-        //methods
-
+        private void InitializeQuestionTypes()
+        {
+            var types = _context
+                .QuestionTypes
+                .ToList()
+                .Select(e => new QuestionTypeVM(e));
+            QuestionTypes = new ObservableCollection<QuestionTypeVM>(types);
+            _selectedQuestionType = QuestionTypes.FirstOrDefault();
+            base.RaisePropertyChanged(nameof(SelectedQuestionType));
+        }
         public void SaveQuestionChanges(Window window)
         {
             MessageBoxResult result = MessageBox.Show("Opslaan wijzigingen?", "Bevestiging", MessageBoxButton.OKCancel);
