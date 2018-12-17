@@ -49,7 +49,7 @@ namespace FSBeheer.ViewModel
         {
             // TODO: Not in memory/database after reopening the screen
 
-            ChosenInspectors = new ObservableCollection<InspectorVM>(SelectedInspectors);
+            ChosenInspectors = _Context.InspectorCrud.GetInspectorsByList(SelectedInspectors);
             RaisePropertyChanged(nameof(ChosenInspectors));
             Inspection.Inspectors = ChosenInspectors;
         }
@@ -100,12 +100,36 @@ namespace FSBeheer.ViewModel
                 //            startdate = inspection.startdate
                 //            enddate = inspection.enddate
                 //            inspector = inspection.inspector
+            
+            if (ChosenInspectors.Count != 0)
+            {
+                foreach (InspectorVM inspectorVM in ChosenInspectors)
+                {
+                    for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
+                    {
+                        AvailabilityVM availabilityVM = new AvailabilityVM(new Availability());
+                        availabilityVM.Inspector = inspectorVM.ToModel();
+                        availabilityVM.Scheduled = true;
+                        availabilityVM.Date = (DateTime?) start;
+                        availabilityVM.ScheduleStartTime = Inspection.InspectionDate.StartTime;
+                        availabilityVM.ScheduleEndTime = Inspection.InspectionDate.EndTime;
+                        //availabilityVM.InspectorId
+                        _Context.Availabilities.Add(availabilityVM.ToModel());
+                    }
+                }
+            }
+
+            if (Inspection.Status.StatusName == "Afgerond")
+            {
+
+            }
+
             if (CheckStartDateValidity())
             {
                 _Context.SaveChanges();
 
                 Messenger.Default.Send(true, "UpdateInspectionList");
-                CloseAction(window);
+                //CloseAction(window);
             }
             else
             {

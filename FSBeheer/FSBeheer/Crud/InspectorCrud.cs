@@ -65,6 +65,17 @@ namespace FSBeheer.Crud
             return !availableList.Contains(false);
         }
 
+        public ObservableCollection<InspectorVM> GetInspectorsByList(ObservableCollection<InspectorVM> list)
+        {
+            var inspectors = new ObservableCollection<InspectorVM>();
+            foreach (InspectorVM inspectorVM in list)
+            {
+                var inspector = CustomFSContext.Inspectors.FirstOrDefault(i => inspectorVM.Id == i.Id);
+                inspectors.Add(new InspectorVM(inspector));
+            }
+            return inspectors;
+        }
+
         public void Add(InspectorVM _inspector) => CustomFSContext.Inspectors.Add(_inspector.ToModel());
 
         public void Modify(InspectorVM _inspector)
