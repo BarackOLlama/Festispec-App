@@ -14,38 +14,34 @@ namespace FSBeheer.Crud
         }
         public void Add(QuestionVM _question) => CustomFSContext.Questions.Add(_question.ToModel());
 
-        public ObservableCollection<QuestionVM> GetAllQuestionVMs()
+        public ObservableCollection<QuestionVM> GetAllQuestions()
         {
             var questions = CustomFSContext.Questions
+                .Include(nameof(Model.QuestionType))
                .ToList()
+               .Where(q => q.IsDeleted == false)
                .Select(c => new QuestionVM(c));
-            var result = new ObservableCollection<QuestionVM>(questions);
-
-            return result;
+            return new ObservableCollection<QuestionVM>(questions);
         }
 
-        public ObservableCollection<QuestionVM> GetQuestionById(int questionId)
+        public ObservableCollection<QuestionVM> GetAllQuestionsByQuestionnaire(QuestionnaireVM questionnaire)
         {
             var questions = CustomFSContext.Questions
+                .Include(nameof(Model.QuestionType))
                .ToList()
-               .Where(c => c.Id == questionId)
+               .Where(q => q.IsDeleted == false)
+               .Where(q => q.Questionnaire.Id == questionnaire.Id)
                .Select(c => new QuestionVM(c));
-            var result = new ObservableCollection<QuestionVM>(questions);
-
-            return result;
+            return new ObservableCollection<QuestionVM>(questions);
         }
 
-        public void Modify(QuestionVM question)
+        public QuestionVM GetQuestionById(int questionId)
         {
-            CustomFSContext.Entry(question?.ToModel()).State = EntityState.Modified;
-            CustomFSContext.SaveChanges();
-        }
-
-        public void Delete(QuestionVM question)
-        {
-            CustomFSContext.Questions.Attach(question?.ToModel());
-            CustomFSContext.Questions.Remove(question?.ToModel());
-            CustomFSContext.SaveChanges();
+            var question = CustomFSContext.Questions
+               .ToList()
+               .Where(c => c.IsDeleted == false)
+               .FirstOrDefault(c => c.Id == questionId);
+            return new QuestionVM(question);
         }
 
         public ObservableCollection<QuestionVM> GetFilteredQuestionsByString(string must_contain)
@@ -56,6 +52,7 @@ namespace FSBeheer.Crud
             }
             var questions = CustomFSContext.Questions
                 .ToList()
+                .Where(c => c.IsDeleted == false)
                 .Where(c =>
                 c.Content.Contains(must_contain) ||
                 c.QuestionType.Name.Equals(must_contain) ||

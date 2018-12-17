@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,6 +27,13 @@ namespace FSBeheer.ViewModel
         public RelayCommand<Window> DiscardChangesCommand { get; set; }
         public RelayCommand<Window> DeleteEventCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
+
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
 
         public CreateEditEventViewModel()
         {
@@ -111,12 +119,19 @@ namespace FSBeheer.ViewModel
 
         private void SaveChanges(Window window)
         {
-            MessageBoxResult result = MessageBox.Show(" Weet u zeker dat u dit evenement op wilt slaan?", "Bevestigen", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
+            if (IsInternetConnected())
             {
-                _Context.SaveChanges();
-                Messenger.Default.Send(true, "UpdateEventList");
-                CloseAction(window);
+                MessageBoxResult result = MessageBox.Show("Weet u zeker dat u dit evenement op wilt slaan?", "Bevestigen", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    _Context.SaveChanges();
+                    Messenger.Default.Send(true, "UpdateEventList");
+                    CloseAction(window);
+                }
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
 
@@ -131,12 +146,19 @@ namespace FSBeheer.ViewModel
 
         private void DeleteEvent(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Weet u zeker dat u dit evenement wilt verwijderen?", "Bevestigen", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
+            if (IsInternetConnected())
             {
-                _Context.EventCrud.Delete(Event);
-                Messenger.Default.Send(true, "UpdateEventList");
-                CloseAction(window);
+                MessageBoxResult result = MessageBox.Show("Weet u zeker dat u dit evenement wilt verwijderen?", "Bevestigen", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    _Context.EventCrud.Delete(Event);
+                    Messenger.Default.Send(true, "UpdateEventList");
+                    CloseAction(window);
+                }
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
     }
