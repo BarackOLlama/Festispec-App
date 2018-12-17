@@ -15,7 +15,7 @@ namespace FSBeheer.VM
 
         public InspectionVM(Inspection inspection)
         {
-            _inspection = inspection;
+            _inspection = inspection;            
         }
 
         public int Id
@@ -65,6 +65,18 @@ namespace FSBeheer.VM
         {
             get { return new ObservableCollection<InspectorVM>(_inspection.Inspectors.Select(i => new InspectorVM(i))); }
             set { _inspection.Inspectors = new ObservableCollection<Inspector>(value.Select(i => i.ToModel())); }
+        }
+
+        public ObservableCollection<InspectorVM> Inspectors
+        {
+            get
+            {
+                return new ObservableCollection<InspectorVM>(_inspection.Inspectors.ToList().Select(i => new InspectorVM(i))); 
+            }
+            set
+            {
+                _inspection.Inspectors = new ObservableCollection<Inspector>(value.ToList().Select(i => i.ToModel()));
+            }
         }
 
         public bool IsDeleted
