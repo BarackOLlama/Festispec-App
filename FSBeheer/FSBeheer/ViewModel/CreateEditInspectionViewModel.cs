@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
@@ -19,6 +20,13 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<CustomerVM> Customers { get; }
         public ObservableCollection<EventVM> Events { get; set; }
         public ObservableCollection<StatusVM> Statuses { get; set; }
+
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
 
         private DateTime _StartDate { get; set; }
         public DateTime StartDate
@@ -183,16 +191,26 @@ namespace FSBeheer.ViewModel
 
         public void AddInspection()
         {
-            // Inspectie aanmaken in de database met alle velden die ingevuld zijn
-            _Context.InspectionCrud.GetAllInspectionVMs().Add(Inspection);
-            _Context.SaveChanges();
+            if (IsInternetConnected())
+            {
+                // Inspectie aanmaken in de database met alle velden die ingevuld zijn
+                _Context.InspectionCrud.GetAllInspectionVMs().Add(Inspection);
+                _Context.SaveChanges();
 
-            Messenger.Default.Send(true, "UpdateInspectionList");
+                Messenger.Default.Send(true, "UpdateInspectionList");
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
+            }
         }
 
         public void OpenAvailable()
         {
-            new AvailableInspectorView(Inspection.Id).Show();
+            if(IsInternetConnected())
+                new AvailableInspectorView(Inspection.Id).Show();
+            else
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
     }
 }

@@ -17,19 +17,7 @@ namespace FSBeheer.ViewModel
 
         //variables and properties
         private CustomFSContext _context;
-        private QuestionVM _question;
-        public QuestionVM Question
-        {
-            get
-            {
-                return _question;
-            }
-            set
-            {
-                _question = value;
-                base.RaisePropertyChanged(nameof(Question));
-            }
-        }
+        public QuestionVM Question { get; set; }
 
         private QuestionTypeVM _selectedQuestionType;
         public QuestionTypeVM SelectedQuestionType
@@ -60,9 +48,11 @@ namespace FSBeheer.ViewModel
             InitializeQuestionTypes();
             InitializeCommands();
 
-            _question = new QuestionVM();
-            _question.Type = _selectedQuestionType.ToModel();
-            _question.QuestionnaireId = questionnaireId;
+            Question = new QuestionVM
+            {
+                Type = SelectedQuestionType.ToModel(),
+                QuestionnaireId = questionnaireId
+            };
 
 
         }
@@ -73,14 +63,8 @@ namespace FSBeheer.ViewModel
             _context = new CustomFSContext();
             InitializeQuestionTypes();
             InitializeCommands();
-
-            var question = _context.Questions
-                .ToList()
-                .Where(e => e.Id == questionId)
-                .FirstOrDefault();
-            _question = new QuestionVM(question);
-
-
+            
+            Question = _context.QuestionCrud.GetQuestionById(questionId);
         }
 
         //methods
@@ -99,11 +83,11 @@ namespace FSBeheer.ViewModel
                 .Select(e => new QuestionTypeVM(e));
             QuestionTypes = new ObservableCollection<QuestionTypeVM>(types);
             _selectedQuestionType = QuestionTypes.FirstOrDefault();
-            base.RaisePropertyChanged(nameof(SelectedQuestionType));
+            RaisePropertyChanged(nameof(SelectedQuestionType));
         }
         public void SaveQuestionChanges(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Opslaan wijzigingen?", "Bevestiging", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestiging", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
                 _context.SaveChanges();
@@ -115,7 +99,6 @@ namespace FSBeheer.ViewModel
 
         public void CreateQuestion(Window window)
         {
-
             var result = MessageBox.Show("Opslaan?", "Bevestiging", MessageBoxButton.OKCancel);
 
             if (result == MessageBoxResult.OK)
@@ -140,8 +123,7 @@ namespace FSBeheer.ViewModel
                 window.Close();
             }
         }
-
-
+        
         public void CloseWindow(Window window)
         {
             MessageBoxResult result = MessageBox.Show("Aanpassing annuleren?", "Bevestig", MessageBoxButton.OKCancel);

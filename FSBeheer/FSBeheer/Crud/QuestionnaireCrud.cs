@@ -17,20 +17,21 @@ namespace FSBeheer.Crud
 
         }
 
-        public ObservableCollection<QuestionnaireVM> GetAllQuestionnaireVMs()
+        public ObservableCollection<QuestionnaireVM> GetAllQuestionnaires()
         {
             var questionnaire = CustomFSContext.Questionnaires
                 .ToList()
+                .Where(i => i.IsDeleted == false)
                 .Select(i => new QuestionnaireVM(i));
-            var _questionnaire = new ObservableCollection<QuestionnaireVM>(questionnaire);
-            return _questionnaire;
+            return new ObservableCollection<QuestionnaireVM>(questionnaire);
         }
 
-        public void Add(QuestionnaireVM _questionnaire)
+        public QuestionnaireVM GetQuestionnaireById(int id)
         {
-            CustomFSContext.Questionnaires.Add(_questionnaire.ToModel());
-            CustomFSContext.SaveChanges();
+            var questionnaire = CustomFSContext.Questionnaires
+                .Where(q => q.IsDeleted == false)
+                .FirstOrDefault(q => q.Id == id);
+            return new QuestionnaireVM(questionnaire);
         }
-
     }
 }
