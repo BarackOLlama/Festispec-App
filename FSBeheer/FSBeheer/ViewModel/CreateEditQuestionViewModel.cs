@@ -57,26 +57,30 @@ namespace FSBeheer.ViewModel
         {
             //create
             _context = new CustomFSContext();
+            InitializeQuestionTypes();
+            InitializeCommands();
+
             _question = new QuestionVM();
             _question.Type = _selectedQuestionType.ToModel();
             _question.QuestionnaireId = questionnaireId;
 
-            InitializeQuestionTypes();
-            InitializeCommands();
+
         }
 
         public CreateEditQuestionViewModel(int questionnaireId, int questionId)
         {
             //edit
             _context = new CustomFSContext();
+            InitializeQuestionTypes();
+            InitializeCommands();
+
             var question = _context.Questions
                 .ToList()
                 .Where(e => e.Id == questionId)
                 .FirstOrDefault();
             _question = new QuestionVM(question);
 
-            InitializeQuestionTypes();
-            InitializeCommands();
+
         }
 
         //methods

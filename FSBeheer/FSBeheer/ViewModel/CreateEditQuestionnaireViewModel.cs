@@ -72,7 +72,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand OpenCreateQuestionViewCommand { get; set; }
         public RelayCommand<Window> SaveQuestionnaireChangesCommand { get; set; }
         public RelayCommand OpenEditQuestionViewCommand { get; set; }
-        public RelayCommand CreateQuestionnaireCommand { get; set; }
+        public RelayCommand<Window> CreateQuestionnaireCommand { get; set; }
 
         public RelayCommand DeleteQuestionCommand { get; set; }
         public RelayCommand<Window> CloseWindowCommand { get; set; }
@@ -122,7 +122,7 @@ namespace FSBeheer.ViewModel
             SaveQuestionnaireChangesCommand = new RelayCommand<Window>(SaveQuestionnaireChanges);
             OpenEditQuestionViewCommand = new RelayCommand(OpenEditQuestionView);
             DeleteQuestionCommand = new RelayCommand(DeleteQuestion);
-            CreateQuestionnaireCommand = new RelayCommand(CreateQuestionnaire);
+            CreateQuestionnaireCommand = new RelayCommand<Window>(CreateQuestionnaire);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
 
         }
@@ -178,13 +178,15 @@ namespace FSBeheer.ViewModel
         {
             var questions = _context.Questions.ToList().Select(e => new QuestionVM(e));
             Questions = new ObservableCollection<QuestionVM>(questions);
+            base.RaisePropertyChanged(nameof(Questions));
         }
 
-        private void CreateQuestionnaire()
+        private void CreateQuestionnaire(Window window)
         {
             _context.Questionnaires.Add(Questionnaire.ToModel());
             _context.SaveChanges();
             Messenger.Default.Send(true, "UpdateQuestionnaires");
+            window.Close();
         }
 
         public void DeleteQuestion()
