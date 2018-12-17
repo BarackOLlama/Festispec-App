@@ -36,12 +36,12 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return _questionType;
+                return _selectedQuestionType;
             }
             set
             {
-                _questionType = value;
-                base.RaisePropertyChanged(nameof(QuestionType));
+                _selectedQuestionType = value;
+                base.RaisePropertyChanged(nameof(SelectedQuestionType));
             }
         }
         public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
@@ -62,7 +62,8 @@ namespace FSBeheer.ViewModel
 
             var temp = _context.QuestionTypes.ToList().Select(e => new QuestionTypeVM(e));
             QuestionTypes = new ObservableCollection<QuestionTypeVM>(temp);
-            SelectedQuestionType = QuestionTypes?[1];
+            _selectedQuestionType = QuestionTypes.FirstOrDefault();
+            base.RaisePropertyChanged(nameof(SelectedQuestionType));
 
             Question = new QuestionVM();
             Question.Type = _selectedQuestionType.ToModel();
@@ -85,7 +86,8 @@ namespace FSBeheer.ViewModel
                 .Select(e => new QuestionTypeVM(e));
             QuestionTypes = new ObservableCollection<QuestionTypeVM>(types);
 
-            SelectedQuestionType = QuestionTypes.FirstOrDefault();
+            _selectedQuestionType = QuestionTypes.FirstOrDefault();
+            base.RaisePropertyChanged(nameof(QuestionTypes));
 
             InitializeCommands();
         }
