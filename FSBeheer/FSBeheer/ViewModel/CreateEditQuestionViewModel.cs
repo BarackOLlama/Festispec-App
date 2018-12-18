@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -108,6 +109,32 @@ namespace FSBeheer.ViewModel
 
         public void CreateQuestion(Window window)
         {
+            if (Question.Content.Trim() == string.Empty)
+            {
+                MessageBox.Show("");
+                return;
+            }
+
+
+            Regex multiplechoiceRegex = new Regex("(\\w{1}\\|{1}\\w{1,};?){2,}");
+            //https://regexr.com/
+            //example data
+            //A|100;B|200;C|500;D|1000
+            //A | 100; c | 200
+            //A | 200
+
+
+            if ( SelectedQuestionType.Name != "Open Vraag" && SelectedQuestionType.Name != "Open Tabelvraag")
+            {
+                if (!multiplechoiceRegex.IsMatch(Question.Options))
+                {
+                    MessageBox.Show("De multiple choice syntax is incorrect.\n"+
+                        "Voorbeeld: A|Waar;B|Niet waar");
+                    return;
+                }
+                
+            }
+
             if (IsInternetConnected())
             {
                 var result = MessageBox.Show("Opslaan?", "Bevestiging", MessageBoxButton.OKCancel);
