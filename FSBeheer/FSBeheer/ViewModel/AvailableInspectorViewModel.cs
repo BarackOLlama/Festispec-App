@@ -28,7 +28,7 @@ namespace FSBeheer.ViewModel
 
         public RelayCommand<Window> DiscardChangesCommand { get; set; }
 
-        private InspectorVM _selectedAvailaibleInspector { get; set; }
+        private InspectorVM _selectedAvailableInspector { get; set; }
 
         private InspectorVM _selectedChosenInspector { get; set; }
 
@@ -46,13 +46,13 @@ namespace FSBeheer.ViewModel
             DiscardChangesCommand = new RelayCommand<Window>(Discard);
         }
 
-        public InspectorVM SelectedAvailaibleInspector
+        public InspectorVM SelectedAvailableInspector
         {
-            get { return _selectedAvailaibleInspector; }
+            get { return _selectedAvailableInspector; }
             set
             {
-                _selectedAvailaibleInspector = value;
-                base.RaisePropertyChanged(nameof(SelectedAvailaibleInspector));
+                _selectedAvailableInspector = value;
+                base.RaisePropertyChanged(nameof(SelectedAvailableInspector));
             }
         }
 
@@ -90,7 +90,7 @@ namespace FSBeheer.ViewModel
                 AvailableInspectors.Remove(inspectorAvailable);
             } else
             {
-                MessageBox.Show("No inspector selected");
+                MessageBox.Show("Er zijn geen inspecteurs geselecteerd.");
             }
         }
 
@@ -102,16 +102,17 @@ namespace FSBeheer.ViewModel
                 AvailableInspectors.Add(inspectorChosen);
             } else
             {
-                MessageBox.Show("No inspector selected");
+                MessageBox.Show("Er zijn geen inspecteurs geselecteerd.");
             }
         }
 
         private void SaveChanges(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Wilt u de veranderingen opslaan?", "Bevestigen", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                CustomFSContext.SaveChanges();
+                _selectedInspection.Inspectors = ChosenInspectors;
+                //CustomFSContext.SaveChanges();
                 window.Close();
 
                 // Update
@@ -121,7 +122,7 @@ namespace FSBeheer.ViewModel
 
         private void Discard(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Close without saving?", "Confirm discard", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Wilt u sluiten zonder op te slaan?", "Confirm discard", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
                 CustomFSContext.Dispose();

@@ -76,6 +76,17 @@ namespace FSBeheer.Crud
             return inspectors;
         }
 
+        public List<InspectorVM> GetInspectorsByInspectionId(int inspectionId)
+        {
+            var inspectors = new List<InspectorVM>();
+            var inspection = new InspectionCrud(CustomFSContext).GetInspectionById(inspectionId);
+            foreach (InspectorVM inspectorVM in inspection.Inspectors)
+            {
+                inspectors.Add(inspectorVM);
+            }
+            return inspectors;
+        }
+
         public void Add(InspectorVM _inspector) => CustomFSContext.Inspectors.Add(_inspector.ToModel());
 
         public void Modify(InspectorVM _inspector)

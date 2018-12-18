@@ -1,10 +1,12 @@
-﻿using FSBeheer.Model;
+﻿using FSBeheer.Crud;
+using FSBeheer.Model;
 using FSBeheer.View;
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -21,6 +23,7 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<StatusVM> Statuses { get; set; }
         public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
         public string Title { get; set; }
+        private List<InspectorVM> _listOfInspectors;
 
         public string WarningText { get; set; }
         
@@ -38,6 +41,7 @@ namespace FSBeheer.ViewModel
             Customers = _Context.CustomerCrud.GetAllCustomers();
             Events = _Context.EventCrud.GetAllEvents();
             Statuses = _Context.StatusCrud.GetAllStatusVMs();
+            _listOfInspectors = new List<InspectorVM>();
 
             CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
             AddInspectionCommand = new RelayCommand<Window>(AddInspection);
@@ -48,10 +52,30 @@ namespace FSBeheer.ViewModel
         public void SetInspectors(ObservableCollection<InspectorVM> SelectedInspectors)
         {
             // TODO: Not in memory/database after reopening the screen
+            _listOfInspectors = new InspectorCrud(_Context).GetInspectorsByInspectionId(Inspection.Id);
 
             ChosenInspectors = _Context.InspectorCrud.GetInspectorsByList(SelectedInspectors);
-            RaisePropertyChanged(nameof(ChosenInspectors));
-            Inspection.Inspectors = ChosenInspectors;
+            if (ChosenInspectors != null && ChosenInspectors.Count != 0)
+            {
+                foreach (InspectorVM inspectorVM in ChosenInspectors)
+                {
+                    _listOfInspectors.Add(inspectorVM);
+
+                    for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
+                    {
+                        AvailabilityVM availabilityVM = new AvailabilityVM(new Availability());
+                        availabilityVM.Inspector = inspectorVM.ToModel();
+                        availabilityVM.Scheduled = true;
+                        availabilityVM.Date = (DateTime?)start;
+                        availabilityVM.ScheduleStartTime = Inspection.InspectionDate.StartTime;
+                        availabilityVM.ScheduleEndTime = Inspection.InspectionDate.EndTime;
+                        _Context.Availabilities.Add(availabilityVM.ToModel());
+                    }
+                }
+            }
+            Inspection.Inspectors = new ObservableCollection<InspectorVM>(_listOfInspectors);
+            _Context.SaveChanges();
+            RaisePropertyChanged(nameof(Inspection));
         }
 
         public void SetInspection(int inspectionId)
@@ -91,33 +115,23 @@ namespace FSBeheer.ViewModel
         }
 
         public void AddInspection(Window window)
-        {
-            // TODO:
-            // if inspectors.count != 0
-            //      for each inspector
-                //      new availability
-                //            isscheduled = true
-                //            startdate = inspection.startdate
-                //            enddate = inspection.enddate
-                //            inspector = inspection.inspector
-            
-            if (ChosenInspectors.Count != 0)
-            {
-                foreach (InspectorVM inspectorVM in ChosenInspectors)
-                {
-                    for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
-                    {
-                        AvailabilityVM availabilityVM = new AvailabilityVM(new Availability());
-                        availabilityVM.Inspector = inspectorVM.ToModel();
-                        availabilityVM.Scheduled = true;
-                        availabilityVM.Date = (DateTime?) start;
-                        availabilityVM.ScheduleStartTime = Inspection.InspectionDate.StartTime;
-                        availabilityVM.ScheduleEndTime = Inspection.InspectionDate.EndTime;
-                        //availabilityVM.InspectorId
-                        _Context.Availabilities.Add(availabilityVM.ToModel());
-                    }
-                }
-            }
+        {            
+            //if (ChosenInspectors != null && ChosenInspectors.Count != 0)
+            //{
+            //    foreach (InspectorVM inspectorVM in ChosenInspectors)
+            //    {
+            //        for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
+            //        {
+            //            AvailabilityVM availabilityVM = new AvailabilityVM(new Availability());
+            //            availabilityVM.Inspector = inspectorVM.ToModel();
+            //            availabilityVM.Scheduled = true;
+            //            availabilityVM.Date = (DateTime?) start;
+            //            availabilityVM.ScheduleStartTime = Inspection.InspectionDate.StartTime;
+            //            availabilityVM.ScheduleEndTime = Inspection.InspectionDate.EndTime;
+            //            _Context.Availabilities.Add(availabilityVM.ToModel());
+            //        }
+            //    }
+            //}
 
             if (Inspection.Status.StatusName == "Afgerond")
             {
