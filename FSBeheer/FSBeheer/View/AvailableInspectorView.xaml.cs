@@ -20,10 +20,10 @@ namespace FSBeheer.View
     /// </summary>
     public partial class AvailableInspectorView : Window
     {
-        public AvailableInspectorView(int inspectionId)
+        public AvailableInspectorView(CustomFSContext context, int inspectionId)
         {
             InitializeComponent();
-            (DataContext as AvailableInspectorViewModel).SetInspection(inspectionId);
+            (DataContext as AvailableInspectorViewModel).SetContextInspectionId(context, inspectionId);
         }
     }
 }

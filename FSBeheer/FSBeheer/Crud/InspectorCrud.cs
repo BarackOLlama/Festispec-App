@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.Crud
 {
-    class InspectorCrud : AbstractCrud
+    public class InspectorCrud : AbstractCrud
     {
 
         public InspectorCrud(CustomFSContext customFSContext) : base(customFSContext)
@@ -76,15 +76,10 @@ namespace FSBeheer.Crud
             return inspectors;
         }
 
-        public List<InspectorVM> GetInspectorsByInspectionId(int inspectionId)
+        public ObservableCollection<InspectorVM> GetInspectorsByInspectionId(int inspectionId)
         {
-            var inspectors = new List<InspectorVM>();
             var inspection = new InspectionCrud(CustomFSContext).GetInspectionById(inspectionId);
-            foreach (InspectorVM inspectorVM in inspection.Inspectors)
-            {
-                inspectors.Add(inspectorVM);
-            }
-            return inspectors;
+            return inspection.Inspectors;
         }
 
         public void Add(InspectorVM _inspector) => CustomFSContext.Inspectors.Add(_inspector.ToModel());

@@ -6,7 +6,7 @@ using FSBeheer.VM;
 
 namespace FSBeheer.Crud
 {
-    class EventCrud : AbstractCrud
+    public class EventCrud : AbstractCrud
     {
         public EventCrud(CustomFSContext customFSContext) : base(customFSContext)
         {

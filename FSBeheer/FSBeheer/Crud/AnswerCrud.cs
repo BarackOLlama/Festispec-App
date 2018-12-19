@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace FSBeheer.Crud
 {
-    class AnswerCrud : AbstractCrud
+    public class AnswerCrud : AbstractCrud
     {
         public AnswerCrud(CustomFSContext customFSContext) : base(customFSContext)
         {

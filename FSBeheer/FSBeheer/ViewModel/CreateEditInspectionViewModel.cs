@@ -35,7 +35,7 @@ namespace FSBeheer.ViewModel
         public CreateEditInspectionViewModel()
         {
             // Darjush laten weten
-            Messenger.Default.Register<ObservableCollection<InspectorVM>>(this, "UpdateAvailableList", cl => SetInspectors(cl));
+            Messenger.Default.Register<bool>(this, "UpdateAvailableList", c => RaisePropertyChanged(nameof(Inspection)));
 
             _Context = new CustomFSContext();
             Customers = _Context.CustomerCrud.GetAllCustomers();
@@ -51,32 +51,37 @@ namespace FSBeheer.ViewModel
 
         public void SetInspectors(ObservableCollection<InspectorVM> SelectedInspectors)
         {
-            // TODO: Not in memory/database after reopening the screen
-            _listOfInspectors = new InspectorCrud(_Context).GetInspectorsByInspectionId(Inspection.Id);
+            //// TODO: Not in memory/database after reopening the screen
 
-            ChosenInspectors = _Context.InspectorCrud.GetInspectorsByList(SelectedInspectors);
-            if (ChosenInspectors != null && ChosenInspectors.Count != 0)
-            {
-                foreach (InspectorVM inspectorVM in ChosenInspectors)
-                {
-                    _listOfInspectors.Add(inspectorVM);
+            //ChosenInspectors = _Context.InspectorCrud.GetInspectorsByList(SelectedInspectors);
+            //if (ChosenInspectors != null && ChosenInspectors.Count != 0)
+            //{
+            //    foreach (InspectorVM inspectorVM in ChosenInspectors)
+            //    {
+            //        _listOfInspectors.Add(inspectorVM);
 
-                    for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
-                    {
-                        AvailabilityVM availabilityVM = new AvailabilityVM(new Availability());
-                        availabilityVM.Inspector = inspectorVM.ToModel();
-                        availabilityVM.Scheduled = true;
-                        availabilityVM.Date = (DateTime?)start;
-                        availabilityVM.ScheduleStartTime = Inspection.InspectionDate.StartTime;
-                        availabilityVM.ScheduleEndTime = Inspection.InspectionDate.EndTime;
-                        _Context.Availabilities.Add(availabilityVM.ToModel());
-                    }
-                }
-            }
-            Inspection.Inspectors = new ObservableCollection<InspectorVM>(_listOfInspectors);
-            _Context.SaveChanges();
-            RaisePropertyChanged(nameof(Inspection));
+            //        for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
+            //        {
+            //            AvailabilityVM availabilityVM = new AvailabilityVM(new Availability());
+            //            availabilityVM.Inspector = inspectorVM.ToModel();
+            //            availabilityVM.Scheduled = true;
+            //            availabilityVM.Date = (DateTime?)start;
+            //            availabilityVM.ScheduleStartTime = Inspection.InspectionDate.StartTime;
+            //            availabilityVM.ScheduleEndTime = Inspection.InspectionDate.EndTime;
+            //            _Context.Availabilities.Add(availabilityVM.ToModel());
+            //        }
+            //    }
+            //}
+            //Inspection.Inspectors = new ObservableCollection<InspectorVM>(_listOfInspectors);
+            //_Context.SaveChanges();
+            //RaisePropertyChanged(nameof(Inspection));
         }
+
+        //private void UpdateInspection()
+        //{
+        //    Inspection = _Context.InspectionCrud.GetInspectionById(Inspection.Id);
+        //    RaisePropertyChanged(nameof(Inspection));
+        //}
 
         public void SetInspection(int inspectionId)
         {
@@ -115,7 +120,7 @@ namespace FSBeheer.ViewModel
         }
 
         public void AddInspection(Window window)
-        {            
+        {
             //if (ChosenInspectors != null && ChosenInspectors.Count != 0)
             //{
             //    foreach (InspectorVM inspectorVM in ChosenInspectors)
@@ -156,7 +161,7 @@ namespace FSBeheer.ViewModel
         {
             if (CheckStartDateValidity())
             {
-                new AvailableInspectorView(Inspection.Id).Show();
+                new AvailableInspectorView(_Context, Inspection.Id).Show();
             }
             else
             {
