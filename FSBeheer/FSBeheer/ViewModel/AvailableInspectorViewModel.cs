@@ -128,43 +128,36 @@ namespace FSBeheer.ViewModel
         {
             // moet nog gefixt worden
 
-            MessageBoxResult result = MessageBox.Show("Wilt u de veranderingen opslaan?", "Bevestigen", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
-            {
-                _selectedInspection.Inspectors = ChosenInspectors;
-                foreach (InspectorVM inspectorVM in ChosenInspectors)
-                {
-                    for (var start = _selectedInspection.InspectionDate.StartDate; start <= _selectedInspection.InspectionDate.EndDate; start = start.AddDays(1))
-                    {
-                        AvailabilityVM availabilityVM = new AvailabilityVM(new Availability());
-                        availabilityVM.Inspector = inspectorVM.ToModel();
-                        availabilityVM.Scheduled = true;
-                        availabilityVM.Date = (DateTime?)start;
-                        availabilityVM.ScheduleStartTime = _selectedInspection.InspectionDate.StartTime;
-                        availabilityVM.ScheduleEndTime = _selectedInspection.InspectionDate.EndTime;
-                        CustomFSContext.Availabilities.Add(availabilityVM.ToModel());
-                    }
-                }
-
-                foreach (InspectorVM inspectorVM in RemovedInspectors)
-                {
-
-                }
-                window.Close();
             if (IsInternetConnected())
             {
-                MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
+                MessageBoxResult result = MessageBox.Show("Wilt u de veranderingen opslaan?", "Bevestigen", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    CustomFSContext.SaveChanges();
-                    window.Close();
-                    
-                    // Update
-                    Messenger.Default.Send(true, "UpdateAvailableList");
+                    _selectedInspection.Inspectors = ChosenInspectors;
+                    foreach (InspectorVM inspectorVM in ChosenInspectors)
+                    {
+                        for (var start = _selectedInspection.InspectionDate.StartDate; start <= _selectedInspection.InspectionDate.EndDate; start = start.AddDays(1))
+                        {
+                            AvailabilityVM availabilityVM = new AvailabilityVM(new Availability())
+                            {
+                                Inspector = inspectorVM.ToModel(),
+                                Scheduled = true,
+                                Date = (DateTime?)start,
+                                ScheduleStartTime = _selectedInspection.InspectionDate.StartTime,
+                                ScheduleEndTime = _selectedInspection.InspectionDate.EndTime
+                            };
+                            CustomFSContext.Availabilities.Add(availabilityVM.ToModel());
+                        }
+                    }
 
-
+                    foreach (InspectorVM inspectorVM in RemovedInspectors)
+                    {
 
                     }
+
+                    window.Close();
+                    Messenger.Default.Send(true, "UpdateAvailableList");
+                }
             }
             else
             {
