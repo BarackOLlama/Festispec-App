@@ -15,7 +15,7 @@ namespace FSBeheer.Crud
         {
         }
 
-        public ObservableCollection<InspectionVM> GetAllInspectionVMs()
+        public ObservableCollection<InspectionVM> GetAllInspections()
         {
             var inspection = CustomFSContext.Inspections
                 .ToList()
@@ -27,7 +27,10 @@ namespace FSBeheer.Crud
 
         public InspectionVM GetInspectionById(int inspectionId)
         {
-            var inspection = CustomFSContext.Inspections.ToList().FirstOrDefault(i => i.Id == inspectionId);
+            var inspection = CustomFSContext.Inspections
+                .ToList()
+                .Where(i => i.IsDeleted == false)
+                .FirstOrDefault(i => i.Id == inspectionId);
             return new InspectionVM(inspection);
         }
     }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
@@ -24,6 +25,100 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
         public string Title { get; set; }
         private List<InspectorVM> _listOfInspectors;
+
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
+
+        private DateTime _StartDate { get; set; }
+        public DateTime StartDate
+        {
+            get
+            {
+                return _StartDate;
+            }
+            set
+            {
+                _StartDate = value;
+                Inspection.InspectionDate.StartDate = value;
+                RaisePropertyChanged(nameof(StartDate));
+            }
+        }
+        private DateTime _EndDate { get; set; }
+        public DateTime EndDate
+        {
+            get
+            {
+                return _EndDate;
+            }
+            set
+            {
+                _EndDate = value;
+                Inspection.InspectionDate.EndDate = value;
+                RaisePropertyChanged(nameof(EndDate));
+            }
+        }
+        private TimeSpan? _StartTime { get; set; }
+        public TimeSpan? StartTime {
+            get
+            {
+                return _StartTime;
+            }
+            set
+            {
+                _StartTime = value;
+                Inspection.InspectionDate.StartTime = value;
+                RaisePropertyChanged(nameof(StartTime));
+            }
+        }
+        private TimeSpan? _EndTime { get; set; }
+        public TimeSpan? EndTime {
+            get
+            {
+                return _EndTime;
+            }
+            set
+            {
+                _EndTime = value;
+                Inspection.InspectionDate.EndTime = value;
+                RaisePropertyChanged(nameof(EndTime));
+            }
+        }
+        private EventVM _SelectedEvent { get; set; }
+        public EventVM SelectedEvent {
+            get
+            {
+                return _SelectedEvent;
+            }
+            set
+            {
+                _SelectedEvent = value;
+                if (Inspection != null)
+                {
+                    Inspection.Event = value.ToModel();
+                }
+                RaisePropertyChanged(nameof(SelectedEvent));
+            }
+        }
+        private StatusVM _SelectedStatus { get; set; }
+        public StatusVM SelectedStatus {
+            get
+            {
+                return _SelectedStatus;
+            }
+            set
+            {
+                _SelectedStatus = value;
+                if (Inspection != null)
+                {
+                    Inspection.Status = value.ToModel();
+                }
+                RaisePropertyChanged(nameof(SelectedStatus));
+            }
+        }
 
         public string WarningText { get; set; }
         
@@ -41,7 +136,6 @@ namespace FSBeheer.ViewModel
             Customers = _Context.CustomerCrud.GetAllCustomers();
             Events = _Context.EventCrud.GetAllEvents();
             Statuses = _Context.StatusCrud.GetAllStatusVMs();
-            _listOfInspectors = new List<InspectorVM>();
 
             CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
             AddInspectionCommand = new RelayCommand<Window>(AddInspection);
@@ -49,39 +143,9 @@ namespace FSBeheer.ViewModel
             PickInspectorsCommand = new RelayCommand(OpenAvailable);
         }
 
-        public void SetInspectors(ObservableCollection<InspectorVM> SelectedInspectors)
-        {
-            //// TODO: Not in memory/database after reopening the screen
+        
 
-            //ChosenInspectors = _Context.InspectorCrud.GetInspectorsByList(SelectedInspectors);
-            //if (ChosenInspectors != null && ChosenInspectors.Count != 0)
-            //{
-            //    foreach (InspectorVM inspectorVM in ChosenInspectors)
-            //    {
-            //        _listOfInspectors.Add(inspectorVM);
-
-            //        for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
-            //        {
-            //            AvailabilityVM availabilityVM = new AvailabilityVM(new Availability());
-            //            availabilityVM.Inspector = inspectorVM.ToModel();
-            //            availabilityVM.Scheduled = true;
-            //            availabilityVM.Date = (DateTime?)start;
-            //            availabilityVM.ScheduleStartTime = Inspection.InspectionDate.StartTime;
-            //            availabilityVM.ScheduleEndTime = Inspection.InspectionDate.EndTime;
-            //            _Context.Availabilities.Add(availabilityVM.ToModel());
-            //        }
-            //    }
-            //}
-            //Inspection.Inspectors = new ObservableCollection<InspectorVM>(_listOfInspectors);
-            //_Context.SaveChanges();
-            //RaisePropertyChanged(nameof(Inspection));
-        }
-
-        //private void UpdateInspection()
-        //{
-        //    Inspection = _Context.InspectionCrud.GetInspectionById(Inspection.Id);
-        //    RaisePropertyChanged(nameof(Inspection));
-        //}
+        
 
         public void SetInspection(int inspectionId)
         {
@@ -114,51 +178,41 @@ namespace FSBeheer.ViewModel
             MessageBoxResult result = MessageBox.Show("Weet u zeker dat u deze inspectie wilt annuleren?", "Bevestig annulering inspectie", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                CloseAction(window);
+                _Context.Dispose();
+                Inspection = null;
+                window.Close();
             }
-            CanExecuteChanged();
         }
 
-        public void AddInspection(Window window)
+        public void AddInspection()
         {
-            //if (ChosenInspectors != null && ChosenInspectors.Count != 0)
-            //{
-            //    foreach (InspectorVM inspectorVM in ChosenInspectors)
-            //    {
-            //        for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
-            //        {
-            //            AvailabilityVM availabilityVM = new AvailabilityVM(new Availability());
-            //            availabilityVM.Inspector = inspectorVM.ToModel();
-            //            availabilityVM.Scheduled = true;
-            //            availabilityVM.Date = (DateTime?) start;
-            //            availabilityVM.ScheduleStartTime = Inspection.InspectionDate.StartTime;
-            //            availabilityVM.ScheduleEndTime = Inspection.InspectionDate.EndTime;
-            //            _Context.Availabilities.Add(availabilityVM.ToModel());
-            //        }
-            //    }
-            //}
-
-            if (Inspection.Status.StatusName == "Afgerond")
+            if (IsInternetConnected())
             {
+                if (CheckStartDateValidity())
+                {
+                    // Inspectie aanmaken in de database met alle velden die ingevuld zijn
+                    _Context.InspectionCrud.GetAllInspections().Add(Inspection);
+                    _Context.SaveChanges();
+                    Messenger.Default.Send(true, "UpdateInspectionList");
 
-            }
-
-            if (CheckStartDateValidity())
-            {
-                _Context.SaveChanges();
-
-                Messenger.Default.Send(true, "UpdateInspectionList");
-                //CloseAction(window);
+                }
+                else
+                {
+                    MessageBox.Show("De ingevulde datums zijn niet correct. Voer correcte begin- en einddatums in en probeer het opnieuw.");
+                }
             }
             else
             {
-                MessageBox.Show("De ingevulde datums zijn niet correct. Voer correcte begin- en einddatums in en probeer het opnieuw.");
-                return;
-            }            
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
+            }
         }
 
         public void OpenAvailable()
         {
+            if (IsInternetConnected())
+                new AvailableInspectorView(Inspection.Id).Show();
+            else
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             if (CheckStartDateValidity())
             {
                 new AvailableInspectorView(_Context, Inspection.Id).Show();
@@ -210,6 +264,7 @@ namespace FSBeheer.ViewModel
                 return true;
             }
             return false;
+            
         }
     }
 }

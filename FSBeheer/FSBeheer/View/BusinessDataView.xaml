@@ -10,29 +10,29 @@
     <Grid>
         <StackPanel HorizontalAlignment="Left" Width="225">
             <TextBlock FontSize="20">Kwartaal Jaar</TextBlock>
-            <Label Content="{Binding Year, FallbackValue=error}" FontSize="15"></Label>
+            <ComboBox ItemsSource="{Binding ValidYears}" SelectedItem="{Binding Year}"></ComboBox>
             <Separator/>
             <TextBlock>Aantal inspecteurs:</TextBlock>
-            <Label Content="{Binding Inspectors.Count, FallbackValue=0}"></Label>
+            <Label Content="{Binding Inspectors.Count, Mode=OneWay, FallbackValue=0}"></Label>
             <TextBlock>Aantal inspecties:</TextBlock>
-            <Label Content="{Binding Inspections.Count, FallbackValue=0}"></Label>
+            <Label Content="{Binding Inspections.Count, Mode=OneWay, FallbackValue=0}"></Label>
             <TextBlock>Aantal klanten:</TextBlock>
-            <Label Content="{Binding Customers.Count, FallbackValue=0}" ></Label>
+            <Label Content="{Binding Customers.Count, Mode=OneWay, FallbackValue=0}" ></Label>
             <TextBlock>Nieuwe klanten:</TextBlock>
-            <Label Content="{Binding NewCustomersCount, FallbackValue=0}"></Label>
+            <Label Content="{Binding NewCustomersCount, Mode=OneWay, FallbackValue=0}"></Label>
         </StackPanel>
         <StackPanel HorizontalAlignment="Right" Width="225">
             <TextBlock FontSize="20">Kwartaal Nummer</TextBlock>
-            <Label Content="{Binding QuarterNumber, FallbackValue=error}" FontSize="15"></Label>
+            <ComboBox ItemsSource="{Binding Quarters}" SelectedItem="{Binding QuarterNumber}"></ComboBox>
             <Separator/>
             <TextBlock>Nieuwe inspecteurs:</TextBlock>
-            <Label Content="{Binding NewInspectorsCount, FallbackValue=0}"></Label>
+            <Label Content="{Binding NewInspectorsCount, Mode=OneWay, FallbackValue=0}"></Label>
             <TextBlock>Actieve inspecteurs:</TextBlock>
-            <Label Content="{Binding ActiveInspectorsCount, FallbackValue=0}"></Label>
+            <Label Content="{Binding ActiveInspectorsCount, Mode=OneWay, FallbackValue=0}"></Label>
             <TextBlock>Inactieve inspecteurs:</TextBlock>
-            <Label Content="{Binding InactiveInspectorsCount, FallbackValue=0}"></Label>
+            <Label Content="{Binding InactiveInspectorsCount, Mode=OneWay, FallbackValue=0}"></Label>
             <TextBlock>Nieuwe inspecties:</TextBlock>
-            <Label Content="{Binding NewInspectionsCount, FallbackValue=0}"></Label>
+            <Label Content="{Binding NewInspectionsCount,Mode=OneWay, FallbackValue=0}"></Label>
         </StackPanel>
     </Grid>
 </Window>
