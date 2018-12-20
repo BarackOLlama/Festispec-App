@@ -24,7 +24,7 @@ namespace FSBeheer.ViewModel
 
         public RelayCommand<Window> DeleteContactCommand { get; set; }
 
-        private CustomFSContext _Context;
+        private CustomFSContext _context;
 
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int description, int reservedValue);
@@ -35,7 +35,7 @@ namespace FSBeheer.ViewModel
 
         public CreateEditContactViewModel()
         {
-            _Context = new CustomFSContext();
+            _context = new CustomFSContext();
             SaveChangesContactCommand = new RelayCommand(SaveChangesContact);
             DiscardContactCommand = new RelayCommand<Window>(DiscardContact);
             DeleteContactCommand = new RelayCommand<Window>(DeleteContact);
@@ -50,12 +50,12 @@ namespace FSBeheer.ViewModel
                 {
                     CustomerId = _linkCustomer.Id
                 };
-                _Context.Contacts.Add(Contact.ToModel());
+                _context.Contacts.Add(Contact.ToModel());
                 RaisePropertyChanged(nameof(Contact));
             }
             else
             {
-                Contact = new ContactVM(_Context.Contacts.FirstOrDefault(c => c.Id == contact.Id));
+                Contact = new ContactVM(_context.Contacts.FirstOrDefault(c => c.Id == contact.Id));
                 RaisePropertyChanged(nameof(Contact));
             }
         }
@@ -64,14 +64,14 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
+                MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestiging opslaan", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
                     // TODO: Als je nieuw klant aanmaakt en niet saved en dan contact aanmaakt zit hij nog niet in de database en krijg je een error
                     try
                     {
-                        _Context.ContactCrud.GetAllContactVMs().Add(Contact);
-                        _Context.SaveChanges();
+                        _context.ContactCrud.GetAllContactVMs().Add(Contact);
+                        _context.SaveChanges();
                     }
                     catch
                     {
@@ -89,10 +89,10 @@ namespace FSBeheer.ViewModel
 
         private void DiscardContact(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Close without saving?", "Confirm discard", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Sluiten zonder opslaan?", "Bevestig annulering", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                _Context.Dispose();
+                _context.Dispose();
                 Contact = null;
                 window?.Close();
             }
@@ -102,11 +102,11 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                MessageBoxResult result = MessageBox.Show("Delete the selected contactperson?", "Confirm Delete", MessageBoxButton.OKCancel);
+                MessageBoxResult result = MessageBox.Show("Geselecteerde contactpersoon verwijderen?", "Bevestiging verwijdering", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
                     Contact.IsDeleted = true;
-                    _Context.SaveChanges();
+                    _context.SaveChanges();
                     window.Close();
 
                     Messenger.Default.Send(true, "UpdateContactList");

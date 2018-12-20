@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace FSBeheer.ViewModel
@@ -17,28 +18,17 @@ namespace FSBeheer.ViewModel
         public AccountVM Account { get; set; }
         private HomeViewModel _homeViewModel;
 
-        public string Message
-        {
-            get { return _message; }
-            set
-            {
-                _message = value;
-                base.RaisePropertyChanged();
-            }
-        }
-
-        public RelayCommand VerifyLoginCommand { get; set; }
+        public RelayCommand<Window> VerifyLoginCommand { get; set; }
 
         public LoginViewModel(HomeViewModel homeViewModel)
         {
             _homeViewModel = homeViewModel;
             //this.CreateNewAccount();
-            VerifyLoginCommand = new RelayCommand(VerifyLogin);
-            Message = "";
+            VerifyLoginCommand = new RelayCommand<Window>(VerifyLogin);
             Account = new AccountVM();
         }
 
-        public void VerifyLogin()
+        public void VerifyLogin(Window window)
         {
             string username;
             string password;
@@ -55,7 +45,7 @@ namespace FSBeheer.ViewModel
                 }
                 catch (Exception)
                 {
-                    Message = "Could not connect to database.";
+                    MessageBox.Show("Kan momenteel niet verbinden met de inlogservice.");
                     return;
                 }
 
@@ -65,7 +55,7 @@ namespace FSBeheer.ViewModel
                 //short circuti
                 if (salt == null)
                 {
-                    Message = "No such username/password combination found.";
+                    MessageBox.Show("Gebruikersnaam/wachtwoord combinatie onbekend.");
                     return;
                 }
                 //get the salted version of the user input with the salt from the account in the database
@@ -76,14 +66,14 @@ namespace FSBeheer.ViewModel
 
                 if (findUser == null)
                 {
-                    Message = "No such username/password combination found.";
+                    MessageBox.Show("Gebruikersnaam/wachtwoord combinatie onbekend.");
                 }
                 else
                 {
-                    Message = "Login succesful!";
                     //save the fact that the user has logged in in a variable.
                     //Loginbox should automatically close.
                     _homeViewModel.Account = new AccountVM() { Username = username };
+                    window.Close();
                 }
 
             }

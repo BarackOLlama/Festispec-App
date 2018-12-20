@@ -63,8 +63,8 @@ namespace FSBeheer.ViewModel
         public CreateEditQuestionnaireViewModel(int questionnaireId)
         {
             //edit
-            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => Init());
-            Init();
+            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
+            FetchAndSetQuestions();
             Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
 
             Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
@@ -84,8 +84,8 @@ namespace FSBeheer.ViewModel
         public CreateEditQuestionnaireViewModel()
         {
             //create
-            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => Init());
-            Init();
+            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
+            FetchAndSetQuestions();
             Questionnaire = new QuestionnaireVM();
             InitializeCommands();
         }
@@ -102,7 +102,7 @@ namespace FSBeheer.ViewModel
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
-        internal void Init()
+        internal void FetchAndSetQuestions()
         {
             _context = new CustomFSContext();
             Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
@@ -117,8 +117,27 @@ namespace FSBeheer.ViewModel
                 window.Close();
             }
         }
+
+        private bool QuestionnaireIsValid()
+        {
+            if (Questionnaire == null)
+            {
+                MessageBox.Show("Er is iets misgegaan. Heropen a.u.b. dit scherm.");
+                return false;
+            }
+            if (Questionnaire.Name.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een vragenlijst moet een vraag hebben.");
+                return false;
+            }
+
+            return true;
+        }
+
         private void SaveQuestionnaireChanges(Window window)
         {
+            if (!QuestionnaireIsValid()) return;
+
             if (IsInternetConnected())
             {
                 MessageBoxResult result = MessageBox.Show("Opslaan wijzigingen?", "Bevestiging", MessageBoxButton.OKCancel);
@@ -166,6 +185,8 @@ namespace FSBeheer.ViewModel
 
         private void SaveQuestionnaire(Window window)
         {
+            if (!QuestionnaireIsValid()) return;
+
             if (IsInternetConnected())
             {
                 _context.Questionnaires.Add(Questionnaire.ToModel());
@@ -192,7 +213,7 @@ namespace FSBeheer.ViewModel
                     {
                         _selectedQuestion.IsDeleted = true;
                         _context.SaveChanges();
-                        this.Init();
+                        this.FetchAndSetQuestions();
                     }
                 }
             }
