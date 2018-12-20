@@ -387,7 +387,7 @@ namespace FSBeheer.Migrations
                     Instructions = "Laat geen vragen leeg",
                     Version = 1,
                     Comments = "Dit is onze eerste inspectie, extra goed opletten!",
-                    Inspection = inspections[0],
+                    Inspection = inspections[1],
                     IsDeleted = false
                 }
             };
