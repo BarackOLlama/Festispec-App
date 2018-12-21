@@ -85,8 +85,8 @@ namespace FSBeheer.ViewModel
         {
             //create
             Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => Init());
-            Init();
             Questionnaire = new QuestionnaireVM();
+            Init();
             InitializeCommands();
         }
 
