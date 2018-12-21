@@ -5,6 +5,9 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System.Windows;
 using FSBeheer.View;
+using System.Runtime.InteropServices;
+using System.Runtime.Caching;
+using System;
 
 namespace FSBeheer.ViewModel
 {
@@ -29,6 +32,13 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowCreateInspectionViewCommand { get; set; }
         //public RelayCommand<Window> BackHomeCommand { get; set; }
 
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
+
         public InspectionManagementViewModel()
         {
             Messenger.Default.Register<bool>(this, "UpdateInspectionList", il => Init());
@@ -42,7 +52,29 @@ namespace FSBeheer.ViewModel
         internal void Init()
         {
             _Context = new CustomFSContext();
-            Inspections = _Context.InspectionCrud.GetAllInspectionVMs();
+            GetData();
+        }
+
+        private void GetData()
+        {
+            ObjectCache cache = MemoryCache.Default;
+            CacheItemPolicy policy = new CacheItemPolicy
+            {
+                AbsoluteExpiration = DateTimeOffset.Now.AddDays(1)
+            };
+            if (IsInternetConnected())
+            {
+                Inspections = _Context.InspectionCrud.GetAllInspections();
+                cache.Set("inspections", Inspections, policy);
+            }
+            else
+            {
+                Inspections = cache["inspections"] as ObservableCollection<InspectionVM>;
+                if (Inspections == null)
+                {
+                    Inspections = new ObservableCollection<InspectionVM>();
+                }
+            }
             RaisePropertyChanged(nameof(Inspections));
         }
 
@@ -53,19 +85,29 @@ namespace FSBeheer.ViewModel
 
         private void ShowEditInspectionView()
         {
-            if (_SelectedInspection == null)
+            if (IsInternetConnected())
             {
-                MessageBox.Show("Er is geen inspectie geselecteerd. Kies een inspectie en kies daarna de optie 'Wijzig'.");
+                if (_SelectedInspection == null)
+                {
+                    MessageBox.Show("Er is geen inspectie geselecteerd. Kies een inspectie en kies daarna de optie 'Wijzig'.");
+                }
+                else
+                {
+                    new CreateEditInspectionView(_SelectedInspection).Show();
+                }
             }
             else
             {
-                new CreateEditInspectionView(_SelectedInspection).Show();
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
 
         private void ShowCreateInspectionView()
         {
-            new CreateEditInspectionView().Show();                                                                                                                                                                                 
+            if(IsInternetConnected())
+                new CreateEditInspectionView().Show();   
+            else
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using FSBeheer.VM;
+using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,23 +9,16 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.ViewModel
 {
-    public class BusinessDataViewModel
+    public class BusinessDataViewModel : ViewModelBase
     {
-        //ViewModel for the BusinessDataView
-        //this view must display generic business data for the previous quarter
-        //Define boundaries for each quarter?
-        //Display the following:
-        //Amounts of specific roles(?)
-        //Number of current employees
-        //Employees that joined in the previous quarter
-        //Amount of inspector days worked(?)
-        //current number of customers
-        //customers joined in the last quarter
+        private int _quarterNumber;
+        public int QuarterNumber { get { return _quarterNumber; } set { _quarterNumber = value; Init(); } }
+        private int _year;
+        public int Year { get { return _year; } set { _year = value; Init(); } }
 
-        //number of roles?
+        public ObservableCollection<int> Quarters { get; set; }
+        public ObservableCollection<int> ValidYears { get; set; }
 
-        public int QuarterNumber { get; set; }
-        public int Year { get; set; }
         //counts
 
         //Inspectors
@@ -38,27 +32,39 @@ namespace FSBeheer.ViewModel
 
         //collections
         public ObservableCollection<InspectorVM> Inspectors { get; set; }
-        //public ObservableCollection<QuestionnaireVM> Questionnares { get; set; }
-        //public ObservableCollection<QuestionVM> Questions { get; set; }
-        //public ObservableCollection<AnswerVM> Answers { get; set; }
         public ObservableCollection<InspectionVM> Inspections { get; set; }
         //public ObservableCollection<QuotationVM> Quotations { get; set; }
         public ObservableCollection<CustomerVM> Customers { get; set; }
 
         public BusinessDataViewModel()
         {
-            int quarterNumber = GetQuarter();
-            if (quarterNumber - 1 == 0)
+            Quarters = new ObservableCollection<int>() { 1, 2, 3, 4 };
+            ValidYears = new ObservableCollection<int>();
+
+            for(int i = 2014; i<DateTime.Now.Year + 1; i++)
             {
-                Year = DateTime.Now.Year - 1;
-                QuarterNumber = 4;
+                ValidYears.Add(i);
+            }
+
+            //set the quarter to the previous one.
+            int quarter = (DateTime.Now.Month - 1) / 3 + 1;
+            //set the year
+
+            if (quarter == 1)
+            {
+                _quarterNumber = 4;
+                _year = DateTime.Now.Year - 1;
             }
             else
             {
-                Year = DateTime.Now.Year;
-                QuarterNumber = GetQuarter();
+                _quarterNumber = quarter;
+                _year = DateTime.Now.Year;
             }
+            Init();
+        }
 
+        public void Init()
+        {
             using (var context = new CustomFSContext())
             {
 
@@ -68,41 +74,22 @@ namespace FSBeheer.ViewModel
                     .Where(e => !e.IsDeleted && e.InvalidDate > GetUpperDateBound())
                     .Select(e => new InspectorVM(e));
                 Inspectors = new ObservableCollection<InspectorVM>(inspectors);
-
-                var tempins = context.Inspectors.ToList().Select(e => new InspectorVM(e));
+                base.RaisePropertyChanged(nameof(Inspectors));
 
                 NewInspectorsCount = inspectors
-                    .Where(e => e.CertificationDate >= GetLowerDateBound() && 
+                    .Where(e => e.CertificationDate >= GetLowerDateBound() &&
                     e.CertificationDate <= GetUpperDateBound())
                     .Count();
+                base.RaisePropertyChanged(nameof(NewInspectorsCount));
 
                 InactiveInspectorsCount = context.InspectorCrud.GetAllInspectorsFilteredByAvailability(new List<DateTime>() {
                     GetLowerDateBound(),
                     GetUpperDateBound()
                 }).Count();
+                base.RaisePropertyChanged(nameof(InactiveInspectorsCount));
 
                 ActiveInspectorsCount = inspectors.Count() - InactiveInspectorsCount;
-
-                //var questionnaires = context
-                //    .Questionnaires
-                //    .ToList()
-                //    .Where(e => !e.IsDeleted)
-                //    .Select(e => new QuestionnaireVM(e));
-                //Questionnares = new ObservableCollection<QuestionnaireVM>(questionnaires);
-
-                //var questions = context
-                //    .Questions
-                //    .ToList()
-                //    .Where(e => !e.IsDeleted)
-                //    .Select(e => new QuestionVM(e));
-                //Questions = new ObservableCollection<QuestionVM>(questions);
-
-                //var answers = context
-                //    .Answers
-                //    .ToList()
-                //    .Where(e => !e.IsDeleted)
-                //    .Select(e => new AnswerVM(e));
-                //Answers = new ObservableCollection<AnswerVM>(answers);
+                base.RaisePropertyChanged(nameof(InactiveInspectorsCount));
 
                 var inspections = context
                             .Inspections
@@ -110,8 +97,10 @@ namespace FSBeheer.ViewModel
                             .Where(e => !e.IsDeleted)
                             .Select(e => new InspectionVM(e));
                 Inspections = new ObservableCollection<InspectionVM>(inspections);
+                base.RaisePropertyChanged(nameof(Inspections));
 
                 NewInspectionsCount = inspections.Where(e => e.InspectionDate?.StartDate.Date >= GetLowerDateBound()).Count();
+                base.RaisePropertyChanged(nameof(NewInspectorsCount));
 
                 var customers = context
                     .Customers
@@ -119,18 +108,14 @@ namespace FSBeheer.ViewModel
                     .Where(e => !e.IsDeleted)
                     .Select(e => new CustomerVM(e));
                 Customers = new ObservableCollection<CustomerVM>(customers);
+                base.RaisePropertyChanged(nameof(Customers));
 
                 NewCustomersCount = customers
                     .Where(e => e?.StartingDate >= GetLowerDateBound() &&
                     e?.StartingDate <= GetUpperDateBound())
                     .Count();
+                base.RaisePropertyChanged(nameof(NewCustomersCount));
             }
-        }
-
-
-        private int GetQuarter()
-        {
-            return (DateTime.Now.Month - 1) / 3 + 1;
         }
 
         public DateTime GetLowerDateBound()

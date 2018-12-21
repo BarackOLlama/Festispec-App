@@ -10,6 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Runtime.Caching;
+using System.Runtime;
+using System.Runtime.InteropServices;
 
 namespace FSBeheer.ViewModel
 {
@@ -24,6 +27,13 @@ namespace FSBeheer.ViewModel
         public RelayCommand CreateEventCommand { get; set; }
         public RelayCommand EditEventCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
+
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
 
         public EventManagementViewModel()
         {
@@ -40,7 +50,29 @@ namespace FSBeheer.ViewModel
         private void Init()
         {
             _Context = new CustomFSContext();
-            Events = _Context.EventCrud.GetAllEvents();
+            GetData();
+        }
+
+        private void GetData()
+        {
+            ObjectCache cache = MemoryCache.Default;
+            CacheItemPolicy policy = new CacheItemPolicy
+            {
+                AbsoluteExpiration = DateTimeOffset.Now.AddDays(1)
+            };
+            if(IsInternetConnected())
+            {
+                Events = _Context.EventCrud.GetAllEvents();
+                cache.Set("events", Events, policy);
+            }
+            else
+            {
+                Events = cache["events"] as ObservableCollection<EventVM>;
+                if(Events == null)
+                {
+                    Events = new ObservableCollection<EventVM>();
+                }
+            }
             RaisePropertyChanged(nameof(Events));
         }
 
@@ -74,15 +106,21 @@ namespace FSBeheer.ViewModel
 
         private void OpenCreateEvent()
         {
-            new CreateEditEventView().Show();
+            if (IsInternetConnected())
+                new CreateEditEventView().Show();
+            else
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
 
         private void OpenEditEvent()
         {
-            if(SelectedEvent != null)
+            if (IsInternetConnected())
             {
-                new CreateEditEventView(SelectedEvent.Id).Show();
+                if (SelectedEvent != null)
+                    new CreateEditEventView(SelectedEvent.Id).Show();
             }
+            else
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
     }
 }

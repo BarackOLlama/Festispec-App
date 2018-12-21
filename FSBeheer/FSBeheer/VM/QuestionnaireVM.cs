@@ -83,7 +83,7 @@ namespace FSBeheer.VM
         
         public Event Event
         {
-            get { return _questionnaire.Inspection.Event; }
+            get { return _questionnaire.Inspection?.Event; }
         }
 
         //for QuestionnaireManagementViewModel
