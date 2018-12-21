@@ -38,5 +38,21 @@ namespace FSBeheer.Crud
             return _availability;
         }
 
+        public void RemoveAvailabilitiesByInspectorList(ObservableCollection<InspectorVM> inspectorList, InspectionVM inspection)
+        {
+            var startRemoveDate = inspection.InspectionDate.StartDate;
+            var endRemoveDate = inspection.InspectionDate.EndDate;
+            var allAvailabilityVMs = CustomFSContext.Availabilities.Select(a => new AvailabilityVM(a));
+
+            foreach (InspectorVM inspectorVM in inspectorList)
+            {
+                foreach (AvailabilityVM availabilityVM in allAvailabilityVMs)
+                {
+                    if (availabilityVM.Date >= startRemoveDate && availabilityVM.Date <= endRemoveDate && availabilityVM.Inspector.Id == inspectorVM.Id)
+                        CustomFSContext.Availabilities.Remove(availabilityVM.ToModel());
+                }
+            }
+        }
+
     }
 }

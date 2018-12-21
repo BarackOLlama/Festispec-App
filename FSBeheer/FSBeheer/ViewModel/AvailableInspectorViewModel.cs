@@ -92,6 +92,7 @@ namespace FSBeheer.ViewModel
                     _selectedInspection.InspectionDate.EndDate
             });
             ChosenInspectors = CustomFSContext.InspectorCrud.GetInspectorsByInspectionId(inspectionId);
+            RemovedInspectors = new ObservableCollection<InspectorVM>();
             RaisePropertyChanged(nameof(AvailableInspectors));
             RaisePropertyChanged(nameof(ChosenInspectors));
         }
@@ -115,6 +116,11 @@ namespace FSBeheer.ViewModel
                 if (_selectedInspection.Inspectors.Contains(inspectorChosen))
                 {
                     RemovedInspectors.Add(inspectorChosen);
+                }
+                foreach (InspectorVM inspectorVM in _selectedInspection.Inspectors)
+                {
+                    if (inspectorVM.Id == inspectorChosen.Id)
+                        RemovedInspectors.Add(inspectorChosen);
                 }
                 ChosenInspectors.Remove(inspectorChosen);
                 AvailableInspectors.Add(inspectorChosen);
@@ -150,10 +156,9 @@ namespace FSBeheer.ViewModel
                         }
                     }
 
-                    foreach (InspectorVM inspectorVM in RemovedInspectors)
-                    {
-
-                    }
+                    
+                    CustomFSContext.AvailabilityCrud.RemoveAvailabilitiesByInspectorList(RemovedInspectors, _selectedInspection);
+                    
 
                     window.Close();
                     Messenger.Default.Send(true, "UpdateAvailableList");
