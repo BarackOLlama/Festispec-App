@@ -64,9 +64,8 @@ namespace FSBeheer.ViewModel
         {
             //edit
             Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => Init());
-            Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
 
-            Init();
+            Init(questionnaireId);
 
             var inspectionNumbers = _context.Inspections
                 .ToList()
@@ -84,7 +83,6 @@ namespace FSBeheer.ViewModel
         {
             //create
             Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => Init());
-            Questionnaire = new QuestionnaireVM();
             Init();
             InitializeCommands();
         }
@@ -101,9 +99,13 @@ namespace FSBeheer.ViewModel
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
-        internal void Init()
+        internal void Init(int questionnaireId = -1)
         {
             _context = new CustomFSContext();
+            if(questionnaireId != -1)
+                Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
+            else
+                Questionnaire = new QuestionnaireVM();
             Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
             RaisePropertyChanged(nameof(Questions));
         }
