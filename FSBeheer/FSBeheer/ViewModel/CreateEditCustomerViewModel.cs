@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
@@ -29,6 +30,13 @@ namespace FSBeheer.ViewModel
         private ContactVM _selectedContact { get; set; }
 
         private CustomFSContext _Context;
+
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
 
         public CreateEditCustomerViewModel()
         {
@@ -60,20 +68,30 @@ namespace FSBeheer.ViewModel
 
         private void OpenCreateContact()
         {
-            new CreateEditContactView(null, Customer).Show();
+            if(IsInternetConnected())
+                new CreateEditContactView(null, Customer).Show();
+            else
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
 
         // TODO: Found bug when making a contact it loses the selected customer
 
         private void OpenEditContact()
         {
-            if (_selectedContact == null)
+            if (IsInternetConnected())
             {
-                MessageBox.Show("No contact selected");
+                if (_selectedContact == null)
+                {
+                    MessageBox.Show("No contact selected");
+                }
+                else
+                {
+                    new CreateEditContactView(_selectedContact, Customer).Show();
+                }
             }
             else
             {
-                new CreateEditContactView(_selectedContact, Customer).Show();
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
 
@@ -111,13 +129,20 @@ namespace FSBeheer.ViewModel
 
         private void SaveChanges()
         {
-            MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
+            if (IsInternetConnected())
             {
-                _Context.CustomerCrud.GetAllCustomers().Add(Customer);
-                _Context.SaveChanges();
+                MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    _Context.CustomerCrud.GetAllCustomers().Add(Customer);
+                    _Context.SaveChanges();
 
-                Messenger.Default.Send(true, "UpdateCustomerList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
+                    Messenger.Default.Send(true, "UpdateCustomerList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
+                }
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
 
@@ -138,18 +163,25 @@ namespace FSBeheer.ViewModel
         /// <param name="window"></param>
         private void DeleteCustomer(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Delete the selected customer?", "Confirm Delete", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
+            if (IsInternetConnected())
             {
-                Customer.IsDeleted = true;
-                foreach (var e in Contacts)
+                MessageBoxResult result = MessageBox.Show("Delete the selected customer?", "Confirm Delete", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
                 {
-                    e.IsDeleted = true;
-                }
-                _Context.SaveChanges(); // TODO: Changes of last changes to customer stays, do we want that?
-                window.Close();
+                    Customer.IsDeleted = true;
+                    foreach (var e in Contacts)
+                    {
+                        e.IsDeleted = true;
+                    }
+                    _Context.SaveChanges(); // TODO: Changes of last changes to customer stays, do we want that?
+                    window.Close();
 
-                Messenger.Default.Send(true, "UpdateCustomerList");
+                    Messenger.Default.Send(true, "UpdateCustomerList");
+                }
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
     }
