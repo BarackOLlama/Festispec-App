@@ -35,7 +35,7 @@ namespace FSBeheer.ViewModel
         public string WarningText { get; set; }
         
         public RelayCommand<Window> CancelInspectionCommand { get; set; }
-        public RelayCommand AddInspectionCommand { get; set; }
+        public RelayCommand<Window> AddInspectionCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
         public RelayCommand PickInspectorsCommand { get; set; }
 
@@ -50,7 +50,7 @@ namespace FSBeheer.ViewModel
             Statuses = _Context.StatusCrud.GetAllStatusVMs();
 
             CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
-            AddInspectionCommand = new RelayCommand(AddInspection);
+            AddInspectionCommand = new RelayCommand<Window>(AddInspection);
             CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
             PickInspectorsCommand = new RelayCommand(OpenAvailable);
         }
@@ -92,7 +92,7 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public void AddInspection()
+        public void AddInspection(Window window)
         {
             if (IsInternetConnected())
             {
@@ -102,7 +102,7 @@ namespace FSBeheer.ViewModel
                     _Context.InspectionCrud.GetAllInspections().Add(Inspection);
                     _Context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateInspectionList");
-
+                    CloseAction(window);
                 }
                 else
                 {

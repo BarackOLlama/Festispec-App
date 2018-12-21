@@ -15,7 +15,8 @@
         <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
             <Button FontSize="15" Margin="5"
                     Content="{TemplateBinding Content}"
-                    Command="{TemplateBinding Command}"/>
+                    Command="{TemplateBinding Command}"
+                    CommandParameter="{TemplateBinding CommandParameter}"/>
         </ControlTemplate>
     </Window.Resources>
 
@@ -193,7 +194,7 @@
                         <StackPanel Height="390" Margin="10,20,10,0">
                             <Border BorderBrush="Black" BorderThickness="1">
 
-                                <TextBox Text="{Binding Inspection.Notes, Mode=OneWay}" Height="380" TextWrapping="Wrap"/>
+                                <TextBox Text="{Binding Inspection.Notes, Mode=TwoWay}" Height="380" TextWrapping="Wrap"/>
 
                             </Border>
                         </StackPanel>
@@ -211,8 +212,8 @@
                     Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,20,0">
 
             <TextBlock Foreground="Red" Text="{Binding WarningText}"/>
-            <Button Content="Opslaan" Command="{Binding AddInspectionCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{StaticResource InterfaceButtonTemplate}"/>
-            <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{StaticResource InterfaceButtonTemplate}"/>
+            <Button Content="Opslaan" Command="{Binding AddInspectionCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+            <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
         </StackPanel>
     </StackPanel>
 </Window>

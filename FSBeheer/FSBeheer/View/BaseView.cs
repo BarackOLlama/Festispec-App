@@ -58,23 +58,23 @@ namespace FSBeheer.View
             this.Resources = new ResourceDictionary
             {
                 {
-                    "InterfaceButton",
+                    "InterfaceButtonTemplate",
                     new ControlTemplate{ VisualTree = InterfaceButtonFactory }
                 },
                 {
-                    "SearchTextBox",
+                    "SearchTextBoxTemplate",
                     new ControlTemplate{ VisualTree = SearchTextBoxFactory }
                 },
                 {
-                    "FilteredComboBox",
+                    "FilteredComboBoxTemplate",
                     new ControlTemplate{ VisualTree = FilteredComboBoxFactory }
                 },
                 {
-                    "CreateEditLabel",
+                    "CreateEditLabelTemplate",
                     new ControlTemplate{ VisualTree = CreateEditLabelFactory }
                 },
                 {
-                    "CreateEditTextBox",
+                    "CreateEditTextBoxTemplate",
                     new ControlTemplate{ VisualTree = CreateEditTextBoxFactory }
                 }
             };
