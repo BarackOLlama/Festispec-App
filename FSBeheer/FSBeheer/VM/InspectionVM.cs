@@ -41,7 +41,7 @@ namespace FSBeheer.VM
         public EventVM Event
         {
             get { return new EventVM(_inspection.Event); }
-            set { Event = value; }
+            set { _inspection.Event = value.ToModel(); }
         }
 
         public int? StatusId
