@@ -80,10 +80,5 @@ namespace FSBeheer.VM
             get { return _customer.IsDeleted; }
             set { _customer.IsDeleted = value; RaisePropertyChanged(nameof(IsDeleted)); }
         }
-
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
     }
 }
