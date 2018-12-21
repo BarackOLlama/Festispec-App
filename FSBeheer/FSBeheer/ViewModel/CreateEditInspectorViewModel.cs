@@ -41,15 +41,9 @@ namespace FSBeheer.ViewModel
             Inspector = SelectedInspector;
         }
 
-        public CreateEditInspectorViewModel()
-        {
-            _Context = new CustomFSContext();
-        }
-
         private void AddInspector()
         {
             _Context.InspectorCrud.GetAllInspectors().Add(Inspector);
-            _Context.InspectorCrud.Add(Inspector);
         }
 
 
