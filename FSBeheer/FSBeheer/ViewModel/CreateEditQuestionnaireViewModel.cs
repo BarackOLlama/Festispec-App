@@ -64,10 +64,9 @@ namespace FSBeheer.ViewModel
         {
             //edit
             Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => Init());
-            Init();
             Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
 
-            Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
+            Init();
 
             var inspectionNumbers = _context.Inspections
                 .ToList()
