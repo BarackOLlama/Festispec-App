@@ -63,11 +63,6 @@ namespace FSBeheer.VM
 
         public ObservableCollection<InspectorVM> Inspectors
         {
-            get { return new ObservableCollection<InspectorVM>(_inspection.Inspectors.Select(i => new InspectorVM(i))); }
-        }
-
-        public ObservableCollection<InspectorVM> Inspectors
-        {
             get
             {
                 return new ObservableCollection<InspectorVM>(_inspection.Inspectors.ToList().Select(i => new InspectorVM(i))); 

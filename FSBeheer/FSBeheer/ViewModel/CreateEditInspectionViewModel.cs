@@ -137,7 +137,7 @@ namespace FSBeheer.ViewModel
             Statuses = _Context.StatusCrud.GetAllStatusVMs();
 
             CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
-            AddInspectionCommand = new RelayCommand<Window>(AddInspection, CheckSaveAllowed);
+            AddInspectionCommand = new RelayCommand<Window>(AddInspection);
             CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
             PickInspectorsCommand = new RelayCommand(OpenAvailable);
         }
@@ -196,7 +196,7 @@ namespace FSBeheer.ViewModel
             CanExecuteChanged();
        }
 
-        public void AddInspection()
+        public void AddInspection(Window window)
         {
             if (IsInternetConnected())
             {
@@ -225,30 +225,7 @@ namespace FSBeheer.ViewModel
            AddInspectionCommand.RaiseCanExecuteChanged();
        }
 
-       private bool CheckSaveAllowed(Window window)
-       {
-           if (Inspection == null)
-           {
-               return false;
-           }else if (string.IsNullOrEmpty(Inspection.Name))
-           {
-               WarningText = "Het veld Naam mag niet leeg zijn";
-               RaisePropertyChanged(nameof(WarningText));
-               return false;
-           }
-           else if (Inspection.Inspectors == null)
-           {
-               WarningText = "Het veld Inspecteur(s) mag niet leeg zijn";
-               RaisePropertyChanged(nameof(WarningText));
-               return false;
-           }
-           else
-           {
-               WarningText = "";
-               RaisePropertyChanged(nameof(WarningText));
-               return true;
-           }
-       }
+
 
     }
 }
