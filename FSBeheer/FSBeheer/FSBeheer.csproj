@@ -72,6 +72,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -128,15 +129,19 @@
     <Compile Include="Model\Quotation.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="ViewModel\AvailableInspectorViewModel.cs" />
+    <Compile Include="ViewModel\BusinessDataViewModel.cs" />
     <Compile Include="ViewModel\CreateEditInspectionViewModel.cs" />
     <Compile Include="ViewModel\CreateEditContactViewModel.cs" />
     <Compile Include="ViewModel\CreateEditEventViewModel.cs" />
+    <Compile Include="ViewModel\CreateEditQuestionnaireViewModel.cs" />
+    <Compile Include="ViewModel\CreateEditQuestionViewModel.cs" />
     <Compile Include="ViewModel\CreateQuestionnaireViewModel.cs" />
     <Compile Include="ViewModel\CreateEditInspectorViewModel.cs" />
-    <Compile Include="ViewModel\CreateQuestionViewModel.cs" />
-    <Compile Include="ViewModel\EditQuestionViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
+    <Compile Include="View\BusinessDataView.xaml.cs">
+      <DependentUpon>BusinessDataView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="View\BaseView.cs" />
     <Compile Include="View\CreateEditEventView.xaml.cs">
@@ -171,7 +176,6 @@
     </Compile>
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\QuestionnaireManagementViewModel.cs" />
-    <Compile Include="ViewModel\EditQuestionnaireViewModel.cs" />
     <Compile Include="View\InspectionManagementView.xaml.cs">
       <DependentUpon>InspectionManagementView.xaml</DependentUpon>
     </Compile>
@@ -248,6 +252,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\AvailableInspectorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BusinessDataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
