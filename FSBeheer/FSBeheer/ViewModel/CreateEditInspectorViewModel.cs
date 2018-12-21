@@ -28,20 +28,16 @@ namespace FSBeheer.ViewModel
 
         private CustomFSContext _Context;
 
-        public CreateEditInspectorViewModel(InspectorVM SelectedInspector)
+        public CreateEditInspectorViewModel()
         {
             _Context = new CustomFSContext();
             SaveChangesCommand = new RelayCommand(SaveChanges);
 
  
-                Inspector = SelectedInspector;
+       
         
         }
 
-        public CreateEditInspectorViewModel()
-        {
-            _Context = new CustomFSContext();
-        }
 
         private void AddInspector()
         {

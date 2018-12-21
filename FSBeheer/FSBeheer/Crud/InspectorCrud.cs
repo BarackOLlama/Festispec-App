@@ -26,6 +26,16 @@ namespace FSBeheer.Crud
             return new ObservableCollection<InspectorVM>(inspectors);
         }
 
+        //public String GetMostRecentInspection(int ID)
+        //{
+        //    var inspectors = CustomFSContext.Inspectors
+        //        .ToList()
+        //        .Where(i => i.Id == ID)
+        //        .Where(i => i.Inspections.Where(x => x.InspectionDate <= DateTime.)
+                
+                
+        //}
+
         public ObservableCollection<InspectorVM> GetAllInspectorsFilteredByAvailability(List<DateTime> dateRange) //Startdate and enddate of the inspection
         {
             var inspectors = CustomFSContext.Inspectors
