@@ -16,7 +16,7 @@ namespace FSBeheer.ViewModel
 {
     public class CreateEditEventViewModel : ViewModelBase
     {
-        private CustomFSContext _Context { get; set; }
+        private CustomFSContext _context { get; set; }
         public string Title { get; set; }
         public EventVM Event { get; set; }
         public ObservableCollection<CustomerVM> Customers { get; set; }
@@ -37,8 +37,8 @@ namespace FSBeheer.ViewModel
 
         public CreateEditEventViewModel()
         {
-            _Context = new CustomFSContext();
-            Customers = _Context.CustomerCrud.GetAllCustomers();
+            _context = new CustomFSContext();
+            Customers = _context.CustomerCrud.GetAllCustomers();
 
             SaveChangesCommand = new RelayCommand<Window>(SaveChanges, SaveAllowed);
             DiscardChangesCommand = new RelayCommand<Window>(DiscardChanges);
@@ -51,14 +51,14 @@ namespace FSBeheer.ViewModel
             if(eventId == -1)
             {
                 Event = new EventVM(new Event());
-                _Context.Events.Add(Event.ToModel());
+                _context.Events.Add(Event.ToModel());
                 SelectedCustomer = null;
                 Title = "Evenement aanmaken";
             }
             else
             {
-                Event = _Context.EventCrud.GetEventById(eventId);
-                SelectedCustomer = _Context.CustomerCrud.GetCustomerById(Event.Customer.Id);
+                Event = _context.EventCrud.GetEventById(eventId);
+                SelectedCustomer = _context.CustomerCrud.GetCustomerById(Event.Customer.Id);
                 Title = "Evenement wijzigen";
             }
             RaisePropertyChanged(nameof(Event));
@@ -66,9 +66,9 @@ namespace FSBeheer.ViewModel
             RaisePropertyChanged(nameof(Title));
         }
 
-        private void CloseAction(Window window)
+        private void CloseWindow(Window window)
         {
-            _Context.Dispose();
+            _context.Dispose();
             window.Close();
         }
 
@@ -124,9 +124,9 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Weet u zeker dat u dit evenement op wilt slaan?", "Bevestigen", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    _Context.SaveChanges();
+                    _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateEventList");
-                    CloseAction(window);
+                    CloseWindow(window);
                 }
             }
             else
@@ -140,7 +140,7 @@ namespace FSBeheer.ViewModel
             MessageBoxResult result = MessageBox.Show("Weet u zeker dat u wilt afsluiten zonder op te slaan?", "Bevestigen", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                CloseAction(window);
+                CloseWindow(window);
             }
         }
 
@@ -151,9 +151,9 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Weet u zeker dat u dit evenement wilt verwijderen?", "Bevestigen", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    _Context.EventCrud.Delete(Event);
+                    _context.EventCrud.Delete(Event);
                     Messenger.Default.Send(true, "UpdateEventList");
-                    CloseAction(window);
+                    CloseWindow(window);
                 }
             }
             else

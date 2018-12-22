@@ -14,7 +14,7 @@ namespace FSBeheer.ViewModel
 {
     public class CreateEditInspectionViewModel : ViewModelBase
     {
-        private CustomFSContext _Context;
+        private CustomFSContext _context;
 
         public InspectionVM Inspection { get; set; }
         public ObservableCollection<CustomerVM> Customers { get; }
@@ -28,69 +28,69 @@ namespace FSBeheer.ViewModel
             return InternetGetConnectedState(out int description, 0);
         }
 
-        private DateTime _StartDate { get; set; }
+        private DateTime _startDate { get; set; }
         public DateTime StartDate
         {
             get
             {
-                return _StartDate;
+                return _startDate;
             }
             set
             {
-                _StartDate = value;
+                _startDate = value;
                 Inspection.InspectionDate.StartDate = value;
                 RaisePropertyChanged(nameof(StartDate));
             }
         }
-        private DateTime _EndDate { get; set; }
+        private DateTime _endDate { get; set; }
         public DateTime EndDate
         {
             get
             {
-                return _EndDate;
+                return _endDate;
             }
             set
             {
-                _EndDate = value;
+                _endDate = value;
                 Inspection.InspectionDate.EndDate = value;
                 RaisePropertyChanged(nameof(EndDate));
             }
         }
-        private TimeSpan? _StartTime { get; set; }
+        private TimeSpan? _startTime;
         public TimeSpan? StartTime {
             get
             {
-                return _StartTime;
+                return _startTime;
             }
             set
             {
-                _StartTime = value;
+                _startTime = value;
                 Inspection.InspectionDate.StartTime = value;
                 RaisePropertyChanged(nameof(StartTime));
             }
         }
-        private TimeSpan? _EndTime { get; set; }
+        private TimeSpan? _endTime { get; set; }
         public TimeSpan? EndTime {
             get
             {
-                return _EndTime;
+                return _endTime;
             }
             set
             {
-                _EndTime = value;
+                _endTime = value;
                 Inspection.InspectionDate.EndTime = value;
                 RaisePropertyChanged(nameof(EndTime));
             }
         }
-        private EventVM _SelectedEvent { get; set; }
+        private EventVM _selectedEvent { get; set; }
         public EventVM SelectedEvent {
             get
             {
-                return _SelectedEvent;
+                return _selectedEvent;
             }
             set
             {
-                _SelectedEvent = value;
+                _selectedEvent = value;
                 if (Inspection != null)
                 {
                     Inspection.Event = value.ToModel();
@@ -98,15 +98,15 @@ namespace FSBeheer.ViewModel
                 RaisePropertyChanged(nameof(SelectedEvent));
             }
         }
-        private StatusVM _SelectedStatus { get; set; }
+        private StatusVM _selectedStatus;
         public StatusVM SelectedStatus {
             get
             {
-                return _SelectedStatus;
+                return _selectedStatus;
             }
             set
             {
-                _SelectedStatus = value;
+                _selectedStatus = value;
                 if (Inspection != null)
                 {
                     Inspection.Status = value.ToModel();
@@ -125,10 +125,10 @@ namespace FSBeheer.ViewModel
             // Darjush laten weten
             Messenger.Default.Register<ObservableCollection<InspectorVM>>(this, "UpdateAvailableList", cl => SetInspectors(cl));
 
-            _Context = new CustomFSContext();
-            Customers = _Context.CustomerCrud.GetAllCustomers();
-            Events = _Context.EventCrud.GetAllEvents();
-            Statuses = _Context.StatusCrud.GetAllStatusVMs();
+            _context = new CustomFSContext();
+            Customers = _context.CustomerCrud.GetAllCustomers();
+            Events = _context.EventCrud.GetAllEvents();
+            Statuses = _context.StatusCrud.GetAllStatusVMs();
 
             // niet netjes, maar anders heeft de Event combobox in het begin helemaal geen waarde, mede omdat de SetInspection na de InitializeComponent wordt uitgevoerd
             //SelectedEvent = Events.ElementAtOrDefault(2);
@@ -160,15 +160,15 @@ namespace FSBeheer.ViewModel
                 };
                 StartDate = new DateTime(2000, 01, 01);
                 EndDate = new DateTime(2000, 01, 01);
-                _Context.Inspections.Add(Inspection.ToModel());
+                _context.Inspections.Add(Inspection.ToModel());
                 RaisePropertyChanged(nameof(Inspection));
             }
             else
             {
-                Inspection = new InspectionVM(_Context.Inspections
+                Inspection = new InspectionVM(_context.Inspections
                     .FirstOrDefault(i => i.Id == inspection.Id));
-                SelectedEvent = _Context.EventCrud.GetEventById(Inspection.Event.Id);
-                SelectedStatus = _Context.StatusCrud.GetStatusById(Inspection.Status.Id);
+                SelectedEvent = _context.EventCrud.GetEventById(Inspection.Event.Id);
+                SelectedStatus = _context.StatusCrud.GetStatusById(Inspection.Status.Id);
                 StartDate = Inspection.InspectionDate.StartDate;
                 EndDate = Inspection.InspectionDate.EndDate;
                 StartTime = Inspection.InspectionDate.StartTime;
@@ -183,19 +183,26 @@ namespace FSBeheer.ViewModel
             MessageBoxResult result = MessageBox.Show("Weet u zeker dat u deze inspectie wilt annuleren?", "Bevestig annulering inspectie", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                _Context.Dispose();
+                _context.Dispose();
                 Inspection = null;
                 window.Close();
             }
         }
 
+        private bool InspectionIsValid()
+        {
+            return true;
+        }
+
         public void AddInspection()
         {
+            if (!InspectionIsValid()) return;
+
             if (IsInternetConnected())
             {
                 // Inspectie aanmaken in de database met alle velden die ingevuld zijn
-                _Context.InspectionCrud.GetAllInspections().Add(Inspection);
-                _Context.SaveChanges();
+                _context.InspectionCrud.GetAllInspections().Add(Inspection);
+                _context.SaveChanges();
 
                 Messenger.Default.Send(true, "UpdateInspectionList");
             }
