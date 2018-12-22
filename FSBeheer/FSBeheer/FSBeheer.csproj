@@ -145,7 +145,6 @@
     <Compile Include="ViewModel\CreateEditEventViewModel.cs" />
     <Compile Include="ViewModel\CreateEditQuestionnaireViewModel.cs" />
     <Compile Include="ViewModel\CreateEditQuestionViewModel.cs" />
-    <Compile Include="ViewModel\CreateQuestionnaireViewModel.cs" />
     <Compile Include="ViewModel\CreateEditInspectorViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />

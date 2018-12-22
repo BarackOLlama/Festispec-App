@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -70,7 +71,7 @@ namespace FSBeheer.ViewModel
             _context = new CustomFSContext();
             InitializeQuestionTypes();
             InitializeCommands();
-            
+
             Question = _context.QuestionCrud.GetQuestionById(questionId);
         }
 
@@ -92,8 +93,56 @@ namespace FSBeheer.ViewModel
             _selectedQuestionType = QuestionTypes.FirstOrDefault();
             RaisePropertyChanged(nameof(SelectedQuestionType));
         }
+
+        public bool QuestionIsValid()
+        {
+            if (Question == null)
+            {
+                MessageBox.Show("Iets is fout gegaan. Open dit scherm a.u.b. opnieuw.");
+                return false;
+            }
+            if (Question.Content.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een vraag mag niet leeg zijn..");
+                return false;
+            }
+
+            Regex multiplechoiceRegex = new Regex("^(\\w{1}\\|{1}\\w{1,};?){2,}");
+            //https://regexr.com/
+            //example data
+            //A|100;B|200;C|500;D|1000
+            //A | 100; c | 200
+            //A | 200
+
+            if (SelectedQuestionType.Name != "Open Vraag" && SelectedQuestionType.Name != "Open Tabelvraag")
+            {
+                if (!multiplechoiceRegex.IsMatch(Question.Options))
+                {
+                    MessageBox.Show("De multiple choice syntax is incorrect.\n" +
+                        "Voorbeeld: A|Waar;B|Niet waar");
+                    return false;
+                }
+
+            }
+
+            return true;
+        }
+
         public void SaveQuestionChanges(Window window)
         {
+            if (!QuestionIsValid()) return;
+
+            if (SelectedQuestionType.Name == "Open Vraag" || SelectedQuestionType.Name == "Open Tabelvraag")
+            {
+                Regex multiplechoiceRegex = new Regex("^(\\w{1}\\|{1}\\w{1,};?){2,}");
+                if (!multiplechoiceRegex.IsMatch(Question.Content))
+                {
+                    MessageBox.Show("De multiple choice syntax is incorrect.\n" +
+                        "Voorbeeld: A|Waar;B|Niet waar");
+                    return;
+                }
+            }
+
             if (IsInternetConnected())
             {
                 MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestiging", MessageBoxButton.OKCancel);
@@ -108,6 +157,8 @@ namespace FSBeheer.ViewModel
 
         public void CreateQuestion(Window window)
         {
+            if (!QuestionIsValid()) return;
+
             if (IsInternetConnected())
             {
                 var result = MessageBox.Show("Opslaan?", "Bevestiging", MessageBoxButton.OKCancel);
@@ -139,7 +190,7 @@ namespace FSBeheer.ViewModel
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
-        
+
         public void CloseWindow(Window window)
         {
             MessageBoxResult result = MessageBox.Show("Aanpassing annuleren?", "Bevestig", MessageBoxButton.OKCancel);
