@@ -112,7 +112,7 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                MessageBoxResult result = MessageBox.Show("Delete the selected inspector?", "Confirm Delete", MessageBoxButton.OKCancel);
+                MessageBoxResult result = MessageBox.Show("Geselecteerde inspecteur verwijderen?", "Bevestiging verwijdering", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
                     SelectedInspector.IsDeleted = true;
