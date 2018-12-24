@@ -32,24 +32,24 @@ namespace FSBeheer.ViewModel
             return InternetGetConnectedState(out int description, 0);
         }
 
-        private CustomFSContext _Context;
+        private CustomFSContext _context;
 
         public CreateEditInspectorViewModel(InspectorVM SelectedInspector)
         {
-            _Context = new CustomFSContext();
+            _context = new CustomFSContext();
             SaveChangesCommand = new RelayCommand(SaveChanges);
             Inspector = SelectedInspector;
         }
 
         public CreateEditInspectorViewModel()
         {
-            _Context = new CustomFSContext();
+            _context = new CustomFSContext();
         }
 
         private void AddInspector()
         {
-            _Context.InspectorCrud.GetAllInspectors().Add(Inspector);
-            _Context.InspectorCrud.Add(Inspector);
+            _context.InspectorCrud.GetAllInspectors().Add(Inspector);
+            _context.InspectorCrud.Add(Inspector);
         }
 
 
@@ -57,11 +57,11 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
+                MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestiging opslaan", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    _Context.InspectorCrud.GetAllInspectors().Add(Inspector);
-                    _Context.SaveChanges();
+                    _context.InspectorCrud.GetAllInspectors().Add(Inspector);
+                    _context.SaveChanges();
 
                     Messenger.Default.Send(true, "UpdateInspectorList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
                 }
@@ -77,22 +77,22 @@ namespace FSBeheer.ViewModel
             if (inspector == null)
             {
                 Inspector = new InspectorVM();
-                _Context.Inspectors.Add(Inspector.ToModel());
+                _context.Inspectors.Add(Inspector.ToModel());
                 RaisePropertyChanged(nameof(Inspector)); // a sign that a property has changed for viewing
             }
             else
             {
-                Inspector = new InspectorVM(_Context.Inspectors.FirstOrDefault(c => c.Id == inspector.Id));
+                Inspector = new InspectorVM(_context.Inspectors.FirstOrDefault(c => c.Id == inspector.Id));
                 RaisePropertyChanged(nameof(inspector));
             }
         }
 
         private void Discard(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Close without saving?", "Confirm discard", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Sluiten zonder opslaan?", "Bevestiging annulering", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.Cancel)
             {
-                _Context.Dispose();
+                _context.Dispose();
                 Inspector = null;
                 window?.Close();
             }

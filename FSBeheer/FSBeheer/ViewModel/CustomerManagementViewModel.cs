@@ -97,7 +97,7 @@ namespace FSBeheer.ViewModel
             {
                 if (_selectedCustomer == null)
                 {
-                    MessageBox.Show("No customer selected");
+                    MessageBox.Show("Geen klant geselecteerd.");
                 }
                 else
                 {

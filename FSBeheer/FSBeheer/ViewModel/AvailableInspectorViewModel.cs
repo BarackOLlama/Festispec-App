@@ -16,7 +16,7 @@ namespace FSBeheer.ViewModel
 {
     public class AvailableInspectorViewModel : ViewModelBase
     {
-        private CustomFSContext CustomFSContext;
+        private CustomFSContext _customFSContext;
 
         public ObservableCollection<InspectorVM> AvailableInspectors { get; set; }
 
@@ -79,15 +79,14 @@ namespace FSBeheer.ViewModel
 
         internal void Init()
         {
-            CustomFSContext = new CustomFSContext();
+            _customFSContext = new CustomFSContext();
         }
 
         public void SetContextInspectionId(CustomFSContext context, int inspectionId)
         {
-            CustomFSContext = context;
-            _selectedInspection = CustomFSContext.InspectionCrud.GetInspectionById(inspectionId);
-            AvailableInspectors = CustomFSContext.InspectorCrud.GetAllInspectorsFilteredByAvailability(
-            new List<DateTime>{
+            _selectedInspection = _customFSContext.InspectionCrud.GetInspectionById(inspectionId);
+            AvailableInspectors = _customFSContext.InspectorCrud.GetAllInspectorsFilteredByAvailability(
+                new List<DateTime>{
                     _selectedInspection.InspectionDate.StartDate,
                     _selectedInspection.InspectionDate.EndDate
             });
@@ -105,7 +104,7 @@ namespace FSBeheer.ViewModel
                 AvailableInspectors.Remove(inspectorAvailable);
             } else
             {
-                MessageBox.Show("Er zijn geen inspecteurs geselecteerd.");
+                MessageBox.Show("Geen inspecteur geselecteerd.");
             }
         }
 
@@ -126,7 +125,7 @@ namespace FSBeheer.ViewModel
                 AvailableInspectors.Add(inspectorChosen);
             } else
             {
-                MessageBox.Show("Er zijn geen inspecteurs geselecteerd.");
+                MessageBox.Show("Geen inspecteur geselecteerd.");
             }
         }
 
@@ -172,10 +171,10 @@ namespace FSBeheer.ViewModel
 
         private void Discard(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Wilt u sluiten zonder op te slaan?", "Confirm discard", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Sluiten zonder opslaan?", "Bevestiging annulering", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                CustomFSContext.Dispose();
+                _customFSContext.Dispose();
                 ChosenInspectors = null;
                 window.Close();
             }
