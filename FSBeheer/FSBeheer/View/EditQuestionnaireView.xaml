@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
         Title="Vragenlijst Aanpassen" Height="500" Width="800"
-        DataContext="{Binding EditQuestionnaireViewModel, Source={StaticResource Locator}}">
+        DataContext="{Binding EditQuestionnaire, Source={StaticResource Locator}}">
     <StackPanel>
         <StackPanel  Margin="0,10,0,0" Width="500">
             <TextBlock>Inspectienaam:</TextBlock>
@@ -23,7 +23,7 @@
                     <DataGridTextColumn Header="Vraag" Binding="{Binding Content}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="Opties" Binding="{Binding Options}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="Kolommen" Binding="{Binding Options}" Width="*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Vraagtype" Binding="{Binding Type}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Vraagtype" Binding="{Binding Type.Name}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="Commentaar" Binding="{Binding Comments}" Width="*"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>

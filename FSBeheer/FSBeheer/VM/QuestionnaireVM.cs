@@ -20,17 +20,6 @@ namespace FSBeheer.VM
         public QuestionnaireVM(Questionnaire questionnaire)
         {
             _questionnaire = questionnaire;
-
-            using (var context = new CustomFSContext())
-            {
-                var questions = context.Questions
-                    .Include("QuestionType")
-                    .ToList()
-                    .Where(e => e.QuestionnaireId == _questionnaire.Id)
-                    .Select(e => new QuestionVM(e));
-                Questions = new ObservableCollection<QuestionVM>(questions);
-                context.Dispose();
-            }
         }
 
         public QuestionnaireVM()
@@ -82,20 +71,34 @@ namespace FSBeheer.VM
             }
         }
 
-        public int QuestionCount
+        public int? QuestionCount
         {
             get
             {
-                int amount = 0;
-
-                using(var context = new CustomFSContext())
-                {
-                    amount = context.Questions.Where(e => e.QuestionnaireId == _questionnaire.Id).Count();
-                }
-
+                int? amount = 0;
+                amount = _questionnaire?.Questions?.Count();
                 return amount;
             }
         }
+        
+        public Event Event
+        {
+            get { return _questionnaire.Inspection?.Event; }
+        }
+
+        //for QuestionnaireManagementViewModel
+        public string InspectionNumber
+        {
+            get
+            {
+                if (_questionnaire.InspectionId == null)
+                {
+                    return "unknown";
+                }
+                return _questionnaire.InspectionId.ToString();
+            }
+        }
+
 
         public bool IsDeleted
         {

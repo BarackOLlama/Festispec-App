@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Caching;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,13 +26,18 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowCreateInspectorViewCommand { get; set; }
         public RelayCommand DeleteInspectorCommand { get; set; }
 
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
 
         public InspectorManagementViewModel()
         {
             Messenger.Default.Register<bool>(this, "UpdateInspectorList", il => Init()); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
 
             Init();
-            
             
             BackHomeCommand = new RelayCommand<Window>(CloseAction);
             ShowEditInspectorViewCommand = new RelayCommand(ShowEditInspectorView);
@@ -41,7 +48,29 @@ namespace FSBeheer.ViewModel
         private void Init()
         {
             _customFSContext = new CustomFSContext();
-            Inspectors = _customFSContext.InspectorCrud.GetAllInspectors();
+            GetData();
+        }
+
+        private void GetData()
+        {
+            ObjectCache cache = MemoryCache.Default;
+            CacheItemPolicy policy = new CacheItemPolicy
+            {
+                AbsoluteExpiration = DateTimeOffset.Now.AddDays(1)
+            };
+            if (IsInternetConnected())
+            {
+                Inspectors = _customFSContext.InspectorCrud.GetAllInspectors();
+                cache.Set("inspectors", Inspectors, policy);
+            }
+            else
+            {
+                Inspectors = cache["inspectors"] as ObservableCollection<InspectorVM>;
+                if (Inspectors == null)
+                {
+                    Inspectors = new ObservableCollection<InspectorVM>();
+                }
+            }
             RaisePropertyChanged(nameof(Inspectors));
         }
 
@@ -60,13 +89,18 @@ namespace FSBeheer.ViewModel
 
         private void ShowCreateInspectorView()
         {
-            SelectedInspector = null;
-            new CreateEditInspectorView().Show();
+            if(IsInternetConnected())
+                new CreateEditInspectorView().Show();
+            else
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
 
         private void ShowEditInspectorView()
         {
-            new CreateEditInspectorView(SelectedInspector).Show();
+            if(IsInternetConnected())
+                new CreateEditInspectorView(SelectedInspector).Show();
+            else
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
 
         private void CloseAction(Window window)
@@ -76,14 +110,21 @@ namespace FSBeheer.ViewModel
 
         private void DeleteInspector()
         {
-            MessageBoxResult result = MessageBox.Show("Delete the selected inspector?", "Confirm Delete", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
+            if (IsInternetConnected())
             {
-                SelectedInspector.IsDeleted = true;
-                _customFSContext.SaveChanges();
-                
+                MessageBoxResult result = MessageBox.Show("Geselecteerde inspecteur verwijderen?", "Bevestiging verwijdering", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    SelectedInspector.IsDeleted = true;
+                    _customFSContext.SaveChanges();
 
-                Messenger.Default.Send(true, "UpdateInspectorList");
+
+                    Messenger.Default.Send(true, "UpdateInspectorList");
+                }
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
     }

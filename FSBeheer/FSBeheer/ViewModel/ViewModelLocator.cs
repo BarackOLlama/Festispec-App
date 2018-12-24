@@ -10,7 +10,7 @@ namespace FSBeheer.ViewModel
     public class ViewModelLocator
     {
         private QuestionnaireManagementViewModel _questionnaireManagementViewModel;
-        private EditQuestionnaireViewModel _questionnaireViewModel;
+        private CreateEditQuestionnaireViewModel _questionnaireViewModel;
         private InspectorManagementViewModel _inspectorManagementViewModel;
         private InspectionManagementViewModel _InspectionManagementViewModel;
 
@@ -89,15 +89,6 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public CreateQuestionnaireViewModel CreateQuestionnaire
-        {
-            get
-            {
-                return new CreateQuestionnaireViewModel();
-            }
-        }
-
-
         public LoginViewModel LoginViewModel
         {
             get
@@ -123,28 +114,40 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public EditQuestionnaireViewModel EditQuestionnaireViewModel
+        public CreateEditQuestionnaireViewModel CreateQuestionnaire
         {
             get
             {
-                _questionnaireViewModel = new EditQuestionnaireViewModel(_questionnaireManagementViewModel.SelectedQuestionnaire.Id);
+                //create
+                return new CreateEditQuestionnaireViewModel();
+            }
+        }
+
+        public CreateEditQuestionnaireViewModel EditQuestionnaire
+        {
+            get
+            {
+                //edit
+                _questionnaireViewModel = new CreateEditQuestionnaireViewModel(_questionnaireManagementViewModel.SelectedQuestionnaire.Id);
                 return _questionnaireViewModel;
             }
         }
 
-        public CreateQuestionViewModel NewQuestionCreationViewModel
+        public CreateEditQuestionViewModel CreateQuestion
         {
             get
             {
-                return new CreateQuestionViewModel(_questionnaireManagementViewModel.SelectedQuestionnaire.Id);
+                //create, questionnaire id
+                return new CreateEditQuestionViewModel(_questionnaireViewModel.Questionnaire.Id);
             }
         }
 
-        public EditQuestionViewModel EditQuestion
+        public CreateEditQuestionViewModel EditQuestion
         {
             get
             {
-                return new EditQuestionViewModel(_questionnaireViewModel.SelectedQuestion.Id);
+                //edit, questionnaire id and question id
+                return new CreateEditQuestionViewModel(_questionnaireViewModel.SelectedQuestion.Id, _questionnaireViewModel.SelectedQuestion.Id);
             }
         }
 
@@ -161,6 +164,14 @@ namespace FSBeheer.ViewModel
             get
             {
                 return new CreateEditInspectionViewModel();
+            }
+        }
+
+        public BusinessDataViewModel BusinessData
+        {
+            get
+            {
+                return new BusinessDataViewModel();
             }
         }
 

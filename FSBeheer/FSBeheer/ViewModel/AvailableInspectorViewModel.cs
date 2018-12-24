@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,7 +15,7 @@ namespace FSBeheer.ViewModel
 {
     public class AvailableInspectorViewModel : ViewModelBase
     {
-        private CustomFSContext CustomFSContext;
+        private CustomFSContext _customFSContext;
 
         public ObservableCollection<InspectorVM> AvailableInspectors { get; set; }
 
@@ -33,6 +34,13 @@ namespace FSBeheer.ViewModel
         private InspectorVM _selectedChosenInspector { get; set; }
 
         private InspectionVM _selectedInspection { get; set; }
+
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
 
         public AvailableInspectorViewModel()
         {
@@ -68,13 +76,13 @@ namespace FSBeheer.ViewModel
 
         internal void Init()
         {
-            CustomFSContext = new CustomFSContext();
+            _customFSContext = new CustomFSContext();
         }
 
         public void SetInspection(int inspectionId)
         {
-            _selectedInspection = CustomFSContext.InspectionCrud.GetInspectionById(inspectionId);
-            AvailableInspectors = CustomFSContext.InspectorCrud.GetAllInspectorsFilteredByAvailability(
+            _selectedInspection = _customFSContext.InspectionCrud.GetInspectionById(inspectionId);
+            AvailableInspectors = _customFSContext.InspectorCrud.GetAllInspectorsFilteredByAvailability(
                 new List<DateTime>{
                     _selectedInspection.InspectionDate.StartDate,
                     _selectedInspection.InspectionDate.EndDate
@@ -90,7 +98,7 @@ namespace FSBeheer.ViewModel
                 AvailableInspectors.Remove(inspectorAvailable);
             } else
             {
-                MessageBox.Show("No inspector selected");
+                MessageBox.Show("Geen inspecteur geselecteerd.");
             }
         }
 
@@ -102,29 +110,36 @@ namespace FSBeheer.ViewModel
                 AvailableInspectors.Add(inspectorChosen);
             } else
             {
-                MessageBox.Show("No inspector selected");
+                MessageBox.Show("Geen inspecteur geselecteerd.");
             }
         }
 
         private void SaveChanges(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
+            if (IsInternetConnected())
             {
-                CustomFSContext.SaveChanges();
-                window.Close();
+                MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan??", "Opslaan wijzigingen", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    _customFSContext.SaveChanges();
+                    window.Close();
 
-                // Update
-                Messenger.Default.Send(ChosenInspectors, "UpdateAvailableList");
+                    // Update
+                    Messenger.Default.Send(ChosenInspectors, "UpdateAvailableList");
+                }
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
 
         private void Discard(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Close without saving?", "Confirm discard", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Sluiten zonder opslaan?", "Bevestiging annulering", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                CustomFSContext.Dispose();
+                _customFSContext.Dispose();
                 ChosenInspectors = null;
                 window.Close();
             }

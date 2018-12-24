@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,38 +25,50 @@ namespace FSBeheer.ViewModel
 
         public RelayCommand<Window> DiscardCommand { get; set; }
 
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
 
+        private CustomFSContext _context;
 
-        private CustomFSContext _Context;
+        public CreateEditInspectorViewModel(InspectorVM SelectedInspector)
+        {
+            _context = new CustomFSContext();
+            SaveChangesCommand = new RelayCommand(SaveChanges);
+            Inspector = SelectedInspector;
+        }
 
         public CreateEditInspectorViewModel()
         {
-            _Context = new CustomFSContext();
-            SaveChangesCommand = new RelayCommand(SaveChanges);
-
- 
-       
-        
+            _context = new CustomFSContext();
         }
-
 
         private void AddInspector()
         {
-
-            _Context.InspectorCrud.GetAllInspectors().Add(Inspector);
-            _Context.InspectorCrud.Add(Inspector);
+            _context.InspectorCrud.GetAllInspectors().Add(Inspector);
+            _context.InspectorCrud.Add(Inspector);
         }
 
 
         private void SaveChanges()
         {
-            MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
+            if (IsInternetConnected())
             {
-                _Context.InspectorCrud.GetAllInspectors().Add(Inspector);
-                _Context.SaveChanges();
+                MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestiging opslaan", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    _context.InspectorCrud.GetAllInspectors().Add(Inspector);
+                    _context.SaveChanges();
 
-                Messenger.Default.Send(true, "UpdateInspectorList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
+                    Messenger.Default.Send(true, "UpdateInspectorList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
+                }
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
 
@@ -64,22 +77,22 @@ namespace FSBeheer.ViewModel
             if (inspector == null)
             {
                 Inspector = new InspectorVM();
-                _Context.Inspectors.Add(Inspector.ToModel());
+                _context.Inspectors.Add(Inspector.ToModel());
                 RaisePropertyChanged(nameof(Inspector)); // a sign that a property has changed for viewing
             }
             else
             {
-                Inspector = new InspectorVM(_Context.Inspectors.FirstOrDefault(c => c.Id == inspector.Id));
+                Inspector = new InspectorVM(_context.Inspectors.FirstOrDefault(c => c.Id == inspector.Id));
                 RaisePropertyChanged(nameof(inspector));
             }
         }
 
         private void Discard(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Close without saving?", "Confirm discard", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Sluiten zonder opslaan?", "Bevestiging annulering", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.Cancel)
             {
-                _Context.Dispose();
+                _context.Dispose();
                 Inspector = null;
                 window?.Close();
             }

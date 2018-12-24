@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,11 +24,18 @@ namespace FSBeheer.ViewModel
 
         public RelayCommand<Window> DeleteContactCommand { get; set; }
 
-        private CustomFSContext _Context;
+        private CustomFSContext _context;
+
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
 
         public CreateEditContactViewModel()
         {
-            _Context = new CustomFSContext();
+            _context = new CustomFSContext();
             SaveChangesContactCommand = new RelayCommand(SaveChangesContact);
             DiscardContactCommand = new RelayCommand<Window>(DiscardContact);
             DeleteContactCommand = new RelayCommand<Window>(DeleteContact);
@@ -42,41 +50,49 @@ namespace FSBeheer.ViewModel
                 {
                     CustomerId = _linkCustomer.Id
                 };
-                _Context.Contacts.Add(Contact.ToModel());
+                _context.Contacts.Add(Contact.ToModel());
                 RaisePropertyChanged(nameof(Contact));
             }
             else
             {
-                Contact = new ContactVM(_Context.Contacts.FirstOrDefault(c => c.Id == contact.Id));
+                Contact = new ContactVM(_context.Contacts.FirstOrDefault(c => c.Id == contact.Id));
                 RaisePropertyChanged(nameof(Contact));
             }
         }
 
         private void SaveChangesContact()
         {
-            MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
+            if (IsInternetConnected())
             {
-                // TODO: Als je nieuw klant aanmaakt en niet saved en dan contact aanmaakt zit hij nog niet in de database en krijg je een error
-                try
+                MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestiging opslaan", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
                 {
-                    _Context.ContactCrud.GetAllContactVMs().Add(Contact);
-                    _Context.SaveChanges();
-                } catch
-                {
-                    return;
-                }
+                    // TODO: Als je nieuw klant aanmaakt en niet saved en dan contact aanmaakt zit hij nog niet in de database en krijg je een error
+                    try
+                    {
+                        _context.ContactCrud.GetAllContactVMs().Add(Contact);
+                        _context.SaveChanges();
+                    }
+                    catch
+                    {
+                        return;
+                    }
 
-                Messenger.Default.Send(true, "UpdateContactList");
+                    Messenger.Default.Send(true, "UpdateContactList");
+                }
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
 
         private void DiscardContact(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Close without saving?", "Confirm discard", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Sluiten zonder opslaan?", "Bevestig annulering", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                _Context.Dispose();
+                _context.Dispose();
                 Contact = null;
                 window?.Close();
             }
@@ -84,14 +100,21 @@ namespace FSBeheer.ViewModel
 
         private void DeleteContact(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Delete the selected contactperson?", "Confirm Delete", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
+            if (IsInternetConnected())
             {
-                Contact.IsDeleted = true;
-                _Context.SaveChanges();
-                window.Close();
+                MessageBoxResult result = MessageBox.Show("Geselecteerde contactpersoon verwijderen?", "Bevestiging verwijdering", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    Contact.IsDeleted = true;
+                    _context.SaveChanges();
+                    window.Close();
 
-                Messenger.Default.Send(true, "UpdateContactList");
+                    Messenger.Default.Send(true, "UpdateContactList");
+                }
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
     }
