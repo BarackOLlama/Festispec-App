@@ -31,6 +31,7 @@ namespace FSBeheer.VM
         public string Notes
         {
             get { return _inspection.Notes; }
+            set { _inspection.Notes = value; }
         }
 
         public int? EventId
