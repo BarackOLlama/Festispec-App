@@ -1,4 +1,5 @@
 ﻿using FSBeheer.ViewModel;
+using FSBeheer.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +17,14 @@ using System.Windows.Shapes;
 namespace FSBeheer.View
 {
     /// <summary>
-    /// Interaction logic for AvailableInspectorsView.xaml
+    /// Interaction logic for CreateEditQuotationView.xaml
     /// </summary>
-    public partial class AvailableInspectorView : Window
+    public partial class CreateEditQuotationView : Window
     {
-        public AvailableInspectorView(CustomFSContext context, int inspectionId)
+        public CreateEditQuotationView(QuotationVM quotation = null)
         {
             InitializeComponent();
-            (DataContext as AvailableInspectorViewModel).SetContextInspectionId(context, inspectionId);
+            (DataContext as CreateEditQuotationViewModel).SetQuotation(quotation);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using FSBeheer.VM;
+﻿using FSBeheer.Model;
+using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -29,7 +30,7 @@ namespace FSBeheer.ViewModel
 
         public RelayCommand<Window> DiscardChangesCommand { get; set; }
 
-        private InspectorVM _selectedAvailaibleInspector { get; set; }
+        private InspectorVM _selectedAvailableInspector { get; set; }
 
         private InspectorVM _selectedChosenInspector { get; set; }
 
@@ -54,13 +55,13 @@ namespace FSBeheer.ViewModel
             DiscardChangesCommand = new RelayCommand<Window>(Discard);
         }
 
-        public InspectorVM SelectedAvailaibleInspector
+        public InspectorVM SelectedAvailableInspector
         {
-            get { return _selectedAvailaibleInspector; }
+            get { return _selectedAvailableInspector; }
             set
             {
-                _selectedAvailaibleInspector = value;
-                base.RaisePropertyChanged(nameof(SelectedAvailaibleInspector));
+                _selectedAvailableInspector = value;
+                base.RaisePropertyChanged(nameof(SelectedAvailableInspector));
             }
         }
 
@@ -74,20 +75,25 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public ObservableCollection<InspectorVM> RemovedInspectors { get; set; }
+
         internal void Init()
         {
             _customFSContext = new CustomFSContext();
         }
 
-        public void SetInspection(int inspectionId)
+        public void SetContextInspectionId(CustomFSContext context, int inspectionId)
         {
             _selectedInspection = _customFSContext.InspectionCrud.GetInspectionById(inspectionId);
             AvailableInspectors = _customFSContext.InspectorCrud.GetAllInspectorsFilteredByAvailability(
                 new List<DateTime>{
                     _selectedInspection.InspectionDate.StartDate,
                     _selectedInspection.InspectionDate.EndDate
-                });
+            });
+            ChosenInspectors = CustomFSContext.InspectorCrud.GetInspectorsByInspectionId(inspectionId);
+            RemovedInspectors = new ObservableCollection<InspectorVM>();
             RaisePropertyChanged(nameof(AvailableInspectors));
+            RaisePropertyChanged(nameof(ChosenInspectors));
         }
 
         private void AddInspector(InspectorVM inspectorAvailable)
@@ -106,6 +112,15 @@ namespace FSBeheer.ViewModel
         {
             if (inspectorChosen != null)
             {
+                if (_selectedInspection.Inspectors.Contains(inspectorChosen))
+                {
+                    RemovedInspectors.Add(inspectorChosen);
+                }
+                foreach (InspectorVM inspectorVM in _selectedInspection.Inspectors)
+                {
+                    if (inspectorVM.Id == inspectorChosen.Id)
+                        RemovedInspectors.Add(inspectorChosen);
+                }
                 ChosenInspectors.Remove(inspectorChosen);
                 AvailableInspectors.Add(inspectorChosen);
             } else
@@ -116,16 +131,36 @@ namespace FSBeheer.ViewModel
 
         private void SaveChanges(Window window)
         {
+            // moet nog gefixt worden
+
             if (IsInternetConnected())
             {
-                MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan??", "Opslaan wijzigingen", MessageBoxButton.OKCancel);
+                MessageBoxResult result = MessageBox.Show("Wilt u de veranderingen opslaan?", "Bevestigen", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    _customFSContext.SaveChanges();
-                    window.Close();
+                    _selectedInspection.Inspectors = ChosenInspectors;
+                    foreach (InspectorVM inspectorVM in ChosenInspectors)
+                    {
+                        for (var start = _selectedInspection.InspectionDate.StartDate; start <= _selectedInspection.InspectionDate.EndDate; start = start.AddDays(1))
+                        {
+                            AvailabilityVM availabilityVM = new AvailabilityVM(new Availability())
+                            {
+                                Inspector = inspectorVM.ToModel(),
+                                Scheduled = true,
+                                Date = (DateTime?)start,
+                                ScheduleStartTime = _selectedInspection.InspectionDate.StartTime,
+                                ScheduleEndTime = _selectedInspection.InspectionDate.EndTime
+                            };
+                            CustomFSContext.Availabilities.Add(availabilityVM.ToModel());
+                        }
+                    }
 
-                    // Update
-                    Messenger.Default.Send(ChosenInspectors, "UpdateAvailableList");
+                    
+                    CustomFSContext.AvailabilityCrud.RemoveAvailabilitiesByInspectorList(RemovedInspectors, _selectedInspection);
+                    
+
+                    window.Close();
+                    Messenger.Default.Send(true, "UpdateAvailableList");
                 }
             }
             else

@@ -1,4 +1,5 @@
 ﻿using FSBeheer.Model;
+using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.VM
 {
-    public class AvailabilityVM
+    public class AvailabilityVM : ViewModelBase
     {
         private Availability _Availability;
 
@@ -24,11 +25,7 @@ namespace FSBeheer.VM
         public DateTime? Date
         {
             get { return _Availability.Date; }
-        }
-
-        public bool Scheduled
-        {
-            get { return _Availability.Scheduled; }
+            set { _Availability.Date = value; RaisePropertyChanged(nameof(Date)); }
         }
 
         public TimeSpan? AvailableStartTime
@@ -44,11 +41,19 @@ namespace FSBeheer.VM
         public TimeSpan? ScheduleStartTime
         {
             get { return _Availability.ScheduleStartTime; }
+            set { _Availability.ScheduleStartTime = value; RaisePropertyChanged(nameof(ScheduleStartTime)); }
         }
 
         public TimeSpan? ScheduleEndTime
         {
             get { return _Availability.ScheduleEndTime; }
+            set { _Availability.ScheduleEndTime = value; RaisePropertyChanged(nameof(ScheduleEndTime)); }
+        }
+
+        public bool Scheduled
+        {
+            get { return _Availability.Scheduled; }
+            set { _Availability.Scheduled = value; RaisePropertyChanged(nameof(Scheduled)); }
         }
 
         public int? InspectorId
@@ -60,6 +65,12 @@ namespace FSBeheer.VM
         public virtual Inspector Inspector
         {
             get { return _Availability.Inspector; }
+            set { _Availability.Inspector = value; RaisePropertyChanged(nameof(Inspector)); }
+        }
+
+        internal Availability ToModel()
+        {
+            return _Availability;
         }
 
         public bool IsDeleted

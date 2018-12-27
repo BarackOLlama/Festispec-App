@@ -24,10 +24,13 @@
         <StackPanel Name="spContent" Margin="30">
             <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Inspections}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedInspection}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Inspectienummer" Binding="{Binding Id}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Evenement" Binding="{Binding EventId}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Status" Binding="{Binding StatusId}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Statusnaam" Binding="{Binding StatusName}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Inspectienummer" Binding="{Binding Id}" Width="50"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Inspectienaam" Binding="{Binding Name}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Evenement" Binding="{Binding EventId}" Width="50"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Evenementnaam" Binding="{Binding EventName}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Status" Binding="{Binding StatusId}" Width="50"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Statusnaam" Binding="{Binding StatusName}" Width="*"></DataGridTextColumn>
+                    
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

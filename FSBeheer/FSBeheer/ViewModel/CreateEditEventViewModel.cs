@@ -3,7 +3,6 @@ using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -20,7 +19,7 @@ namespace FSBeheer.ViewModel
         public string Title { get; set; }
         public EventVM Event { get; set; }
         public ObservableCollection<CustomerVM> Customers { get; set; }
-        public CustomerVM SelectedCustomer { get; set; }
+        public int SelectedIndex { get; set; }
         public string WarningText { get; set; }
 
         public RelayCommand<Window> SaveChangesCommand { get; set; }
@@ -38,7 +37,6 @@ namespace FSBeheer.ViewModel
         public CreateEditEventViewModel()
         {
             _Context = new CustomFSContext();
-            Customers = _Context.CustomerCrud.GetAllCustomers();
 
             SaveChangesCommand = new RelayCommand<Window>(SaveChanges, SaveAllowed);
             DiscardChangesCommand = new RelayCommand<Window>(DiscardChanges);
@@ -48,22 +46,32 @@ namespace FSBeheer.ViewModel
 
         public void SetEvent(int eventId)
         {
-            if(eventId == -1)
+            if (eventId == -1)
             {
                 Event = new EventVM(new Event());
+                Event.Customer = new CustomerVM();
                 _Context.Events.Add(Event.ToModel());
-                SelectedCustomer = null;
                 Title = "Evenement aanmaken";
             }
             else
             {
                 Event = _Context.EventCrud.GetEventById(eventId);
-                SelectedCustomer = _Context.CustomerCrud.GetCustomerById(Event.Customer.Id);
                 Title = "Evenement wijzigen";
             }
+            Customers = _Context.CustomerCrud.GetAllCustomers();
+            SelectedIndex = GetIndex(Event.Customer, Customers);
+            RaisePropertyChanged(nameof(SelectedIndex));
+            RaisePropertyChanged(nameof(Customers));
             RaisePropertyChanged(nameof(Event));
-            RaisePropertyChanged(nameof(SelectedCustomer));
             RaisePropertyChanged(nameof(Title));
+        }
+
+        private int GetIndex(CustomerVM Obj, ObservableCollection<CustomerVM> List)
+        {
+            for (int i = 0; i < List.Count; i++)
+                if (List[i].Id == Obj.Id)
+                    return i;
+            return -1;
         }
 
         private void CloseAction(Window window)

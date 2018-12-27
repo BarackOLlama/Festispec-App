@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
+        x:Name="CreateEditEvent"
         Title="{Binding Title}" Height="400" Width="500"
         DataContext="{Binding CreateEditEvent, Source={StaticResource Locator}}">
     <Grid>
@@ -13,16 +14,10 @@
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Klant: " Template="{DynamicResource CreateEditLabel}"/>
                     <local:FilteredComboBox ItemsSource="{Binding Customers}"
-                                            SelectedItem="{Binding SelectedCustomer}"
-                                            SelectedValue="{Binding SelectedCustomer.Name}"
-                                            SelectedValuePath="Name"
-                                            Template="{DynamicResource FilteredComboBox}">
-                        <local:FilteredComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel VirtualizationMode="Recycling"/>
-                            </ItemsPanelTemplate>
-                        </local:FilteredComboBox.ItemsPanel>
-                    </local:FilteredComboBox>
+                                            SelectedItem="{Binding Event.Customer}"
+                                            SelectedIndex="{Binding SelectedIndex}"
+                                            DisplayMemberPath="Name"
+                                            Template="{DynamicResource FilteredComboBox}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Naam: " Template="{DynamicResource CreateEditLabel}"/>
@@ -42,7 +37,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Startdatum: " Template="{DynamicResource CreateEditLabel}"/>
-                    <TextBox Text="{Binding Event.Zipcode}" Template="{DynamicResource CreateEditTextBox}"/>
+                    <TextBox Text="{Binding Event.EventDate}" Template="{DynamicResource CreateEditTextBox}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Einddatum: " Template="{DynamicResource CreateEditLabel}"/>
@@ -52,7 +47,7 @@
             <StackPanel>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="20">
                     <Button Content="Opslaan" Template="{DynamicResource InterfaceButton}"/>
-                    <Button Content="Annuleren" Template="{DynamicResource InterfaceButton}"/>
+                    <Button Content="Annuleren" Command="{Binding DiscardChangesCommand}" CommandParameter="{Binding ElementName=CreateEditEvent}" Template="{DynamicResource InterfaceButton}"/>
                     <Button Content="Verwijderen" Template="{DynamicResource InterfaceButton}"/>
                 </StackPanel>
             </StackPanel>
