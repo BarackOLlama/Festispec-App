@@ -90,7 +90,7 @@ namespace FSBeheer.ViewModel
                     _selectedInspection.InspectionDate.StartDate,
                     _selectedInspection.InspectionDate.EndDate
             });
-            ChosenInspectors = CustomFSContext.InspectorCrud.GetInspectorsByInspectionId(inspectionId);
+            ChosenInspectors = _customFSContext.InspectorCrud.GetInspectorsByInspectionId(inspectionId);
             RemovedInspectors = new ObservableCollection<InspectorVM>();
             RaisePropertyChanged(nameof(AvailableInspectors));
             RaisePropertyChanged(nameof(ChosenInspectors));
@@ -151,12 +151,12 @@ namespace FSBeheer.ViewModel
                                 ScheduleStartTime = _selectedInspection.InspectionDate.StartTime,
                                 ScheduleEndTime = _selectedInspection.InspectionDate.EndTime
                             };
-                            CustomFSContext.Availabilities.Add(availabilityVM.ToModel());
+                            _customFSContext.Availabilities.Add(availabilityVM.ToModel());
                         }
                     }
 
                     
-                    CustomFSContext.AvailabilityCrud.RemoveAvailabilitiesByInspectorList(RemovedInspectors, _selectedInspection);
+                    _customFSContext.AvailabilityCrud.RemoveAvailabilitiesByInspectorList(RemovedInspectors, _selectedInspection);
                     
 
                     window.Close();
