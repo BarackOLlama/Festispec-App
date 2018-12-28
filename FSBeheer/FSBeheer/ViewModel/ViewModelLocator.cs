@@ -12,7 +12,8 @@ namespace FSBeheer.ViewModel
         private QuestionnaireManagementViewModel _questionnaireManagementViewModel;
         private CreateEditQuestionnaireViewModel _questionnaireViewModel;
         private InspectorManagementViewModel _inspectorManagementViewModel;
-        private InspectionManagementViewModel _InspectionManagementViewModel;
+        private InspectionManagementViewModel _inspectionManagementViewModel;
+        private QuotationManagementViewModel _quotationManagementViewModel;
 
         public ViewModelLocator()
         {
@@ -161,6 +162,23 @@ namespace FSBeheer.ViewModel
             get
             {
                 return new CreateEditInspectionViewModel();
+            }
+        }
+
+        public QuotationManagementViewModel QuotationManagement
+        {
+            get
+            {
+                _quotationManagementViewModel = new QuotationManagementViewModel();
+                return _quotationManagementViewModel;
+            }
+        }
+
+        public CreateEditQuotationViewModel CreateEditQuotation
+        {
+            get
+            {
+                return new CreateEditQuotationViewModel();
             }
         }
 

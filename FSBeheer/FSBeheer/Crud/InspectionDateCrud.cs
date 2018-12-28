@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.Crud
 {
-    class InspectionDateCrud : AbstractCrud
+    public class InspectionDateCrud : AbstractCrud
     {
 
         public InspectionDateCrud(CustomFSContext customFSContext) : base(customFSContext)

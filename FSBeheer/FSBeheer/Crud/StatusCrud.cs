@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.Crud
 {
-    class StatusCrud : AbstractCrud
+    public class StatusCrud : AbstractCrud
     {
         public StatusCrud(CustomFSContext customFSContext) : base(customFSContext)
         {

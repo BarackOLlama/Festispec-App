@@ -6,7 +6,7 @@ using System.Data.Entity;
 
 namespace FSBeheer.Crud
 {
-    class QuestionCrud : AbstractCrud
+    public class QuestionCrud : AbstractCrud
     {
         public QuestionCrud(CustomFSContext customFSContext) : base(customFSContext)
         {

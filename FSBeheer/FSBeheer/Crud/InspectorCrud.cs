@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.Crud
 {
-    class InspectorCrud : AbstractCrud
+    public class InspectorCrud : AbstractCrud
     {
 
         public InspectorCrud(CustomFSContext customFSContext) : base(customFSContext)
@@ -89,9 +89,34 @@ namespace FSBeheer.Crud
 
             if(availableList.Count == 0)
             {
-                return false;
+                return true;
             }
             return !availableList.Contains(false);
+        }
+
+        public ObservableCollection<InspectorVM> GetInspectorsByList(ObservableCollection<InspectorVM> list)
+        {
+            var inspectors = new ObservableCollection<InspectorVM>();
+            foreach (InspectorVM inspectorVM in list)
+            {
+                var inspector = CustomFSContext.Inspectors.FirstOrDefault(i => inspectorVM.Id == i.Id);
+                inspectors.Add(new InspectorVM(inspector));
+            }
+            return inspectors;
+        }
+
+        public ObservableCollection<InspectorVM> GetInspectorsByInspectionId(int inspectionId)
+        {
+            var inspection = new InspectionCrud(CustomFSContext).GetInspectionById(inspectionId);
+            return inspection.Inspectors;
+        }
+
+        public void Add(InspectorVM _inspector) => CustomFSContext.Inspectors.Add(_inspector.ToModel());
+
+        public void Modify(InspectorVM _inspector)
+        {
+            CustomFSContext.Entry(_inspector?.ToModel()).State = EntityState.Modified;
+            CustomFSContext.SaveChanges();
         }
 
         public void Delete(InspectorVM _inspector)

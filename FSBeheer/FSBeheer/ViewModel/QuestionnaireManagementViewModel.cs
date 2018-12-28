@@ -115,7 +115,7 @@ namespace FSBeheer.ViewModel
                 }
                 else
                 {
-                    var result = MessageBox.Show("Vraag verwijderen?", "Verwijder", MessageBoxButton.OKCancel);
+                    var result = MessageBox.Show("Vragenlijst verwijderen?", "Bevestiging verwijdering", MessageBoxButton.OKCancel);
                     if (result == MessageBoxResult.OK)
                     {
                         _selectedQuestionnaire.IsDeleted = true;

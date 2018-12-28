@@ -109,6 +109,7 @@
     <Compile Include="Crud\QuestionCrud.cs" />
     <Compile Include="Crud\QuestionnaireCrud.cs" />
     <Compile Include="Crud\QuestionTypeCrud.cs" />
+    <Compile Include="Crud\QuotationCrud.cs" />
     <Compile Include="Crud\StatusCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -135,12 +136,19 @@
     <Compile Include="ViewModel\CreateEditEventViewModel.cs" />
     <Compile Include="ViewModel\CreateEditQuestionnaireViewModel.cs" />
     <Compile Include="ViewModel\CreateEditQuestionViewModel.cs" />
-    <Compile Include="ViewModel\CreateQuestionnaireViewModel.cs" />
+    <Compile Include="ViewModel\CreateEditQuotationViewModel.cs" />
     <Compile Include="ViewModel\CreateEditInspectorViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
     <Compile Include="View\BusinessDataView.xaml.cs">
       <DependentUpon>BusinessDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\QuotationManagementViewModel.cs" />
+    <Compile Include="View\CreateEditQuotationView.xaml.cs">
+      <DependentUpon>CreateEditQuotationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\QuotationManagementView.xaml.cs">
+      <DependentUpon>QuotationManagementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="View\BaseView.cs" />
@@ -219,6 +227,7 @@
     <Compile Include="VM\InspectorVM.cs" />
     <Compile Include="VM\QuestionTypeVM.cs" />
     <Compile Include="VM\QuestionVM.cs" />
+    <Compile Include="VM\QuotationVM.cs" />
     <Compile Include="VM\StatusVM.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -279,6 +288,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\CreateEditQuotationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CreateQuestionnaireView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -320,6 +333,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\QuestionnaireManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\QuotationManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

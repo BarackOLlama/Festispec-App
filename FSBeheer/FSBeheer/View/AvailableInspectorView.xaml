@@ -17,7 +17,7 @@
             </StackPanel>
             <StackPanel Margin="10,5,10,10" Width="400" Height="360">
                 <StackPanel Name="spContent" Margin="0,0,0,2">
-                    <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedAvailaibleInspector, Mode=TwoWay}" 
+                    <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedAvailableInspector, Mode=TwoWay}" 
                       ItemsSource="{Binding AvailableInspectors}" Margin="0,6,0,0" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" BorderBrush="#FF979494"
                       GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFF0E0E0" HeadersVisibility="Column">
                         <DataGrid.Columns>
@@ -31,7 +31,7 @@
         </StackPanel>
         <StackPanel Width="100" VerticalAlignment="Center">
             <Button Command="{Binding RemoveInspectorCommand}" CommandParameter="{Binding SelectedChosenInspector}" BorderThickness="1" BorderBrush="#FF999A9B" Foreground="White" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="20" Background="#FF6F9BDA">Links</Button>
-            <Button Command="{Binding SetInspectorCommand}" CommandParameter="{Binding SelectedAvailaibleInspector}" BorderThickness="1" BorderBrush="#FF999A9B" Foreground="White" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="20" Background="#FF6F9BDA">Rechts</Button>
+            <Button Command="{Binding SetInspectorCommand}" CommandParameter="{Binding SelectedAvailableInspector}" BorderThickness="1" BorderBrush="#FF999A9B" Foreground="White" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="20" Background="#FF6F9BDA">Rechts</Button>
         </StackPanel>
         <StackPanel Orientation="Vertical">
             <StackPanel>

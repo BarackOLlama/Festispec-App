@@ -31,6 +31,7 @@ namespace FSBeheer.VM
         public string Notes
         {
             get { return _inspection.Notes; }
+            set { _inspection.Notes = value; }
         }
 
         public int? EventId
@@ -41,7 +42,8 @@ namespace FSBeheer.VM
         public EventVM Event
         {
             get { return new EventVM(_inspection.Event); }
-            set { _inspection.Event = value.ToModel(); }
+            set { _inspection.Event = value.ToModel();
+                RaisePropertyChanged(nameof(_inspection)); }
         }
 
         public int? StatusId
@@ -63,14 +65,8 @@ namespace FSBeheer.VM
 
         public ObservableCollection<InspectorVM> Inspectors
         {
-            get
-            {
-                return new ObservableCollection<InspectorVM>(_inspection.Inspectors.ToList().Select(i => new InspectorVM(i))); 
-            }
-            set
-            {
-                _inspection.Inspectors = new ObservableCollection<Inspector>(value.ToList().Select(i => i.ToModel()));
-            }
+            get { return new ObservableCollection<InspectorVM>(_inspection.Inspectors.ToList().Select(i => new InspectorVM(i))); }
+            set { _inspection.Inspectors = new ObservableCollection<Inspector>(value.ToList().Select(i => i.ToModel())); }
         }
 
         public bool IsDeleted
