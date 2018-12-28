@@ -42,7 +42,6 @@ namespace FSBeheer.ViewModel
 
         public CreateEditInspectionViewModel()
         {
-            // Darjush laten weten
             Messenger.Default.Register<bool>(this, "UpdateAvailableList", c => RaisePropertyChanged(nameof(Inspection)));
 
             _Context = new CustomFSContext();
@@ -62,7 +61,8 @@ namespace FSBeheer.ViewModel
             {
                 Inspection = new InspectionVM(new Inspection())
                 {
-                    InspectionDate = new InspectionDateVM(new InspectionDate())
+                    InspectionDate = new InspectionDateVM(new InspectionDate()),
+                    Event = new EventVM(new Event())
                 };
                 _Context.Inspections.Add(Inspection.ToModel());
                 Title = "Inspectie aanmaken";
@@ -72,8 +72,18 @@ namespace FSBeheer.ViewModel
                 Inspection = _Context.InspectionCrud.GetInspectionById(inspectionId);
                 Title = "Inspectie wijzigen";
             }
-
+            SelectedIndex = GetIndex(Inspection.Event, Events);
+            RaisePropertyChanged(nameof(SelectedIndex));
             RaisePropertyChanged(nameof(Inspection));
+            RaisePropertyChanged(nameof(Title));
+        }
+
+        private int GetIndex(EventVM Obj, ObservableCollection<EventVM> List)
+        {
+            for (int i = 0; i < List.Count; i++)
+                if (List[i].Id == Obj.Id)
+                    return i;
+            return -1;
         }
 
         private void CloseAction(Window window)

@@ -41,14 +41,9 @@ namespace FSBeheer.ViewModel
             Inspector = SelectedInspector;
         }
 
-        public CreateEditInspectorViewModel()
-        {
-            _context = new CustomFSContext();
-        }
-
         private void AddInspector()
         {
-            _Context.InspectorCrud.GetAllInspectors().Add(Inspector);
+            _context.InspectorCrud.GetAllInspectors().Add(Inspector);
         }
 
 
@@ -76,11 +71,11 @@ namespace FSBeheer.ViewModel
             if (inspector == null)
             {
                 Inspector = new InspectorVM();
-                _Context.Inspectors.Add(Inspector.ToModel());
+                _context.Inspectors.Add(Inspector.ToModel());
             }
             else
             {
-                Inspector = new InspectorVM(_Context.Inspectors.FirstOrDefault(c => c.Id == inspector.Id));
+                Inspector = new InspectorVM(_context.Inspectors.FirstOrDefault(c => c.Id == inspector.Id));
             }
             RaisePropertyChanged(nameof(Inspector)); // a sign that a property has changed for viewing
         }

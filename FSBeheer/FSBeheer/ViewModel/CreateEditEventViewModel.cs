@@ -37,6 +37,7 @@ namespace FSBeheer.ViewModel
         public CreateEditEventViewModel()
         {
             _Context = new CustomFSContext();
+            Customers = _Context.CustomerCrud.GetAllCustomers();
 
             SaveChangesCommand = new RelayCommand<Window>(SaveChanges, SaveAllowed);
             DiscardChangesCommand = new RelayCommand<Window>(DiscardChanges);
@@ -59,10 +60,8 @@ namespace FSBeheer.ViewModel
                 Event = _Context.EventCrud.GetEventById(eventId);
                 Title = "Evenement wijzigen";
             }
-            Customers = _Context.CustomerCrud.GetAllCustomers();
             SelectedIndex = GetIndex(Event.Customer, Customers);
             RaisePropertyChanged(nameof(SelectedIndex));
-            RaisePropertyChanged(nameof(Customers));
             RaisePropertyChanged(nameof(Event));
             RaisePropertyChanged(nameof(Title));
         }

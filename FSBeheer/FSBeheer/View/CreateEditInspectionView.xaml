@@ -16,7 +16,7 @@
         <StackPanel Name="EventSelection" Margin="0,30,0,0">
 
             <local:FilteredComboBox ItemsSource="{Binding Events}"
-                      SelectedItem="{Binding SelectedEvent}"
+                      SelectedItem="{Binding Inspection.Event}"
                       SelectedIndex="{Binding SelectedIndex}"
                       DisplayMemberPath="Name"
                       Template="{DynamicResource FilteredComboBoxTemplate}"/>
