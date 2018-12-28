@@ -95,7 +95,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowQuotationView()
         {
-            throw new NotImplementedException();
+            new QuotationManagementView().Show();
         }
 
         private void ShowCreateEditInspectionView()
