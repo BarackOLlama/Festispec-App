@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.Crud
 {
-    class QuestionnaireCrud : AbstractCrud
+    public class QuestionnaireCrud : AbstractCrud
     {
 
         public QuestionnaireCrud(CustomFSContext customFSContext) : base(customFSContext)

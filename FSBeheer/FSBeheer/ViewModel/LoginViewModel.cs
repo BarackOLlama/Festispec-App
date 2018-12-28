@@ -14,7 +14,7 @@ namespace FSBeheer.ViewModel
 {
     public class LoginViewModel : ViewModelBase
     {
-        private string _message;
+        //private string _message;
         public AccountVM Account { get; set; }
         private HomeViewModel _homeViewModel;
 

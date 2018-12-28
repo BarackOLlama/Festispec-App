@@ -10,7 +10,7 @@ using System.Data.Entity;
 
 namespace FSBeheer
 {
-    class CustomFSContext : FSContext
+    public class CustomFSContext : FSContext
     {
         public CustomerCrud CustomerCrud;
         public AnswerCrud AnswerCrud;
@@ -23,6 +23,7 @@ namespace FSBeheer
         public QuestionnaireCrud QuestionnaireCrud;
         public ContactCrud ContactCrud;
         public StatusCrud StatusCrud;
+        public QuotationCrud QuotationCrud;
 
         public CustomFSContext() : base()
         {
@@ -40,6 +41,7 @@ namespace FSBeheer
             QuestionnaireCrud = new QuestionnaireCrud(this);
             ContactCrud = new ContactCrud(this);
             StatusCrud = new StatusCrud(this);
+            QuotationCrud = new QuotationCrud(this);
         }
     }
 }

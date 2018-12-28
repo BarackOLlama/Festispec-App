@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace FSBeheer.Crud
 {
-    class AbstractCrud
+    public class AbstractCrud
     {
         protected CustomFSContext CustomFSContext;
 

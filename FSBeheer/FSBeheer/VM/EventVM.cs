@@ -43,7 +43,10 @@ namespace FSBeheer.VM
         public CustomerVM Customer
         {
             get { return new CustomerVM(_event.Customer); }
-            set { _event.Customer = value.ToModel(); }
+            set {
+                if(value != null)
+                    _event.Customer = value.ToModel();
+            }
         }
 
         public override string ToString()
