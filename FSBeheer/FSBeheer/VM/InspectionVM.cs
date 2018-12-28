@@ -31,6 +31,7 @@ namespace FSBeheer.VM
         public string Notes
         {
             get { return _inspection.Notes; }
+            set { _inspection.Notes = value; }
         }
 
         public int? EventId
@@ -41,7 +42,8 @@ namespace FSBeheer.VM
         public EventVM Event
         {
             get { return new EventVM(_inspection.Event); }
-            set { _inspection.Event = value.ToModel(); }
+            set { _inspection.Event = value.ToModel();
+                RaisePropertyChanged(nameof(_inspection)); }
         }
 
         public int? StatusId
