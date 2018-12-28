@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace FSBeheer.Crud
 {
-    class CustomerCrud : AbstractCrud
+    public class CustomerCrud : AbstractCrud
     {
         public ObservableCollection<CustomerVM> GetFilteredCustomerBasedOnName(string name_contains) => _getMultipleCustomersByName(name_contains);
         public CustomerCrud(CustomFSContext customFSContext) : base(customFSContext)

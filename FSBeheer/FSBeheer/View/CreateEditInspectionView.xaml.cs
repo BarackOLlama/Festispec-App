@@ -21,10 +21,10 @@ namespace FSBeheer.View
     /// </summary>
     public partial class CreateEditInspectionView : Window
     {
-        public CreateEditInspectionView(InspectionVM inspection = null)
+        public CreateEditInspectionView(int inspectionId = -1)
         {
             InitializeComponent();
-            (DataContext as CreateEditInspectionViewModel).SetInspection(inspection);
+            (DataContext as CreateEditInspectionViewModel).SetInspection(inspectionId);
         }
     }
 }

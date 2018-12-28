@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.Crud
 {
-    class AvailabilityCrud : AbstractCrud
+    public class AvailabilityCrud : AbstractCrud
     {
 
         public AvailabilityCrud(CustomFSContext customFSContext) : base(customFSContext)
@@ -36,6 +36,22 @@ namespace FSBeheer.Crud
                 .Select(i => new AvailabilityVM(i));
             var _availability = new ObservableCollection<AvailabilityVM>(availability);
             return _availability;
+        }
+
+        public void RemoveAvailabilitiesByInspectorList(ObservableCollection<InspectorVM> inspectorList, InspectionVM inspection)
+        {
+            var startRemoveDate = inspection.InspectionDate.StartDate;
+            var endRemoveDate = inspection.InspectionDate.EndDate;
+            var allAvailabilityVMs = CustomFSContext.Availabilities.Select(a => new AvailabilityVM(a));
+
+            foreach (InspectorVM inspectorVM in inspectorList)
+            {
+                foreach (AvailabilityVM availabilityVM in allAvailabilityVMs)
+                {
+                    if (availabilityVM.Date >= startRemoveDate && availabilityVM.Date <= endRemoveDate && availabilityVM.Inspector.Id == inspectorVM.Id)
+                        CustomFSContext.Availabilities.Remove(availabilityVM.ToModel());
+                }
+            }
         }
 
     }
