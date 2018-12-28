@@ -1,14 +1,11 @@
-﻿using FSBeheer.Crud;
-using FSBeheer.Model;
+﻿using FSBeheer.Model;
 using FSBeheer.View;
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -18,7 +15,16 @@ namespace FSBeheer.ViewModel
     {
         private CustomFSContext _Context;
 
-        public InspectionVM Inspection { get; set; }
+        private InspectionVM _inspection;
+        public InspectionVM Inspection
+        {
+            get { return _inspection; }
+            set
+            {
+                _inspection = value;
+                RaisePropertyChanged(nameof(Inspection));
+            }
+        }
         public ObservableCollection<CustomerVM> Customers { get; }
         public ObservableCollection<EventVM> Events { get; set; }
         public int SelectedIndex { get; set; }
@@ -34,7 +40,7 @@ namespace FSBeheer.ViewModel
         }
 
         public string WarningText { get; set; }
-        
+
         public RelayCommand<Window> CancelInspectionCommand { get; set; }
         public RelayCommand<Window> AddInspectionCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
@@ -62,7 +68,10 @@ namespace FSBeheer.ViewModel
                 Inspection = new InspectionVM(new Inspection())
                 {
                     InspectionDate = new InspectionDateVM(new InspectionDate()),
-                    Event = new EventVM(new Event())
+                    Event = new EventVM(new Event()
+                    {
+                        Customer = new Customer()
+                    })
                 };
                 _Context.Inspections.Add(Inspection.ToModel());
                 Title = "Inspectie aanmaken";
@@ -109,8 +118,6 @@ namespace FSBeheer.ViewModel
             {
                 if (CheckStartDateValidity())
                 {
-                    // Inspectie aanmaken in de database met alle velden die ingevuld zijn
-                    _Context.InspectionCrud.GetAllInspections().Add(Inspection);
                     _Context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateInspectionList");
                     CloseAction(window);
@@ -176,7 +183,7 @@ namespace FSBeheer.ViewModel
             else
             {
                 return false;
-            }                
+            }
         }
 
         private bool CheckStartDateValidity()
@@ -186,7 +193,7 @@ namespace FSBeheer.ViewModel
                 return true;
             }
             return false;
-            
+
         }
     }
 }
