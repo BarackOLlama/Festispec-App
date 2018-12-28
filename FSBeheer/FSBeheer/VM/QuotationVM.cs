@@ -55,6 +55,7 @@ namespace FSBeheer.VM
         public CustomerVM Customer
         {
             get { return new CustomerVM(_quotation.Customer); }
+            set { _quotation.Customer = value.ToModel(); }
         }
 
         public int? InspectionId

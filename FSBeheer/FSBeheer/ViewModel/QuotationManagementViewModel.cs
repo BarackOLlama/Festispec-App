@@ -1,14 +1,8 @@
-﻿using FSBeheer.Model;
-using FSBeheer.View;
+﻿using FSBeheer.View;
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
@@ -21,17 +15,14 @@ namespace FSBeheer.ViewModel
         private QuotationVM _SelectedQuotation { get; set; }
         public QuotationVM SelectedQuotation
         {
-            get
-            {
-                return _SelectedQuotation;
-            }
+            get { return _SelectedQuotation; }
             set
             {
                 _SelectedQuotation = value;
-                base.RaisePropertyChanged(nameof(SelectedQuotation));
+                RaisePropertyChanged(nameof(SelectedQuotation));
             }
         }
-        
+
         public RelayCommand ShowEditQuotationViewCommand { get; set; }
         public RelayCommand ShowCreateQuotationViewCommand { get; set; }
 
@@ -46,13 +37,13 @@ namespace FSBeheer.ViewModel
 
         private void ShowEditQuotationView()
         {
-            if (_SelectedQuotation == null)
+            if (SelectedQuotation == null)
             {
                 MessageBox.Show("Er is geen inspectie geselecteerd. Kies een inspectie en kies daarna de optie 'Wijzig'.");
             }
             else
             {
-                new CreateEditQuotationView(_SelectedQuotation).Show();
+                new CreateEditQuotationView(SelectedQuotation).Show();
             }
         }
 

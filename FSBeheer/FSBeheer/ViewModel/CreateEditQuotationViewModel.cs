@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -13,6 +14,9 @@ namespace FSBeheer.ViewModel
         public QuotationVM Quotation { get; set; }
 
         public QuotationVM SelectedQuotation { get; set; }
+
+        public ObservableCollection<CustomerVM> Customers { get; set; }
+        public int SelectedIndex { get; set; }
 
         public RelayCommand SaveChangesCommand { get; set; }
 
@@ -71,15 +75,26 @@ namespace FSBeheer.ViewModel
             if (quotationVM == null)
             {
                 Quotation = new QuotationVM();
+                Quotation.Customer = new CustomerVM();
                 _context.Quotations.Add(Quotation.ToModel());
-                RaisePropertyChanged(nameof(Quotation)); // a sign that a property has changed for viewing
             }
             else
             {
                 Quotation = new QuotationVM(_context.Quotations.FirstOrDefault(q => q.Id == quotationVM.Id));
-                RaisePropertyChanged(nameof(quotationVM));
             }
+            Customers = _context.CustomerCrud.GetAllCustomers();
+            SelectedIndex = GetIndex(Quotation.Customer, Customers);
+            RaisePropertyChanged(nameof(Customers));
+            RaisePropertyChanged(nameof(SelectedIndex));
+            RaisePropertyChanged(nameof(Quotation)); // a sign that a property has changed for viewing
         }
 
+        private int GetIndex(CustomerVM Obj, ObservableCollection<CustomerVM> List)
+        {
+            for (int i = 0; i < List.Count; i++)
+                if (List[i].Id == Obj.Id)
+                    return i;
+            return -1;
+        }
     }
 }
