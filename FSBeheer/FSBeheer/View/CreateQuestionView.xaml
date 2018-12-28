@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="CreateQuestionWindow" Height="300" Width="300"
         ResizeMode="NoResize"
-        DataContext="{Binding NewQuestionCreationViewModel, Source={StaticResource Locator}}">
+        DataContext="{Binding CreateQuestion, Source={StaticResource Locator}}">
     <StackPanel>
 
         <TextBlock Text="Vraag toevoegen" FontSize="28"/>
@@ -25,8 +25,9 @@
         <TextBlock Text="Kolommen"></TextBlock>
         <TextBox Text="{Binding Question.Columns}"></TextBox>
         <Grid>
-            <Button Content="Toevoegen" Command="{Binding AddQuestionCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
-            <Button Content="Annuleren" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}"  Template="{DynamicResource InterfaceButtonTemplate}"/>
+            <Button Content="Toevoegen" Command="{Binding CreateQuestionCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}"
+                    Width="100"  HorizontalAlignment="Left" Margin="5,5,0,0" />
+            <Button Content="Annuleren" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}" Width="100" HorizontalAlignment="Left" Margin="120,5,5,0"></Button>
         </Grid>
     </StackPanel>
 </local:BaseView>

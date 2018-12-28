@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -33,6 +34,13 @@ namespace FSBeheer.ViewModel
         private InspectorVM _selectedChosenInspector { get; set; }
 
         private InspectionVM _selectedInspection { get; set; }
+
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
 
         public AvailableInspectorViewModel()
         {
@@ -108,14 +116,21 @@ namespace FSBeheer.ViewModel
 
         private void SaveChanges(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
+            if (IsInternetConnected())
             {
-                CustomFSContext.SaveChanges();
-                window.Close();
+                MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    CustomFSContext.SaveChanges();
+                    window.Close();
 
-                // Update
-                Messenger.Default.Send(ChosenInspectors, "UpdateAvailableList");
+                    // Update
+                    Messenger.Default.Send(ChosenInspectors, "UpdateAvailableList");
+                }
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
         }
 

@@ -151,7 +151,7 @@
                                 
                                 <!-- TODO: Make it less ugly  -->
 
-                                <ListBox Height="25" DisplayMemberPath="Name" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="335" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8" ItemsSource="{Binding ChosenInspectors, UpdateSourceTrigger=PropertyChanged}">
+                                <ListBox Height="25" DisplayMemberPath="Name" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="335" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8" ItemsSource="{Binding Inspection.Inspectors, UpdateSourceTrigger=PropertyChanged}">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <WrapPanel IsItemsHost="True"/> 

@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
@@ -20,9 +21,14 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<EventVM> Events { get; set; }
         public int SelectedIndex { get; set; }
         public ObservableCollection<StatusVM> Statuses { get; set; }
-        public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
 
-        public string WarningText { get; set; }
+        [DllImport("wininet.dll")]
+        private extern static bool InternetGetConnectedState(out int description, int reservedValue);
+        public static bool IsInternetConnected()
+        {
+            return InternetGetConnectedState(out int description, 0);
+        }
+
         private DateTime _StartDate { get; set; }
         public DateTime StartDate
         {
@@ -132,7 +138,7 @@ namespace FSBeheer.ViewModel
             Statuses = _Context.StatusCrud.GetAllStatusVMs();
 
             CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
-            AddInspectionCommand = new RelayCommand<Window>(AddInspection, CheckSaveAllowed);
+            AddInspectionCommand = new RelayCommand<Window>(AddInspection);
             CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
             PickInspectorsCommand = new RelayCommand(OpenAvailable);
         }
@@ -141,8 +147,11 @@ namespace FSBeheer.ViewModel
         {
             // TODO: Not in memory/database after reopening the screen
 
-            ChosenInspectors = new ObservableCollection<InspectorVM>(SelectedInspectors);
-            RaisePropertyChanged(nameof(ChosenInspectors)); 
+            if (Inspection != null)
+            {
+                Inspection.Inspectors =  SelectedInspectors;
+                RaisePropertyChanged(nameof(Inspection));
+            }
         }
 
         public void SetInspection(InspectionVM inspection)
@@ -199,19 +208,28 @@ namespace FSBeheer.ViewModel
             CanExecuteChanged();
        }
 
-       public void AddInspection(Window window)
-       {
-           _Context.InspectionCrud.GetAllInspections().Add(Inspection);
-           _Context.SaveChanges();
+        public void AddInspection(Window window)
+        {
+            if (IsInternetConnected())
+            {
+                // Inspectie aanmaken in de database met alle velden die ingevuld zijn
+                _Context.InspectionCrud.GetAllInspections().Add(Inspection);
+                _Context.SaveChanges();
 
-           Messenger.Default.Send(true, "UpdateInspectionList");
-           CloseAction(window);
-            CanExecuteChanged();
-       }
+                Messenger.Default.Send(true, "UpdateInspectionList");
+            }
+            else
+            {
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
+            }
+        }
 
         public void OpenAvailable()
         {
-            new AvailableInspectorView(Inspection.Id).Show();
+            if(IsInternetConnected())
+                new AvailableInspectorView(Inspection.Id).Show();
+            else
+                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
 
        private void CanExecuteChanged()
@@ -219,30 +237,7 @@ namespace FSBeheer.ViewModel
            AddInspectionCommand.RaiseCanExecuteChanged();
        }
 
-       private bool CheckSaveAllowed(Window window)
-       {
-           if (Inspection == null)
-           {
-               return false;
-           }else if (string.IsNullOrEmpty(Inspection.Name))
-           {
-               WarningText = "Het veld Naam mag niet leeg zijn";
-               RaisePropertyChanged(nameof(WarningText));
-               return false;
-           }
-           else if (Inspection.Inspectors == null)
-           {
-               WarningText = "Het veld Inspecteur(s) mag niet leeg zijn";
-               RaisePropertyChanged(nameof(WarningText));
-               return false;
-           }
-           else
-           {
-               WarningText = "";
-               RaisePropertyChanged(nameof(WarningText));
-               return true;
-           }
-       }
+
 
     }
 }

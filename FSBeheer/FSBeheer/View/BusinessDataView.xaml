@@ -1,0 +1,38 @@
+﻿<Window x:Class="FSBeheer.View.BusinessDataView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FSBeheer.View"
+        mc:Ignorable="d"
+        Title="BusinessDataView" Height="350" Width="450"
+        DataContext="{Binding BusinessData, Source={StaticResource Locator}}">
+    <Grid>
+        <StackPanel HorizontalAlignment="Left" Width="225">
+            <TextBlock FontSize="20">Kwartaal Jaar</TextBlock>
+            <ComboBox ItemsSource="{Binding ValidYears}" SelectedItem="{Binding Year}"></ComboBox>
+            <Separator/>
+            <TextBlock>Aantal inspecteurs:</TextBlock>
+            <Label Content="{Binding Inspectors.Count, Mode=OneWay, FallbackValue=0}"></Label>
+            <TextBlock>Aantal inspecties:</TextBlock>
+            <Label Content="{Binding Inspections.Count, Mode=OneWay, FallbackValue=0}"></Label>
+            <TextBlock>Aantal klanten:</TextBlock>
+            <Label Content="{Binding Customers.Count, Mode=OneWay, FallbackValue=0}" ></Label>
+            <TextBlock>Nieuwe klanten:</TextBlock>
+            <Label Content="{Binding NewCustomersCount, Mode=OneWay, FallbackValue=0}"></Label>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right" Width="225">
+            <TextBlock FontSize="20">Kwartaal Nummer</TextBlock>
+            <ComboBox ItemsSource="{Binding Quarters}" SelectedItem="{Binding QuarterNumber}"></ComboBox>
+            <Separator/>
+            <TextBlock>Nieuwe inspecteurs:</TextBlock>
+            <Label Content="{Binding NewInspectorsCount, Mode=OneWay, FallbackValue=0}"></Label>
+            <TextBlock>Actieve inspecteurs:</TextBlock>
+            <Label Content="{Binding ActiveInspectorsCount, Mode=OneWay, FallbackValue=0}"></Label>
+            <TextBlock>Inactieve inspecteurs:</TextBlock>
+            <Label Content="{Binding InactiveInspectorsCount, Mode=OneWay, FallbackValue=0}"></Label>
+            <TextBlock>Nieuwe inspecties:</TextBlock>
+            <Label Content="{Binding NewInspectionsCount,Mode=OneWay, FallbackValue=0}"></Label>
+        </StackPanel>
+    </Grid>
+</Window>

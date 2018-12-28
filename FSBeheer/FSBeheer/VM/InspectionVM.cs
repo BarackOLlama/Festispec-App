@@ -15,7 +15,7 @@ namespace FSBeheer.VM
 
         public InspectionVM(Inspection inspection)
         {
-            _inspection = inspection;
+            _inspection = inspection;            
         }
 
         public int Id
@@ -41,7 +41,7 @@ namespace FSBeheer.VM
         public EventVM Event
         {
             get { return new EventVM(_inspection.Event); }
-            set { Event = value; }
+            set { _inspection.Event = value.ToModel(); }
         }
 
         public int? StatusId
@@ -52,18 +52,25 @@ namespace FSBeheer.VM
         public StatusVM Status
         {
             get { return new StatusVM(_inspection.Status); }
-            set { Status = value; }
+            set { _inspection.Status = value.ToModel(); }
         }
 
         public InspectionDateVM InspectionDate
         {
             get { return new InspectionDateVM(_inspection.InspectionDate); }
-            set { InspectionDate = value; }
+            set { _inspection.InspectionDate = value.ToModel(); }
         }
 
         public ObservableCollection<InspectorVM> Inspectors
         {
-            get { return new ObservableCollection<InspectorVM>(_inspection.Inspectors.Select(i => new InspectorVM(i))); }
+            get
+            {
+                return new ObservableCollection<InspectorVM>(_inspection.Inspectors.ToList().Select(i => new InspectorVM(i))); 
+            }
+            set
+            {
+                _inspection.Inspectors = new ObservableCollection<Inspector>(value.ToList().Select(i => i.ToModel()));
+            }
         }
 
         public bool IsDeleted
