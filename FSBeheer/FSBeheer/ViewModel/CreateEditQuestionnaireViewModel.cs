@@ -14,7 +14,7 @@ using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
-    public class CreateEditQuestionnaireViewModel :ViewModelBase
+    public class CreateEditQuestionnaireViewModel : ViewModelBase
     {
         private CustomFSContext _context;
         public QuestionnaireVM Questionnaire { get; set; }
@@ -29,19 +29,20 @@ namespace FSBeheer.ViewModel
             set
             {
                 _selectedQuestion = value;
-                base.RaisePropertyChanged("SelectedQuestion");
+                base.RaisePropertyChanged(nameof(SelectedQuestion));
             }
         }
-        public ObservableCollection<int?> InspectionNumbers { get; set; }
+        public ObservableCollection<InspectionVM> Inspections { get; set; }
         public ObservableCollection<QuestionVM> Questions { get; set; }
-        private int? _selectedInspectionNumber;
-        public int? SelectedInspectionNumber
+        private InspectionVM _selectedInspection;
+        public InspectionVM SelectedInspection
         {
-            get { return _selectedInspectionNumber; }
+            get { return _selectedInspection; }
             set
             {
-                _selectedInspectionNumber = value;
-                base.RaisePropertyChanged("SelectedInspectionNumber");
+                _selectedInspection = value;
+                base.RaisePropertyChanged(nameof(SelectedInspection));
+                Questionnaire.InspectionId = _selectedInspection.Id;
             }
         }
 
@@ -65,17 +66,9 @@ namespace FSBeheer.ViewModel
             //edit
             Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
             FetchAndSetQuestions();
-
-            var inspectionNumbers = _context.Inspections
-                .ToList()
-                .Where(e => !e.IsDeleted)
-                .Select(e => (int?)e.Id);
-            InspectionNumbers = new ObservableCollection<int?>(inspectionNumbers);
-            _selectedInspectionNumber = inspectionNumbers.FirstOrDefault();
-
             SelectedQuestion = Questions.FirstOrDefault();
-
             InitializeCommands();
+            FetchAndSetInspectionNumbersAndSelectedInspection();
         }
 
         public CreateEditQuestionnaireViewModel()
@@ -84,6 +77,7 @@ namespace FSBeheer.ViewModel
             Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
             FetchAndSetQuestions();
             InitializeCommands();
+            FetchAndSetInspectionNumbersAndSelectedInspection();
         }
 
         //methods
@@ -97,11 +91,29 @@ namespace FSBeheer.ViewModel
             CreateQuestionnaireCommand = new RelayCommand<Window>(SaveQuestionnaire);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
-        
+
+        private void FetchAndSetInspectionNumbersAndSelectedInspection()
+        {
+            var inspectionsList = _context
+                .Inspections
+                .ToList()
+                .Where(e => !e.IsDeleted)
+                .Select(e => new InspectionVM(e));
+            Inspections = new ObservableCollection<InspectionVM>(inspectionsList);
+            if (Questionnaire.InspectionId == null)
+            {
+                _selectedInspection = inspectionsList.FirstOrDefault();
+            }else
+            {
+                _selectedInspection = inspectionsList
+                    .FirstOrDefault(e => e.Id == Questionnaire.InspectionId);
+            }
+        }
+
         internal void FetchAndSetQuestions(int questionnaireId = -1)
         {
             _context = new CustomFSContext();
-            if(questionnaireId != -1)
+            if (questionnaireId != -1)
                 Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
             else
                 Questionnaire = new QuestionnaireVM();
@@ -156,7 +168,7 @@ namespace FSBeheer.ViewModel
 
         public void OpenCreateQuestionView()
         {
-            if(IsInternetConnected())
+            if (IsInternetConnected())
                 new CreateQuestionView().ShowDialog();
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
