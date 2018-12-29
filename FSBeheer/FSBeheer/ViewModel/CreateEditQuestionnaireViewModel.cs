@@ -64,8 +64,9 @@ namespace FSBeheer.ViewModel
         public CreateEditQuestionnaireViewModel(int questionnaireId)
         {
             //edit
-            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
-            FetchAndSetQuestions();
+            Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
+            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions(questionnaireId));
+            FetchAndSetQuestions(questionnaireId);
             SelectedQuestion = Questions.FirstOrDefault();
             InitializeCommands();
             FetchAndSetInspectionNumbersAndSelectedInspection();
@@ -74,8 +75,9 @@ namespace FSBeheer.ViewModel
         public CreateEditQuestionnaireViewModel()
         {
             //create
-            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
-            FetchAndSetQuestions();
+            //Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
+            //FetchAndSetQuestions();
+            Questionnaire = new QuestionnaireVM();
             InitializeCommands();
             FetchAndSetInspectionNumbersAndSelectedInspection();
         }
@@ -110,13 +112,9 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        internal void FetchAndSetQuestions(int questionnaireId = -1)
+        private void FetchAndSetQuestions(int questionnaireId)
         {
             _context = new CustomFSContext();
-            if (questionnaireId != -1)
-                Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
-            else
-                Questionnaire = new QuestionnaireVM();
             Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
             RaisePropertyChanged(nameof(Questions));
         }
