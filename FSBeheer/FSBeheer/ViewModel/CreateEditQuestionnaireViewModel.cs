@@ -29,7 +29,7 @@ namespace FSBeheer.ViewModel
             set
             {
                 _selectedQuestion = value;
-                base.RaisePropertyChanged("SelectedQuestion");
+                base.RaisePropertyChanged(nameof(SelectedQuestion));
             }
         }
         public ObservableCollection<InspectionVM> Inspections { get; set; }

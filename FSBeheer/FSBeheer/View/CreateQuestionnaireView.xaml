@@ -39,7 +39,7 @@
                         <Label Foreground="Black" FontSize="12" Content="Naam:"></Label>
                     </Border>
                     <Border Grid.Column="0" Grid.Row="1" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <Label Foreground="Black" FontSize="12" Content="Inspectienummer:"></Label>
+                        <Label Foreground="Black" FontSize="12" Content="Inspectie:"></Label>
                     </Border>
                     <Border Grid.Column="0" Grid.Row="2" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                         <Label Foreground="Black" FontSize="12" Content="Versie:"></Label>
@@ -55,7 +55,7 @@
                         <TextBox Foreground="Black" Text="{Binding Questionnaire.Name, Mode=TwoWay}" FontSize="12"></TextBox>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="1" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <ComboBox Width="100" HorizontalAlignment="Center" ItemsSource="{Binding InspectionNumbers}" SelectedItem="{Binding SelectedInspectionNumber}"/>
+                        <ComboBox Width="100" HorizontalAlignment="Center" ItemsSource="{Binding Inspections}" SelectedItem="{Binding SelectedInspectionNumber}"/>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="2" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                         <TextBox Foreground="Black" Text="{Binding Questionnaire.Version, Mode=TwoWay}" FontSize="12"></TextBox>
