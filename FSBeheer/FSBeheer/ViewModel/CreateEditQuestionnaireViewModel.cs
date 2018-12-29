@@ -32,16 +32,17 @@ namespace FSBeheer.ViewModel
                 base.RaisePropertyChanged("SelectedQuestion");
             }
         }
-        public ObservableCollection<int?> InspectionNumbers { get; set; }
+        public ObservableCollection<InspectionVM> Inspections { get; set; }
         public ObservableCollection<QuestionVM> Questions { get; set; }
-        private int? _selectedInspectionNumber;
-        public int? SelectedInspectionNumber
+        private InspectionVM _selectedInspection;
+        public InspectionVM SelectedInspection
         {
-            get { return _selectedInspectionNumber; }
+            get { return _selectedInspection; }
             set
             {
-                _selectedInspectionNumber = value;
-                base.RaisePropertyChanged("SelectedInspectionNumber");
+                _selectedInspection = value;
+                base.RaisePropertyChanged(nameof(SelectedInspection));
+                Questionnaire.InspectionId = _selectedInspection.Id;
             }
         }
 
@@ -67,7 +68,7 @@ namespace FSBeheer.ViewModel
             FetchAndSetQuestions();
             SelectedQuestion = Questions.FirstOrDefault();
             InitializeCommands();
-            FetchAndSetInspectionNumbers();
+            FetchAndSetInspectionNumbersAndSelectedInspection();
         }
 
         public CreateEditQuestionnaireViewModel()
@@ -76,7 +77,7 @@ namespace FSBeheer.ViewModel
             Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
             FetchAndSetQuestions();
             InitializeCommands();
-            FetchAndSetInspectionNumbers();
+            FetchAndSetInspectionNumbersAndSelectedInspection();
         }
 
         //methods
@@ -91,15 +92,22 @@ namespace FSBeheer.ViewModel
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
-        private void FetchAndSetInspectionNumbers()
+        private void FetchAndSetInspectionNumbersAndSelectedInspection()
         {
-            var inspectionNumbers = _context
+            var inspectionsList = _context
                 .Inspections
                 .ToList()
                 .Where(e => !e.IsDeleted)
-                .Select(e => (int?)e.Id);
-            InspectionNumbers = new ObservableCollection<int?>(inspectionNumbers);
-            _selectedInspectionNumber = inspectionNumbers.FirstOrDefault();
+                .Select(e => new InspectionVM(e));
+            Inspections = new ObservableCollection<InspectionVM>(inspectionsList);
+            if (Questionnaire.InspectionId == null)
+            {
+                _selectedInspection = inspectionsList.FirstOrDefault();
+            }else
+            {
+                _selectedInspection = inspectionsList
+                    .FirstOrDefault(e => e.Id == Questionnaire.InspectionId);
+            }
         }
 
         internal void FetchAndSetQuestions(int questionnaireId = -1)
