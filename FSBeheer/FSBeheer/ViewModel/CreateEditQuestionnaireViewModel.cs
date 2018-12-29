@@ -14,7 +14,7 @@ using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
-    public class CreateEditQuestionnaireViewModel :ViewModelBase
+    public class CreateEditQuestionnaireViewModel : ViewModelBase
     {
         private CustomFSContext _context;
         public QuestionnaireVM Questionnaire { get; set; }
@@ -65,17 +65,9 @@ namespace FSBeheer.ViewModel
             //edit
             Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
             FetchAndSetQuestions();
-
-            var inspectionNumbers = _context.Inspections
-                .ToList()
-                .Where(e => !e.IsDeleted)
-                .Select(e => (int?)e.Id);
-            InspectionNumbers = new ObservableCollection<int?>(inspectionNumbers);
-            _selectedInspectionNumber = inspectionNumbers.FirstOrDefault();
-
             SelectedQuestion = Questions.FirstOrDefault();
-
             InitializeCommands();
+            FetchAndSetInspectionNumbers();
         }
 
         public CreateEditQuestionnaireViewModel()
@@ -84,6 +76,7 @@ namespace FSBeheer.ViewModel
             Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
             FetchAndSetQuestions();
             InitializeCommands();
+            FetchAndSetInspectionNumbers();
         }
 
         //methods
@@ -97,11 +90,22 @@ namespace FSBeheer.ViewModel
             CreateQuestionnaireCommand = new RelayCommand<Window>(SaveQuestionnaire);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
-        
+
+        private void FetchAndSetInspectionNumbers()
+        {
+            var inspectionNumbers = _context
+                .Inspections
+                .ToList()
+                .Where(e => !e.IsDeleted)
+                .Select(e => (int?)e.Id);
+            InspectionNumbers = new ObservableCollection<int?>(inspectionNumbers);
+            _selectedInspectionNumber = inspectionNumbers.FirstOrDefault();
+        }
+
         internal void FetchAndSetQuestions(int questionnaireId = -1)
         {
             _context = new CustomFSContext();
-            if(questionnaireId != -1)
+            if (questionnaireId != -1)
                 Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
             else
                 Questionnaire = new QuestionnaireVM();
@@ -156,7 +160,7 @@ namespace FSBeheer.ViewModel
 
         public void OpenCreateQuestionView()
         {
-            if(IsInternetConnected())
+            if (IsInternetConnected())
                 new CreateQuestionView().ShowDialog();
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
