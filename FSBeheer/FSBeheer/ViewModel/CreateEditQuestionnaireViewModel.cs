@@ -223,7 +223,7 @@ namespace FSBeheer.ViewModel
                     {
                         _selectedQuestion.IsDeleted = true;
                         _context.SaveChanges();
-                        this.FetchAndSetQuestions();
+                        this.FetchAndSetQuestions(Questionnaire.Id);
                     }
                 }
             }
