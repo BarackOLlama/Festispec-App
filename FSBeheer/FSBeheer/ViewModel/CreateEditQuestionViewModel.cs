@@ -31,9 +31,14 @@ namespace FSBeheer.ViewModel
             {
                 _selectedQuestionType = value;
                 base.RaisePropertyChanged(nameof(SelectedQuestionType));
+                HandleEnabledComponents();
             }
         }
         public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
+
+        //enable/disable components
+        public bool ColumnsIsEnabled { get; set; }
+        public bool OptionsIsEnabled { get; set; }
 
         //commands
         public RelayCommand<Window> SaveQuestionChangesCommand { get; set; }
@@ -126,6 +131,27 @@ namespace FSBeheer.ViewModel
             }
 
             return true;
+        }
+
+        private void HandleEnabledComponents()
+        {
+            if (SelectedQuestionType.Name == "Multiple Choice Vraag")
+            {
+                ColumnsIsEnabled = false;
+                OptionsIsEnabled = true;
+            }else if (SelectedQuestionType.Name == "Open Vraag")
+            {
+                ColumnsIsEnabled = false;
+                OptionsIsEnabled = false;
+            }else if (SelectedQuestionType.Name == "Open Tabelvraag")
+            {
+                ColumnsIsEnabled = true;
+                OptionsIsEnabled = false;
+            }else
+            {
+                ColumnsIsEnabled = true;
+                OptionsIsEnabled = true;
+            }
         }
 
         public void SaveQuestionChanges(Window window)

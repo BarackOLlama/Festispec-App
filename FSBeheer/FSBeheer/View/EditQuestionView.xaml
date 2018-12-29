@@ -20,9 +20,9 @@
         <TextBlock>Commentaar:</TextBlock>
         <TextBox Text="{Binding Question.Comments}"></TextBox>
         <TextBlock Text="Opties:* multiple choice"></TextBlock>
-        <TextBox Text="{Binding Question.Options}"></TextBox>
+        <TextBox Text="{Binding Question.Options}" IsEnabled="{Binding OptionsIsEnabled}"></TextBox>
         <TextBlock Text="Kolommen"></TextBlock>
-        <TextBox Text="{Binding Question.Columns}"></TextBox>
+        <TextBox Text="{Binding Question.Columns}" IsEnabled="{Binding ColumnsIsEnabled}"></TextBox>
         <Grid>
             <Button Content="Opslaan" Command="{Binding SaveQuestionChangesCommand}" CommandParameter="{Binding ElementName=EditWindow}"
                     Width="100"  HorizontalAlignment="Left" Margin="5,5,0,0" />
