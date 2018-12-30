@@ -37,8 +37,34 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
 
         //enable/disable components
-        public bool ColumnsIsEnabled { get; set; }
-        public bool OptionsIsEnabled { get; set; }
+        private bool _columnsIsEnabled;
+        public bool ColumnsIsEnabled
+        {
+            get
+            {
+                return _columnsIsEnabled;
+            }
+            set
+            {
+                _columnsIsEnabled = value;
+                base.RaisePropertyChanged(nameof(ColumnsIsEnabled));
+            }
+        }
+
+
+        private bool _optionsIsEnabled;
+        public bool OptionsIsEnabled
+        {
+            get
+            {
+                return _optionsIsEnabled;
+            }
+            set
+            {
+                _optionsIsEnabled = value;
+                base.RaisePropertyChanged(nameof(OptionsIsEnabled));
+            }
+        }
 
         //commands
         public RelayCommand<Window> SaveQuestionChangesCommand { get; set; }
@@ -139,15 +165,18 @@ namespace FSBeheer.ViewModel
             {
                 ColumnsIsEnabled = false;
                 OptionsIsEnabled = true;
-            }else if (SelectedQuestionType.Name == "Open Vraag")
+            }
+            else if (SelectedQuestionType.Name == "Open Vraag")
             {
                 ColumnsIsEnabled = false;
                 OptionsIsEnabled = false;
-            }else if (SelectedQuestionType.Name == "Open Tabelvraag")
+            }
+            else if (SelectedQuestionType.Name == "Open Tabelvraag")
             {
                 ColumnsIsEnabled = true;
                 OptionsIsEnabled = false;
-            }else
+            }
+            else
             {
                 ColumnsIsEnabled = true;
                 OptionsIsEnabled = true;
