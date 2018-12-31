@@ -21,8 +21,8 @@
                 </StackPanel>
                 <StackPanel Margin="20">
                     <StackPanel Name="spContent">
-                        <StackPanel Name="spFilter" Orientation="Horizontal" Margin="0,0,0,10">
-                            <TextBox Name="txtSearchInput" Template="{DynamicResource SearchTextBoxTemplate}"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <local:FilterTextBox Template="{DynamicResource SearchTextBoxTemplate}"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="0,0,0,2">

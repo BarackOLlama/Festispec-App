@@ -1,5 +1,5 @@
-﻿<Window x:Class="FSBeheer.View.CreateQuestionView"
-        Name="CreateQuestionWindow"
+﻿<local:BaseView x:Class="FSBeheer.View.CreateQuestionView"
+        x:Name="CreateQuestionWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -30,4 +30,4 @@
             <Button Content="Annuleren" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}" Width="100" HorizontalAlignment="Left" Margin="120,5,5,0"></Button>
         </Grid>
     </StackPanel>
-</Window>
+</local:BaseView>

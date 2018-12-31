@@ -1,14 +1,11 @@
-﻿using FSBeheer.Crud;
-using FSBeheer.Model;
+﻿using FSBeheer.Model;
 using FSBeheer.View;
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -18,9 +15,19 @@ namespace FSBeheer.ViewModel
     {
         private CustomFSContext _context;
 
-        public InspectionVM Inspection { get; set; }
+        private InspectionVM _inspection;
+        public InspectionVM Inspection
+        {
+            get { return _inspection; }
+            set
+            {
+                _inspection = value;
+                RaisePropertyChanged(nameof(Inspection));
+            }
+        }
         public ObservableCollection<CustomerVM> Customers { get; }
         public ObservableCollection<EventVM> Events { get; set; }
+        public int SelectedIndex { get; set; }
         public ObservableCollection<StatusVM> Statuses { get; set; }
         public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
         public string Title { get; set; }
@@ -33,7 +40,7 @@ namespace FSBeheer.ViewModel
         }
 
         public string WarningText { get; set; }
-        
+
         public RelayCommand<Window> CancelInspectionCommand { get; set; }
         public RelayCommand<Window> AddInspectionCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
@@ -41,7 +48,6 @@ namespace FSBeheer.ViewModel
 
         public CreateEditInspectionViewModel()
         {
-            // Darjush laten weten
             Messenger.Default.Register<bool>(this, "UpdateAvailableList", c => RaisePropertyChanged(nameof(Inspection)));
 
             _context = new CustomFSContext();
@@ -61,7 +67,11 @@ namespace FSBeheer.ViewModel
             {
                 Inspection = new InspectionVM(new Inspection())
                 {
-                    InspectionDate = new InspectionDateVM(new InspectionDate())
+                    InspectionDate = new InspectionDateVM(new InspectionDate()),
+                    Event = new EventVM(new Event()
+                    {
+                        Customer = new Customer()
+                    })
                 };
                 _context.Inspections.Add(Inspection.ToModel());
                 Title = "Inspectie aanmaken";
@@ -71,8 +81,18 @@ namespace FSBeheer.ViewModel
                 Inspection = _context.InspectionCrud.GetInspectionById(inspectionId);
                 Title = "Inspectie wijzigen";
             }
-
+            SelectedIndex = GetIndex(Inspection.Event, Events);
+            RaisePropertyChanged(nameof(SelectedIndex));
             RaisePropertyChanged(nameof(Inspection));
+            RaisePropertyChanged(nameof(Title));
+        }
+
+        private int GetIndex(EventVM Obj, ObservableCollection<EventVM> List)
+        {
+            for (int i = 0; i < List.Count; i++)
+                if (List[i].Id == Obj.Id)
+                    return i;
+            return -1;
         }
 
         private void CloseAction(Window window)
@@ -98,8 +118,6 @@ namespace FSBeheer.ViewModel
             {
                 if (CheckStartDateValidity())
                 {
-                    // Inspectie aanmaken in de database met alle velden die ingevuld zijn
-                    _context.InspectionCrud.GetAllInspections().Add(Inspection);
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateInspectionList");
                     CloseAction(window);
@@ -165,7 +183,7 @@ namespace FSBeheer.ViewModel
             else
             {
                 return false;
-            }                
+            }
         }
 
         private bool CheckStartDateValidity()
@@ -175,7 +193,7 @@ namespace FSBeheer.ViewModel
                 return true;
             }
             return false;
-            
+
         }
     }
 }
