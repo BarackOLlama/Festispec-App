@@ -84,7 +84,7 @@ namespace FSBeheer.ViewModel
         {
             //create
             _context = new CustomFSContext();
-            InitializeQuestionTypes();
+            InitializeQuestionTypesAndBooleans();
             InitializeCommands();
 
             Question = new QuestionVM
@@ -100,7 +100,7 @@ namespace FSBeheer.ViewModel
         {
             //edit
             _context = new CustomFSContext();
-            InitializeQuestionTypes();
+            InitializeQuestionTypesAndBooleans();
             InitializeCommands();
 
             Question = _context.QuestionCrud.GetQuestionById(questionId);
@@ -114,7 +114,7 @@ namespace FSBeheer.ViewModel
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
-        private void InitializeQuestionTypes()
+        private void InitializeQuestionTypesAndBooleans()
         {
             var types = _context
                 .QuestionTypes
@@ -123,6 +123,8 @@ namespace FSBeheer.ViewModel
             QuestionTypes = new ObservableCollection<QuestionTypeVM>(types);
             _selectedQuestionType = QuestionTypes.FirstOrDefault();
             RaisePropertyChanged(nameof(SelectedQuestionType));
+            _optionsIsEnabled = true;
+            _columnsIsEnabled = false;
         }
 
         public bool QuestionIsValid()
@@ -161,25 +163,28 @@ namespace FSBeheer.ViewModel
 
         private void HandleEnabledComponents()
         {
-            if (SelectedQuestionType.Name == "Multiple Choice Vraag")
+            switch (SelectedQuestionType.Name)
             {
-                ColumnsIsEnabled = false;
-                OptionsIsEnabled = true;
-            }
-            else if (SelectedQuestionType.Name == "Open Vraag")
-            {
-                ColumnsIsEnabled = false;
-                OptionsIsEnabled = false;
-            }
-            else if (SelectedQuestionType.Name == "Open Tabelvraag")
-            {
-                ColumnsIsEnabled = true;
-                OptionsIsEnabled = false;
-            }
-            else
-            {
-                ColumnsIsEnabled = true;
-                OptionsIsEnabled = true;
+                case "Multiple Choice vraag":
+                    //Multiple choice has options but no columns
+                    OptionsIsEnabled = true;
+                    ColumnsIsEnabled = false;
+                    break;
+                case "Open Vraag":
+                    //Open question has neither options nor columns
+                    OptionsIsEnabled = false;
+                    ColumnsIsEnabled = false;
+                    break;
+                case "Open Tabelvraag":
+                    //An open columnquestion has columns but no options
+                    OptionsIsEnabled = false;
+                    ColumnsIsEnabled = true;
+                    break;
+                case "Multiple Choice Tabelvraag":
+                    //A multiple choice columnquestion has both options and columns
+                    OptionsIsEnabled = true;
+                    ColumnsIsEnabled = true;
+                    break;
             }
         }
 
