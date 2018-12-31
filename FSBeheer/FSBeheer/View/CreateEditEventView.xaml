@@ -12,43 +12,43 @@
         <StackPanel Margin="0,20,0,0">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Klant: " Template="{DynamicResource CreateEditLabel}"/>
+                    <Label Content="Klant: " Template="{DynamicResource CreateEditLabelTemplate}"/>
                     <local:FilteredComboBox ItemsSource="{Binding Customers}"
                                             SelectedItem="{Binding Event.Customer}"
                                             SelectedIndex="{Binding SelectedIndex}"
                                             DisplayMemberPath="Name"
-                                            Template="{DynamicResource FilteredComboBox}"/>
+                                            Template="{DynamicResource FilteredComboBoxTemplate}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Naam: " Template="{DynamicResource CreateEditLabel}"/>
-                    <TextBox Text="{Binding Event.Name}" Template="{DynamicResource CreateEditTextBox}"/>
+                    <Label Content="Naam: " Template="{DynamicResource CreateEditLabelTemplate}"/>
+                    <TextBox Text="{Binding Event.Name}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Adres: " Template="{DynamicResource CreateEditLabel}"/>
-                    <TextBox Text="{Binding Event.Address}" Template="{DynamicResource CreateEditTextBox}"/>
+                    <Label Content="Adres: " Template="{DynamicResource CreateEditLabelTemplate}"/>
+                    <TextBox Text="{Binding Event.Address}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Plaats: " Template="{DynamicResource CreateEditLabel}"/>
-                    <TextBox Text="{Binding Event.City}" Template="{DynamicResource CreateEditTextBox}"/>
+                    <Label Content="Plaats: " Template="{DynamicResource CreateEditLabelTemplate}"/>
+                    <TextBox Text="{Binding Event.City}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Postcode: " Template="{DynamicResource CreateEditLabel}"/>
-                    <TextBox Text="{Binding Event.Zipcode}" Template="{DynamicResource CreateEditTextBox}"/>
+                    <Label Content="Postcode: " Template="{DynamicResource CreateEditLabelTemplate}"/>
+                    <TextBox Text="{Binding Event.Zipcode}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Startdatum: " Template="{DynamicResource CreateEditLabel}"/>
-                    <TextBox Text="{Binding Event.EventDate}" Template="{DynamicResource CreateEditTextBox}"/>
+                    <Label Content="Startdatum: " Template="{DynamicResource CreateEditLabelTemplate}"/>
+                    <TextBox Text="{Binding Event.EventDate}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <Label Content="Einddatum: " Template="{DynamicResource CreateEditLabel}"/>
-                    <TextBox Text="{Binding Event.Zipcode}" Template="{DynamicResource CreateEditTextBox}"/>
+                    <Label Content="Einddatum: " Template="{DynamicResource CreateEditLabelTemplate}"/>
+                    <TextBox Text="{Binding Event.Zipcode}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="20">
-                    <Button Content="Opslaan" Template="{DynamicResource InterfaceButton}"/>
-                    <Button Content="Annuleren" Command="{Binding DiscardChangesCommand}" CommandParameter="{Binding ElementName=CreateEditEvent}" Template="{DynamicResource InterfaceButton}"/>
-                    <Button Content="Verwijderen" Template="{DynamicResource InterfaceButton}"/>
+                    <Button Content="Opslaan" Command="{Binding SaveChangesCommand}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+                    <Button Content="Annuleren" Command="{Binding DiscardChangesCommand}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+                    <Button Content="Verwijderen" Template="{DynamicResource InterfaceButtonTemplate}"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

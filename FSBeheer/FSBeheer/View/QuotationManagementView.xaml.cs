@@ -17,7 +17,7 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for QuotationManagementView.xaml
     /// </summary>
-    public partial class QuotationManagementView : Window
+    public partial class QuotationManagementView : BaseView
     {
         public QuotationManagementView()
         {

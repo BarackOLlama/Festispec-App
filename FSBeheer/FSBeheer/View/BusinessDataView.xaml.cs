@@ -17,7 +17,7 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for BusinessDataView.xaml
     /// </summary>
-    public partial class BusinessDataView : Window
+    public partial class BusinessDataView : BaseView
     {
         public BusinessDataView()
         {

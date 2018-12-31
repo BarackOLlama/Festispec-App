@@ -59,8 +59,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                _inspectionManagementViewModel = new InspectionManagementViewModel();
-                return _inspectionManagementViewModel;
+                return new InspectionManagementViewModel();
             }
         }
 
@@ -68,8 +67,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                _inspectorManagementViewModel = new InspectorManagementViewModel();
-                return _inspectorManagementViewModel;
+                return new InspectorManagementViewModel();
             }
         }
 
@@ -77,7 +75,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new CreateEditInspectorViewModel(_inspectorManagementViewModel.SelectedInspector);
+                return new CreateEditInspectorViewModel();
             }
         }
 
@@ -102,8 +100,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                _questionnaireManagementViewModel = new QuestionnaireManagementViewModel();
-                return _questionnaireManagementViewModel;   
+                return new QuestionnaireManagementViewModel();
             }
         }
 

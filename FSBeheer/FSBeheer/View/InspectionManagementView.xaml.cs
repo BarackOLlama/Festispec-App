@@ -17,7 +17,7 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for InspectionManagementView.xaml
     /// </summary>
-    public partial class InspectionManagementView : Window
+    public partial class InspectionManagementView : BaseView
     {
         public InspectionManagementView()
         {

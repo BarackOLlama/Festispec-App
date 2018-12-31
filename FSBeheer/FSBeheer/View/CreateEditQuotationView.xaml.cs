@@ -19,7 +19,7 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for CreateEditQuotationView.xaml
     /// </summary>
-    public partial class CreateEditQuotationView : Window
+    public partial class CreateEditQuotationView : BaseView
     {
         public CreateEditQuotationView(QuotationVM quotation = null)
         {

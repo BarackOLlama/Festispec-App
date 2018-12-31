@@ -26,6 +26,35 @@ namespace FSBeheer.Crud
             return new ObservableCollection<InspectorVM>(inspectors);
         }
 
+        public InspectorVM GetInspectorById(int inspectorId)
+        {
+            var inspector = CustomFSContext.Inspectors.FirstOrDefault(i => i.Id == inspectorId);
+            return new InspectorVM(inspector);
+        }
+
+        public ObservableCollection<InspectorVM> GetAllInspectorsFiltered(string must_contain)
+        {
+            if (string.IsNullOrEmpty(must_contain))
+            {
+                throw new ArgumentNullException(nameof(must_contain));
+            }
+
+            must_contain = must_contain.ToLower();
+
+            var inspectors = CustomFSContext.Inspectors
+                .ToList()
+                .Where(i => i.IsDeleted == false)
+                .Where(i =>
+                i.Id.ToString().ToLower().Contains(must_contain) ||
+                i.Name.ToLower().Contains(must_contain) ||
+                i.Address.ToLower().Contains(must_contain) ||
+                i.City.ToLower().Contains(must_contain)
+                ).Distinct()
+                .Select(i => new InspectorVM(i));
+            var _inspectors = new ObservableCollection<InspectorVM>(inspectors);
+            return _inspectors;
+        }
+
         public ObservableCollection<InspectorVM> GetAllInspectorsFilteredByAvailability(List<DateTime> dateRange) //Startdate and enddate of the inspection
         {
             var inspectors = CustomFSContext.Inspectors

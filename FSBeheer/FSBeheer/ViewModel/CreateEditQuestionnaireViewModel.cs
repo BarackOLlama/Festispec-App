@@ -64,8 +64,10 @@ namespace FSBeheer.ViewModel
         public CreateEditQuestionnaireViewModel(int questionnaireId)
         {
             //edit
-            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
-            FetchAndSetQuestions();
+            _context = new CustomFSContext();
+            Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
+            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions(questionnaireId));
+            FetchAndSetQuestions(questionnaireId);
             SelectedQuestion = Questions.FirstOrDefault();
             InitializeCommands();
             FetchAndSetInspectionNumbersAndSelectedInspection();
@@ -74,8 +76,10 @@ namespace FSBeheer.ViewModel
         public CreateEditQuestionnaireViewModel()
         {
             //create
-            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
-            FetchAndSetQuestions();
+            //Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
+            //FetchAndSetQuestions();
+            _context = new CustomFSContext();
+            Questionnaire = new QuestionnaireVM();
             InitializeCommands();
             FetchAndSetInspectionNumbersAndSelectedInspection();
         }
@@ -110,13 +114,8 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        internal void FetchAndSetQuestions(int questionnaireId = -1)
+        private void FetchAndSetQuestions(int questionnaireId)
         {
-            _context = new CustomFSContext();
-            if (questionnaireId != -1)
-                Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
-            else
-                Questionnaire = new QuestionnaireVM();
             Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
             RaisePropertyChanged(nameof(Questions));
         }
@@ -155,6 +154,7 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Opslaan wijzigingen?", "Bevestiging", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
+                    _context.Entry(Questionnaire.ToModel()).State = System.Data.Entity.EntityState.Modified;
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateQuestionnaires");
                     window.Close();
@@ -225,7 +225,7 @@ namespace FSBeheer.ViewModel
                     {
                         _selectedQuestion.IsDeleted = true;
                         _context.SaveChanges();
-                        this.FetchAndSetQuestions();
+                        this.FetchAndSetQuestions(Questionnaire.Id);
                     }
                 }
             }

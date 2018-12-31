@@ -17,7 +17,7 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for CreateQuestionView.xaml
     /// </summary>
-    public partial class CreateQuestionView : Window
+    public partial class CreateQuestionView : BaseView
     {
         public CreateQuestionView()
         {

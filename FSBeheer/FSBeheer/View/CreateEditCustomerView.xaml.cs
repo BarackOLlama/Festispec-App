@@ -19,7 +19,7 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for CreateEditCustomerView.xaml
     /// </summary>
-    public partial class CreateEditCustomerView : Window
+    public partial class CreateEditCustomerView : BaseView
     {
         public CreateEditCustomerView(CustomerVM customer = null)
         {

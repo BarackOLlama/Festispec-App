@@ -1,5 +1,4 @@
-﻿<Window x:Class="FSBeheer.View.LoginView"
-        Name="WindowName"
+﻿<local:BaseView x:Class="FSBeheer.View.LoginView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -16,4 +15,4 @@
         <TextBox Text="{Binding Path=Account.Password, Mode=TwoWay}" Margin="10"></TextBox>
         <Button Command="{Binding VerifyLoginCommand}" CommandParameter="{Binding ElementName=WindowName}" HorizontalAlignment="Center" Height="30" Width="100" Background="LightBlue" Margin="10">Log in</Button>
     </StackPanel>
-</Window>
+</local:BaseView>
