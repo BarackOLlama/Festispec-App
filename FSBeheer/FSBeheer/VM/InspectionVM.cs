@@ -75,6 +75,11 @@ namespace FSBeheer.VM
             set { _inspection.IsDeleted = value; RaisePropertyChanged(nameof(IsDeleted)); }
         }
 
+        public override string ToString()
+        {//to display them in the combobox in Questionnaire creation/editing.
+            return _inspection.Name;
+        }
+
         internal Inspection ToModel()
         {
             return _inspection;

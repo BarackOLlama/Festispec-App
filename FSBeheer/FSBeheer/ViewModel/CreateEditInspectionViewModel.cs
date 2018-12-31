@@ -16,7 +16,7 @@ namespace FSBeheer.ViewModel
 {
     public class CreateEditInspectionViewModel : ViewModelBase
     {
-        private CustomFSContext _Context;
+        private CustomFSContext _context;
 
         public InspectionVM Inspection { get; set; }
         public ObservableCollection<CustomerVM> Customers { get; }
@@ -44,10 +44,10 @@ namespace FSBeheer.ViewModel
             // Darjush laten weten
             Messenger.Default.Register<bool>(this, "UpdateAvailableList", c => RaisePropertyChanged(nameof(Inspection)));
 
-            _Context = new CustomFSContext();
-            Customers = _Context.CustomerCrud.GetAllCustomers();
-            Events = _Context.EventCrud.GetAllEvents();
-            Statuses = _Context.StatusCrud.GetAllStatusVMs();
+            _context = new CustomFSContext();
+            Customers = _context.CustomerCrud.GetAllCustomers();
+            Events = _context.EventCrud.GetAllEvents();
+            Statuses = _context.StatusCrud.GetAllStatusVMs();
 
             CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
             AddInspectionCommand = new RelayCommand<Window>(AddInspection);
@@ -63,12 +63,12 @@ namespace FSBeheer.ViewModel
                 {
                     InspectionDate = new InspectionDateVM(new InspectionDate())
                 };
-                _Context.Inspections.Add(Inspection.ToModel());
+                _context.Inspections.Add(Inspection.ToModel());
                 Title = "Inspectie aanmaken";
             }
             else
             {
-                Inspection = _Context.InspectionCrud.GetInspectionById(inspectionId);
+                Inspection = _context.InspectionCrud.GetInspectionById(inspectionId);
                 Title = "Inspectie wijzigen";
             }
 
@@ -77,7 +77,7 @@ namespace FSBeheer.ViewModel
 
         private void CloseAction(Window window)
         {
-            _Context.Dispose();
+            _context.Dispose();
             window.Close();
         }
 
@@ -86,7 +86,7 @@ namespace FSBeheer.ViewModel
             MessageBoxResult result = MessageBox.Show("Weet u zeker dat u deze inspectie wilt annuleren?", "Bevestig annulering inspectie", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                _Context.Dispose();
+                _context.Dispose();
                 Inspection = null;
                 window.Close();
             }
@@ -99,8 +99,8 @@ namespace FSBeheer.ViewModel
                 if (CheckStartDateValidity())
                 {
                     // Inspectie aanmaken in de database met alle velden die ingevuld zijn
-                    _Context.InspectionCrud.GetAllInspections().Add(Inspection);
-                    _Context.SaveChanges();
+                    _context.InspectionCrud.GetAllInspections().Add(Inspection);
+                    _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateInspectionList");
                     CloseAction(window);
                 }
@@ -121,7 +121,7 @@ namespace FSBeheer.ViewModel
             {
                 if (CheckStartDateValidity())
                 {
-                    new AvailableInspectorView(_Context, Inspection.Id).Show();
+                    new AvailableInspectorView(_context, Inspection.Id).Show();
                 }
                 else
                 {
