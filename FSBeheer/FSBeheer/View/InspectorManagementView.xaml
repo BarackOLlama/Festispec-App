@@ -1,5 +1,4 @@
-﻿
-<Window x:Name="InspectorManagementViewName" x:Class="FSBeheer.View.InspectorManagementView"
+﻿<local:BaseView x:Name="InspectorManagementViewName" x:Class="FSBeheer.View.InspectorManagementView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,24 +9,18 @@
         Title="InspectorManagementView" Height="450" Width="800"
         DataContext="{Binding InspectorManagement, Source={StaticResource Locator}}">
 
-    <Window.Resources>
-        <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
-            <Button FontSize="15" Margin="5"
-                    Content="{TemplateBinding Content}"
-                    Command="{TemplateBinding Command}"/>
-        </ControlTemplate>
-    </Window.Resources>
-
     <StackPanel Margin="20">
         <StackPanel Name="spBackButton" HorizontalAlignment="Left">
             <Button Content="Back"
                     Command="{Binding }"
                     CommandParameter="{Binding ElementName=InspectorManagementViewName}"
-                    Template="{StaticResource InterfaceButtonTemplate}"/>
+                    Template="{DynamicResource InterfaceButtonTemplate}"/>
         </StackPanel>
 
         <StackPanel Name="spContent" Margin="30">
-
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <local:FilterTextBox Template="{DynamicResource SearchTextBoxTemplate}"/>
+            </StackPanel>
             <DataGrid MaxHeight="250" ItemsSource="{Binding Inspectors}" AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedInspector, Mode=TwoWay}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"></DataGridTextColumn>
@@ -40,9 +33,9 @@
         </StackPanel>
         <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"
                     Orientation="Horizontal" Margin="0,0,25,0">
-            <Button Content="New" Command="{Binding ShowCreateInspectorViewCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-            <Button Content="Edit" Command="{Binding ShowEditInspectorViewCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-            <Button Content="Delete" Command="{Binding DeleteInspectorCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+            <Button Content="New" Command="{Binding ShowCreateInspectorViewCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+            <Button Content="Edit" Command="{Binding ShowEditInspectorViewCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+            <Button Content="Delete" Command="{Binding DeleteInspectorCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
         </StackPanel>
     </StackPanel>
-</Window>
+</local:BaseView>

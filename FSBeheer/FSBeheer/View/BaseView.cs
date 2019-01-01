@@ -89,7 +89,6 @@ namespace FSBeheer.View
 
         protected TextBox EditableTextBox => GetTemplateChild("PART_EditableTextBox") as TextBox;
 
-
         protected override void OnItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
         {
             if (newValue != null)
@@ -210,10 +209,10 @@ namespace FSBeheer.View
 
     public class FilterTextBox : TextBox
     {
-        protected override void OnKeyUp(KeyEventArgs e)
+        protected override void OnTextChanged(TextChangedEventArgs e)
         {
             Filter(Text);
-            e.Handled = true;
+            base.OnTextChanged(e);
         }
 
         private void Filter(string f)

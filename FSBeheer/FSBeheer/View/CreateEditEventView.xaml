@@ -46,8 +46,8 @@
             </StackPanel>
             <StackPanel>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="20">
-                    <Button Content="Opslaan" Template="{DynamicResource InterfaceButtonTemplate}"/>
-                    <Button Content="Annuleren" Command="{Binding DiscardChangesCommand}" CommandParameter="{Binding ElementName=CreateEditEvent}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+                    <Button Content="Opslaan" Command="{Binding SaveChangesCommand}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+                    <Button Content="Annuleren" Command="{Binding DiscardChangesCommand}" Template="{DynamicResource InterfaceButtonTemplate}"/>
                     <Button Content="Verwijderen" Template="{DynamicResource InterfaceButtonTemplate}"/>
                 </StackPanel>
             </StackPanel>
