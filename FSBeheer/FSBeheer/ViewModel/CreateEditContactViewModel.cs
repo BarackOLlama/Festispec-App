@@ -4,9 +4,11 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -98,6 +100,30 @@ namespace FSBeheer.ViewModel
             if (Contact.Name.Trim() == string.Empty)
             {
                 MessageBox.Show("Een contactpersoon moet een naam hebben.");
+                return false;
+            }
+
+            if (Contact.PhoneNumber == null)
+            {
+                MessageBox.Show("Een contactpersoon moet een telefoonnummer hebben.");
+                return false;
+            }
+
+            if (!Regex.Match(Contact.PhoneNumber, @"^(\+[0-9]{9})$").Success)
+            {
+                MessageBox.Show("De ingevoerde telefoonnummer is onjuist.");
+                return false;
+            }
+
+            if (Contact.Email.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een contactpersoon moet een e-mail adres hebben");
+                return false;
+            }
+
+            if (!new EmailAddressAttribute().IsValid(Contact.Email))
+            {
+                MessageBox.Show("De ingevoerde e-mail is onjuist.");
                 return false;
             }
 

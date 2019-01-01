@@ -149,12 +149,6 @@ namespace FSBeheer.ViewModel
 
         private bool InspectionIsValid()
         {
-            //returning false upon finding a flaw is better than returning true as soon as possible
-            //if (Inspection.InspectionDate.StartDate >= new DateTime(1753, 1, 1))
-            //{
-            //    return true;
-            //}
-
             if (Inspection.InspectionDate.StartDate <= DateTime.Now)
             {
                 MessageBox.Show("Een inspectie kan niet in het verleden worden gepland.");
