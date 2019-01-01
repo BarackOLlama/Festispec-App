@@ -116,15 +116,11 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                if (CheckStartDateValidity())
+                if (StartDateIsValid())
                 {
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateInspectionList");
                     CloseAction(window);
-                }
-                else
-                {
-                    MessageBox.Show("De ingevulde datums zijn niet correct. Voer correcte begin- en einddatums in en probeer het opnieuw.");
                 }
             }
             else
@@ -137,13 +133,9 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                if (CheckStartDateValidity())
+                if (StartDateIsValid())
                 {
                     new AvailableInspectorView(_context, Inspection.Id).Show();
-                }
-                else
-                {
-                    MessageBox.Show("De ingevulde datums zijn niet correct. Voer correcte begin- en einddatums in en probeer het opnieuw.");
                 }
             }
             else
@@ -158,7 +150,7 @@ namespace FSBeheer.ViewModel
         }
 
         private bool CheckSaveAllowed(Window window)
-        {
+        {//unused?
             if (Inspection != null)
             {
                 if (string.IsNullOrEmpty(Inspection.Name))
@@ -186,13 +178,27 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        private bool CheckStartDateValidity()
+        private bool StartDateIsValid()
         {
-            if (Inspection.InspectionDate.StartDate >= new DateTime(1753, 1, 1))
+            //returning false upon finding a flaw is better than returning true as soon as possible
+            //if (Inspection.InspectionDate.StartDate >= new DateTime(1753, 1, 1))
+            //{
+            //    return true;
+            //}
+
+            if (Inspection.InspectionDate.StartDate <= DateTime.Now)
             {
-                return true;
+                MessageBox.Show("Een inspectie kan niet in het verleden worden gepland.");
+                return false;
             }
-            return false;
+
+            if (Inspection.InspectionDate.EndDate <= Inspection.InspectionDate.StartDate)
+            {
+                MessageBox.Show("De einddatum moet na de begindatum zijn.");
+                return false;
+            }
+
+            return true;
 
         }
     }
