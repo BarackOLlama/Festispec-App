@@ -7,6 +7,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
@@ -80,6 +81,42 @@ namespace FSBeheer.ViewModel
             if (Customer.Name.Trim() == string.Empty)
             {
                 MessageBox.Show("Een klant moet een naam hebben.");
+                return false;
+            }
+
+            if (Customer.ZipCode.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een klant moet een postcode hebben.");
+                return false;
+            }
+
+            if (!Regex.Match(Customer.ZipCode, "^[0-9]{5}(?:-[0-9]{4})?$").Success)
+            {
+                MessageBox.Show("De ingevoerde postcode is incorrect.");
+                return false;
+            }
+
+            if (Customer.Address.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een klant moet een adres hebben.");
+                return false;
+            }
+
+            if (Customer.ChamberOfCommerceNumber == null)
+            {
+                MessageBox.Show("Een klant moet een KVK nummer hebben.");
+                return false;
+            }
+
+            if (Customer.City.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een klant moet een stad hebben.");
+                return false;
+            }
+
+            if (Customer.StartingDate <= new DateTime(1990, 1, 1))
+            {
+                MessageBox.Show("De geselecteerde startdatum is incorrect.");
                 return false;
             }
 
