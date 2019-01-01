@@ -39,8 +39,6 @@ namespace FSBeheer.ViewModel
             return InternetGetConnectedState(out int description, 0);
         }
 
-        public string WarningText { get; set; }
-
         public RelayCommand<Window> CancelInspectionCommand { get; set; }
         public RelayCommand<Window> AddInspectionCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
@@ -116,7 +114,7 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                if (StartDateIsValid())
+                if (InspectionIsValid())
                 {
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateInspectionList");
@@ -133,7 +131,7 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                if (StartDateIsValid())
+                if (InspectionIsValid())
                 {
                     new AvailableInspectorView(_context, Inspection.Id).Show();
                 }
@@ -149,36 +147,7 @@ namespace FSBeheer.ViewModel
             AddInspectionCommand.RaiseCanExecuteChanged();
         }
 
-        private bool CheckSaveAllowed(Window window)
-        {//unused?
-            if (Inspection != null)
-            {
-                if (string.IsNullOrEmpty(Inspection.Name))
-                {
-                    WarningText = "Het veld Naam mag niet leeg zijn";
-                    RaisePropertyChanged(nameof(WarningText));
-                    return false;
-                }
-                else if (Inspection.Inspectors == null)
-                {
-                    WarningText = "Het veld Inspecteur(s) mag niet leeg zijn";
-                    RaisePropertyChanged(nameof(WarningText));
-                    return false;
-                }
-                else
-                {
-                    WarningText = "";
-                    RaisePropertyChanged(nameof(WarningText));
-                    return true;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private bool StartDateIsValid()
+        private bool InspectionIsValid()
         {
             //returning false upon finding a flaw is better than returning true as soon as possible
             //if (Inspection.InspectionDate.StartDate >= new DateTime(1753, 1, 1))
@@ -195,6 +164,18 @@ namespace FSBeheer.ViewModel
             if (Inspection.InspectionDate.EndDate <= Inspection.InspectionDate.StartDate)
             {
                 MessageBox.Show("De einddatum moet na de begindatum zijn.");
+                return false;
+            }
+
+            if (Inspection.Inspectors == null)
+            {
+                MessageBox.Show("Een inspectie moet minstens een inspecteur hebben.");
+                return false;
+            }
+
+            if (Inspection.Name.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een inspectie moet een naam hebben.");
                 return false;
             }
 
