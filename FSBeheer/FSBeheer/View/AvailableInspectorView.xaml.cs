@@ -18,7 +18,7 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for AvailableInspectorsView.xaml
     /// </summary>
-    public partial class AvailableInspectorView : Window
+    public partial class AvailableInspectorView : BaseView
     {
         public AvailableInspectorView(CustomFSContext context, int inspectionId)
         {

@@ -34,22 +34,16 @@ namespace FSBeheer.ViewModel
 
         private CustomFSContext _context;
 
-        public CreateEditInspectorViewModel(InspectorVM SelectedInspector)
+        public CreateEditInspectorViewModel()
         {
             _context = new CustomFSContext();
             SaveChangesCommand = new RelayCommand(SaveChanges);
             Inspector = SelectedInspector;
         }
 
-        public CreateEditInspectorViewModel()
-        {
-            _context = new CustomFSContext();
-        }
-
         private void AddInspector()
         {
             _context.InspectorCrud.GetAllInspectors().Add(Inspector);
-            _context.InspectorCrud.Add(Inspector);
         }
 
 
@@ -78,13 +72,12 @@ namespace FSBeheer.ViewModel
             {
                 Inspector = new InspectorVM();
                 _context.Inspectors.Add(Inspector.ToModel());
-                RaisePropertyChanged(nameof(Inspector)); // a sign that a property has changed for viewing
             }
             else
             {
                 Inspector = new InspectorVM(_context.Inspectors.FirstOrDefault(c => c.Id == inspector.Id));
-                RaisePropertyChanged(nameof(inspector));
             }
+            RaisePropertyChanged(nameof(Inspector)); // a sign that a property has changed for viewing
         }
 
         private void Discard(Window window)

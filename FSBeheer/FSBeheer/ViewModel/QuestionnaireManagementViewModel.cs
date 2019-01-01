@@ -137,5 +137,18 @@ namespace FSBeheer.ViewModel
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
+
+        public void FilterList(string filter)
+        {
+            if (string.IsNullOrEmpty(filter))
+            {
+                Questionnaires = _context.QuestionnaireCrud.GetAllQuestionnaires();
+            }
+            else
+            {
+                Questionnaires = _context.QuestionnaireCrud.GetAllQuestionnairesFiltered(filter);
+            }
+            RaisePropertyChanged(nameof(Questionnaires));
+        }
     }
 }
