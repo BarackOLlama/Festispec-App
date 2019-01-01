@@ -17,8 +17,6 @@ namespace FSBeheer.ViewModel
 
         public InspectorVM Inspector { get; set; }
 
-        public InspectorVM SelectedInspector { get; set; }
-
         public RelayCommand SaveChangesCommand { get; set; }
 
         public RelayCommand AddCommand { get; set; }

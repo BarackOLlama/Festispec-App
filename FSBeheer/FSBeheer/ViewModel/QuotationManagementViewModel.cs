@@ -12,14 +12,14 @@ namespace FSBeheer.ViewModel
         private CustomFSContext _Context;
 
         public ObservableCollection<QuotationVM> Quotations { get; set; }
-        private QuotationVM _SelectedQuotation { get; set; }
-        public QuotationVM SelectedQuotation
+        private QuotationVM _quotation { get; set; }
+        public QuotationVM Quotation
         {
-            get { return _SelectedQuotation; }
+            get { return _quotation; }
             set
             {
-                _SelectedQuotation = value;
-                RaisePropertyChanged(nameof(SelectedQuotation));
+                _quotation = value;
+                RaisePropertyChanged(nameof(Quotation));
             }
         }
 
@@ -37,13 +37,13 @@ namespace FSBeheer.ViewModel
 
         private void ShowEditQuotationView()
         {
-            if (SelectedQuotation == null)
+            if (Quotation == null)
             {
                 MessageBox.Show("Er is geen inspectie geselecteerd. Kies een inspectie en kies daarna de optie 'Wijzig'.");
             }
             else
             {
-                new CreateEditQuotationView(SelectedQuotation).Show();
+                new CreateEditQuotationView(Quotation).Show();
             }
         }
 
