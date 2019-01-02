@@ -117,12 +117,6 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (Inspector.InvalidDate<= Inspector.CertificationDate)
-            {
-                MessageBox.Show("De certificering van een inspecteur kan alleen invalide worden na de originele certificeringsdatum.");
-                return false;
-            }
-
             if (Inspector.City.Trim() == string.Empty)
             {
                 MessageBox.Show("Een inspecteur moet in een stad wonen.");
@@ -141,21 +135,27 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (Inspector.PhoneNumber == null)
+            if (Inspector.InvalidDate <= Inspector.CertificationDate)
             {
-                MessageBox.Show("Een inspecteur moet een telefoonnummer hebben.");
+                MessageBox.Show("De certificering van een inspecteur kan alleen invalide worden na de originele certificeringsdatum.");
                 return false;
             }
 
             if (!Regex.Match(Inspector.PhoneNumber, @"^(\+[0-9]{9})$").Success)
             {
-                MessageBox.Show("De ingevoerde telefoonnummer is incorrect.");
+                MessageBox.Show("Het ingevoerde telefoonnummer is incorrect.");
                 return false;
             }
 
             if (Inspector.Name.Trim() == string.Empty)
             {
                 MessageBox.Show("Een inspecteur moet een naam hebben.");
+                return false;
+            }
+
+            if (Inspector.PhoneNumber == null)
+            {
+                MessageBox.Show("Een inspecteur moet een telefoonnummer hebben.");
                 return false;
             }
 

@@ -97,6 +97,18 @@ namespace FSBeheer.ViewModel
         {
             //determines whether the contact is valid and may be saved to the database
 
+            if (Contact.Email.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een contactpersoon moet een e-mail adres hebben");
+                return false;
+            }
+
+            if (!new EmailAddressAttribute().IsValid(Contact.Email))
+            {
+                MessageBox.Show("De ingevoerde e-mail is onjuist.");
+                return false;
+            }
+
             if (Contact.Name.Trim() == string.Empty)
             {
                 MessageBox.Show("Een contactpersoon moet een naam hebben.");
@@ -112,18 +124,6 @@ namespace FSBeheer.ViewModel
             if (!Regex.Match(Contact.PhoneNumber, @"^(\+[0-9]{9})$").Success)
             {
                 MessageBox.Show("De ingevoerde telefoonnummer is onjuist.");
-                return false;
-            }
-
-            if (Contact.Email.Trim() == string.Empty)
-            {
-                MessageBox.Show("Een contactpersoon moet een e-mail adres hebben");
-                return false;
-            }
-
-            if (!new EmailAddressAttribute().IsValid(Contact.Email))
-            {
-                MessageBox.Show("De ingevoerde e-mail is onjuist.");
                 return false;
             }
 

@@ -131,11 +131,6 @@ namespace FSBeheer.ViewModel
 
         private bool QuestionnaireIsValid()
         {
-            if (Questionnaire == null)
-            {
-                MessageBox.Show("Er is iets misgegaan. Heropen a.u.b. dit scherm.");
-                return false;
-            }
             if (Questionnaire.Name.Trim() == string.Empty)
             {
                 MessageBox.Show("Een vragenlijst moet een vraag hebben.");
