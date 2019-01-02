@@ -105,7 +105,7 @@ namespace FSBeheer.ViewModel
 
             if (!new EmailAddressAttribute().IsValid(Contact.Email))
             {
-                MessageBox.Show("De ingevoerde e-mail is onjuist.");
+                MessageBox.Show("Het ingevoerde e-mail adres is onjuist.");
                 return false;
             }
 

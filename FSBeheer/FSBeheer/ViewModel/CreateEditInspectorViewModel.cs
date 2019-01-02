@@ -131,7 +131,7 @@ namespace FSBeheer.ViewModel
 
             if (new EmailAddressAttribute().IsValid(Inspector.Email))
             {
-                MessageBox.Show("De ingevoerde e-mail adres is incorrect.");
+                MessageBox.Show("Het ingevoerde e-mail adres is incorrect.");
                 return false;
             }
 
