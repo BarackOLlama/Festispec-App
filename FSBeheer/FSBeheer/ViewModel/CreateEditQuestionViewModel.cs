@@ -31,9 +31,40 @@ namespace FSBeheer.ViewModel
             {
                 _selectedQuestionType = value;
                 base.RaisePropertyChanged(nameof(SelectedQuestionType));
+                HandleEnabledComponents();
             }
         }
         public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
+
+        //enable/disable components
+        private bool _columnsIsEnabled;
+        public bool ColumnsIsEnabled
+        {
+            get
+            {
+                return _columnsIsEnabled;
+            }
+            set
+            {
+                _columnsIsEnabled = value;
+                base.RaisePropertyChanged(nameof(ColumnsIsEnabled));
+            }
+        }
+
+
+        private bool _optionsIsEnabled;
+        public bool OptionsIsEnabled
+        {
+            get
+            {
+                return _optionsIsEnabled;
+            }
+            set
+            {
+                _optionsIsEnabled = value;
+                base.RaisePropertyChanged(nameof(OptionsIsEnabled));
+            }
+        }
 
         //commands
         public RelayCommand<Window> SaveQuestionChangesCommand { get; set; }
@@ -53,7 +84,7 @@ namespace FSBeheer.ViewModel
         {
             //create
             _context = new CustomFSContext();
-            InitializeQuestionTypes();
+            InitializeQuestionTypesAndBooleans();
             InitializeCommands();
 
             Question = new QuestionVM
@@ -69,7 +100,7 @@ namespace FSBeheer.ViewModel
         {
             //edit
             _context = new CustomFSContext();
-            InitializeQuestionTypes();
+            InitializeQuestionTypesAndBooleans();
             InitializeCommands();
 
             Question = _context.QuestionCrud.GetQuestionById(questionId);
@@ -83,7 +114,7 @@ namespace FSBeheer.ViewModel
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
-        private void InitializeQuestionTypes()
+        private void InitializeQuestionTypesAndBooleans()
         {
             var types = _context
                 .QuestionTypes
@@ -92,6 +123,8 @@ namespace FSBeheer.ViewModel
             QuestionTypes = new ObservableCollection<QuestionTypeVM>(types);
             _selectedQuestionType = QuestionTypes.FirstOrDefault();
             RaisePropertyChanged(nameof(SelectedQuestionType));
+            _optionsIsEnabled = true;
+            _columnsIsEnabled = false;
         }
 
         public bool QuestionIsValid()
@@ -126,6 +159,33 @@ namespace FSBeheer.ViewModel
             }
 
             return true;
+        }
+
+        private void HandleEnabledComponents()
+        {
+            switch (SelectedQuestionType.Name)
+            {
+                case "Multiple Choice vraag":
+                    //Multiple choice has options but no columns
+                    OptionsIsEnabled = true;
+                    ColumnsIsEnabled = false;
+                    break;
+                case "Open Vraag":
+                    //Open question has neither options nor columns
+                    OptionsIsEnabled = false;
+                    ColumnsIsEnabled = false;
+                    break;
+                case "Open Tabelvraag":
+                    //An open columnquestion has columns but no options
+                    OptionsIsEnabled = false;
+                    ColumnsIsEnabled = true;
+                    break;
+                case "Multiple Choice Tabelvraag":
+                    //A multiple choice columnquestion has both options and columns
+                    OptionsIsEnabled = true;
+                    ColumnsIsEnabled = true;
+                    break;
+            }
         }
 
         public void SaveQuestionChanges(Window window)

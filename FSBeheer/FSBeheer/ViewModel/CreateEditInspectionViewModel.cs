@@ -39,8 +39,6 @@ namespace FSBeheer.ViewModel
             return InternetGetConnectedState(out int description, 0);
         }
 
-        public string WarningText { get; set; }
-
         public RelayCommand<Window> CancelInspectionCommand { get; set; }
         public RelayCommand<Window> AddInspectionCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
@@ -116,15 +114,11 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                if (CheckStartDateValidity())
+                if (InspectionIsValid())
                 {
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateInspectionList");
                     CloseAction(window);
-                }
-                else
-                {
-                    MessageBox.Show("De ingevulde datums zijn niet correct. Voer correcte begin- en einddatums in en probeer het opnieuw.");
                 }
             }
             else
@@ -137,13 +131,9 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                if (CheckStartDateValidity())
+                if (InspectionIsValid())
                 {
                     new AvailableInspectorView(_context, Inspection.Id).Show();
-                }
-                else
-                {
-                    MessageBox.Show("De ingevulde datums zijn niet correct. Voer correcte begin- en einddatums in en probeer het opnieuw.");
                 }
             }
             else
@@ -157,42 +147,34 @@ namespace FSBeheer.ViewModel
             AddInspectionCommand.RaiseCanExecuteChanged();
         }
 
-        private bool CheckSaveAllowed(Window window)
+        private bool InspectionIsValid()
         {
-            if (Inspection != null)
+
+            if (Inspection.InspectionDate.EndDate <= Inspection.InspectionDate.StartDate)
             {
-                if (string.IsNullOrEmpty(Inspection.Name))
-                {
-                    WarningText = "Het veld Naam mag niet leeg zijn";
-                    RaisePropertyChanged(nameof(WarningText));
-                    return false;
-                }
-                else if (Inspection.Inspectors == null)
-                {
-                    WarningText = "Het veld Inspecteur(s) mag niet leeg zijn";
-                    RaisePropertyChanged(nameof(WarningText));
-                    return false;
-                }
-                else
-                {
-                    WarningText = "";
-                    RaisePropertyChanged(nameof(WarningText));
-                    return true;
-                }
-            }
-            else
-            {
+                MessageBox.Show("De einddatum moet na de begindatum zijn.");
                 return false;
             }
-        }
 
-        private bool CheckStartDateValidity()
-        {
-            if (Inspection.InspectionDate.StartDate >= new DateTime(1753, 1, 1))
+            if (Inspection.InspectionDate.StartDate <= DateTime.Now)
             {
-                return true;
+                MessageBox.Show("Een inspectie kan niet in het verleden worden gepland.");
+                return false;
             }
-            return false;
+
+            if (Inspection.Inspectors == null)
+            {
+                MessageBox.Show("Een inspectie moet minstens een inspecteur hebben.");
+                return false;
+            }
+
+            if (Inspection.Name.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een inspectie moet een naam hebben.");
+                return false;
+            }
+
+            return true;
 
         }
     }

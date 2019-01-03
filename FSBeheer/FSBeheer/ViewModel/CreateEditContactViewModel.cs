@@ -4,9 +4,11 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -55,13 +57,16 @@ namespace FSBeheer.ViewModel
             }
             else
             {
-                Contact = new ContactVM(_context.Contacts.FirstOrDefault(c => c.Id == contact.Id));
+                Contact = new ContactVM(_context.Contacts.ToList().FirstOrDefault(c => c.Id == contact.Id));
                 RaisePropertyChanged(nameof(Contact));
             }
         }
 
         private void SaveChangesContact()
         {
+
+            if (!ContactIsValid()) return;
+
             if (IsInternetConnected())
             {
                 MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestiging opslaan", MessageBoxButton.OKCancel);
@@ -75,6 +80,7 @@ namespace FSBeheer.ViewModel
                     }
                     catch
                     {
+                        MessageBox.Show("Opslaan niet gelukt!");
                         return;
                     }
 
@@ -85,6 +91,43 @@ namespace FSBeheer.ViewModel
             {
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
             }
+        }
+
+        public bool ContactIsValid()
+        {
+            //determines whether the contact is valid and may be saved to the database
+
+            if (Contact.Email.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een contactpersoon moet een e-mail adres hebben");
+                return false;
+            }
+
+            if (!new EmailAddressAttribute().IsValid(Contact.Email))
+            {
+                MessageBox.Show("Het ingevoerde e-mail adres is onjuist.");
+                return false;
+            }
+
+            if (Contact.Name.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een contactpersoon moet een naam hebben.");
+                return false;
+            }
+
+            if (Contact.PhoneNumber == null)
+            {
+                MessageBox.Show("Een contactpersoon moet een telefoonnummer hebben.");
+                return false;
+            }
+
+            if (!Regex.Match(Contact.PhoneNumber, @"^(\+[0-9]{9})$").Success)
+            {
+                MessageBox.Show("De ingevoerde telefoonnummer is onjuist.");
+                return false;
+            }
+
+            return true;
         }
 
         private void DiscardContact(Window window)

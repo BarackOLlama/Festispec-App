@@ -6,28 +6,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="CreateQuestionWindow" Height="300" Width="300"
+        Title="CreateQuestionWindow" Height="430" Width="340"
         ResizeMode="NoResize"
         DataContext="{Binding CreateQuestion, Source={StaticResource Locator}}">
     <StackPanel>
-
-        <TextBlock Text="Vraag toevoegen" FontSize="28"/>
-
-        <TextBlock Text="Vraag:" Margin="0,5,0,0"  />
-        <TextBox MaxLength="50" Text="{Binding Question.Content, Mode=TwoWay}"/>
-
-        <TextBlock Text="Vraag type:" Margin="5,5,0,0"  />
-        <ComboBox ItemsSource="{Binding QuestionTypes}" SelectedItem="{Binding SelectedQuestionType}" HorizontalAlignment="Left" Width="292"/>
-        <TextBlock>Commentaar:</TextBlock>
-        <TextBox Text="{Binding Question.Comments}"></TextBox>
-        <TextBlock Text="Opties:* multiple choice"></TextBlock>
-        <TextBox Text="{Binding Question.Options}"></TextBox>
-        <TextBlock Text="Kolommen"></TextBlock>
-        <TextBox Text="{Binding Question.Columns}"></TextBox>
-        <Grid>
-            <Button Content="Toevoegen" Command="{Binding CreateQuestionCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}"
+        <TextBlock Text="Vraag toevoegen" FontSize="28" Margin="5,5,0,0"/>
+        <TextBlock Text="Vraag:" Margin="10,5,0,0"  />
+        <TextBox MaxLength="50" Text="{Binding Question.Content, Mode=TwoWay}" Margin="10"/>
+        <TextBlock Text="Vraag type:" Margin="10,5,0,0"  />
+        <ComboBox ItemsSource="{Binding QuestionTypes}" SelectedItem="{Binding SelectedQuestionType}" HorizontalAlignment="Left" Width="292" Margin="10"/>
+        <TextBlock Margin="10,5,0,0">Commentaar:</TextBlock>
+        <TextBox Text="{Binding Question.Comments}" Margin="10"></TextBox>
+        <TextBlock Text="Opties:* multiple choice" Margin="10,5,0,0"></TextBlock>
+        <TextBox Text="{Binding Question.Options}" IsEnabled="{Binding OptionsIsEnabled}" Margin="10"></TextBox>
+        <TextBlock Text="Kolommen" Margin="10,5,0,0"></TextBlock>
+        <TextBox Text="{Binding Question.Columns}" IsEnabled="{Binding ColumnsIsEnabled}" Margin="10"></TextBox>
+        <Grid Margin="10,5,0,0">
+            <Button Content="Opslaan" Command="{Binding CreateQuestionCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}"
                     Width="100"  HorizontalAlignment="Left" Margin="5,5,0,0" />
-            <Button Content="Annuleren" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}" Width="100" HorizontalAlignment="Left" Margin="120,5,5,0"></Button>
+            <Button Content="Annuleren" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}" Width="100" Height="30" HorizontalAlignment="Left" Margin="120, 5,5 , 0"></Button>
         </Grid>
     </StackPanel>
 </local:BaseView>
