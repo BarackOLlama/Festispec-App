@@ -12,7 +12,8 @@ namespace FSBeheer.ViewModel
         private QuestionnaireManagementViewModel _questionnaireManagementViewModel;
         private CreateEditQuestionnaireViewModel _questionnaireViewModel;
         private InspectorManagementViewModel _inspectorManagementViewModel;
-        private InspectionManagementViewModel _InspectionManagementViewModel;
+        private InspectionManagementViewModel _inspectionManagementViewModel;
+        private QuotationManagementViewModel _quotationManagementViewModel;
 
         public ViewModelLocator()
         {
@@ -58,8 +59,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                _InspectionManagementViewModel = new InspectionManagementViewModel();
-                return _InspectionManagementViewModel;
+                return new InspectionManagementViewModel();
             }
         }
 
@@ -67,8 +67,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                _inspectorManagementViewModel = new InspectorManagementViewModel();
-                return _inspectorManagementViewModel;
+                return new InspectorManagementViewModel();
             }
         }
 
@@ -76,7 +75,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new CreateEditInspectorViewModel(_inspectorManagementViewModel.SelectedInspector);
+                return new CreateEditInspectorViewModel();
             }
         }
 
@@ -101,8 +100,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                _questionnaireManagementViewModel = new QuestionnaireManagementViewModel();
-                return _questionnaireManagementViewModel;   
+                return new QuestionnaireManagementViewModel();
             }
         }
 
@@ -172,6 +170,23 @@ namespace FSBeheer.ViewModel
             get
             {
                 return new TestPDFViewModel();
+            }
+        }
+
+        public QuotationManagementViewModel QuotationManagement
+        {
+            get
+            {
+                _quotationManagementViewModel = new QuotationManagementViewModel();
+                return _quotationManagementViewModel;
+            }
+        }
+
+        public CreateEditQuotationViewModel CreateEditQuotation
+        {
+            get
+            {
+                return new CreateEditQuotationViewModel();
             }
         }
 

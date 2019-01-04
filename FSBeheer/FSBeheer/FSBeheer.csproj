@@ -39,6 +39,9 @@
       <HintPath>..\packages\BCrypt.Net-Next.3.1.0\lib\net452\BCrypt.Net-Next.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Bogus, Version=25.0.2.0, Culture=neutral, PublicKeyToken=fa1bb3f3f218129a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bogus.25.0.2\lib\net40\Bogus.dll</HintPath>
+    </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
     </Reference>
@@ -47,6 +50,9 @@
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Faker.NET45, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Faker.Net.1.1.1\lib\net452\Faker.NET45.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
@@ -119,6 +125,7 @@
     <Compile Include="Crud\QuestionCrud.cs" />
     <Compile Include="Crud\QuestionnaireCrud.cs" />
     <Compile Include="Crud\QuestionTypeCrud.cs" />
+    <Compile Include="Crud\QuotationCrud.cs" />
     <Compile Include="Crud\StatusCrud.cs" />
     <Compile Include="CustomFSContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -145,6 +152,7 @@
     <Compile Include="ViewModel\CreateEditEventViewModel.cs" />
     <Compile Include="ViewModel\CreateEditQuestionnaireViewModel.cs" />
     <Compile Include="ViewModel\CreateEditQuestionViewModel.cs" />
+    <Compile Include="ViewModel\CreateEditQuotationViewModel.cs" />
     <Compile Include="ViewModel\CreateEditInspectorViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
@@ -154,6 +162,13 @@
     </Compile>
     <Compile Include="View\BusinessDataView.xaml.cs">
       <DependentUpon>BusinessDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\QuotationManagementViewModel.cs" />
+    <Compile Include="View\CreateEditQuotationView.xaml.cs">
+      <DependentUpon>CreateEditQuotationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\QuotationManagementView.xaml.cs">
+      <DependentUpon>QuotationManagementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="View\BaseView.cs" />
@@ -232,6 +247,7 @@
     <Compile Include="VM\InspectorVM.cs" />
     <Compile Include="VM\QuestionTypeVM.cs" />
     <Compile Include="VM\QuestionVM.cs" />
+    <Compile Include="VM\QuotationVM.cs" />
     <Compile Include="VM\StatusVM.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -292,6 +308,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\CreateEditQuotationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CreateQuestionnaireView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -333,6 +353,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\QuestionnaireManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\QuotationManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

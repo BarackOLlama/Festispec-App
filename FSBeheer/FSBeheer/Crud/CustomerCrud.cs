@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace FSBeheer.Crud
 {
-    class CustomerCrud : AbstractCrud
+    public class CustomerCrud : AbstractCrud
     {
         public ObservableCollection<CustomerVM> GetFilteredCustomerBasedOnName(string name_contains) => _getMultipleCustomersByName(name_contains);
         public CustomerCrud(CustomFSContext customFSContext) : base(customFSContext)
@@ -29,6 +29,7 @@ namespace FSBeheer.Crud
         }
 
         /*
+         * TODO: Not need anymore?
          * Filter customer results based on a part of their name
          */
         private ObservableCollection<CustomerVM> _getMultipleCustomersByName(string name_contains)
@@ -57,9 +58,28 @@ namespace FSBeheer.Crud
                .FirstOrDefault(c => c.Id == customer_id));
         }
 
-        public void SetDeleted(CustomerVM _customer)
+        public ObservableCollection<CustomerVM> GetAllCustomersFiltered(string must_contain)
         {
-            // isDeleted is true veld check zo ja dan krijg je alle deleted terug!
+            if (string.IsNullOrEmpty(must_contain))
+            {
+                throw new ArgumentNullException(nameof(must_contain));
+            }
+
+            must_contain = must_contain.ToLower();
+
+            var customers = CustomFSContext.Customers
+                .ToList()
+                .Where(i => i.IsDeleted == false)
+                .Where(i =>
+                i.Id.ToString().ToLower().Contains(must_contain) ||
+                i.Name != null && i.Name.ToLower().Contains(must_contain) ||
+                i.Address != null && i.Address.ToLower().Contains(must_contain) ||
+                i.City != null && i.City.ToLower().Contains(must_contain) ||
+                (i.StartingDate != null && i.StartingDate.ToString().ToLower().Contains(must_contain))
+                ).Distinct()
+                .Select(i => new CustomerVM(i));
+            var _customers = new ObservableCollection<CustomerVM>(customers);
+            return _customers;
         }
     }
 }

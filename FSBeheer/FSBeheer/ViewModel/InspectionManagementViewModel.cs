@@ -93,7 +93,7 @@ namespace FSBeheer.ViewModel
                 }
                 else
                 {
-                    new CreateEditInspectionView(_SelectedInspection).Show();
+                    new CreateEditInspectionView(_SelectedInspection.Id).Show();
                 }
             }
             else
@@ -108,6 +108,19 @@ namespace FSBeheer.ViewModel
                 new CreateEditInspectionView().Show();   
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
+        }
+
+        public void FilterList(string filter)
+        {
+            if (string.IsNullOrEmpty(filter))
+            {
+                Inspections = _Context.InspectionCrud.GetAllInspections();
+            }
+            else
+            {
+                Inspections = _Context.InspectionCrud.GetAllInspectionsFiltered(filter);
+            }
+            RaisePropertyChanged(nameof(Inspections));
         }
     }
 }

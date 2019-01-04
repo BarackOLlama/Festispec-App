@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.Crud
 {
-    class InspectorCrud : AbstractCrud
+    public class InspectorCrud : AbstractCrud
     {
 
         public InspectorCrud(CustomFSContext customFSContext) : base(customFSContext)
@@ -24,6 +24,35 @@ namespace FSBeheer.Crud
                 .Where(i => i.IsDeleted == false)
                 .Select(i => new InspectorVM(i));
             return new ObservableCollection<InspectorVM>(inspectors);
+        }
+
+        public InspectorVM GetInspectorById(int inspectorId)
+        {
+            var inspector = CustomFSContext.Inspectors.FirstOrDefault(i => i.Id == inspectorId);
+            return new InspectorVM(inspector);
+        }
+
+        public ObservableCollection<InspectorVM> GetAllInspectorsFiltered(string must_contain)
+        {
+            if (string.IsNullOrEmpty(must_contain))
+            {
+                throw new ArgumentNullException(nameof(must_contain));
+            }
+
+            must_contain = must_contain.ToLower();
+
+            var inspectors = CustomFSContext.Inspectors
+                .ToList()
+                .Where(i => i.IsDeleted == false)
+                .Where(i =>
+                i.Id.ToString().ToLower().Contains(must_contain) ||
+                i.Name.ToLower().Contains(must_contain) ||
+                i.Address.ToLower().Contains(must_contain) ||
+                i.City.ToLower().Contains(must_contain)
+                ).Distinct()
+                .Select(i => new InspectorVM(i));
+            var _inspectors = new ObservableCollection<InspectorVM>(inspectors);
+            return _inspectors;
         }
 
         public ObservableCollection<InspectorVM> GetAllInspectorsFilteredByAvailability(List<DateTime> dateRange) //Startdate and enddate of the inspection
@@ -60,9 +89,26 @@ namespace FSBeheer.Crud
 
             if(availableList.Count == 0)
             {
-                return false;
+                return true;
             }
             return !availableList.Contains(false);
+        }
+
+        public ObservableCollection<InspectorVM> GetInspectorsByList(ObservableCollection<InspectorVM> list)
+        {
+            var inspectors = new ObservableCollection<InspectorVM>();
+            foreach (InspectorVM inspectorVM in list)
+            {
+                var inspector = CustomFSContext.Inspectors.FirstOrDefault(i => inspectorVM.Id == i.Id);
+                inspectors.Add(new InspectorVM(inspector));
+            }
+            return inspectors;
+        }
+
+        public ObservableCollection<InspectorVM> GetInspectorsByInspectionId(int inspectionId)
+        {
+            var inspection = new InspectionCrud(CustomFSContext).GetInspectionById(inspectionId);
+            return inspection.Inspectors;
         }
 
         public void Add(InspectorVM _inspector) => CustomFSContext.Inspectors.Add(_inspector.ToModel());

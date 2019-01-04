@@ -19,12 +19,12 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for CreateEditInspectionView.xaml
     /// </summary>
-    public partial class CreateEditInspectionView : Window
+    public partial class CreateEditInspectionView : BaseView
     {
-        public CreateEditInspectionView(InspectionVM inspection = null)
+        public CreateEditInspectionView(int inspectionId = -1)
         {
             InitializeComponent();
-            (DataContext as CreateEditInspectionViewModel).SetInspection(inspection);
+            (DataContext as CreateEditInspectionViewModel).SetInspection(inspectionId);
         }
     }
 }

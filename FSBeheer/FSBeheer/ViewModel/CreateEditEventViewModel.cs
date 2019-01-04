@@ -3,7 +3,6 @@ using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -16,11 +15,11 @@ namespace FSBeheer.ViewModel
 {
     public class CreateEditEventViewModel : ViewModelBase
     {
-        private CustomFSContext _Context { get; set; }
+        private CustomFSContext _context { get; set; }
         public string Title { get; set; }
         public EventVM Event { get; set; }
         public ObservableCollection<CustomerVM> Customers { get; set; }
-        public CustomerVM SelectedCustomer { get; set; }
+        public int SelectedIndex { get; set; }
         public string WarningText { get; set; }
 
         public RelayCommand<Window> SaveChangesCommand { get; set; }
@@ -37,8 +36,8 @@ namespace FSBeheer.ViewModel
 
         public CreateEditEventViewModel()
         {
-            _Context = new CustomFSContext();
-            Customers = _Context.CustomerCrud.GetAllCustomers();
+            _context = new CustomFSContext();
+            Customers = _context.CustomerCrud.GetAllCustomers();
 
             SaveChangesCommand = new RelayCommand<Window>(SaveChanges, SaveAllowed);
             DiscardChangesCommand = new RelayCommand<Window>(DiscardChanges);
@@ -48,27 +47,36 @@ namespace FSBeheer.ViewModel
 
         public void SetEvent(int eventId)
         {
-            if(eventId == -1)
+            if (eventId == -1)
             {
-                Event = new EventVM(new Event());
-                _Context.Events.Add(Event.ToModel());
-                SelectedCustomer = null;
+                Event = new EventVM(new Event() {
+                    Customer = new Customer()
+                });
+                _context.Events.Add(Event.ToModel());
                 Title = "Evenement aanmaken";
             }
             else
             {
-                Event = _Context.EventCrud.GetEventById(eventId);
-                SelectedCustomer = _Context.CustomerCrud.GetCustomerById(Event.Customer.Id);
+                Event = _context.EventCrud.GetEventById(eventId);
                 Title = "Evenement wijzigen";
             }
+            SelectedIndex = GetIndex(Event.Customer, Customers);
+            RaisePropertyChanged(nameof(SelectedIndex));
             RaisePropertyChanged(nameof(Event));
-            RaisePropertyChanged(nameof(SelectedCustomer));
             RaisePropertyChanged(nameof(Title));
         }
 
-        private void CloseAction(Window window)
+        private int GetIndex(CustomerVM Obj, ObservableCollection<CustomerVM> List)
         {
-            _Context.Dispose();
+            for (int i = 0; i < List.Count; i++)
+                if (List[i].Id == Obj.Id)
+                    return i;
+            return -1;
+        }
+
+        private void CloseWindow(Window window)
+        {
+            _context.Dispose();
             window.Close();
         }
 
@@ -124,9 +132,9 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Weet u zeker dat u dit evenement op wilt slaan?", "Bevestigen", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    _Context.SaveChanges();
+                    _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateEventList");
-                    CloseAction(window);
+                    CloseWindow(window);
                 }
             }
             else
@@ -140,7 +148,7 @@ namespace FSBeheer.ViewModel
             MessageBoxResult result = MessageBox.Show("Weet u zeker dat u wilt afsluiten zonder op te slaan?", "Bevestigen", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                CloseAction(window);
+                CloseWindow(window);
             }
         }
 
@@ -151,9 +159,9 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Weet u zeker dat u dit evenement wilt verwijderen?", "Bevestigen", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    _Context.EventCrud.Delete(Event);
+                    _context.EventCrud.Delete(Event);
                     Messenger.Default.Send(true, "UpdateEventList");
-                    CloseAction(window);
+                    CloseWindow(window);
                 }
             }
             else

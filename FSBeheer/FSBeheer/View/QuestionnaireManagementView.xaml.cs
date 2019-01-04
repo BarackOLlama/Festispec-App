@@ -17,7 +17,7 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for QuestionnairesView.xaml
     /// </summary>
-    public partial class QuestionnaireManagementView : Window
+    public partial class QuestionnaireManagementView : BaseView
     {
         public QuestionnaireManagementView()
         {

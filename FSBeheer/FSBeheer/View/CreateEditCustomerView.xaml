@@ -1,5 +1,5 @@
-﻿<Window x:Class="FSBeheer.View.CreateEditCustomerView"
-        Name="CreateEditWindow"
+﻿<local:BaseView x:Class="FSBeheer.View.CreateEditCustomerView"
+        x:Name="CreateEditWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,24 +8,6 @@
         mc:Ignorable="d"
         DataContext="{Binding CreateEditCustomer, Source={StaticResource Locator}}"
         Title="CreateEditCustomerView" Height="450" Width="850" Background="White">
-    <Window.Resources>
-        <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
-            <Button FontSize="15" Margin="5"
-                    Content="{TemplateBinding Content}"
-                    Command="{TemplateBinding Command}"
-                    CommandParameter="{TemplateBinding CommandParameter}"/>
-        </ControlTemplate>
-        <ControlTemplate x:Key="SearchTextBox" TargetType="TextBox">
-            <TextBox FontSize="15" Width="300"
-                     Text="{TemplateBinding Text}"/>
-        </ControlTemplate>
-        <ControlTemplate x:Key="SearchButton" TargetType="Button">
-            <Button FontSize="15"
-                    Content="{TemplateBinding Content}"
-                    Command="{TemplateBinding Command}"
-                    CommandParameter="{TemplateBinding CommandParameter}"/>
-        </ControlTemplate>
-    </Window.Resources>
 
     <StackPanel Orientation="Horizontal" Margin="5">
         <StackPanel Margin="5"  Width="100">
@@ -78,8 +60,8 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Contacten" FontSize="28" FontWeight="ExtraBold" Margin="5"/>
                 <DockPanel Margin="5">
-                    <Button Content="Aanpassen" Command="{Binding EditContactWindowCommand}" Margin="180,0,0,0" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                    <Button Content="Nieuw" Command="{Binding CreateContactWindowCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Aanpassen" Command="{Binding EditContactWindowCommand}" Margin="180,0,0,0" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Nieuw" Command="{Binding CreateContactWindowCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
                 </DockPanel>
             </StackPanel>
             <StackPanel Margin="0,0,0,2" Height="300">
@@ -96,12 +78,12 @@
             </StackPanel>
             <StackPanel Height="50">
                 <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
-                    <Button Content="Annuleer" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                    <Button Content="Verwijder" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DeleteCustomerCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-                    <Button Content="Accepteer" Command="{Binding SaveChangesCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Annuleer" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Verwijder" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DeleteCustomerCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Accepteer" Command="{Binding SaveChangesCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
                 </DockPanel>
             </StackPanel>
         </StackPanel>
     </StackPanel>
 
-</Window>
+</local:BaseView>

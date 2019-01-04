@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.Crud
 {
-    class InspectionCrud : AbstractCrud
+    public class InspectionCrud : AbstractCrud
     {
 
         public InspectionCrud(CustomFSContext customFSContext) : base(customFSContext)
@@ -22,6 +22,30 @@ namespace FSBeheer.Crud
                 .Where(i => i.IsDeleted == false)
                 .Select(i => new InspectionVM(i));
             var _inspections = new ObservableCollection<InspectionVM>(inspection);
+            return _inspections;
+        }
+
+        public ObservableCollection<InspectionVM> GetAllInspectionsFiltered(string must_contain)
+        {
+            if (string.IsNullOrEmpty(must_contain))
+            {
+                throw new ArgumentNullException(nameof(must_contain));
+            }
+
+            must_contain = must_contain.ToLower();
+
+            var inspections = CustomFSContext.Inspections
+                .ToList()
+                .Where(i => i.IsDeleted == false)
+                .Where(i =>
+                i.Id.ToString().ToLower().Contains(must_contain) ||
+                i.Name.ToLower().Contains(must_contain) ||
+                i.Notes.ToLower().Contains(must_contain) ||
+                i.Status.ToString().ToLower().Contains(must_contain) ||
+                i.Event.Name.ToLower().Contains(must_contain)
+                ).Distinct()
+                .Select(i => new InspectionVM(i));
+            var _inspections = new ObservableCollection<InspectionVM>(inspections);
             return _inspections;
         }
 
