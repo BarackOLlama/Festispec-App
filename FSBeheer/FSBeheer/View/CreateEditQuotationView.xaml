@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="Offerte toevoegen/wijzigen" Height="800" Width="600"
+        Title="Offerte toevoegen/wijzigen" Height="800" Width="650"
         DataContext="{Binding CreateEditQuotation, Source={StaticResource Locator}}">
 
     <StackPanel VerticalAlignment="Center">
@@ -17,7 +17,7 @@
                 Template="{DynamicResource FilteredComboBoxTemplate}"/>
         </StackPanel>
 
-        <StackPanel Width="500" HorizontalAlignment="Center" Margin="0,0,0,0" >
+        <StackPanel Width="550" HorizontalAlignment="Center" Margin="0,0,0,0" >
             <Border BorderBrush="Black" BorderThickness="1" Padding="0" VerticalAlignment="Top">
                 <StackPanel>
 
@@ -66,7 +66,7 @@
             <ComboBox ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}" DisplayMemberPath="Name" Width="400" Height="30" Margin="0,0,0,0"/>
         </StackPanel>-->
 
-        <StackPanel Width="500" HorizontalAlignment="Center" Margin="0,0,0,50" >
+        <StackPanel Width="550" HorizontalAlignment="Center" Margin="0,0,0,50" >
             <Border BorderBrush="Black" BorderThickness="1" Padding="0" VerticalAlignment="Top">
                 <StackPanel>
                     <StackPanel>
