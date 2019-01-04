@@ -12,8 +12,8 @@
         <StackPanel Margin="5" Orientation="Vertical">
             <StackPanel Height="120"></StackPanel>
             <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="2">
-                <Button Content="Create" CommandParameter="{Binding ElementName=PDF_Generate}" Command="{Binding CreatePDFCommand}" Template="{DynamicResource InterfaceButton}"></Button>
-                <Button Content="Annuleer" CommandParameter="{Binding ElementName=PDF_Generate}" Command="{Binding CloseCommand}" Template="{DynamicResource InterfaceButton}"></Button>
+                <Button Content="Create" CommandParameter="{Binding ElementName=PDF_Generate}" Command="{Binding CreatePDFCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+                <Button Content="Annuleer" CommandParameter="{Binding ElementName=PDF_Generate}" Command="{Binding CloseCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
                 <!--<Button Content="Verwijder" CommandParameter="{Binding ElementName=PDF_Generate}" Command="{Binding DeletePDFCommand}" Template="{DynamicResource InterfaceButton}"></Button>
                 <Button Content="Accepteer" CommandParameter="{Binding ElementName=PDF_Generate}" Command="{Binding SavePDFCommand}" Template="{DynamicResource InterfaceButton}"></Button>-->
             </DockPanel>
