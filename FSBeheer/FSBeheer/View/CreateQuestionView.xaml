@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="CreateQuestionWindow" Height="430" Width="340"
+        Title="Vraag toevoegen" Height="430" Width="340"
         ResizeMode="NoResize"
         DataContext="{Binding CreateQuestion, Source={StaticResource Locator}}">
     <StackPanel>

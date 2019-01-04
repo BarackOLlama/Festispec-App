@@ -1,4 +1,4 @@
-﻿<local:BaseView x:Class="FSBeheer.View.CreateQuestionView"
+﻿<local:BaseView x:Class="FSBeheer.View.EditQuestionView"
         x:Name="EditWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="EditQuestionView" Height="430" Width="340"
+        Title="Vraag aanpassen" Height="430" Width="340"
         DataContext="{Binding EditQuestion, Source={StaticResource Locator}}">
     <StackPanel>
         <TextBlock Text="Vraag aanpassen" FontSize="28" Margin="5,5,0,0"/>
