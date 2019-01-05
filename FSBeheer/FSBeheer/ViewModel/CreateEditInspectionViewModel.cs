@@ -150,17 +150,34 @@ namespace FSBeheer.ViewModel
         private bool InspectionIsValid()
         {
 
-            if (Inspection.InspectionDate.EndDate <= Inspection.InspectionDate.StartDate)
+            if (Inspection.InspectionDate.EndDate < Inspection.InspectionDate.StartDate)
             {
                 MessageBox.Show("De einddatum moet na de begindatum zijn.");
                 return false;
             }
 
-            if (Inspection.InspectionDate.StartDate <= DateTime.Now)
+            if (Inspection.InspectionDate.StartDate < DateTime.Now.Date)
             {
                 MessageBox.Show("Een inspectie kan niet in het verleden worden gepland.");
                 return false;
             }
+
+            // nog niet af
+            if (Inspection.InspectionDate.StartTime != null)
+            {
+                var stringHours = Inspection.InspectionDate.StartTime.ToString().Substring(0, 2);
+                var intHours = Int32.Parse(stringHours);
+                if (intHours > 24)
+                {
+                    var result = Inspection.InspectionDate.StartTime.ToString().Substring(0, 2);
+                    var intresult = Int32.Parse(result);
+                    // regex om format van starttime en endtime te checken
+                    //   /(\d\d):(([0 - 6][0]) | ([0 - 5][0 - 9])):?(([0 - 6][0]) | ([0 - 5]?[0 - 9] ?))/g
+                    MessageBox.Show("De starttime is niet goed");
+                    return false;
+                }
+            }
+
 
             if (Inspection.Inspectors == null)
             {
@@ -168,7 +185,7 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (Inspection.Name.Trim() == string.Empty)
+            if (Inspection.Name != null && Inspection.Name.Trim() == string.Empty)
             {
                 MessageBox.Show("Een inspectie moet een naam hebben.");
                 return false;
