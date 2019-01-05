@@ -448,7 +448,7 @@ namespace FSBeheer.Migrations
                 },
                 new Question()
                 {
-                    Content="Verkopen ze mooie shirts op het festival?",
+                    Content="Verkopen ze ook mooie shirts op het festival?",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Open Vraag"),
                     IsDeleted = false
