@@ -355,8 +355,8 @@ namespace FSBeheer.Migrations
             {
                 new Inspection()
                 {
-                    Name = "EersteInspectie",
-                    Event = events[1],
+                    Name = "Zwarte Cross Inspectie",
+                    Event = events[2],
                     Status = statuses[3],
                     Notes = "Minstens 4 inspecteurs",
                     InspectionDate = inspectiondates[0],
@@ -364,8 +364,8 @@ namespace FSBeheer.Migrations
                 },
                 new Inspection()
                 {
-                    Name = "TweedeInspectie",
-                    Event = events[0],
+                    Name = "Appelpop inspectie",
+                    Event = events[1],
                     Status = statuses[3],
                     Notes = "",
                     InspectionDate = inspectiondates[1],
@@ -374,7 +374,7 @@ namespace FSBeheer.Migrations
                         inspectors[2],
                         inspectors[3]
                     },
-                    IsDeleted = false                    
+                    IsDeleted = false
                 }
             };
             context.Inspections.AddRange(inspections);
@@ -383,18 +383,28 @@ namespace FSBeheer.Migrations
             {
                 new Questionnaire()
                 {
-                    Name = "VragenlijstEersteInspectie",
-                    Instructions = "Laat geen vragen leeg",
+                    Name = "Vragenlijst Zwarte Cross",
+                    Instructions = "Lever de inspectie in 5 uur voor het einde van het festival.",
                     Version = 1,
-                    Comments = "Dit is onze eerste inspectie, extra goed opletten!",
-                    Inspection = inspections[1],
+                    Comments = "Drank gekocht tijdens het festival wordt niet door Festispec vergoed.",
+                    Inspection = inspections[0],
                     IsDeleted = false
+                },
+                new Questionnaire()
+                {
+                    Name="Vragenlijst Appelpop",
+                    Instructions="Niet te veel drinken.",
+                    Version = 2,
+                    Comments="Dit is niet onze eerste inspectie, maar toch goed opletten.",
+                    Inspection = inspections[1],
+                    IsDeleted=false
                 }
             };
             context.Questionnaires.AddRange(questionnaires);
 
             var questions = new List<Question>
             {
+                //zwarte cross
                 new Question()
                 {
                     Content = "Hoeveel man is er op het festival?",
@@ -406,27 +416,60 @@ namespace FSBeheer.Migrations
                 new Question()
                 {
                     Content = "Hoe groot is het percentage van roest op het podium?",
-                    Options = "A|10%;B|20%;C|50%;D|100%",
                     Questionnaire = questionnaires[0],
-                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice vraag"),
+                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Open Vraag"),
                     IsDeleted = false
                 },
                 new Question()
                 {
-                    Content = "Wat is de draaglast van de fundament van het podium?",
-                    Options = "A|100kg;B|200kg;C|500kg;D|1000kg",
+                    Content = "Hoeveel klanten zijn er bij de bars?",
                     Questionnaire = questionnaires[0],
-                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice vraag"),
+                    Columns="1|Grolsch bar| Bavaria bar| Hertog Jan Bar",
+                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Open Tabelvraag"),
                     IsDeleted = false
                 },
                 new Question()
                 {
                     Content = "Hoeveel bars zijn er op het festival?",
-                    Options = "A|5;B|10;C|20;D|40",
+                    Options = "A|1-3;B|40-50;C|90;D|500+",
+                    Columns="2|temp|voorbeeld|example",
                     Questionnaire = questionnaires[0],
-                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice vraag"),
+                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice Tabelvraag"),
                     IsDeleted = false
-                }
+                },
+                //appelpop
+                new Question()
+                {
+                    Content="Worden er band shirts verkocht",
+                    Options="A|Jazeker;B|Nee;C|Misschien",
+                    Questionnaire = questionnaires[1],
+                    QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Multiple Choice vraag"),
+                    IsDeleted = false
+                },
+                new Question()
+                {
+                    Content="Verkopen ze ook mooie shirts op het festival?",
+                    Questionnaire = questionnaires[1],
+                    QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Open Vraag"),
+                    IsDeleted = false
+                },
+                new Question()
+                {
+                    Content="Verschillen tussen drankprijzen",
+                    Columns="2|Grolsch bar|Bavaria Bar|Hertog Jan Bar",
+                    Questionnaire = questionnaires[1],
+                    QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Open Tabelvraag"),
+                    IsDeleted = false
+                },
+                new Question()
+                {
+                    Content="Hoe combineer je een multiple choice vraag met een tabelvraag?",
+                    Options="A|Dat is onmogelijk;B|Dat doe je zo.",
+                    Columns="1|Voorbeeld|Voorbeeld 2",
+                    Questionnaire = questionnaires[1],
+                    QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Multiple Choice Tabelvraag"),
+                    IsDeleted = false
+                },
             };
             context.Questions.AddRange(questions);
 

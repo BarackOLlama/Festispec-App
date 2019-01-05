@@ -100,7 +100,8 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new QuestionnaireManagementViewModel();
+                _questionnaireManagementViewModel = new QuestionnaireManagementViewModel();
+                return _questionnaireManagementViewModel;
             }
         }
 
