@@ -91,6 +91,7 @@ namespace FSBeheer.ViewModel
 
                     //save the fact that the user has logged in in a variable.
                     //Loginbox should automatically close.
+                    Account = new AccountVM(findUser);
                     new HomeView().Show();
                     window.Close();
                 }

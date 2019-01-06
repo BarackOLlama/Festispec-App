@@ -9,9 +9,6 @@
         Title="Home" Height="450" Width="600">
 
     <StackPanel Background="White" Height="420">
-        <!--<StackPanel>
-            <TextBlock Text="{Binding Account.Username, StringFormat=Naam:{0},  FallbackValue='Niet ingelogd'}" HorizontalAlignment="Right" Width="592"></TextBlock>
-        </StackPanel>-->
         <StackPanel VerticalAlignment="Center" Height="220" Margin="0,30,0,0">
             <Grid Margin="50">
                 <Grid.RowDefinitions>
@@ -35,12 +32,12 @@
             </Grid>
         </StackPanel>
 
-        <StackPanel DataContext="{}" VerticalAlignment="Bottom" Margin="50,0,50,0">
+        <StackPanel VerticalAlignment="Bottom" Margin="50,0,50,0">
             <StackPanel Margin="20,0,0,0">
                 <Label Content="Ingelogd als" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold"/>
-                <Label Content="{Binding Account.Name, StringFormat='Naam:{0}', FallbackValue=Bob}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Label Content="{Binding AccountRole, StringFormat='Functie:{0}', FallbackValue=Bob}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Label Content="{Binding LoginTime, StringFormat='Ingelogd sinds:{0}', FallbackValue=Bob}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <Label Content="{Binding Account.Username, FallbackValue=-}" ContentStringFormat="Gebruiker: {0}"/>
+                <Label Content="{Binding AccountRole, FallbackValue=-}" ContentStringFormat="Functie: {0}"/>
+                <Label Content="{Binding LoginTime, FallbackValue=-}" ContentStringFormat="Ingelogd sinds: {0}"/>
             </StackPanel>
         </StackPanel>
 

@@ -7,6 +7,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
@@ -20,7 +21,8 @@ namespace FSBeheer.ViewModel
             set
             {
                 _account = value;
-                base.RaisePropertyChanged("Account");
+                base.RaisePropertyChanged(nameof(Account));
+                AccountRole = _context.Roles.ToList().Where(e => e.Id == Account.RoleId).FirstOrDefault().Content;
             }
         }
         public DateTime LoginTime { get; set; }
@@ -35,32 +37,29 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowQuotationViewCommand { get; set; }
         public RelayCommand ShowQuestionnaireManagementViewCommand { get; set; }
         public RelayCommand ShowCreateEditViewCommand { get; set; }
-        //public RelayCommand ShowLoginViewCommand { get; set; }
         public RelayCommand ShowBusinessDataViewCommand { get; set; }
 
-        public HomeViewModel()
+        public HomeViewModel(AccountVM account)
         {
             _context = new CustomFSContext();
-
+            _account = account;
+            base.RaisePropertyChanged(nameof(Account));
             ShowCustomerViewCommand = new RelayCommand(ShowCustomerView);
             ShowInspectionViewCommand = new RelayCommand(ShowInspectionView);
             ShowEventViewCommand = new RelayCommand(ShowEventView);
             ShowInspectorViewCommand = new RelayCommand(ShowInspectorView);
             ShowQuotationViewCommand = new RelayCommand(ShowQuotationView);
-            //ShowLoginViewCommand = new RelayCommand(ShowLoginView);
             ShowCreateEditViewCommand = new RelayCommand(ShowCreateEditInspectionView);
             ShowQuestionnaireManagementViewCommand = new RelayCommand(ShowQuestionnaireManagementView);
             ShowBusinessDataViewCommand = new RelayCommand(ShowBusinessDataView);
 
             LoginTime = DateTime.Now;
-            //AccountRole = _context.Roles.FirstOrDefault(e=> e.Id == Account.RoleId).Content;
-            AccountRole = "Stinkie";
 
             // Tests to make sure everything is working
-            //_Context = new CustomFSContext();
-            //ObservableCollection<CustomerVM> test = _Context.CustomerCrud.GetAllCustomers();
-            //ObservableCollection<CustomerVM> test2 = _Context.CustomerCrud.GetFilteredCustomerBasedOnName("F");
-            // ObservableCollection<CustomerVM> test3 = _Context.CustomerCrud.GetCustomerById(51);
+            //_context = new CustomFSContext();
+            //ObservableCollection<CustomerVM> test = _context.CustomerCrud.GetAllCustomers();
+            //ObservableCollection<CustomerVM> test2 = _context.CustomerCrud.GetFilteredCustomerBasedOnName("F");
+            // ObservableCollection<CustomerVM> test3 = _context.CustomerCrud.GetCustomerById(51);
 
             // Place brakepoint here
             Console.WriteLine("");
@@ -69,13 +68,9 @@ namespace FSBeheer.ViewModel
 
         private void ShowBusinessDataView()
         {
-            new BusinessDataView().ShowDialog();
+            MessageBox.Show("Account username:"+Account.Username+"\nIngelogd sinds:"+LoginTime+"\nFunctie"+AccountRole);
+            //new BusinessDataView().ShowDialog();
         }
-
-        //private void ShowLoginView()
-        //{
-        //    new LoginView().ShowDialog();
-        //}
 
         private void ShowCustomerView()
         {

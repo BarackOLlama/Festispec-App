@@ -20,7 +20,7 @@ namespace FSBeheer.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            SimpleIoc.Default.Register<HomeViewModel>();
+            //SimpleIoc.Default.Register<HomeViewModel>();
             SimpleIoc.Default.Register<CustomerManagementViewModel>();
         }
 
@@ -28,8 +28,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                ServiceLocator.Current.GetInstance<HomeViewModel>().Account = _loginViewModel.Account;
-                return ServiceLocator.Current.GetInstance<HomeViewModel>();
+                return new HomeViewModel(_loginViewModel.Account);
             }
         }
 
