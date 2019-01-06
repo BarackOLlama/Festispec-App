@@ -22,7 +22,6 @@ namespace FSBeheer.ViewModel
             {
                 _account = value;
                 base.RaisePropertyChanged(nameof(Account));
-                AccountRole = _context.Roles.ToList().Where(e => e.Id == Account.RoleId).FirstOrDefault().Content;
             }
         }
         public DateTime LoginTime { get; set; }
@@ -43,6 +42,7 @@ namespace FSBeheer.ViewModel
         {
             _context = new CustomFSContext();
             _account = account;
+            AccountRole = _context.Roles.ToList().Where(e => e.Id == _account.RoleId).FirstOrDefault().Content;
             base.RaisePropertyChanged(nameof(Account));
             ShowCustomerViewCommand = new RelayCommand(ShowCustomerView);
             ShowInspectionViewCommand = new RelayCommand(ShowInspectionView);
