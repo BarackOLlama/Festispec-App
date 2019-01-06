@@ -58,6 +58,7 @@ namespace FSBeheer.Migrations
             string cjSalt = BCrypt.GenerateSalt();
             string evertSalt = BCrypt.GenerateSalt();
             string mitchSalt = BCrypt.GenerateSalt();
+            string sjakieSalt = BCrypt.GenerateSalt();
 
             var accounts = new List<Account>
             {
@@ -106,7 +107,16 @@ namespace FSBeheer.Migrations
                     Salt = mitchSalt,
                     IsAdmin = true,
                     IsDeleted = false
-                }
+                },
+                new Account()
+                {
+                    Username = "sjakie@festispec.com",
+                    Password = BCrypt.HashPassword("password", sjakieSalt),
+                    Role = roles.FirstOrDefault(e=> e.Content == "Inspecteur"),
+                    Salt = sjakieSalt,
+                    IsAdmin = true,
+                    IsDeleted = false
+                }            
             };
             context.Accounts.AddRange(accounts);
 

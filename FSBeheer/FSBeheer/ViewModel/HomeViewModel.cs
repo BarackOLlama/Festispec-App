@@ -12,20 +12,20 @@ namespace FSBeheer.ViewModel
 {
     public class HomeViewModel : ViewModelBase
     {
-        private CustomFSContext _Context;
+        private CustomFSContext _context;
         private AccountVM _account;
         public AccountVM Account
         {
-            get
-            {
-                return _account;
-            }
+            get { return _account; }
             set
             {
                 _account = value;
                 base.RaisePropertyChanged("Account");
             }
         }
+        public DateTime LoginTime { get; set; }
+        public string AccountRole { get; set; }
+
         public ObservableCollection<QuestionVM> Questions;
 
         public RelayCommand ShowCustomerViewCommand { get; set; }
@@ -35,22 +35,26 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowQuotationViewCommand { get; set; }
         public RelayCommand ShowQuestionnaireManagementViewCommand { get; set; }
         public RelayCommand ShowCreateEditViewCommand { get; set; }
-        public RelayCommand ShowLoginViewCommand { get; set; }
+        //public RelayCommand ShowLoginViewCommand { get; set; }
         public RelayCommand ShowBusinessDataViewCommand { get; set; }
 
         public HomeViewModel()
         {
-            _Context = new CustomFSContext();
+            _context = new CustomFSContext();
 
             ShowCustomerViewCommand = new RelayCommand(ShowCustomerView);
             ShowInspectionViewCommand = new RelayCommand(ShowInspectionView);
             ShowEventViewCommand = new RelayCommand(ShowEventView);
             ShowInspectorViewCommand = new RelayCommand(ShowInspectorView);
             ShowQuotationViewCommand = new RelayCommand(ShowQuotationView);
-            ShowLoginViewCommand = new RelayCommand(ShowLoginView);
+            //ShowLoginViewCommand = new RelayCommand(ShowLoginView);
             ShowCreateEditViewCommand = new RelayCommand(ShowCreateEditInspectionView);
             ShowQuestionnaireManagementViewCommand = new RelayCommand(ShowQuestionnaireManagementView);
             ShowBusinessDataViewCommand = new RelayCommand(ShowBusinessDataView);
+
+            LoginTime = DateTime.Now;
+            //AccountRole = _context.Roles.FirstOrDefault(e=> e.Id == Account.RoleId).Content;
+            AccountRole = "Stinkie";
 
             // Tests to make sure everything is working
             //_Context = new CustomFSContext();
@@ -68,10 +72,10 @@ namespace FSBeheer.ViewModel
             new BusinessDataView().ShowDialog();
         }
 
-        private void ShowLoginView()
-        {
-            new LoginView().ShowDialog();
-        }
+        //private void ShowLoginView()
+        //{
+        //    new LoginView().ShowDialog();
+        //}
 
         private void ShowCustomerView()
         {

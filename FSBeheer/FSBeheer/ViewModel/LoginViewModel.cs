@@ -1,4 +1,5 @@
 ﻿using FSBeheer.Model;
+using FSBeheer.View;
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -16,16 +17,16 @@ namespace FSBeheer.ViewModel
     {
         //private string _message;
         public AccountVM Account { get; set; }
-        private HomeViewModel _homeViewModel;
 
         public RelayCommand<Window> VerifyLoginCommand { get; set; }
 
-        public LoginViewModel(HomeViewModel homeViewModel)
+        public LoginViewModel()
         {
-            _homeViewModel = homeViewModel;
             //this.CreateNewAccount();
             VerifyLoginCommand = new RelayCommand<Window>(VerifyLogin);
             Account = new AccountVM();
+            Account.Username = "sjakie@festispec.com";
+            Account.Password = "password";
         }
 
         public void VerifyLogin(Window window)
@@ -70,9 +71,27 @@ namespace FSBeheer.ViewModel
                 }
                 else
                 {
+                    if (findUser.IsDeleted)
+                    {
+                        MessageBox.Show("De geselecteerde account is niet toegankelijk.\nAls dit een fout is, neem contact op met de beheerder.");
+                        return;
+                    }
+
+                    if (!findUser.IsAdmin)
+                    {
+                        MessageBox.Show("Alleen administrateur-accounts kunnen inloggen op deze applicatie.");
+                        return;
+                    }
+
+                    //if ()
+                    //{
+                    //    MessageBox.Show("De account waar u op probeert in te loggen is verlopen.");
+                    //    return;
+                    //}
+
                     //save the fact that the user has logged in in a variable.
                     //Loginbox should automatically close.
-                    _homeViewModel.Account = new AccountVM() { Username = username };
+                    new HomeView().Show();
                     window.Close();
                 }
 
