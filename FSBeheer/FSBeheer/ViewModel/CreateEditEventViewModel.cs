@@ -87,41 +87,48 @@ namespace FSBeheer.ViewModel
 
         private bool SaveAllowed(object args)
         {
-            if (string.IsNullOrEmpty(Event.Name))
+            if (Event != null)
             {
-                WarningText = "Het veld Naam mag niet leeg zijn";
-                RaisePropertyChanged(nameof(WarningText));
-                return false;
-            }
-            else if (string.IsNullOrEmpty(Event.Address))
-            {
-                WarningText = "Het veld Adres mag niet leeg zijn";
-                RaisePropertyChanged(nameof(WarningText));
-                return false;
-            }
-            else if (string.IsNullOrEmpty(Event.City))
-            {
-                WarningText = "Het veld Plaats mag niet leeg zijn";
-                RaisePropertyChanged(nameof(WarningText));
-                return false;
-            }
-            else if (string.IsNullOrEmpty(Event.Zipcode))
-            {
-                WarningText = "Het veld Postcode mag niet leeg zijn";
-                RaisePropertyChanged(nameof(WarningText));
-                return false;
-            }
-            else if (Event.Customer == null)
-            {
-                WarningText = "U moet een klant kiezen";
-                RaisePropertyChanged(nameof(WarningText));
-                return false;
+                if (string.IsNullOrEmpty(Event.Name))
+                {
+                    WarningText = "Het veld Naam mag niet leeg zijn";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return false;
+                }
+                else if (string.IsNullOrEmpty(Event.Address))
+                {
+                    WarningText = "Het veld Adres mag niet leeg zijn";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return false;
+                }
+                else if (string.IsNullOrEmpty(Event.City))
+                {
+                    WarningText = "Het veld Plaats mag niet leeg zijn";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return false;
+                }
+                else if (string.IsNullOrEmpty(Event.Zipcode))
+                {
+                    WarningText = "Het veld Postcode mag niet leeg zijn";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return false;
+                }
+                else if (Event.Customer == null)
+                {
+                    WarningText = "U moet een klant kiezen";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return false;
+                }
+                else
+                {
+                    WarningText = "";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return true;
+                }
             }
             else
             {
-                WarningText = "";
-                RaisePropertyChanged(nameof(WarningText));
-                return true;
+                return false;
             }
         }
 
