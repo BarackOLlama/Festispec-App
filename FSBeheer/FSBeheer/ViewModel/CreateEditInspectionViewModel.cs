@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
@@ -69,7 +70,8 @@ namespace FSBeheer.ViewModel
                     Event = new EventVM(new Event()
                     {
                         Customer = new Customer()
-                    })
+                    }),
+                    Status = new StatusVM(new Status())
                 };
                 _context.Inspections.Add(Inspection.ToModel());
                 Title = "Inspectie aanmaken";
@@ -116,6 +118,7 @@ namespace FSBeheer.ViewModel
             {
                 if (InspectionIsValid())
                 {
+                    var inspection = Inspection;
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateInspectionList");
                     CloseAction(window);
@@ -131,10 +134,8 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                if (InspectionIsValid())
-                {
-                    new AvailableInspectorView(_context, Inspection.Id).Show();
-                }
+                if (_inspectionDateCorrect())
+                    new AvailableInspectorView(_context, Inspection).Show();
             }
             else
             {
@@ -150,36 +151,30 @@ namespace FSBeheer.ViewModel
         private bool InspectionIsValid()
         {
 
-            if (Inspection.InspectionDate.EndDate < Inspection.InspectionDate.StartDate)
-            {
-                MessageBox.Show("De einddatum moet na de begindatum zijn.");
+            if (!_inspectionDateCorrect())
                 return false;
-            }
-
-            if (Inspection.InspectionDate.StartDate < DateTime.Now.Date)
-            {
-                MessageBox.Show("Een inspectie kan niet in het verleden worden gepland.");
-                return false;
-            }
-
-            // nog niet af
+            
             if (Inspection.InspectionDate.StartTime != null)
             {
-                var stringHours = Inspection.InspectionDate.StartTime.ToString().Substring(0, 2);
-                var intHours = Int32.Parse(stringHours);
-                if (intHours > 24)
-                {
-                    var result = Inspection.InspectionDate.StartTime.ToString().Substring(0, 2);
-                    var intresult = Int32.Parse(result);
-                    // regex om format van starttime en endtime te checken
-                    //   /(\d\d):(([0 - 6][0]) | ([0 - 5][0 - 9])):?(([0 - 6][0]) | ([0 - 5]?[0 - 9] ?))/g
-                    MessageBox.Show("De starttime is niet goed");
+                var regex = new Regex(@"^([0-1][0-9]|2[0-3]):([0-5][0-9])?:?([0-5][0-9])$");
+                if (!regex.IsMatch(Inspection.InspectionDate.StartTime.ToString()))
+                { 
+                    MessageBox.Show("De starttime is niet goed.");
                     return false;
                 }
             }
 
+            if (Inspection.InspectionDate.EndTime != null)
+            {
+                var regex = new Regex(@"^([0-1][0-9]|2[0-3]):([0-5][0-9])?:?([0-5][0-9])$");
+                if (!regex.IsMatch(Inspection.InspectionDate.EndTime.ToString()))
+                {
+                    MessageBox.Show("De starttime is niet goed.");
+                    return false;
+                }
+            }
 
-            if (Inspection.Inspectors == null)
+            if (Inspection.Inspectors.Count == 0)
             {
                 MessageBox.Show("Een inspectie moet minstens een inspecteur hebben.");
                 return false;
@@ -191,8 +186,36 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
+            if (Inspection.Status.StatusName == null)
+            {
+                MessageBox.Show("Een inspectie moet een status hebben.");
+                return false;
+            }
+
+            //if (Inspection.Event.Zipcode == null)
+            //{
+            //    MessageBox.Show("Een inspectie moet een evenement hebben.");
+            //    return false;
+            //}
+
             return true;
 
+        }
+
+        private bool _inspectionDateCorrect()
+        {
+            if (Inspection.InspectionDate.StartDate != null && Inspection.InspectionDate.EndDate != null && Inspection.InspectionDate.EndDate < Inspection.InspectionDate.StartDate)
+            {
+                MessageBox.Show("De einddatum mag niet voor de begindatum liggen.");
+                return false;
+            }
+
+            if (Inspection.InspectionDate.StartDate != null && Inspection.InspectionDate.StartDate < DateTime.Now.Date)
+            {
+                MessageBox.Show("Een inspectie kan niet in het verleden worden gepland.");
+                return false;
+            }
+            return true;
         }
     }
 }
