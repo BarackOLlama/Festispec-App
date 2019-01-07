@@ -15,12 +15,15 @@
 
         <StackPanel Name="EventSelection" Margin="0,30,0,0">
 
-            <local:FilteredComboBox ItemsSource="{Binding Events}"
-                      SelectedItem="{Binding Inspection.Event}"
-                      SelectedIndex="{Binding SelectedIndex}"
-                      DisplayMemberPath="Name"
-                      Template="{DynamicResource FilteredComboBoxTemplate}"/>
-
+            <ComboBox ItemsSource="{Binding Events}"
+                                            SelectedItem="{Binding Inspection.Event}"
+                                            SelectedIndex="{Binding SelectedIndex}"
+                                            DisplayMemberPath="Name"
+                                            IsEditable="True"
+                                            IsTextSearchEnabled="True"
+                                            TextSearch.TextPath="Name"
+                                            StaysOpenOnEdit="True"
+                                            Width="250"/>
         </StackPanel>
 
         <StackPanel Name="EventOverview" Margin="10,10,10,0" Height="500" Orientation="Horizontal">
