@@ -9,6 +9,7 @@ namespace FSBeheer.ViewModel
 {
     public class ViewModelLocator
     {
+        private LoginViewModel _loginViewModel;
         private QuestionnaireManagementViewModel _questionnaireManagementViewModel;
         private CreateEditQuestionnaireViewModel _questionnaireViewModel;
         private InspectorManagementViewModel _inspectorManagementViewModel;
@@ -19,7 +20,7 @@ namespace FSBeheer.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            SimpleIoc.Default.Register<HomeViewModel>();
+            //SimpleIoc.Default.Register<HomeViewModel>();
             SimpleIoc.Default.Register<CustomerManagementViewModel>();
         }
 
@@ -27,7 +28,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<HomeViewModel>();
+                return new HomeViewModel(_loginViewModel.Account);
             }
         }
 
@@ -59,8 +60,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                _inspectionManagementViewModel = new InspectionManagementViewModel();
-                return _inspectionManagementViewModel;
+                return new InspectionManagementViewModel();
             }
         }
 
@@ -68,8 +68,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                _inspectorManagementViewModel = new InspectorManagementViewModel();
-                return _inspectorManagementViewModel;
+                return new InspectorManagementViewModel();
             }
         }
 
@@ -94,7 +93,8 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new LoginViewModel(Home);
+                _loginViewModel = new LoginViewModel();
+                return _loginViewModel;
             }
         }
 
@@ -103,7 +103,7 @@ namespace FSBeheer.ViewModel
             get
             {
                 _questionnaireManagementViewModel = new QuestionnaireManagementViewModel();
-                return _questionnaireManagementViewModel;   
+                return _questionnaireManagementViewModel;
             }
         }
 

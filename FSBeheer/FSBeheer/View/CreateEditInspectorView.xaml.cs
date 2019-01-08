@@ -19,7 +19,7 @@ namespace FSBeheer.View
     /// <summary>
     /// Interaction logic for CreateEditInspectorWindow.xaml
     /// </summary>
-    public partial class CreateEditInspectorView : Window
+    public partial class CreateEditInspectorView : BaseView
     {
         public CreateEditInspectorView(InspectorVM inspector = null)
         {

@@ -7,6 +7,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
@@ -27,9 +28,18 @@ namespace FSBeheer.ViewModel
 
         public ObservableCollection<ContactVM> Contacts { get; set; }
 
-        private ContactVM _selectedContact { get; set; }
+        private ContactVM _selectedContact;
+        public ContactVM SelectedContact
+        {
+            get { return _selectedContact; }
+            set
+            {
+                _selectedContact = value;
+                base.RaisePropertyChanged(nameof(SelectedContact));
+            }
+        }
 
-        private CustomFSContext _Context;
+        private CustomFSContext _context;
 
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int description, int reservedValue);
@@ -40,9 +50,9 @@ namespace FSBeheer.ViewModel
 
         public CreateEditCustomerViewModel()
         {
-            Messenger.Default.Register<bool>(this, "UpdateContactList", cl => Init()); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
+            Messenger.Default.Register<bool>(this, "UpdateContactList", cl => UpdateCustomers()); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
 
-            Init();
+            UpdateCustomers();
             SaveChangesCommand = new RelayCommand(SaveChanges);
             DiscardCommand = new RelayCommand<Window>(Discard);
             DeleteCustomerCommand = new RelayCommand<Window>(DeleteCustomer);
@@ -56,14 +66,62 @@ namespace FSBeheer.ViewModel
             return Customer?.Id != 0;
         }
 
-        internal void Init()
+        internal void UpdateCustomers()
         {
-            _Context = new CustomFSContext();
+            _context = new CustomFSContext();   
             if (Customer != null)
             {
-                Contacts = _Context.ContactCrud.GetContactByCustomer(Customer);
+                Contacts = _context.ContactCrud.GetContactByCustomer(Customer);
                 RaisePropertyChanged(nameof(Contacts));
             }
+        }
+
+        private bool CustomerIsValid()
+        {
+
+            if (Customer.Address.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een klant moet een adres hebben.");
+                return false;
+            }
+
+            if (Customer.ChamberOfCommerceNumber == null)
+            {
+                MessageBox.Show("Een klant moet een KVK nummer hebben.");
+                return false;
+            }
+
+            if (Customer.City.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een klant moet een stad hebben.");
+                return false;
+            }
+
+            if (Customer.Name.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een klant moet een naam hebben.");
+                return false;
+            }
+
+            if (Customer.StartingDate <= new DateTime(1990, 1, 1))
+            {
+                MessageBox.Show("De geselecteerde startdatum is incorrect.");
+                return false;
+            }
+
+            if (Customer.ZipCode.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een klant moet een postcode hebben.");
+                return false;
+            }
+
+            if (!Regex.Match(Customer.ZipCode, "^[0-9]{5}(?:-[0-9]{4})?$").Success)
+            {
+                MessageBox.Show("De ingevoerde postcode is incorrect.");
+                return false;
+            }
+
+            return true;
         }
 
         private void OpenCreateContact()
@@ -95,31 +153,20 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public ContactVM SelectedContact
-        {
-            get { return _selectedContact; }
-            set
-            {
-                _selectedContact = value;
-                base.RaisePropertyChanged(nameof(SelectedContact));
-            }
-        }
-
-
         public void SetCustomer(CustomerVM customer)
         {
             if (customer == null)
             {
                 Customer = new CustomerVM();
-                _Context.Customers.Add(Customer.ToModel());
+                _context.Customers.Add(Customer.ToModel());
                 RaisePropertyChanged(nameof(Customer)); // a sign that a property has changed for viewing
             }
             else
             {
-                Customer = new CustomerVM(_Context.Customers.FirstOrDefault(c => c.Id == customer.Id));
+                Customer = new CustomerVM(_context.Customers.FirstOrDefault(c => c.Id == customer.Id));
                 RaisePropertyChanged(nameof(Customer));
             }
-            Contacts = _Context.ContactCrud.GetContactByCustomer(Customer); // TODO kan beter
+            Contacts = _context.ContactCrud.GetContactByCustomer(Customer); // TODO kan beter
             RaisePropertyChanged(nameof(Contacts));
 
 
@@ -129,13 +176,15 @@ namespace FSBeheer.ViewModel
 
         private void SaveChanges()
         {
+            if (!CustomerIsValid()) return;
+
             if (IsInternetConnected())
             {
                 MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    _Context.CustomerCrud.GetAllCustomers().Add(Customer);
-                    _Context.SaveChanges();
+                    _context.CustomerCrud.GetAllCustomers().Add(Customer);
+                    _context.SaveChanges();
 
                     Messenger.Default.Send(true, "UpdateCustomerList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
                 }
@@ -151,7 +200,7 @@ namespace FSBeheer.ViewModel
             MessageBoxResult result = MessageBox.Show("Close without saving?", "Confirm discard", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                _Context.Dispose();
+                _context.Dispose();
                 Customer = null;
                 window.Close();
             }
@@ -173,7 +222,7 @@ namespace FSBeheer.ViewModel
                     {
                         e.IsDeleted = true;
                     }
-                    _Context.SaveChanges(); // TODO: Changes of last changes to customer stays, do we want that?
+                    _context.SaveChanges(); // TODO: Changes of last changes to customer stays, do we want that?
                     window.Close();
 
                     Messenger.Default.Send(true, "UpdateCustomerList");
