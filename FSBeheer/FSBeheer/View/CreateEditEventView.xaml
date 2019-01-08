@@ -41,11 +41,11 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Startdatum: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                    <TextBox Text="{Binding Event.EventDate}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
+                    <TextBox Text="{Binding Event.EventDate.StartDate}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Einddatum: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                    <TextBox Text="{Binding Event.Zipcode}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
+                    <TextBox Text="{Binding Event.EventDate.EndDate}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel>

@@ -66,7 +66,11 @@ namespace FSBeheer.ViewModel
             {
                 Inspection = new InspectionVM(new Inspection())
                 {
-                    InspectionDate = new InspectionDateVM(new InspectionDate()),
+                    InspectionDate = new InspectionDateVM(new InspectionDate()
+                    {
+                        StartDate = DateTime.Now.Date,
+                        EndDate = DateTime.Now.Date
+                    }),
                     Event = new EventVM(new Event()
                     {
                         Customer = new Customer()
@@ -134,8 +138,7 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                if (_inspectionDateCorrect())
-                    new AvailableInspectorView(_context, Inspection).Show();
+                new AvailableInspectorView(_context, Inspection).Show();
             }
             else
             {
@@ -151,9 +154,18 @@ namespace FSBeheer.ViewModel
         private bool InspectionIsValid()
         {
 
-            if (!_inspectionDateCorrect())
+            if (Inspection.InspectionDate.StartDate != null && Inspection.InspectionDate.EndDate != null && Inspection.InspectionDate.EndDate < Inspection.InspectionDate.StartDate)
+            {
+                MessageBox.Show("De einddatum mag niet voor de begindatum liggen.");
                 return false;
-            
+            }
+
+            if (Inspection.InspectionDate.StartDate != null && Inspection.InspectionDate.StartDate < DateTime.Now.Date)
+            {
+                MessageBox.Show("Een inspectie kan niet in het verleden worden gepland.");
+                return false;
+            }
+
             if (Inspection.InspectionDate.StartTime != null)
             {
                 var regex = new Regex(@"^([0-1][0-9]|2[0-3]):([0-5][0-9])?:?([0-5][0-9])$");
@@ -174,11 +186,11 @@ namespace FSBeheer.ViewModel
                 }
             }
 
-            if (Inspection.Inspectors.Count == 0)
-            {
-                MessageBox.Show("Een inspectie moet minstens een inspecteur hebben.");
-                return false;
-            }
+            //if (Inspection.Inspectors.Count == 0)
+            //{
+            //    MessageBox.Show("Een inspectie moet minstens een inspecteur hebben.");
+            //    return false;
+            //}
 
             if (Inspection.Name != null && Inspection.Name.Trim() == string.Empty)
             {
@@ -192,30 +204,14 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            //if (Inspection.Event.Zipcode == null)
-            //{
-            //    MessageBox.Show("Een inspectie moet een evenement hebben.");
-            //    return false;
-            //}
-
-            return true;
-
-        }
-
-        private bool _inspectionDateCorrect()
-        {
-            if (Inspection.InspectionDate.StartDate != null && Inspection.InspectionDate.EndDate != null && Inspection.InspectionDate.EndDate < Inspection.InspectionDate.StartDate)
+            if (Inspection.Event.Zipcode == null)
             {
-                MessageBox.Show("De einddatum mag niet voor de begindatum liggen.");
+                MessageBox.Show("Een inspectie moet een evenement hebben.");
                 return false;
             }
 
-            if (Inspection.InspectionDate.StartDate != null && Inspection.InspectionDate.StartDate < DateTime.Now.Date)
-            {
-                MessageBox.Show("Een inspectie kan niet in het verleden worden gepland.");
-                return false;
-            }
             return true;
+
         }
     }
 }
