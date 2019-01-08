@@ -17,11 +17,11 @@
             </StackPanel>
             <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Inspections}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedInspection}" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Inspectienummer" Binding="{Binding Id}" Width="50"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Inspectienummer" Binding="{Binding Id}" Width="105"></DataGridTextColumn>
                     <DataGridTextColumn Header="Inspectienaam" Binding="{Binding Name}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Evenement" Binding="{Binding EventId}" Width="50"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Evenementnummer" Binding="{Binding EventId}" Width="115"></DataGridTextColumn>
                     <DataGridTextColumn Header="Evenementnaam" Binding="{Binding Event.Name}" Width="*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Status" Binding="{Binding StatusId}" Width="50"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Statusnummer" Binding="{Binding StatusId}" Width="90"></DataGridTextColumn>
                     <DataGridTextColumn Header="Statusnaam" Binding="{Binding Status.StatusName}" Width="*"></DataGridTextColumn>
                     
                 </DataGrid.Columns>
