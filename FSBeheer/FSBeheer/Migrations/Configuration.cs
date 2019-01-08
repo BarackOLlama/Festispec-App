@@ -317,7 +317,12 @@ namespace FSBeheer.Migrations
                     City = "Landgraaf",
                     Zipcode = "6372 XC",
                     Customer = customers[0],
-                    IsDeleted = false
+                    IsDeleted = false,
+                    EventDate = new EventDate()
+                    {
+                        StartDate = new DateTime(2019, 1, 11),
+                        EndDate = new DateTime(2019, 1, 15)
+                    }
                 },
                 new Event()
                 {
@@ -326,7 +331,12 @@ namespace FSBeheer.Migrations
                     City = "Heusde",
                     Zipcode = "1234 AB",
                     Customer = customers[0],
-                    IsDeleted = false
+                    IsDeleted = false,
+                    EventDate = new EventDate()
+                    {
+                        StartDate = new DateTime(2019, 1, 16),
+                        EndDate = new DateTime(2019, 1, 20)
+                    }
                 },
                 new Event()
                 {
@@ -335,7 +345,12 @@ namespace FSBeheer.Migrations
                     City = "Lichtervoorde",
                     Zipcode = "2753 HG",
                     Customer = customers[1],
-                    IsDeleted = false
+                    IsDeleted = false,
+                    EventDate = new EventDate()
+                    {
+                        StartDate = new DateTime(2019, 1, 21),
+                        EndDate = new DateTime(2019, 1, 25)
+                    }
                 }
             };
             context.Events.AddRange(events);
