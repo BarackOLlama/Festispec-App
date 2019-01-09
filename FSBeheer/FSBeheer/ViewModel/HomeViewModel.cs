@@ -40,11 +40,8 @@ namespace FSBeheer.ViewModel
 
         public RelayCommand ShowPDFViewCommand { get; set; }
 
-        public HomeViewModel()
         public HomeViewModel(AccountVM account)
         {
-            _Context = new CustomFSContext();
-
             ShowPDFViewCommand = new RelayCommand(ShowPDFView);
 
             _context = new CustomFSContext();
