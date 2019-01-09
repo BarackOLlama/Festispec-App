@@ -154,9 +154,13 @@
     <Compile Include="ViewModel\CreateEditQuestionViewModel.cs" />
     <Compile Include="ViewModel\CreateEditQuotationViewModel.cs" />
     <Compile Include="ViewModel\CreateEditInspectorViewModel.cs" />
+    <Compile Include="ViewModel\GenerateReportViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
     <Compile Include="ViewModel\TestPDFViewModel.cs" />
+    <Compile Include="View\GenerateReportView.xaml.cs">
+      <DependentUpon>GenerateReportView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TestPDFView.xaml.cs">
       <DependentUpon>TestPDFView.xaml</DependentUpon>
     </Compile>
@@ -333,6 +337,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EventManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GenerateReportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -28,9 +28,9 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public RelayCommand ShowGenerateReportViewCommand { get; set; }
         public RelayCommand ShowEditInspectionViewCommand { get; set; }
         public RelayCommand ShowCreateInspectionViewCommand { get; set; }
-        //public RelayCommand<Window> BackHomeCommand { get; set; }
 
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int description, int reservedValue);
@@ -44,6 +44,7 @@ namespace FSBeheer.ViewModel
             Messenger.Default.Register<bool>(this, "UpdateInspectionList", il => Init());
             Init();
 
+            ShowGenerateReportViewCommand = new RelayCommand(ShowGenerateReportView);
             ShowEditInspectionViewCommand = new RelayCommand(ShowEditInspectionView);
             ShowCreateInspectionViewCommand = new RelayCommand(ShowCreateInspectionView);
             //BackHomeCommand = new RelayCommand<Window>(CloseAction);
@@ -81,6 +82,21 @@ namespace FSBeheer.ViewModel
         private void CloseAction(Window window)
         {
             window.Close();
+        }
+
+        private void ShowGenerateReportView()
+        {
+            if (IsInternetConnected())
+            {
+                if (_SelectedInspection == null)
+                {
+                    MessageBox.Show("Er is geen inspectie geselecteerd. Kies een inspectie en kies daarna de optie 'Genereer rapport'.");
+                }
+                else
+                {
+                    new GenerateReportView(_SelectedInspection.Id).Show();
+                }
+            }
         }
 
         private void ShowEditInspectionView()
