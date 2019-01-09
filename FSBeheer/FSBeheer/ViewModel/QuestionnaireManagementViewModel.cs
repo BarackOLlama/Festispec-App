@@ -39,7 +39,7 @@ namespace FSBeheer.ViewModel
             CreateQuestionnaireCommand = new RelayCommand(CreateQuestionnaire);
             DeleteQuestionnaireCommand = new RelayCommand(DeleteQuestionnaire);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
-            SelectedQuestionnaire = Questionnaires?.First();
+            SelectedQuestionnaire = Questionnaires?.FirstOrDefault();
         }
 
         private void CloseWindow(Window obj)

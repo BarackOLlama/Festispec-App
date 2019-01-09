@@ -149,6 +149,12 @@ namespace FSBeheer.ViewModel
 
             if (SelectedQuestionType.Name != "Open Vraag" && SelectedQuestionType.Name != "Open Tabelvraag")
             {
+                if (Question.Options == null)
+                {
+                    MessageBox.Show("Het veld opties mag bij deze vraagtype niet leeg zijn.");
+                    return false;
+                }
+
                 if (!multiplechoiceRegex.IsMatch(Question.Options))
                 {
                     MessageBox.Show("De multiple choice syntax is incorrect.\n" +
@@ -160,6 +166,12 @@ namespace FSBeheer.ViewModel
 
             if (SelectedQuestionType.Name == "Open Tabelvraag" || SelectedQuestionType.Name == "Multiple Choice Tabelvraag")
             {
+                if (Question.Columns == null)
+                {
+                    MessageBox.Show("Bij de geselecteerde vraagtype mag het veld kolommen niet leeg zijn.");
+                    return false;
+                }
+
                 var columnResults = Question.Columns.Split('|');
 
                 if (columnResults.Length < 2)

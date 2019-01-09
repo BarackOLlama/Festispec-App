@@ -122,7 +122,7 @@ namespace FSBeheer.ViewModel
 
         private void CloseWindow(Window window)
         {
-            var result = MessageBox.Show("Terug gaan zonder wijzigingen op te slaan?", "", MessageBoxButton.OKCancel);
+            var result = MessageBox.Show("Terug gaan zonder wijzigingen op te slaan?", "Vragenlijst sluiten", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
                 window.Close();
