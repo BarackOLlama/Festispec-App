@@ -9,6 +9,7 @@ namespace FSBeheer.ViewModel
 {
     public class ViewModelLocator
     {
+        private LoginViewModel _loginViewModel;
         private QuestionnaireManagementViewModel _questionnaireManagementViewModel;
         private CreateEditQuestionnaireViewModel _questionnaireViewModel;
         private InspectorManagementViewModel _inspectorManagementViewModel;
@@ -19,7 +20,7 @@ namespace FSBeheer.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            SimpleIoc.Default.Register<HomeViewModel>();
+            //SimpleIoc.Default.Register<HomeViewModel>();
             SimpleIoc.Default.Register<CustomerManagementViewModel>();
         }
 
@@ -27,7 +28,7 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<HomeViewModel>();
+                return new HomeViewModel(_loginViewModel.Account);
             }
         }
 
@@ -92,7 +93,8 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new LoginViewModel(Home);
+                _loginViewModel = new LoginViewModel();
+                return _loginViewModel;
             }
         }
 
@@ -100,7 +102,8 @@ namespace FSBeheer.ViewModel
         {
             get
             {
-                return new QuestionnaireManagementViewModel();
+                _questionnaireManagementViewModel = new QuestionnaireManagementViewModel();
+                return _questionnaireManagementViewModel;
             }
         }
 

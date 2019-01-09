@@ -22,7 +22,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Vraag" Binding="{Binding Content}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="Opties" Binding="{Binding Options}" Width="*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Kolommen" Binding="{Binding Options}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Kolommen" Binding="{Binding Columns}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="Vraagtype" Binding="{Binding Type.Name}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="Commentaar" Binding="{Binding Comments}" Width="*"></DataGridTextColumn>
                 </DataGrid.Columns>
