@@ -65,8 +65,8 @@ namespace FSBeheer.ViewModel
         {
             //edit
             _context = new CustomFSContext();
-            Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
             Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions(questionnaireId));
+            Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
             FetchAndSetQuestions(questionnaireId);
             SelectedQuestion = Questions.FirstOrDefault();
             InitializeCommands();
@@ -76,8 +76,6 @@ namespace FSBeheer.ViewModel
         public CreateEditQuestionnaireViewModel()
         {
             //create
-            //Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
-            //FetchAndSetQuestions();
             _context = new CustomFSContext();
             Questionnaire = new QuestionnaireVM();
             InitializeCommands();
@@ -122,7 +120,7 @@ namespace FSBeheer.ViewModel
 
         private void CloseWindow(Window window)
         {
-            var result = MessageBox.Show("Terug gaan zonder wijzigingen op te slaan?", "", MessageBoxButton.OKCancel);
+            var result = MessageBox.Show("Terug gaan zonder wijzigingen op te slaan?", "Vragenlijst sluiten", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
                 window.Close();
@@ -202,10 +200,17 @@ namespace FSBeheer.ViewModel
 
             if (IsInternetConnected())
             {
-                _context.Questionnaires.Add(Questionnaire.ToModel());
-                _context.SaveChanges();
-                Messenger.Default.Send(true, "UpdateQuestionnaires");
-                window.Close();
+
+                var result = MessageBox.Show("Opslaan nieuwe vragenlijst?", "Nieuwe vragenlijst", MessageBoxButton.OKCancel);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    _context.Questionnaires.Add(Questionnaire.ToModel());
+                    _context.SaveChanges();
+                    Messenger.Default.Send(true, "UpdateQuestionnaires");
+                    window.Close();
+                }
+
             }
             else
             {
@@ -227,6 +232,8 @@ namespace FSBeheer.ViewModel
                         _selectedQuestion.IsDeleted = true;
                         _context.SaveChanges();
                         this.FetchAndSetQuestions(Questionnaire.Id);
+                        //so that the Questionnaires in QuestionnaireManagementViewModel display the correct number of questions.
+                        Messenger.Default.Send(true, "UpdateQuestionnaires");
                     }
                 }
             }
