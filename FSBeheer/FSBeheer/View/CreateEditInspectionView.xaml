@@ -1,5 +1,5 @@
 ﻿<local:BaseView x:Class="FSBeheer.View.CreateEditInspectionView"
-        x:Name="CreateEditWindow"
+        x:Name="CreateEditInspectionWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -213,8 +213,8 @@
                     Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,20,0">
 
             <TextBlock Foreground="Red" Text="{Binding WarningText}"/>
-            <Button Content="Opslaan" Command="{Binding AddInspectionCommand}" CommandParameter="{Binding ElementName=CreateEditWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
-            <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+            <Button Content="Opslaan" Command="{Binding AddInspectionCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+            <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
         </StackPanel>
     </StackPanel>
 </local:BaseView>
