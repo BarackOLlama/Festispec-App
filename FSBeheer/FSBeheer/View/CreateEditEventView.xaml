@@ -13,11 +13,14 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Klant: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                    <local:FilteredComboBox ItemsSource="{Binding Customers}"
-                                            SelectedItem="{Binding Event.Customer}"
-                                            SelectedIndex="{Binding SelectedIndex}"
-                                            DisplayMemberPath="Name"
-                                            Template="{DynamicResource FilteredComboBoxTemplate}"/>
+                    <ComboBox ItemsSource="{Binding Customers}"
+                              SelectedItem="{Binding Event.Customer}"
+                              SelectedIndex="{Binding SelectedIndex}"
+                              DisplayMemberPath="Name"
+                              IsEditable="True"
+                              IsTextSearchEnabled="True"
+                              TextSearch.TextPath="Name"
+                              Width="250"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Naam: " Template="{DynamicResource CreateEditLabelTemplate}"/>

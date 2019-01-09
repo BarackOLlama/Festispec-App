@@ -28,17 +28,16 @@ namespace FSBeheer.View
             var ItemsPanelFactory = new FrameworkElementFactory(typeof(VirtualizingStackPanel));
             ItemsPanelFactory.SetValue(VirtualizingStackPanel.VirtualizationModeProperty, VirtualizationMode.Recycling);
 
-            var FilteredComboBoxFactory = new FrameworkElementFactory(typeof(FilteredComboBox));
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.ItemsSourceProperty, new TemplateBindingExtension(FilteredComboBox.ItemsSourceProperty));
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedItemProperty, new TemplateBindingExtension(FilteredComboBox.SelectedItemProperty));
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.SelectedIndexProperty, new TemplateBindingExtension(FilteredComboBox.SelectedIndexProperty));
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.DisplayMemberPathProperty, new TemplateBindingExtension(FilteredComboBox.DisplayMemberPathProperty));
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.IsEditableProperty, true);
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.IsTextSearchEnabledProperty, false);
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.StaysOpenOnEditProperty, true);
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.ItemsPanelProperty, new ItemsPanelTemplate() { VisualTree = ItemsPanelFactory });
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.WidthProperty, (double)250);
-            FilteredComboBoxFactory.SetValue(FilteredComboBox.FontSizeProperty, DefaultFontSize);
+            var FilteredComboBoxFactory = new FrameworkElementFactory(typeof(ComboBox));
+            FilteredComboBoxFactory.SetValue(ComboBox.ItemsSourceProperty, new TemplateBindingExtension(ComboBox.ItemsSourceProperty));
+            FilteredComboBoxFactory.SetValue(ComboBox.SelectedItemProperty, new TemplateBindingExtension(ComboBox.SelectedItemProperty));
+            FilteredComboBoxFactory.SetValue(ComboBox.SelectedIndexProperty, new TemplateBindingExtension(ComboBox.SelectedIndexProperty));
+            FilteredComboBoxFactory.SetValue(ComboBox.DisplayMemberPathProperty, new TemplateBindingExtension(ComboBox.DisplayMemberPathProperty));
+            FilteredComboBoxFactory.SetValue(ComboBox.IsEditableProperty, true);
+            FilteredComboBoxFactory.SetValue(ComboBox.IsTextSearchEnabledProperty, true);
+            FilteredComboBoxFactory.SetValue(ComboBox.StaysOpenOnEditProperty, true);
+            FilteredComboBoxFactory.SetValue(ComboBox.WidthProperty, (double)250);
+            FilteredComboBoxFactory.SetValue(ComboBox.FontSizeProperty, DefaultFontSize);
 
             var CreateEditLabelFactory = new FrameworkElementFactory(typeof(Label));
             CreateEditLabelFactory.SetValue(Label.ContentProperty, new TemplateBindingExtension(Label.ContentProperty));
@@ -78,132 +77,6 @@ namespace FSBeheer.View
                     new ControlTemplate{ VisualTree = CreateEditTextBoxFactory }
                 }
             };
-        }
-    }
-
-    public class FilteredComboBox : ComboBox
-    {
-        private string oldFilter = string.Empty;
-
-        private string currentFilter = string.Empty;
-
-        protected TextBox EditableTextBox => GetTemplateChild("PART_EditableTextBox") as TextBox;
-
-        protected override void OnItemsSourceChanged(IEnumerable oldValue, IEnumerable newValue)
-        {
-            if (newValue != null)
-            {
-                var view = CollectionViewSource.GetDefaultView(newValue);
-                view.Filter += FilterItem;
-            }
-
-            if (oldValue != null)
-            {
-                var view = CollectionViewSource.GetDefaultView(oldValue);
-                if (view != null) view.Filter -= FilterItem;
-            }
-
-            base.OnItemsSourceChanged(oldValue, newValue);
-        }
-
-        protected override void OnPreviewKeyDown(KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.Tab:
-                case Key.Enter:
-                    IsDropDownOpen = false;
-                    break;
-                case Key.Escape:
-                    IsDropDownOpen = false;
-                    SelectedIndex = -1;
-                    Text = currentFilter;
-                    break;
-                default:
-                    if (e.Key == Key.Down) IsDropDownOpen = true;
-
-                    base.OnPreviewKeyDown(e);
-                    break;
-            }
-
-            // Cache text
-            oldFilter = Text;
-        }
-
-        protected override void OnKeyUp(KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.Up:
-                case Key.Down:
-                    break;
-                case Key.Tab:
-                case Key.Enter:
-
-                    ClearFilter();
-                    break;
-                default:
-                    if (Text != oldFilter)
-                    {
-                        var temp = Text;
-                        RefreshFilter(); //RefreshFilter will change Text property
-                        Text = temp;
-
-                        if (SelectedIndex != -1 && Text != Items[SelectedIndex].ToString())
-                        {
-                            SelectedIndex = -1; //Clear selection. This line will also clear Text property
-                            Text = temp;
-                        }
-
-
-                        IsDropDownOpen = true;
-
-                        EditableTextBox.SelectionStart = int.MaxValue;
-                    }
-
-                    //automatically select the item when the input text matches it
-                    for (int i = 0; i < Items.Count; i++)
-                    {
-                        if (Text == Items[i].ToString())
-                            SelectedIndex = i;
-                    }
-
-                    base.OnKeyUp(e);
-                    currentFilter = Text;
-                    break;
-            }
-        }
-
-        protected override void OnPreviewLostKeyboardFocus(KeyboardFocusChangedEventArgs e)
-        {
-            ClearFilter();
-            var temp = SelectedIndex;
-            SelectedIndex = -1;
-            Text = string.Empty;
-            SelectedIndex = temp;
-            base.OnPreviewLostKeyboardFocus(e);
-        }
-
-        private void RefreshFilter()
-        {
-            if (ItemsSource == null) return;
-
-            var view = CollectionViewSource.GetDefaultView(ItemsSource);
-            view.Refresh();
-        }
-
-        private void ClearFilter()
-        {
-            currentFilter = string.Empty;
-            RefreshFilter();
-        }
-
-        private bool FilterItem(object value)
-        {
-            if (value == null) return false;
-            if (Text.Length == 0) return true;
-
-            return value.ToString().ToLower().Contains(Text.ToLower());
         }
     }
 

@@ -13,7 +13,14 @@
             <TextBlock>Vragenlijstnaam:</TextBlock>
             <TextBox Text="{Binding Questionnaire.Name, Mode=TwoWay}"></TextBox>
             <TextBlock>Inspectie:</TextBlock>
-            <ComboBox Width="300" HorizontalAlignment="Left" ItemsSource="{Binding Inspections}" SelectedItem="{Binding SelectedInspection}">
+            <ComboBox Width="300" HorizontalAlignment="Left"
+                      ItemsSource="{Binding Inspections}"
+                      SelectedItem="{Binding Questionnaire.Inspection}"
+                      SelectedIndex="{Binding SelectedIndex}"
+                      DisplayMemberPath="Name"
+                      IsEditable="True"
+                      IsTextSearchEnabled="True"
+                      TextSearch.TextPath="Name">
             </ComboBox>
         </StackPanel>
 
@@ -37,11 +44,11 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" Width="500" >
             <StackPanel Orientation="Horizontal">
-                <Button Content="Opslaan" Command="{Binding SaveQuestionnaireChangesCommand}" CommandParameter="{Binding ElementName=EditQuestionnaireWindow}" HorizontalAlignment="Right" Height="60" Margin="0,0,10,0" VerticalAlignment="Bottom" Width="60" HorizontalContentAlignment="Center"/>
-                <Button Content="Bewerken" Command="{Binding OpenEditQuestionViewCommand}" HorizontalAlignment="Right" Height="60" Margin="0,0,10,0" VerticalAlignment="Bottom" Width="60"/>
-                <Button Content="Nieuw" Command="{Binding OpenCreateQuestionViewCommand}" HorizontalAlignment="Right" Height="60" Margin="0,0,10,0" VerticalAlignment="Bottom" Width="60"/>
-                <Button Content="Verwijder vraag" Command="{Binding DeleteQuestionCommand}" HorizontalAlignment="Right" Height="60" Margin="0,0,10,0" VerticalAlignment="Bottom" Width="90"/>
-                <Button Content="Terug" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=EditQuestionnaireWindow}"  HorizontalAlignment="Right" Height="60" Margin="0" VerticalAlignment="Bottom" Width="60"/>
+                <Button Content="Opslaan" Command="{Binding SaveQuestionnaireChangesCommand}" CommandParameter="{Binding ElementName=EditQuestionnaireWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+                <Button Content="Bewerken" Command="{Binding OpenEditQuestionViewCommand}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+                <Button Content="Nieuw" Command="{Binding OpenCreateQuestionViewCommand}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+                <Button Content="Verwijder vraag" Command="{Binding DeleteQuestionCommand}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+                <Button Content="Terug" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=EditQuestionnaireWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
             </StackPanel>
         </StackPanel>
     </StackPanel>
