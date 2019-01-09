@@ -131,6 +131,12 @@ namespace FSBeheer.ViewModel
 
         private bool QuestionnaireIsValid()
         {
+            if (Questionnaire.Name == null)
+            {
+                MessageBox.Show("Een vragenlijst moet een naam hebben.");
+                return false;
+            }
+
             if (Questionnaire.Name.Trim() == string.Empty)
             {
                 MessageBox.Show("Een vragenlijst moet een vraag hebben.");

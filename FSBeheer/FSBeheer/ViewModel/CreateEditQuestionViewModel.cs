@@ -140,6 +140,12 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
+            if (SelectedQuestionType == null)
+            {
+                MessageBox.Show("Een vraag moet een vraagtype hebben.");
+                return false;
+            }
+
             Regex multiplechoiceRegex = new Regex("^(\\w{1}\\|{1}\\w{1,};?){2,}");
             //https://regexr.com/
             //example data
@@ -147,7 +153,7 @@ namespace FSBeheer.ViewModel
             //A | 100; c | 200
             //A | 200
 
-            if (SelectedQuestionType.Name != "Open Vraag" && SelectedQuestionType.Name != "Open Tabelvraag")
+            if (SelectedQuestionType.Name == "Multiple Choice vraag" || SelectedQuestionType.Name == "Multiple Choice Tabelvraag")
             {
                 if (!multiplechoiceRegex.IsMatch(Question.Options))
                 {
