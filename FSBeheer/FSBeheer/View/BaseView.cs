@@ -25,9 +25,6 @@ namespace FSBeheer.View
             SearchTextBoxFactory.SetValue(WidthProperty, (double)300);
             SearchTextBoxFactory.SetValue(FilterTextBox.TextProperty, new TemplateBindingExtension(FilterTextBox.TextProperty));
 
-            var ItemsPanelFactory = new FrameworkElementFactory(typeof(VirtualizingStackPanel));
-            ItemsPanelFactory.SetValue(VirtualizingStackPanel.VirtualizationModeProperty, VirtualizationMode.Recycling);
-
             var FilteredComboBoxFactory = new FrameworkElementFactory(typeof(ComboBox));
             FilteredComboBoxFactory.SetValue(ComboBox.ItemsSourceProperty, new TemplateBindingExtension(ComboBox.ItemsSourceProperty));
             FilteredComboBoxFactory.SetValue(ComboBox.SelectedItemProperty, new TemplateBindingExtension(ComboBox.SelectedItemProperty));

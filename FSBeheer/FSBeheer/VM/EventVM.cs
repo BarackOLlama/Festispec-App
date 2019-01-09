@@ -40,6 +40,16 @@ namespace FSBeheer.VM
             set { _event.Zipcode = value; }
         }
 
+        public EventDateVM EventDate
+        {
+            get { return new EventDateVM(_event.EventDate); }
+            set
+            {
+                if (value != null)
+                    _event.EventDate = value.ToModel();
+            }
+        }
+
         public CustomerVM Customer
         {
             get { return new CustomerVM(_event.Customer); }

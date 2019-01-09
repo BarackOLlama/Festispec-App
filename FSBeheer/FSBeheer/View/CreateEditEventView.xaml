@@ -14,13 +14,14 @@
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Klant: " Template="{DynamicResource CreateEditLabelTemplate}"/>
                     <ComboBox ItemsSource="{Binding Customers}"
-                              SelectedItem="{Binding Event.Customer}"
-                              SelectedIndex="{Binding SelectedIndex}"
-                              DisplayMemberPath="Name"
-                              IsEditable="True"
-                              IsTextSearchEnabled="True"
-                              TextSearch.TextPath="Name"
-                              Width="250"/>
+                                            SelectedItem="{Binding Event.Customer}"
+                                            SelectedIndex="{Binding SelectedIndex}"
+                                            DisplayMemberPath="Name"
+                                            IsEditable="True"
+                                            IsTextSearchEnabled="True"
+                                            TextSearch.TextPath="Name"
+                                            StaysOpenOnEdit="True"
+                                            Width="250"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Naam: " Template="{DynamicResource CreateEditLabelTemplate}"/>
@@ -40,11 +41,11 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Startdatum: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                    <TextBox Text="{Binding Event.EventDate}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
+                    <TextBox Text="{Binding Event.EventDate.StartDate}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Einddatum: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                    <TextBox Text="{Binding Event.Zipcode}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
+                    <TextBox Text="{Binding Event.EventDate.EndDate}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel>
