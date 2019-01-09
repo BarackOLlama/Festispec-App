@@ -11,7 +11,7 @@
         <StackPanel Margin="30">
             <StackPanel>
                 <Label Content="Titel: "/>
-                
+                <TextBox 
             </StackPanel>
         </StackPanel>
     </StackPanel>

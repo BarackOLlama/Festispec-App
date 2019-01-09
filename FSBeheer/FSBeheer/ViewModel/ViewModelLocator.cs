@@ -201,6 +201,14 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public GenerateReportViewModel GenerateReport
+        {
+            get
+            {
+                return new GenerateReportViewModel();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

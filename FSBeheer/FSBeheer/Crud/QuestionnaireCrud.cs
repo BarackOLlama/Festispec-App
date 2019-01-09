@@ -54,5 +54,16 @@ namespace FSBeheer.Crud
                 .Select(e => new QuestionnaireVM(e));
             return new ObservableCollection<QuestionnaireVM>(questionnaires);
         }
+
+        public QuestionnaireVM GetQuestionnaireByInspectionId(int inspectionId)
+        {
+            if (inspectionId > 0)
+            {
+                var questionnaireList = CustomFSContext.Questionnaires.Where(q => q.InspectionId == inspectionId).Select(q => new QuestionnaireVM(q)).ToList();
+                var questionnaire = questionnaireList.First();
+                return questionnaire;
+            }
+            return null;
+        }
     }
 }

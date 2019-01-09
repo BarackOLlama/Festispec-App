@@ -92,6 +92,10 @@ namespace FSBeheer.ViewModel
                 {
                     MessageBox.Show("Er is geen inspectie geselecteerd. Kies een inspectie en kies daarna de optie 'Genereer rapport'.");
                 }
+                else if (_Context.QuestionnaireCrud.GetQuestionnaireByInspectionId(_SelectedInspection.Id) == null)
+                {
+                    MessageBox.Show("De gekozen inspectie heeft geen vragenlijst. Kies een andere inspectie.");
+                }
                 else
                 {
                     new GenerateReportView(_SelectedInspection.Id).Show();
