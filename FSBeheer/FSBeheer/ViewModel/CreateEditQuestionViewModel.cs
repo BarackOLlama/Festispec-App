@@ -135,6 +135,8 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
+
+
             if (Question.Content == null)
             {
                 MessageBox.Show("Een vraag mag niet leeg zijn..");
@@ -154,7 +156,7 @@ namespace FSBeheer.ViewModel
             //A | 100; c | 200
             //A | 200
 
-            if (SelectedQuestionType.Name != "Open Vraag" && SelectedQuestionType.Name != "Open Tabelvraag")
+            if (SelectedQuestionType.Name == "Multiple Choice vraag" || SelectedQuestionType.Name == "Multiple Choice Tabelvraag")
             {
                 if (Question.Options == null)
                 {
@@ -229,17 +231,6 @@ namespace FSBeheer.ViewModel
         public void SaveQuestionChanges(Window window)
         {
             if (!QuestionIsValid()) return;
-
-            if (SelectedQuestionType.Name == "Open Vraag" || SelectedQuestionType.Name == "Open Tabelvraag")
-            {
-                Regex multiplechoiceRegex = new Regex("^(\\w{1}\\|{1}\\w{1,};?){2,}");
-                if (!multiplechoiceRegex.IsMatch(Question.Content))
-                {
-                    MessageBox.Show("De multiple choice syntax is incorrect.\n" +
-                        "Voorbeeld: A|Waar;B|Niet waar");
-                    return;
-                }
-            }
 
             if (IsInternetConnected())
             {
