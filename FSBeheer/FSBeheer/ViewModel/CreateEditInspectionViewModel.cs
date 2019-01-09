@@ -186,12 +186,6 @@ namespace FSBeheer.ViewModel
                 }
             }
 
-            //if (Inspection.Inspectors.Count == 0)
-            //{
-            //    MessageBox.Show("Een inspectie moet minstens een inspecteur hebben.");
-            //    return false;
-            //}
-
             if (Inspection.Name != null && Inspection.Name.Trim() == string.Empty)
             {
                 MessageBox.Show("Een inspectie moet een naam hebben.");
