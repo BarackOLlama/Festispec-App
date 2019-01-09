@@ -196,10 +196,17 @@ namespace FSBeheer.ViewModel
 
             if (IsInternetConnected())
             {
-                _context.Questionnaires.Add(Questionnaire.ToModel());
-                _context.SaveChanges();
-                Messenger.Default.Send(true, "UpdateQuestionnaires");
-                window.Close();
+
+                var result = MessageBox.Show("Opslaan nieuwe vragenlijst?", "Nieuwe vragenlijst", MessageBoxButton.OKCancel);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    _context.Questionnaires.Add(Questionnaire.ToModel());
+                    _context.SaveChanges();
+                    Messenger.Default.Send(true, "UpdateQuestionnaires");
+                    window.Close();
+                }
+
             }
             else
             {
