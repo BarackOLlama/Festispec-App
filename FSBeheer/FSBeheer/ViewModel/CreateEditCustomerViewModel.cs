@@ -78,6 +78,11 @@ namespace FSBeheer.ViewModel
 
         private bool CustomerIsValid()
         {
+            if (Customer.Address == null)
+            {
+                MessageBox.Show("Een klant moet een adres hebben.");
+                return false;
+            }
 
             if (Customer.Address.Trim() == string.Empty)
             {
@@ -91,9 +96,21 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
+            if(Customer.City == null)
+            {
+                MessageBox.Show("Een klant moet een stad hebben.");
+                return false;
+            }
+
             if (Customer.City.Trim() == string.Empty)
             {
                 MessageBox.Show("Een klant moet een stad hebben.");
+                return false;
+            }
+
+            if(Customer.Name == null)
+            {
+                MessageBox.Show("Een klant moet een naam hebben.");
                 return false;
             }
 
@@ -103,9 +120,21 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
+            if (Customer.StartingDate == null)
+            {
+                MessageBox.Show("Een klant moet een startdatum hebben.");
+                return false;
+            }
+
             if (Customer.StartingDate <= new DateTime(1990, 1, 1))
             {
                 MessageBox.Show("De geselecteerde startdatum is incorrect.");
+                return false;
+            }
+
+            if(Customer.ZipCode == null)
+            {
+                MessageBox.Show("Een klant moet een postcode hebben.");
                 return false;
             }
 

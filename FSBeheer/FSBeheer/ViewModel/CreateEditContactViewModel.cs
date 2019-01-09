@@ -97,6 +97,12 @@ namespace FSBeheer.ViewModel
         {
             //determines whether the contact is valid and may be saved to the database
 
+            if (Contact.Email == null)
+            {
+                MessageBox.Show("Een contactpersoon moet een e-mail adres hebben");
+                return false;
+            }
+
             if (Contact.Email.Trim() == string.Empty)
             {
                 MessageBox.Show("Een contactpersoon moet een e-mail adres hebben");
@@ -106,6 +112,12 @@ namespace FSBeheer.ViewModel
             if (!new EmailAddressAttribute().IsValid(Contact.Email))
             {
                 MessageBox.Show("Het ingevoerde e-mail adres is onjuist.");
+                return false;
+            }
+
+            if (Contact.Name == null)
+            {
+                MessageBox.Show("Een contactpersoon moet een naam hebben.");
                 return false;
             }
 

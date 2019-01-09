@@ -154,7 +154,13 @@ namespace FSBeheer.ViewModel
         private bool InspectionIsValid()
         {
 
-            if (Inspection.InspectionDate.StartDate != null && Inspection.InspectionDate.EndDate != null && Inspection.InspectionDate.EndDate < Inspection.InspectionDate.StartDate)
+            if (Inspection.InspectionDate.StartDate == null)
+            {
+                MessageBox.Show("Een inspectie moet een startdatum hebben.");
+                return false;
+            }
+
+            if (Inspection.InspectionDate.EndDate <= Inspection.InspectionDate.StartDate)
             {
                 MessageBox.Show("De einddatum mag niet voor de begindatum liggen.");
                 return false;
@@ -186,7 +192,13 @@ namespace FSBeheer.ViewModel
                 }
             }
 
-            if (Inspection.Name != null && Inspection.Name.Trim() == string.Empty)
+            if (Inspection.Name == null)
+            {
+                MessageBox.Show("Een inspectie moet een naam hebben.");
+                return false;
+            }
+
+            if (Inspection.Name.Trim() == string.Empty)
             {
                 MessageBox.Show("Een inspectie moet een naam hebben.");
                 return false;
