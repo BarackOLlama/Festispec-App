@@ -97,9 +97,20 @@ namespace FSBeheer.ViewModel
         public bool InspectorIsValid()
         {
 
-            if (Inspector.Address.Trim() == string.Empty)
+            if (Inspector.Address == null)
             {
                 MessageBox.Show("Een inspecteur moet een adres hebben.");
+                return false;
+            }
+
+            if (Inspector.Address.Trim() == string.Empty)
+            {
+                return false;
+            }
+
+            if (Inspector.BankNumber == null)
+            {
+                MessageBox.Show("Een inspecteur moet een banknummer hebben.");
                 return false;
             }
 
@@ -109,9 +120,21 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
+            if (Inspector.CertificationDate == null)
+            {
+                MessageBox.Show("Een inspecteur moet een certificatiedatum hebben.");
+                return false;
+            }
+
             if (Inspector.CertificationDate <= new DateTime(1990, 1, 1))
             {
                 MessageBox.Show("Een inspecteur moet een certificatiedatum hebben.");
+                return false;
+            }
+
+            if (Inspector.City == null)
+            {
+                MessageBox.Show("Een inspecteur moet in een stad wonen.");
                 return false;
             }
 
@@ -121,15 +144,27 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
+            if (Inspector.Email == null)
+            {
+                MessageBox.Show("Een inspecteur moet een e-mail adres hebben.");
+                return false;
+            }
+
             if (Inspector.Email.Trim() == string.Empty)
             {
                 MessageBox.Show("Een inspecteur moet een e-mail adres hebben.");
                 return false;
             }
 
-            if (new EmailAddressAttribute().IsValid(Inspector.Email))
+            if (!new EmailAddressAttribute().IsValid(Inspector.Email))
             {
                 MessageBox.Show("Het ingevoerde e-mail adres is incorrect.");
+                return false;
+            }
+
+            if (Inspector.InvalidDate == null)
+            {
+                MessageBox.Show("De certificering van de inspecteur moet eventueel verlopen.");
                 return false;
             }
 
@@ -139,9 +174,21 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (!Regex.Match(Inspector.PhoneNumber, @"^(\+[0-9]{9})$").Success)
+            if (Inspector.PhoneNumber == null)
+            {
+                MessageBox.Show("Een inspecteur moet een telefoonnummer hebben.");
+                return false;
+            }
+
+            if (!Regex.Match(Inspector.PhoneNumber, @"^(\+[0-9]{13})$").Success)
             {
                 MessageBox.Show("Het ingevoerde telefoonnummer is incorrect.");
+                return false;
+            }
+
+            if (Inspector.Name == null)
+            {
+                MessageBox.Show("Een inspecteur moet een naam hebben.");
                 return false;
             }
 
@@ -151,9 +198,9 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (Inspector.PhoneNumber == null)
+            if (Inspector.Zipcode == null)
             {
-                MessageBox.Show("Een inspecteur moet een telefoonnummer hebben.");
+                MessageBox.Show("Een inspecteur moet een postcode hebben.");
                 return false;
             }
 

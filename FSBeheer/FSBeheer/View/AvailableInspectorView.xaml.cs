@@ -1,4 +1,5 @@
 ﻿using FSBeheer.ViewModel;
+using FSBeheer.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,10 @@ namespace FSBeheer.View
     /// </summary>
     public partial class AvailableInspectorView : BaseView
     {
-        public AvailableInspectorView(CustomFSContext context, int inspectionId)
+        public AvailableInspectorView(CustomFSContext context, InspectionVM inspection)
         {
             InitializeComponent();
-            (DataContext as AvailableInspectorViewModel).SetContextInspectionId(context, inspectionId);
+            (DataContext as AvailableInspectorViewModel).SetContextInspectionId(context, inspection);
         }
     }
 }

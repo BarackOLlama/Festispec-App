@@ -82,18 +82,35 @@ namespace FSBeheer.ViewModel
             _customFSContext = new CustomFSContext();
         }
 
-        public void SetContextInspectionId(CustomFSContext context, int inspectionId)
+        public void SetContextInspectionId(CustomFSContext context, InspectionVM inspection)
         {
-            _selectedInspection = _customFSContext.InspectionCrud.GetInspectionById(inspectionId);
-            AvailableInspectors = _customFSContext.InspectorCrud.GetAllInspectorsFilteredByAvailability(
-                new List<DateTime>{
+            _customFSContext = context;
+            //if (inspectionId > 0)
+            //{
+                _selectedInspection = inspection;
+                AvailableInspectors = _customFSContext.InspectorCrud.GetAllInspectorsFilteredByAvailability(
+                    new List<DateTime>{
                     _selectedInspection.InspectionDate.StartDate,
                     _selectedInspection.InspectionDate.EndDate
-            });
-            ChosenInspectors = _customFSContext.InspectorCrud.GetInspectorsByInspectionId(inspectionId);
-            RemovedInspectors = new ObservableCollection<InspectorVM>();
-            RaisePropertyChanged(nameof(AvailableInspectors));
-            RaisePropertyChanged(nameof(ChosenInspectors));
+                });
+                ChosenInspectors = inspection.Inspectors;
+                RemovedInspectors = new ObservableCollection<InspectorVM>();
+                RaisePropertyChanged(nameof(AvailableInspectors));
+                RaisePropertyChanged(nameof(ChosenInspectors));
+            //}
+            //else
+            //{
+            //    _selectedInspection = new InspectionVM(new Inspection());
+            //    _selectedInspection.InspectionDate = inspectionDate;
+            //    AvailableInspectors = _customFSContext.InspectorCrud.GetAllInspectorsFilteredByAvailability(
+            //        new List<DateTime>{
+            //        _selectedInspection.InspectionDate.StartDate,
+            //        _selectedInspection.InspectionDate.EndDate
+            //    });
+            //    ChosenInspectors = new ObservableCollection<InspectorVM>();
+            //    RemovedInspectors = new ObservableCollection<InspectorVM>();
+            //}
+            
         }
 
         private void AddInspector(InspectorVM inspectorAvailable)
