@@ -38,7 +38,6 @@ namespace FSBeheer.ViewModel
         {
             _context = new CustomFSContext();
             SaveChangesCommand = new RelayCommand(SaveChanges);
-            Inspector = SelectedInspector;
         }
 
         private void AddInspector()
