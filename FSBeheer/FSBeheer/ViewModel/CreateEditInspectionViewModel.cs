@@ -7,6 +7,7 @@ using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
@@ -65,11 +66,16 @@ namespace FSBeheer.ViewModel
             {
                 Inspection = new InspectionVM(new Inspection())
                 {
-                    InspectionDate = new InspectionDateVM(new InspectionDate()),
+                    InspectionDate = new InspectionDateVM(new InspectionDate()
+                    {
+                        StartDate = DateTime.Now.Date,
+                        EndDate = DateTime.Now.Date
+                    }),
                     Event = new EventVM(new Event()
                     {
                         Customer = new Customer()
-                    })
+                    }),
+                    Status = new StatusVM(new Status())
                 };
                 _context.Inspections.Add(Inspection.ToModel());
                 Title = "Inspectie aanmaken";
@@ -116,6 +122,7 @@ namespace FSBeheer.ViewModel
             {
                 if (InspectionIsValid())
                 {
+                    var inspection = Inspection;
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateInspectionList");
                     CloseAction(window);
@@ -131,10 +138,7 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                if (InspectionIsValid())
-                {
-                    new AvailableInspectorView(_context, Inspection.Id).Show();
-                }
+                new AvailableInspectorView(_context, Inspection).Show();
             }
             else
             {
@@ -158,20 +162,34 @@ namespace FSBeheer.ViewModel
 
             if (Inspection.InspectionDate.EndDate <= Inspection.InspectionDate.StartDate)
             {
-                MessageBox.Show("De einddatum moet na de begindatum zijn.");
+                MessageBox.Show("De einddatum mag niet voor de begindatum liggen.");
                 return false;
             }
 
-            if (Inspection.InspectionDate.StartDate <= DateTime.Now)
+            if (Inspection.InspectionDate.StartDate != null && Inspection.InspectionDate.StartDate < DateTime.Now.Date)
             {
                 MessageBox.Show("Een inspectie kan niet in het verleden worden gepland.");
                 return false;
             }
 
-            if (Inspection.Inspectors == null)
+            if (Inspection.InspectionDate.StartTime != null)
             {
-                MessageBox.Show("Een inspectie moet minstens een inspecteur hebben.");
-                return false;
+                var regex = new Regex(@"^([0-1][0-9]|2[0-3]):([0-5][0-9])?:?([0-5][0-9])$");
+                if (!regex.IsMatch(Inspection.InspectionDate.StartTime.ToString()))
+                { 
+                    MessageBox.Show("De starttime is niet goed.");
+                    return false;
+                }
+            }
+
+            if (Inspection.InspectionDate.EndTime != null)
+            {
+                var regex = new Regex(@"^([0-1][0-9]|2[0-3]):([0-5][0-9])?:?([0-5][0-9])$");
+                if (!regex.IsMatch(Inspection.InspectionDate.EndTime.ToString()))
+                {
+                    MessageBox.Show("De starttime is niet goed.");
+                    return false;
+                }
             }
 
             if (Inspection.Name == null)
@@ -183,6 +201,18 @@ namespace FSBeheer.ViewModel
             if (Inspection.Name.Trim() == string.Empty)
             {
                 MessageBox.Show("Een inspectie moet een naam hebben.");
+                return false;
+            }
+
+            if (Inspection.Status.StatusName == null)
+            {
+                MessageBox.Show("Een inspectie moet een status hebben.");
+                return false;
+            }
+
+            if (Inspection.Event.Zipcode == null)
+            {
+                MessageBox.Show("Een inspectie moet een evenement hebben.");
                 return false;
             }
 
