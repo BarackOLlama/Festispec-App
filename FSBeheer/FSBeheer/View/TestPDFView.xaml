@@ -7,15 +7,18 @@
         mc:Ignorable="d"
         x:Name="PDF_Generate"
         DataContext="{Binding TestPDF, Source={StaticResource Locator}}"
-        Title="TestPDFView" Height="450" Width="400">
+        Title="TestPDFView" Height="323.832" Width="591.355">
     <StackPanel Orientation="Horizontal">
         <StackPanel Margin="5" Orientation="Vertical">
             <StackPanel Height="120"></StackPanel>
             <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="2">
                 <Button Content="Create" CommandParameter="{Binding ElementName=PDF_Generate}" Command="{Binding CreatePDFCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
                 <Button Content="Annuleer" CommandParameter="{Binding ElementName=PDF_Generate}" Command="{Binding CloseCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
-                <!--<Button Content="Verwijder" CommandParameter="{Binding ElementName=PDF_Generate}" Command="{Binding DeletePDFCommand}" Template="{DynamicResource InterfaceButton}"></Button>
-                <Button Content="Accepteer" CommandParameter="{Binding ElementName=PDF_Generate}" Command="{Binding SavePDFCommand}" Template="{DynamicResource InterfaceButton}"></Button>-->
+                <local:FilteredComboBox ItemsSource="{Binding Inspections}"
+                      SelectedItem="{Binding SelectedInspection, Mode=TwoWay}"
+                      SelectedIndex="{Binding SelectedIndex}"
+                      DisplayMemberPath="Name"
+                      Template="{DynamicResource FilteredComboBoxTemplate}"/>
             </DockPanel>
         </StackPanel>
     </StackPanel>

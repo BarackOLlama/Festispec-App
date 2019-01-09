@@ -15,6 +15,18 @@ namespace FSBeheer.Crud
         {
         }
 
+        public ObservableCollection<InspectionVM> GetAllInspectionsFinished()
+        {
+            var inspection = CustomFSContext.Inspections
+                .ToList()
+                .Where(i => i.IsDeleted == false)
+                .Where(s => s.Status.StatusName.Equals("Afgerond") || s.Status.StatusName.Equals("Inspectie voltooid"))
+                //.Contains(v => v.Questionnaires)
+                .Select(i => new InspectionVM(i));
+            var _inspections = new ObservableCollection<InspectionVM>(inspection);
+            return _inspections;
+        }
+
         public ObservableCollection<InspectionVM> GetAllInspections()
         {
             var inspection = CustomFSContext.Inspections

@@ -1,9 +1,12 @@
 ﻿using FSBeheer.Properties;
+using FSBeheer.VM;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -11,23 +14,40 @@ using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
-    public class TestPDFViewModel
+    public class TestPDFViewModel : ViewModelBase
     {
-        private CustomFSContext _myContext;
+        private CustomFSContext _context;
 
         public RelayCommand CreatePDFCommand { get; set; }
 
         public RelayCommand<Window> CloseCommand { get; set; }
 
+        public ObservableCollection<InspectionVM> Inspections { get; set; }
+
+        private InspectionVM _selectedInspection;
+        public InspectionVM SelectedInspection
+        {
+            get { return _selectedInspection; }
+            set
+            {
+                _selectedInspection = value;
+                base.RaisePropertyChanged(nameof(SelectedInspection));
+            }
+        }
+
         private PdfDocument document;
 
         public TestPDFViewModel()
         {
-            _myContext = new CustomFSContext();
+            _context = new CustomFSContext();
+
+            Inspections = _context.InspectionCrud.GetAllInspectionsFinished();
 
             CreatePDFCommand = new RelayCommand(CreatePDF);
             CloseCommand = new RelayCommand<Window>(Close);
         }
+        
+        
 
         //public class LayoutHelper
         //{
