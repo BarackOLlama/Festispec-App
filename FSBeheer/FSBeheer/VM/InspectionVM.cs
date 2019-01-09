@@ -25,6 +25,7 @@ namespace FSBeheer.VM
         public string Name
         {
             get { return _inspection.Name; }
+            set { _inspection.Name = value; }
         }
 
         public string Notes
