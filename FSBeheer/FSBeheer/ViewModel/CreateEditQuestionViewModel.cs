@@ -129,11 +129,18 @@ namespace FSBeheer.ViewModel
 
         public bool QuestionIsValid()
         {
-            if (Question == null)
+            if (Question.Type == null)
             {
-                MessageBox.Show("Iets is fout gegaan. Open dit scherm a.u.b. opnieuw.");
+                MessageBox.Show("Een vraag moet een vraagtype hebben.");
                 return false;
             }
+
+            if (Question.Content == null)
+            {
+                MessageBox.Show("Een vraag mag niet leeg zijn..");
+                return false;
+            }
+
             if (Question.Content.Trim() == string.Empty)
             {
                 MessageBox.Show("Een vraag mag niet leeg zijn..");
