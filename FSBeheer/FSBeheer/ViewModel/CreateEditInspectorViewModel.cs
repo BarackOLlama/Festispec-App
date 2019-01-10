@@ -209,9 +209,9 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (!Regex.Match(Inspector.Zipcode, "^[0-9]{5}(?:-[0-9]{4})?$").Success)
+            if (!Regex.Match(Inspector.Zipcode, "^[0-9][0-9][0-9][0-9][A-Z][A-Z]").Success)
             {
-                MessageBox.Show("De ingevoerde zipcode is incorrect.");
+                MessageBox.Show("De ingevoerde zipcode is incorrect." +Inspector.Zipcode);
                 return false;
             }
 
