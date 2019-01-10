@@ -159,7 +159,7 @@
                             <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Inspection.InspectionDate.EndTime, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center">
 
-                                <ListBox Height="25" DisplayMemberPath="Name" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="335" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8" ItemsSource="{Binding Inspection.Inspectors, UpdateSourceTrigger=PropertyChanged}">
+                                <ListBox Height="40" DisplayMemberPath="Name" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="335" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8" ItemsSource="{Binding Inspection.Inspectors, UpdateSourceTrigger=PropertyChanged}">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <WrapPanel IsItemsHost="True"/> 
