@@ -50,7 +50,7 @@ namespace FSBeheer.ViewModel
             {
                 Contact = new ContactVM()
                 {
-                    CustomerId = _linkCustomer.Id
+                    Customer = _linkCustomer
                 };
                 _context.Contacts.Add(Contact.ToModel());
                 RaisePropertyChanged(nameof(Contact));
