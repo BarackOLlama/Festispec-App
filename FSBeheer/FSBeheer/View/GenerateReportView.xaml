@@ -5,20 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="Rapport genereren" Height="450" Width="800"
+        Title="Rapport genereren" Height="450" Width="1100"
         DataContext="{Binding GenerateReport, Source={StaticResource Locator}}">
     <StackPanel Margin="20">
         <StackPanel Margin="30">
             <WrapPanel>
                 <Label Content="Titel: "/>
-                <TextBox Text="{Binding Inspection.Name, Mode=TwoWay}" Width="350"/>
+                <TextBox Text="{Binding Title, Mode=TwoWay}" Width="350"/>
             </WrapPanel>
         </StackPanel>
         <StackPanel Margin="10">
-            <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Questionnaire}" AutoGenerateColumns="False">
+            <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Questions}" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Inspectienummer" Binding="{Binding Id}" Width="200"></DataGridTextColumn>
-                    <DataGridCheckBoxColumn Header="Checkbox" Binding="{Binding }"></DataGridCheckBoxColumn>
+                    <DataGridTextColumn Header="Vraag" Binding="{Binding Content}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Vraagtype" Binding="{Binding Type.Name}" Width="150"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Beschrijving" Binding="{Binding Comments}" Width="*"></DataGridTextColumn>
+                    <DataGridCheckBoxColumn Header="Niet tonen" Binding="{Binding Niettonenbinding}" Width="70"></DataGridCheckBoxColumn>
+                    <DataGridCheckBoxColumn Header="Staafdiagram" Binding="{Binding Staafdiagrambinding}" Width="80"></DataGridCheckBoxColumn>
+                    <DataGridCheckBoxColumn Header="Cirkeldiagram" Binding="{Binding Cirkeldiagrambinding}" Width="90"></DataGridCheckBoxColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

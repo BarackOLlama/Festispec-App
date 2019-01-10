@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +12,11 @@ namespace FSBeheer.ViewModel
     public class GenerateReportViewModel : ViewModelBase
     {
         private CustomFSContext _context;
-        public InspectionVM SelectedInspection;
-        public QuestionnaireVM Questionnaire;
-        public string Title;
+        public InspectionVM SelectedInspection { get; set; }
+        public QuestionnaireVM Questionnaire { get; set; }
+        public ObservableCollection<QuestionVM> Questions { get; set; }
+        public string Title { get;
+            set; }
 
         public GenerateReportViewModel()
         {
@@ -28,6 +31,8 @@ namespace FSBeheer.ViewModel
             {
                 SelectedInspection = _context.InspectionCrud.GetInspectionById(inspectionId);
                 RetrieveQuestionnaire(inspectionId);
+                RetrieveQuestions();
+                RaisePropertyChanged(nameof(Questions));
             }
         }
 
@@ -35,6 +40,12 @@ namespace FSBeheer.ViewModel
         {
             if (SelectedInspection != null)
                 Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireByInspectionId(inspectionId);
+        }
+
+        private void RetrieveQuestions()
+        {
+            if (Questionnaire != null)
+                Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
         }
     }
 }
