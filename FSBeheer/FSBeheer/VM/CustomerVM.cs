@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FSBeheer.Model;
+using System.Collections.ObjectModel;
 
 namespace FSBeheer.VM
 {
@@ -79,6 +80,12 @@ namespace FSBeheer.VM
         {
             get { return _customer.IsDeleted; }
             set { _customer.IsDeleted = value; RaisePropertyChanged(nameof(IsDeleted)); }
+        }
+
+        public ContactVM Contact
+        {
+            get { return new ContactVM(_customer.Contacts.FirstOrDefault(c => c.IsDeleted == false)); }
+            set { _customer.Contacts = new ObservableCollection<Contact>() { value.ToModel() }; }
         }
     }
 }

@@ -21,23 +21,9 @@ namespace FSBeheer.ViewModel
         public RelayCommand<Window> DiscardCommand { get; set; }
 
         public RelayCommand<Window> DeleteCustomerCommand { get; set; }
-
-        public RelayCommand CreateContactWindowCommand { get; set; }
-
         public RelayCommand EditContactWindowCommand { get; set; }
 
-        public ObservableCollection<ContactVM> Contacts { get; set; }
-
-        private ContactVM _selectedContact;
-        public ContactVM SelectedContact
-        {
-            get { return _selectedContact; }
-            set
-            {
-                _selectedContact = value;
-                base.RaisePropertyChanged(nameof(SelectedContact));
-            }
-        }
+        public ContactVM Contact { get; set; }
 
         private CustomFSContext _context;
 
@@ -50,24 +36,13 @@ namespace FSBeheer.ViewModel
 
         public CreateEditCustomerViewModel()
         {
-            Messenger.Default.Register<bool>(this, "UpdateContactList", cl => UpdateCustomers()); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
+            Messenger.Default.Register<bool>(this, "UpdateContactList", cl => RaisePropertyChanged(nameof(Customer))); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
+            _context = new CustomFSContext();
 
-            UpdateCustomers();
             SaveChangesCommand = new RelayCommand<Window>(SaveChanges);
             DiscardCommand = new RelayCommand<Window>(Discard);
             DeleteCustomerCommand = new RelayCommand<Window>(DeleteCustomer);
-            CreateContactWindowCommand = new RelayCommand(OpenCreateContact);
-            EditContactWindowCommand = new RelayCommand(OpenEditContact);
-        }
-
-        internal void UpdateCustomers()
-        {
-            _context = new CustomFSContext();   
-            if (Customer != null)
-            {
-                Contacts = _context.ContactCrud.GetContactByCustomer(Customer);
-                RaisePropertyChanged(nameof(Contacts));
-            }
+            EditContactWindowCommand = new RelayCommand(OpenCreateEditContact);
         }
 
         private bool CustomerIsValid()
@@ -141,38 +116,23 @@ namespace FSBeheer.ViewModel
             return true;
         }
 
-        private void OpenCreateContact()
+        private void OpenCreateEditContact()
         {
             if(IsInternetConnected())
-                new CreateEditContactView(null, Customer).Show();
+                new CreateEditContactView(Customer).Show();
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
 
-        private void OpenEditContact()
-        {
-            if (IsInternetConnected())
-            {
-                if (_selectedContact == null)
-                {
-                    MessageBox.Show("No contact selected");
-                }
-                else
-                {
-                    new CreateEditContactView(_selectedContact, Customer).Show();
-                }
-            }
-            else
-            {
-                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
-            }
-        }
 
         public void SetCustomer(CustomerVM customer)
         {
             if (customer == null)
             {
-                Customer = new CustomerVM();
+                Customer = new CustomerVM
+                {
+                    Contact = new ContactVM()
+                };
                 _context.Customers.Add(Customer.ToModel());
                 RaisePropertyChanged(nameof(Customer));
             }
@@ -181,8 +141,7 @@ namespace FSBeheer.ViewModel
                 Customer = new CustomerVM(_context.Customers.FirstOrDefault(c => c.Id == customer.Id));
                 RaisePropertyChanged(nameof(Customer));
             }
-            Contacts = _context.ContactCrud.GetContactByCustomer(Customer);
-            RaisePropertyChanged(nameof(Contacts));
+            RaisePropertyChanged(nameof(Customer));
         }
 
         private void SaveChanges(Window window)
@@ -191,11 +150,10 @@ namespace FSBeheer.ViewModel
 
             if (IsInternetConnected())
             {
-                MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
+                MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestig opslaan", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    Customer.StartingDate = DateTime.Today; 
-                    _context.CustomerCrud.GetAllCustomers().Add(Customer);
+                    Customer.StartingDate = DateTime.Now.Date; 
                     _context.SaveChanges();
                     window.Close();
 
@@ -210,7 +168,7 @@ namespace FSBeheer.ViewModel
 
         private void Discard(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Close without saving?", "Confirm discard", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Sluiten zonder op te slaan?", "Bevestig annuleren", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
                 _context.Dispose();
@@ -227,14 +185,12 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                MessageBoxResult result = MessageBox.Show("Delete the selected customer?", "Confirm Delete", MessageBoxButton.OKCancel);
+                MessageBoxResult result = MessageBox.Show("Verwijder de selecteerde klant?", "Bevestig verwijdering", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
                     Customer.IsDeleted = true;
-                    foreach (var e in Contacts)
-                    {
-                        e.IsDeleted = true;
-                    }
+                    Customer.Contact.IsDeleted = true;
+
                     _context.SaveChanges();
                     window.Close();
 
