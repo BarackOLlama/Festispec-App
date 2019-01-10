@@ -9,14 +9,6 @@
         x:Name="QuotationManagementViewName"
         DataContext="{Binding QuotationManagement, Source={StaticResource Locator}}">
 
-    <Window.Resources>
-        <ControlTemplate x:Key="InterfaceButtonTemplate" TargetType="Button">
-            <Button FontSize="15" Margin="5"
-                    Content="{TemplateBinding Content}"
-                    Command="{TemplateBinding Command}"/>
-        </ControlTemplate>
-    </Window.Resources>
-
     <StackPanel Margin="20">
 
 
@@ -34,8 +26,8 @@
         </StackPanel>
         <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"
                     Orientation="Horizontal" Margin="0,0,25,0">
-            <Button Content="Wijzig" Command="{Binding ShowEditQuotationViewCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
-            <Button Content="Nieuw" Command="{Binding ShowCreateQuotationViewCommand}" Template="{StaticResource InterfaceButtonTemplate}"></Button>
+            <Button Content="Wijzig" Command="{Binding ShowEditQuotationViewCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+            <Button Content="Nieuw" Command="{Binding ShowCreateQuotationViewCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
         </StackPanel>
     </StackPanel>
 </local:BaseView>

@@ -19,8 +19,6 @@ namespace FSBeheer.ViewModel
 
         public InspectorVM Inspector { get; set; }
 
-        public InspectorVM SelectedInspector { get; set; }
-
         public RelayCommand SaveChangesCommand { get; set; }
 
         public RelayCommand AddCommand { get; set; }
@@ -40,7 +38,6 @@ namespace FSBeheer.ViewModel
         {
             _context = new CustomFSContext();
             SaveChangesCommand = new RelayCommand(SaveChanges);
-            Inspector = SelectedInspector;
         }
 
         private void AddInspector()
@@ -213,9 +210,9 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (!Regex.Match(Inspector.Zipcode, "^[0-9]{4}[A-Z]{2}$").Success)
+            if (!Regex.Match(Inspector.Zipcode, "^[0-9][0-9][0-9][0-9][A-Z][A-Z]").Success)
             {
-                MessageBox.Show("De ingevoerde zipcode is incorrect.");
+                MessageBox.Show("De ingevoerde zipcode is incorrect." +Inspector.Zipcode);
                 return false;
             }
 

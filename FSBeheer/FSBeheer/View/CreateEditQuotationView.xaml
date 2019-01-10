@@ -5,14 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="Offerte toevoegen/wijzigen" Height="800" Width="600">
+        Title="Offerte toevoegen/wijzigen" Height="800" Width="650"
+        DataContext="{Binding CreateEditQuotation, Source={StaticResource Locator}}">
 
-    <StackPanel>
-        <StackPanel Width="550" HorizontalAlignment="Center" Margin="0,20,0,20">
-            <ComboBox ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}" DisplayMemberPath="Name" Width="400" Height="30" Margin="0,0,0,0"/>
+    <StackPanel VerticalAlignment="Center">
+        <StackPanel Width="550" HorizontalAlignment="Center" Margin="0,30,0,20">
+            <local:FilteredComboBox ItemsSource="{Binding Customers}"
+                SelectedItem="{Binding Quotation.Customer}"
+                SelectedIndex="{Binding SelectedIndex}"
+                DisplayMemberPath="Name"
+                Template="{DynamicResource FilteredComboBoxTemplate}"/>
         </StackPanel>
 
-        <StackPanel Width="500" HorizontalAlignment="Center" Margin="0,0,0,0" >
+        <StackPanel Width="550" HorizontalAlignment="Center" Margin="0,0,0,0" >
             <Border BorderBrush="Black" BorderThickness="1" Padding="0" VerticalAlignment="Top">
                 <StackPanel>
 
@@ -45,11 +50,11 @@
                         <Label Grid.Row="4" Grid.Column="0" Content="Postcode:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
 
-                        <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedCustomer.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedCustomer.Address}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <Label Grid.Row="2" Grid.Column="1" Content="{Binding SelectedCustomer.City}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <Label Grid.Row="3" Grid.Column="1" Content="{Binding SelectedCustomer.Zipcode}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <Label Grid.Row="4" Grid.Column="1" Content="{Binding }" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedCustomer.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedCustomer.Address}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedCustomer.City}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedCustomer.Zipcode}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding }" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                     </Grid>
 
@@ -57,11 +62,11 @@
             </Border>
         </StackPanel>
 
-        <StackPanel Width="550" HorizontalAlignment="Center" Margin="0,20,0,20">
+        <!--<StackPanel Width="550" HorizontalAlignment="Center" Margin="0,20,0,20">
             <ComboBox ItemsSource="{Binding Customers}" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}" DisplayMemberPath="Name" Width="400" Height="30" Margin="0,0,0,0"/>
-        </StackPanel>
+        </StackPanel>-->
 
-        <StackPanel Width="500" HorizontalAlignment="Center" Margin="0,0,0,0" >
+        <StackPanel Width="550" HorizontalAlignment="Center" Margin="0,0,0,50" >
             <Border BorderBrush="Black" BorderThickness="1" Padding="0" VerticalAlignment="Top">
                 <StackPanel>
                     <StackPanel>
