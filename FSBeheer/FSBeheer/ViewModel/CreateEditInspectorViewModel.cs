@@ -179,7 +179,7 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (!Regex.Match(Inspector.PhoneNumber, @"^(\+[0-9]{13})$").Success)
+            if (!Regex.Match(Inspector.PhoneNumber.Trim(), @"^((((\+|(00))(31))6?)|(06))?[0-9]{8}$").Success)
             {
                 MessageBox.Show("Het ingevoerde telefoonnummer is incorrect.");
                 return false;
