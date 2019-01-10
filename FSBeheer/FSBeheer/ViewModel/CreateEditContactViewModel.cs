@@ -133,9 +133,9 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (!Regex.Match(Contact.PhoneNumber, @"^(\+[0-9]{9})$").Success)
+            if (!Regex.Match(Contact.PhoneNumber.Trim(), @"^((((\+|(00))(31))6?)|(06))?[0-9]{8}$").Success)
             {
-                MessageBox.Show("De ingevoerde telefoonnummer is onjuist.");
+                MessageBox.Show("Het ingevoerde telefoonnummer is incorrect.");
                 return false;
             }
 
