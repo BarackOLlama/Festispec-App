@@ -20,7 +20,7 @@ namespace FSBeheer.ViewModel
 
         public CustomerVM _linkCustomer { get; set; }
 
-        public RelayCommand SaveChangesContactCommand { get; set; }
+        public RelayCommand<Window> SaveChangesContactCommand { get; set; }
 
         public RelayCommand<Window> DiscardContactCommand { get; set; }
 
@@ -38,7 +38,7 @@ namespace FSBeheer.ViewModel
         public CreateEditContactViewModel()
         {
             _context = new CustomFSContext();
-            SaveChangesContactCommand = new RelayCommand(SaveChangesContact);
+            SaveChangesContactCommand = new RelayCommand<Window>(SaveChangesContact);
             DiscardContactCommand = new RelayCommand<Window>(DiscardContact);
             DeleteContactCommand = new RelayCommand<Window>(DeleteContact);
         }
@@ -50,7 +50,7 @@ namespace FSBeheer.ViewModel
             {
                 Contact = new ContactVM()
                 {
-                    CustomerId = _linkCustomer.Id
+                    Customer = _linkCustomer
                 };
                 _context.Contacts.Add(Contact.ToModel());
                 RaisePropertyChanged(nameof(Contact));
@@ -62,7 +62,7 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        private void SaveChangesContact()
+        private void SaveChangesContact(Window window)
         {
 
             if (!ContactIsValid()) return;
@@ -72,11 +72,11 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestiging opslaan", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    // TODO: Als je nieuw klant aanmaakt en niet saved en dan contact aanmaakt zit hij nog niet in de database en krijg je een error
                     try
                     {
                         _context.ContactCrud.GetAllContactVMs().Add(Contact);
                         _context.SaveChanges();
+                        window.Close();
                     }
                     catch
                     {
@@ -96,6 +96,11 @@ namespace FSBeheer.ViewModel
         public bool ContactIsValid()
         {
             //determines whether the contact is valid and may be saved to the database
+            if (Contact.Email == null)
+            {
+                MessageBox.Show("Een contactpersoon moet een e-mail adres hebben");
+                return false;
+            }
 
             if (Contact.Email.Trim() == string.Empty)
             {
@@ -106,6 +111,12 @@ namespace FSBeheer.ViewModel
             if (!new EmailAddressAttribute().IsValid(Contact.Email))
             {
                 MessageBox.Show("Het ingevoerde e-mail adres is onjuist.");
+                return false;
+            }
+
+            if (Contact.Name == null)
+            {
+                MessageBox.Show("Een contactpersoon moet een naam hebben.");
                 return false;
             }
 

@@ -58,10 +58,10 @@ namespace FSBeheer.VM
             set { _contact.Note = value; RaisePropertyChanged(nameof(Note)); }
         }
 
-        public int? CustomerId
+        public CustomerVM Customer
         {
-            get { return _contact.Customer.Id; }
-            set { _contact.CustomerId = value; RaisePropertyChanged(nameof(CustomerId)); } 
+            get { return new CustomerVM(_contact.Customer); }
+            set { _contact.Customer = value.ToModel(); }
         }
 
         public bool IsDeleted
