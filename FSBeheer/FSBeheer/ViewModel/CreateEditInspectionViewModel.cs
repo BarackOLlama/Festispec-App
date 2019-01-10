@@ -177,7 +177,7 @@ namespace FSBeheer.ViewModel
                 var regex = new Regex(@"^([0-1][0-9]|2[0-3]):([0-5][0-9])?:?([0-5][0-9])$");
                 if (!regex.IsMatch(Inspection.InspectionDate.StartTime.ToString()))
                 { 
-                    MessageBox.Show("De starttime is niet goed.");
+                    MessageBox.Show("De begintijd is niet goed.");
                     return false;
                 }
             }
@@ -187,7 +187,7 @@ namespace FSBeheer.ViewModel
                 var regex = new Regex(@"^([0-1][0-9]|2[0-3]):([0-5][0-9])?:?([0-5][0-9])$");
                 if (!regex.IsMatch(Inspection.InspectionDate.EndTime.ToString()))
                 {
-                    MessageBox.Show("De starttime is niet goed.");
+                    MessageBox.Show("De eindtijd is niet goed.");
                     return false;
                 }
             }
