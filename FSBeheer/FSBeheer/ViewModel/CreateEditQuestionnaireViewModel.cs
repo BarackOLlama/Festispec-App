@@ -14,7 +14,7 @@ using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
-    public class CreateEditQuestionnaireViewModel :ViewModelBase
+    public class CreateEditQuestionnaireViewModel : ViewModelBase
     {
         private CustomFSContext _context;
         public QuestionnaireVM Questionnaire { get; set; }
@@ -29,19 +29,20 @@ namespace FSBeheer.ViewModel
             set
             {
                 _selectedQuestion = value;
-                base.RaisePropertyChanged("SelectedQuestion");
+                base.RaisePropertyChanged(nameof(SelectedQuestion));
             }
         }
-        public ObservableCollection<int?> InspectionNumbers { get; set; }
+        public ObservableCollection<InspectionVM> Inspections { get; set; }
         public ObservableCollection<QuestionVM> Questions { get; set; }
-        private int? _selectedInspectionNumber;
-        public int? SelectedInspectionNumber
+        private InspectionVM _selectedInspection;
+        public InspectionVM SelectedInspection
         {
-            get { return _selectedInspectionNumber; }
+            get { return _selectedInspection; }
             set
             {
-                _selectedInspectionNumber = value;
-                base.RaisePropertyChanged("SelectedInspectionNumber");
+                _selectedInspection = value;
+                base.RaisePropertyChanged(nameof(SelectedInspection));
+                Questionnaire.InspectionId = _selectedInspection.Id;
             }
         }
 
@@ -63,27 +64,22 @@ namespace FSBeheer.ViewModel
         public CreateEditQuestionnaireViewModel(int questionnaireId)
         {
             //edit
-            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
-            FetchAndSetQuestions();
-
-            var inspectionNumbers = _context.Inspections
-                .ToList()
-                .Where(e => !e.IsDeleted)
-                .Select(e => (int?)e.Id);
-            InspectionNumbers = new ObservableCollection<int?>(inspectionNumbers);
-            _selectedInspectionNumber = inspectionNumbers.FirstOrDefault();
-
+            _context = new CustomFSContext();
+            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions(questionnaireId));
+            Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
+            FetchAndSetQuestions(questionnaireId);
             SelectedQuestion = Questions.FirstOrDefault();
-
             InitializeCommands();
+            FetchAndSetInspectionNumbersAndSelectedInspection();
         }
 
         public CreateEditQuestionnaireViewModel()
         {
             //create
-            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
-            FetchAndSetQuestions();
+            _context = new CustomFSContext();
+            Questionnaire = new QuestionnaireVM();
             InitializeCommands();
+            FetchAndSetInspectionNumbersAndSelectedInspection();
         }
 
         //methods
@@ -97,21 +93,34 @@ namespace FSBeheer.ViewModel
             CreateQuestionnaireCommand = new RelayCommand<Window>(SaveQuestionnaire);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
-        
-        internal void FetchAndSetQuestions(int questionnaireId = -1)
+
+        private void FetchAndSetInspectionNumbersAndSelectedInspection()
         {
-            _context = new CustomFSContext();
-            if(questionnaireId != -1)
-                Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
-            else
-                Questionnaire = new QuestionnaireVM();
+            var inspectionsList = _context
+                .Inspections
+                .ToList()
+                .Where(e => !e.IsDeleted)
+                .Select(e => new InspectionVM(e));
+            Inspections = new ObservableCollection<InspectionVM>(inspectionsList);
+            if (Questionnaire.InspectionId == null)
+            {
+                _selectedInspection = inspectionsList.FirstOrDefault();
+            }else
+            {
+                _selectedInspection = inspectionsList
+                    .FirstOrDefault(e => e.Id == Questionnaire.InspectionId);
+            }
+        }
+
+        private void FetchAndSetQuestions(int questionnaireId)
+        {
             Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
             RaisePropertyChanged(nameof(Questions));
         }
 
         private void CloseWindow(Window window)
         {
-            var result = MessageBox.Show("Terug gaan zonder wijzigingen op te slaan?", "", MessageBoxButton.OKCancel);
+            var result = MessageBox.Show("Terug gaan zonder wijzigingen op te slaan?", "Vragenlijst sluiten", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
                 window.Close();
@@ -120,11 +129,12 @@ namespace FSBeheer.ViewModel
 
         private bool QuestionnaireIsValid()
         {
-            if (Questionnaire == null)
+            if (Questionnaire.Name == null)
             {
-                MessageBox.Show("Er is iets misgegaan. Heropen a.u.b. dit scherm.");
+                MessageBox.Show("Een vragenlijst moet een naam hebben.");
                 return false;
             }
+
             if (Questionnaire.Name.Trim() == string.Empty)
             {
                 MessageBox.Show("Een vragenlijst moet een vraag hebben.");
@@ -143,6 +153,7 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Opslaan wijzigingen?", "Bevestiging", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
+                    _context.Entry(Questionnaire.ToModel()).State = System.Data.Entity.EntityState.Modified;
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateQuestionnaires");
                     window.Close();
@@ -156,7 +167,7 @@ namespace FSBeheer.ViewModel
 
         public void OpenCreateQuestionView()
         {
-            if(IsInternetConnected())
+            if (IsInternetConnected())
                 new CreateQuestionView().ShowDialog();
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
@@ -189,10 +200,17 @@ namespace FSBeheer.ViewModel
 
             if (IsInternetConnected())
             {
-                _context.Questionnaires.Add(Questionnaire.ToModel());
-                _context.SaveChanges();
-                Messenger.Default.Send(true, "UpdateQuestionnaires");
-                window.Close();
+
+                var result = MessageBox.Show("Opslaan nieuwe vragenlijst?", "Nieuwe vragenlijst", MessageBoxButton.OKCancel);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    _context.Questionnaires.Add(Questionnaire.ToModel());
+                    _context.SaveChanges();
+                    Messenger.Default.Send(true, "UpdateQuestionnaires");
+                    window.Close();
+                }
+
             }
             else
             {
@@ -213,7 +231,9 @@ namespace FSBeheer.ViewModel
                     {
                         _selectedQuestion.IsDeleted = true;
                         _context.SaveChanges();
-                        this.FetchAndSetQuestions();
+                        this.FetchAndSetQuestions(Questionnaire.Id);
+                        //so that the Questionnaires in QuestionnaireManagementViewModel display the correct number of questions.
+                        Messenger.Default.Send(true, "UpdateQuestionnaires");
                     }
                 }
             }

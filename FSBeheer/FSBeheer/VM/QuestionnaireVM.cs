@@ -25,6 +25,7 @@ namespace FSBeheer.VM
         public QuestionnaireVM()
         {
             _questionnaire = new Questionnaire();
+            _questionnaire.Version = 1;
         }
 
         public int Id
@@ -42,6 +43,19 @@ namespace FSBeheer.VM
             {
                 _questionnaire.Name = value;
                 base.RaisePropertyChanged("Name");
+            }
+        }
+
+        public int Version
+        {
+            get
+            {
+                return _questionnaire.Version;
+            }
+            set
+            {
+                _questionnaire.Version = value;
+                base.RaisePropertyChanged(nameof(Version));
             }
         }
 
@@ -86,16 +100,16 @@ namespace FSBeheer.VM
             get { return _questionnaire.Inspection?.Event; }
         }
 
-        //for QuestionnaireManagementViewModel
-        public string InspectionNumber
+        public int? InspectionId
         {
             get
             {
-                if (_questionnaire.InspectionId == null)
-                {
-                    return "unknown";
-                }
-                return _questionnaire.InspectionId.ToString();
+                return _questionnaire.InspectionId;
+            }
+            set
+            {
+                _questionnaire.InspectionId = value;
+                base.RaisePropertyChanged(nameof(InspectionId));
             }
         }
 

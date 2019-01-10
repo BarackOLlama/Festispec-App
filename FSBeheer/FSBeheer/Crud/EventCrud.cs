@@ -34,7 +34,7 @@ namespace FSBeheer.Crud
 
             var events = CustomFSContext.Events
                 .ToList()
-                .Where(c => c.IsDeleted = false)
+                .Where(c => c.IsDeleted == false)
                 .Where(e =>
                 e.Id.ToString().ToLower().Contains(must_contain) ||
                 e.Name.ToLower().Contains(must_contain) ||

@@ -1,11 +1,7 @@
 ﻿using FSBeheer.Model;
 using GalaSoft.MvvmLight;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FSBeheer.VM
 {
@@ -15,7 +11,7 @@ namespace FSBeheer.VM
 
         public InspectionVM(Inspection inspection)
         {
-            _inspection = inspection;            
+            _inspection = inspection;
         }
 
         public int Id
@@ -26,11 +22,13 @@ namespace FSBeheer.VM
         public string Name
         {
             get { return _inspection.Name; }
+            set { _inspection.Name = value; }
         }
 
         public string Notes
         {
             get { return _inspection.Notes; }
+            set { _inspection.Notes = value; }
         }
 
         public int? EventId
@@ -41,7 +39,15 @@ namespace FSBeheer.VM
         public EventVM Event
         {
             get { return new EventVM(_inspection.Event); }
-            set { _inspection.Event = value.ToModel(); }
+            set
+            {
+                if (value == null)
+                    _inspection.Event = new Event() { Customer = new Customer() };
+                else
+                    _inspection.Event = value.ToModel();
+                RaisePropertyChanged(nameof(_inspection.Event));
+                RaisePropertyChanged(nameof(_inspection.Event.Customer));
+            }
         }
 
         public int? StatusId
@@ -71,6 +77,11 @@ namespace FSBeheer.VM
         {
             get { return _inspection.IsDeleted; }
             set { _inspection.IsDeleted = value; RaisePropertyChanged(nameof(IsDeleted)); }
+        }
+
+        public override string ToString()
+        {//to display them in the combobox in Questionnaire creation/editing.
+            return _inspection.Name;
         }
 
         internal Inspection ToModel()

@@ -15,7 +15,7 @@ namespace FSBeheer.ViewModel
 {
     public class CreateEditEventViewModel : ViewModelBase
     {
-        private CustomFSContext _Context { get; set; }
+        private CustomFSContext _context { get; set; }
         public string Title { get; set; }
         public EventVM Event { get; set; }
         public ObservableCollection<CustomerVM> Customers { get; set; }
@@ -36,7 +36,8 @@ namespace FSBeheer.ViewModel
 
         public CreateEditEventViewModel()
         {
-            _Context = new CustomFSContext();
+            _context = new CustomFSContext();
+            Customers = _context.CustomerCrud.GetAllCustomers();
 
             SaveChangesCommand = new RelayCommand<Window>(SaveChanges, SaveAllowed);
             DiscardChangesCommand = new RelayCommand<Window>(DiscardChanges);
@@ -48,20 +49,20 @@ namespace FSBeheer.ViewModel
         {
             if (eventId == -1)
             {
-                Event = new EventVM(new Event());
-                Event.Customer = new CustomerVM();
-                _Context.Events.Add(Event.ToModel());
+                Event = new EventVM(new Event() {
+                    Customer = new Customer(),
+                    EventDate = new EventDate()
+                });
+                _context.Events.Add(Event.ToModel());
                 Title = "Evenement aanmaken";
             }
             else
             {
-                Event = _Context.EventCrud.GetEventById(eventId);
+                Event = _context.EventCrud.GetEventById(eventId);
                 Title = "Evenement wijzigen";
             }
-            Customers = _Context.CustomerCrud.GetAllCustomers();
             SelectedIndex = GetIndex(Event.Customer, Customers);
             RaisePropertyChanged(nameof(SelectedIndex));
-            RaisePropertyChanged(nameof(Customers));
             RaisePropertyChanged(nameof(Event));
             RaisePropertyChanged(nameof(Title));
         }
@@ -74,9 +75,9 @@ namespace FSBeheer.ViewModel
             return -1;
         }
 
-        private void CloseAction(Window window)
+        private void CloseWindow(Window window)
         {
-            _Context.Dispose();
+            _context.Dispose();
             window.Close();
         }
 
@@ -87,41 +88,48 @@ namespace FSBeheer.ViewModel
 
         private bool SaveAllowed(object args)
         {
-            if (string.IsNullOrEmpty(Event.Name))
+            if (Event != null)
             {
-                WarningText = "Het veld Naam mag niet leeg zijn";
-                RaisePropertyChanged(nameof(WarningText));
-                return false;
-            }
-            else if (string.IsNullOrEmpty(Event.Address))
-            {
-                WarningText = "Het veld Adres mag niet leeg zijn";
-                RaisePropertyChanged(nameof(WarningText));
-                return false;
-            }
-            else if (string.IsNullOrEmpty(Event.City))
-            {
-                WarningText = "Het veld Plaats mag niet leeg zijn";
-                RaisePropertyChanged(nameof(WarningText));
-                return false;
-            }
-            else if (string.IsNullOrEmpty(Event.Zipcode))
-            {
-                WarningText = "Het veld Postcode mag niet leeg zijn";
-                RaisePropertyChanged(nameof(WarningText));
-                return false;
-            }
-            else if (Event.Customer == null)
-            {
-                WarningText = "U moet een klant kiezen";
-                RaisePropertyChanged(nameof(WarningText));
-                return false;
+                if (string.IsNullOrEmpty(Event.Name))
+                {
+                    WarningText = "Het veld Naam mag niet leeg zijn";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return false;
+                }
+                else if (string.IsNullOrEmpty(Event.Address))
+                {
+                    WarningText = "Het veld Adres mag niet leeg zijn";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return false;
+                }
+                else if (string.IsNullOrEmpty(Event.City))
+                {
+                    WarningText = "Het veld Plaats mag niet leeg zijn";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return false;
+                }
+                else if (string.IsNullOrEmpty(Event.Zipcode))
+                {
+                    WarningText = "Het veld Postcode mag niet leeg zijn";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return false;
+                }
+                else if (Event.Customer == null)
+                {
+                    WarningText = "U moet een klant kiezen";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return false;
+                }
+                else
+                {
+                    WarningText = "";
+                    RaisePropertyChanged(nameof(WarningText));
+                    return true;
+                }
             }
             else
             {
-                WarningText = "";
-                RaisePropertyChanged(nameof(WarningText));
-                return true;
+                return false;
             }
         }
 
@@ -132,9 +140,9 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Weet u zeker dat u dit evenement op wilt slaan?", "Bevestigen", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    _Context.SaveChanges();
+                    _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateEventList");
-                    CloseAction(window);
+                    CloseWindow(window);
                 }
             }
             else
@@ -148,7 +156,7 @@ namespace FSBeheer.ViewModel
             MessageBoxResult result = MessageBox.Show("Weet u zeker dat u wilt afsluiten zonder op te slaan?", "Bevestigen", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                CloseAction(window);
+                CloseWindow(window);
             }
         }
 
@@ -159,9 +167,9 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Weet u zeker dat u dit evenement wilt verwijderen?", "Bevestigen", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    _Context.EventCrud.Delete(Event);
+                    _context.EventCrud.Delete(Event);
                     Messenger.Default.Send(true, "UpdateEventList");
-                    CloseAction(window);
+                    CloseWindow(window);
                 }
             }
             else

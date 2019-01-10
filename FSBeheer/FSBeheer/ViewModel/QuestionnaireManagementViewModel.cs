@@ -39,7 +39,7 @@ namespace FSBeheer.ViewModel
             CreateQuestionnaireCommand = new RelayCommand(CreateQuestionnaire);
             DeleteQuestionnaireCommand = new RelayCommand(DeleteQuestionnaire);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
-            SelectedQuestionnaire = Questionnaires?.First();
+            SelectedQuestionnaire = Questionnaires?.FirstOrDefault();
         }
 
         private void CloseWindow(Window obj)
@@ -74,6 +74,7 @@ namespace FSBeheer.ViewModel
                 }
             }
             RaisePropertyChanged(nameof(Questionnaires));
+            SelectedQuestionnaire = Questionnaires?.FirstOrDefault();
         }
 
         public QuestionnaireVM SelectedQuestionnaire
@@ -88,16 +89,21 @@ namespace FSBeheer.ViewModel
 
         public void ShowEditQuestionnaireView()
         {
+            if (_selectedQuestionnaire == null)
+            {
+                MessageBox.Show("Geen vragenlijst geselecteerd.");
+                return;
+            }
+
+            if (_selectedQuestionnaire.IsDeleted)
+            {
+                MessageBox.Show("Geen vragenlijst geselecteerd.");
+                return;
+            }
+
             if (IsInternetConnected())
             {
-                if (_selectedQuestionnaire == null || _selectedQuestionnaire.IsDeleted)
-                {
-                    MessageBox.Show("Geen vragenlijst geselecteerd.");
-                }
-                else
-                {
-                    new EditQuestionnaireView().ShowDialog();
-                }
+                new EditQuestionnaireView().ShowDialog();
             }
             else
             {
@@ -132,10 +138,23 @@ namespace FSBeheer.ViewModel
 
         public void CreateQuestionnaire()
         {
-            if(IsInternetConnected())
+            if (IsInternetConnected())
                 new CreateQuestionnaireView().ShowDialog();
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
+        }
+
+        public void FilterList(string filter)
+        {
+            if (string.IsNullOrEmpty(filter))
+            {
+                Questionnaires = _context.QuestionnaireCrud.GetAllQuestionnaires();
+            }
+            else
+            {
+                Questionnaires = _context.QuestionnaireCrud.GetAllQuestionnairesFiltered(filter);
+            }
+            RaisePropertyChanged(nameof(Questionnaires));
         }
     }
 }

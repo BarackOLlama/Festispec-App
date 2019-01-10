@@ -1,26 +1,34 @@
-﻿using FSBeheer.Crud;
-using FSBeheer.Model;
+﻿using FSBeheer.Model;
 using FSBeheer.View;
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
     public class CreateEditInspectionViewModel : ViewModelBase
     {
-        private CustomFSContext _Context;
+        private CustomFSContext _context;
 
-        public InspectionVM Inspection { get; set; }
+        private InspectionVM _inspection;
+        public InspectionVM Inspection
+        {
+            get { return _inspection; }
+            set
+            {
+                _inspection = value;
+                RaisePropertyChanged(nameof(Inspection));
+            }
+        }
         public ObservableCollection<CustomerVM> Customers { get; }
         public ObservableCollection<EventVM> Events { get; set; }
+        public int SelectedIndex { get; set; }
         public ObservableCollection<StatusVM> Statuses { get; set; }
         public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
         public string Title { get; set; }
@@ -32,8 +40,6 @@ namespace FSBeheer.ViewModel
             return InternetGetConnectedState(out int description, 0);
         }
 
-        public string WarningText { get; set; }
-        
         public RelayCommand<Window> CancelInspectionCommand { get; set; }
         public RelayCommand<Window> AddInspectionCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
@@ -41,13 +47,12 @@ namespace FSBeheer.ViewModel
 
         public CreateEditInspectionViewModel()
         {
-            // Darjush laten weten
             Messenger.Default.Register<bool>(this, "UpdateAvailableList", c => RaisePropertyChanged(nameof(Inspection)));
 
-            _Context = new CustomFSContext();
-            Customers = _Context.CustomerCrud.GetAllCustomers();
-            Events = _Context.EventCrud.GetAllEvents();
-            Statuses = _Context.StatusCrud.GetAllStatusVMs();
+            _context = new CustomFSContext();
+            Customers = _context.CustomerCrud.GetAllCustomers();
+            Events = _context.EventCrud.GetAllEvents();
+            Statuses = _context.StatusCrud.GetAllStatusVMs();
 
             CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
             AddInspectionCommand = new RelayCommand<Window>(AddInspection);
@@ -61,23 +66,42 @@ namespace FSBeheer.ViewModel
             {
                 Inspection = new InspectionVM(new Inspection())
                 {
-                    InspectionDate = new InspectionDateVM(new InspectionDate())
+                    InspectionDate = new InspectionDateVM(new InspectionDate()
+                    {
+                        StartDate = DateTime.Now.Date,
+                        EndDate = DateTime.Now.Date
+                    }),
+                    Event = new EventVM(new Event()
+                    {
+                        Customer = new Customer()
+                    }),
+                    Status = new StatusVM(new Status())
                 };
-                _Context.Inspections.Add(Inspection.ToModel());
+                _context.Inspections.Add(Inspection.ToModel());
                 Title = "Inspectie aanmaken";
             }
             else
             {
-                Inspection = _Context.InspectionCrud.GetInspectionById(inspectionId);
+                Inspection = _context.InspectionCrud.GetInspectionById(inspectionId);
                 Title = "Inspectie wijzigen";
             }
-
+            SelectedIndex = GetIndex(Inspection.Event, Events);
+            RaisePropertyChanged(nameof(SelectedIndex));
             RaisePropertyChanged(nameof(Inspection));
+            RaisePropertyChanged(nameof(Title));
+        }
+
+        private int GetIndex(EventVM Obj, ObservableCollection<EventVM> List)
+        {
+            for (int i = 0; i < List.Count; i++)
+                if (List[i].Id == Obj.Id)
+                    return i;
+            return -1;
         }
 
         private void CloseAction(Window window)
         {
-            _Context.Dispose();
+            _context.Dispose();
             window.Close();
         }
 
@@ -86,7 +110,7 @@ namespace FSBeheer.ViewModel
             MessageBoxResult result = MessageBox.Show("Weet u zeker dat u deze inspectie wilt annuleren?", "Bevestig annulering inspectie", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                _Context.Dispose();
+                _context.Dispose();
                 Inspection = null;
                 window.Close();
             }
@@ -96,17 +120,12 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                if (CheckStartDateValidity())
+                if (InspectionIsValid())
                 {
-                    // Inspectie aanmaken in de database met alle velden die ingevuld zijn
-                    _Context.InspectionCrud.GetAllInspections().Add(Inspection);
-                    _Context.SaveChanges();
+                    var inspection = Inspection;
+                    _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateInspectionList");
                     CloseAction(window);
-                }
-                else
-                {
-                    MessageBox.Show("De ingevulde datums zijn niet correct. Voer correcte begin- en einddatums in en probeer het opnieuw.");
                 }
             }
             else
@@ -119,14 +138,7 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                if (CheckStartDateValidity())
-                {
-                    new AvailableInspectorView(_Context, Inspection.Id).Show();
-                }
-                else
-                {
-                    MessageBox.Show("De ingevulde datums zijn niet correct. Voer correcte begin- en einddatums in en probeer het opnieuw.");
-                }
+                new AvailableInspectorView(_context, Inspection).Show();
             }
             else
             {
@@ -139,43 +151,73 @@ namespace FSBeheer.ViewModel
             AddInspectionCommand.RaiseCanExecuteChanged();
         }
 
-        private bool CheckSaveAllowed(Window window)
+        private bool InspectionIsValid()
         {
-            if (Inspection != null)
-            {
-                if (string.IsNullOrEmpty(Inspection.Name))
-                {
-                    WarningText = "Het veld Naam mag niet leeg zijn";
-                    RaisePropertyChanged(nameof(WarningText));
-                    return false;
-                }
-                else if (Inspection.Inspectors == null)
-                {
-                    WarningText = "Het veld Inspecteur(s) mag niet leeg zijn";
-                    RaisePropertyChanged(nameof(WarningText));
-                    return false;
-                }
-                else
-                {
-                    WarningText = "";
-                    RaisePropertyChanged(nameof(WarningText));
-                    return true;
-                }
-            }
-            else
-            {
-                return false;
-            }                
-        }
 
-        private bool CheckStartDateValidity()
-        {
-            if (Inspection.InspectionDate.StartDate >= new DateTime(1753, 1, 1))
+            if (Inspection.InspectionDate.StartDate == null)
             {
-                return true;
+                MessageBox.Show("Een inspectie moet een startdatum hebben.");
+                return false;
             }
-            return false;
-            
+
+            if (Inspection.InspectionDate.EndDate <= Inspection.InspectionDate.StartDate)
+            {
+                MessageBox.Show("De einddatum mag niet voor de begindatum liggen.");
+                return false;
+            }
+
+            if (Inspection.InspectionDate.StartDate != null && Inspection.InspectionDate.StartDate < DateTime.Now.Date)
+            {
+                MessageBox.Show("Een inspectie kan niet in het verleden worden gepland.");
+                return false;
+            }
+
+            if (Inspection.InspectionDate.StartTime != null)
+            {
+                var regex = new Regex(@"^([0-1][0-9]|2[0-3]):([0-5][0-9])?:?([0-5][0-9])$");
+                if (!regex.IsMatch(Inspection.InspectionDate.StartTime.ToString()))
+                { 
+                    MessageBox.Show("De starttime is niet goed.");
+                    return false;
+                }
+            }
+
+            if (Inspection.InspectionDate.EndTime != null)
+            {
+                var regex = new Regex(@"^([0-1][0-9]|2[0-3]):([0-5][0-9])?:?([0-5][0-9])$");
+                if (!regex.IsMatch(Inspection.InspectionDate.EndTime.ToString()))
+                {
+                    MessageBox.Show("De starttime is niet goed.");
+                    return false;
+                }
+            }
+
+            if (Inspection.Name == null)
+            {
+                MessageBox.Show("Een inspectie moet een naam hebben.");
+                return false;
+            }
+
+            if (Inspection.Name.Trim() == string.Empty)
+            {
+                MessageBox.Show("Een inspectie moet een naam hebben.");
+                return false;
+            }
+
+            if (Inspection.Status.StatusName == null)
+            {
+                MessageBox.Show("Een inspectie moet een status hebben.");
+                return false;
+            }
+
+            if (Inspection.Event.Zipcode == null)
+            {
+                MessageBox.Show("Een inspectie moet een evenement hebben.");
+                return false;
+            }
+
+            return true;
+
         }
     }
 }
