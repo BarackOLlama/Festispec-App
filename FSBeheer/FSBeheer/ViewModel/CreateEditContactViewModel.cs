@@ -80,7 +80,6 @@ namespace FSBeheer.ViewModel
 
         public bool ContactIsValid()
         {
-            //determines whether the contact is valid and may be saved to the database
             if (Contact.Email == null)
             {
                 MessageBox.Show("Een contactpersoon moet een e-mail adres hebben");
@@ -126,7 +125,7 @@ namespace FSBeheer.ViewModel
             return true;
         }
 
-        private void DiscardContact(Window window)
+        private void DiscardContact(Window window) // TODO
         {
             MessageBoxResult result = MessageBox.Show("Sluiten zonder opslaan?", "Bevestig annulering", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)

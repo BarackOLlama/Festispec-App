@@ -36,7 +36,7 @@ namespace FSBeheer.ViewModel
 
         public CreateEditCustomerViewModel()
         {
-            Messenger.Default.Register<bool>(this, "UpdateContactList", cl => RaisePropertyChanged(nameof(Customer))); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
+            Messenger.Default.Register<bool>(this, "UpdateContactList", cl => RaisePropertyChanged(nameof(Customer)));
             _context = new CustomFSContext();
 
             SaveChangesCommand = new RelayCommand<Window>(SaveChanges);
@@ -157,7 +157,7 @@ namespace FSBeheer.ViewModel
                     _context.SaveChanges();
                     window.Close();
 
-                    Messenger.Default.Send(true, "UpdateCustomerList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
+                    Messenger.Default.Send(true, "UpdateCustomerList"); 
                 }
             }
             else
@@ -177,10 +177,6 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        /// <summary>
-        /// Set Customer on Deleted, and also all contacts connected to it (fields)
-        /// </summary>
-        /// <param name="window"></param>
         private void DeleteCustomer(Window window)
         {
             if (IsInternetConnected())
