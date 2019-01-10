@@ -21,10 +21,10 @@ namespace FSBeheer.View
     /// </summary>
     public partial class CreateEditContactView : BaseView
     {
-        public CreateEditContactView(ContactVM contact = null, CustomerVM customer = null)
+        public CreateEditContactView(CustomerVM customer = null)
         {
             InitializeComponent();
-            (DataContext as CreateEditContactViewModel).SetContact(contact, customer);
+            (DataContext as CreateEditContactViewModel).SetContact(customer);
         }
     }
 }
