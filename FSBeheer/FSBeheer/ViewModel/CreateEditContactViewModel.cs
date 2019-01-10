@@ -18,15 +18,15 @@ namespace FSBeheer.ViewModel
     {
         public ContactVM Contact { get; set; }
 
-        public CustomerVM _linkCustomer { get; set; }
+        private CustomerVM Customer { get; set; }
 
-        public RelayCommand SaveChangesContactCommand { get; set; }
+        public RelayCommand<Window> SaveChangesContactCommand { get; set; }
 
         public RelayCommand<Window> DiscardContactCommand { get; set; }
 
         public RelayCommand<Window> DeleteContactCommand { get; set; }
 
-        private CustomFSContext _context;
+        private ContactVM tempContact;
 
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int description, int reservedValue);
@@ -37,34 +37,21 @@ namespace FSBeheer.ViewModel
 
         public CreateEditContactViewModel()
         {
-            _context = new CustomFSContext();
-            SaveChangesContactCommand = new RelayCommand(SaveChangesContact);
+            SaveChangesContactCommand = new RelayCommand<Window>(SaveChangesContact);
             DiscardContactCommand = new RelayCommand<Window>(DiscardContact);
             DeleteContactCommand = new RelayCommand<Window>(DeleteContact);
         }
 
-        public void SetContact(ContactVM contact, CustomerVM customer)
+        public void SetContact(CustomerVM customer)
         {
-            _linkCustomer = customer;
-            if (contact == null)
-            {
-                Contact = new ContactVM()
-                {
-                    Customer = _linkCustomer
-                };
-                _context.Contacts.Add(Contact.ToModel());
-                RaisePropertyChanged(nameof(Contact));
-            }
-            else
-            {
-                Contact = new ContactVM(_context.Contacts.ToList().FirstOrDefault(c => c.Id == contact.Id));
-                RaisePropertyChanged(nameof(Contact));
-            }
+            tempContact = customer.Contact;
+            Customer = customer;
+            Contact = customer.Contact;
+            RaisePropertyChanged(nameof(Contact));
         }
 
-        private void SaveChangesContact()
+        private void SaveChangesContact(Window window)
         {
-
             if (!ContactIsValid()) return;
 
             if (IsInternetConnected())
@@ -72,11 +59,9 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestiging opslaan", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    // TODO: Als je nieuw klant aanmaakt en niet saved en dan contact aanmaakt zit hij nog niet in de database en krijg je een error
                     try
                     {
-                        _context.ContactCrud.GetAllContactVMs().Add(Contact);
-                        _context.SaveChanges();
+                        window.Close();
                     }
                     catch
                     {
@@ -95,7 +80,11 @@ namespace FSBeheer.ViewModel
 
         public bool ContactIsValid()
         {
-            //determines whether the contact is valid and may be saved to the database
+            if (Contact.Email == null)
+            {
+                MessageBox.Show("Een contactpersoon moet een e-mail adres hebben");
+                return false;
+            }
 
             if (Contact.Email == null)
             {
@@ -142,14 +131,13 @@ namespace FSBeheer.ViewModel
             return true;
         }
 
-        private void DiscardContact(Window window)
+        private void DiscardContact(Window window) // TODO
         {
             MessageBoxResult result = MessageBox.Show("Sluiten zonder opslaan?", "Bevestig annulering", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                _context.Dispose();
-                Contact = null;
-                window?.Close();
+                Contact = tempContact;
+                window.Close();
             }
         }
 
@@ -160,10 +148,13 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Geselecteerde contactpersoon verwijderen?", "Bevestiging verwijdering", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    Contact.IsDeleted = true;
-                    _context.SaveChanges();
+                    if (!string.IsNullOrEmpty(Customer.Contact.Name) || !string.IsNullOrEmpty(Customer.Contact.PhoneNumber) || !string.IsNullOrEmpty(Customer.Contact.Email))
+                    {
+                        Customer.Contact.IsDeleted = true;
+                        Customer.Contact = new ContactVM();
+                    }
                     window.Close();
-
+                    
                     Messenger.Default.Send(true, "UpdateContactList");
                 }
             }

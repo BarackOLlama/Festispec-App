@@ -16,28 +16,14 @@ namespace FSBeheer.ViewModel
     {
         public CustomerVM Customer { get; set; }
 
-        public RelayCommand SaveChangesCommand { get; set; }
+        public RelayCommand<Window> SaveChangesCommand { get; set; }
 
         public RelayCommand<Window> DiscardCommand { get; set; }
 
         public RelayCommand<Window> DeleteCustomerCommand { get; set; }
-
-        public RelayCommand CreateContactWindowCommand { get; set; }
-
         public RelayCommand EditContactWindowCommand { get; set; }
 
-        public ObservableCollection<ContactVM> Contacts { get; set; }
-
-        private ContactVM _selectedContact;
-        public ContactVM SelectedContact
-        {
-            get { return _selectedContact; }
-            set
-            {
-                _selectedContact = value;
-                base.RaisePropertyChanged(nameof(SelectedContact));
-            }
-        }
+        public ContactVM Contact { get; set; }
 
         private CustomFSContext _context;
 
@@ -50,30 +36,13 @@ namespace FSBeheer.ViewModel
 
         public CreateEditCustomerViewModel()
         {
-            Messenger.Default.Register<bool>(this, "UpdateContactList", cl => UpdateCustomers()); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
+            Messenger.Default.Register<bool>(this, "UpdateContactList", cl => RaisePropertyChanged(nameof(Customer)));
+            _context = new CustomFSContext();
 
-            UpdateCustomers();
-            SaveChangesCommand = new RelayCommand(SaveChanges);
+            SaveChangesCommand = new RelayCommand<Window>(SaveChanges);
             DiscardCommand = new RelayCommand<Window>(Discard);
             DeleteCustomerCommand = new RelayCommand<Window>(DeleteCustomer);
-            CreateContactWindowCommand = new RelayCommand(OpenCreateContact, CanOpenCreateContact);
-            EditContactWindowCommand = new RelayCommand(OpenEditContact);
-            //EditContactWindowCommand.RaiseCanExecuteChanged(); deze moet je ooit nog een keer aanroepen, zodat hij opnieuw de check CanOpenCreateContact uitvoert!
-        }
-
-        private bool CanOpenCreateContact()
-        {
-            return Customer?.Id != 0;
-        }
-
-        internal void UpdateCustomers()
-        {
-            _context = new CustomFSContext();   
-            if (Customer != null)
-            {
-                Contacts = _context.ContactCrud.GetContactByCustomer(Customer);
-                RaisePropertyChanged(nameof(Contacts));
-            }
+            EditContactWindowCommand = new RelayCommand(OpenCreateEditContact);
         }
 
         private bool CustomerIsValid()
@@ -96,7 +65,7 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if(Customer.City == null)
+            if (Customer.City == string.Empty)
             {
                 MessageBox.Show("Een klant moet een stad hebben.");
                 return false;
@@ -108,7 +77,7 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if(Customer.Name == null)
+            if (Customer.Name == null)
             {
                 MessageBox.Show("Een klant moet een naam hebben.");
                 return false;
@@ -132,7 +101,7 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if(Customer.ZipCode == null)
+            if (Customer.ZipCode == null)
             {
                 MessageBox.Show("Een klant moet een postcode hebben.");
                 return false;
@@ -153,69 +122,48 @@ namespace FSBeheer.ViewModel
             return true;
         }
 
-        private void OpenCreateContact()
+        private void OpenCreateEditContact()
         {
             if(IsInternetConnected())
-                new CreateEditContactView(null, Customer).Show();
+                new CreateEditContactView(Customer).Show();
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
 
-        // TODO: Found bug when making a contact it loses the selected customer
-
-        private void OpenEditContact()
-        {
-            if (IsInternetConnected())
-            {
-                if (_selectedContact == null)
-                {
-                    MessageBox.Show("No contact selected");
-                }
-                else
-                {
-                    new CreateEditContactView(_selectedContact, Customer).Show();
-                }
-            }
-            else
-            {
-                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
-            }
-        }
 
         public void SetCustomer(CustomerVM customer)
         {
             if (customer == null)
             {
-                Customer = new CustomerVM();
+                Customer = new CustomerVM
+                {
+                    Contact = new ContactVM()
+                };
                 _context.Customers.Add(Customer.ToModel());
-                RaisePropertyChanged(nameof(Customer)); // a sign that a property has changed for viewing
+                RaisePropertyChanged(nameof(Customer));
             }
             else
             {
                 Customer = new CustomerVM(_context.Customers.FirstOrDefault(c => c.Id == customer.Id));
                 RaisePropertyChanged(nameof(Customer));
             }
-            Contacts = _context.ContactCrud.GetContactByCustomer(Customer); // TODO kan beter
-            RaisePropertyChanged(nameof(Contacts));
-
-
-            // TODO: Try Savechanges before to prevent issue with making contact first?
-            // _Context.SaveChanges();
+            RaisePropertyChanged(nameof(Customer));
         }
 
-        private void SaveChanges()
+        private void SaveChanges(Window window)
         {
             if (!CustomerIsValid()) return;
 
             if (IsInternetConnected())
             {
-                MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
+                MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestig opslaan", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    _context.CustomerCrud.GetAllCustomers().Add(Customer);
+                    Customer.StartingDate = DateTime.Now.Date; 
                     _context.SaveChanges();
+                    window.Close();
 
-                    Messenger.Default.Send(true, "UpdateCustomerList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
+                    Messenger.Default.Send(true, "UpdateCustomerList"); 
                 }
             }
             else
@@ -226,7 +174,7 @@ namespace FSBeheer.ViewModel
 
         private void Discard(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Close without saving?", "Confirm discard", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Sluiten zonder op te slaan?", "Bevestig annuleren", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
                 _context.Dispose();
@@ -235,23 +183,17 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        /// <summary>
-        /// Set Customer on Deleted, and also all contacts connected to it (fields)
-        /// </summary>
-        /// <param name="window"></param>
         private void DeleteCustomer(Window window)
         {
             if (IsInternetConnected())
             {
-                MessageBoxResult result = MessageBox.Show("Delete the selected customer?", "Confirm Delete", MessageBoxButton.OKCancel);
+                MessageBoxResult result = MessageBox.Show("Verwijder de selecteerde klant?", "Bevestig verwijdering", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
                     Customer.IsDeleted = true;
-                    foreach (var e in Contacts)
-                    {
-                        e.IsDeleted = true;
-                    }
-                    _context.SaveChanges(); // TODO: Changes of last changes to customer stays, do we want that?
+                    Customer.Contact.IsDeleted = true;
+
+                    _context.SaveChanges();
                     window.Close();
 
                     Messenger.Default.Send(true, "UpdateCustomerList");

@@ -168,6 +168,14 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public TestPDFViewModel TestPDF
+        {
+            get
+            {
+                return new TestPDFViewModel();
+            }
+        }
+
         public QuotationManagementViewModel QuotationManagement
         {
             get
@@ -190,6 +198,14 @@ namespace FSBeheer.ViewModel
             get
             {
                 return new BusinessDataViewModel();
+            }
+        }
+
+        public GenerateReportViewModel GenerateReport
+        {
+            get
+            {
+                return new GenerateReportViewModel();
             }
         }
 
