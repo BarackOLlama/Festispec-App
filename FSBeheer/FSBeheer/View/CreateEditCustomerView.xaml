@@ -12,9 +12,6 @@
     <StackPanel Orientation="Horizontal" Margin="5">
         <StackPanel Margin="5"  Width="100">
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="ID:"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="Naam:"></TextBox>
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
@@ -29,14 +26,8 @@
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox IsReadOnly="True" Foreground="Black" FontSize="12" Text="KVK:"></TextBox>
             </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5" Height="26">
-                <TextBox IsReadOnly="True" Foreground="Black" Margin="0,3,3,3" BorderThickness="0" FontSize="12" Text="Startdatum:"></TextBox>
-            </Border>
         </StackPanel>
         <StackPanel Margin="5"  Width="225">
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <TextBox IsReadOnly="True" Foreground="Black" Text="{Binding Customer.Id, Mode=OneWay}" FontSize="12"></TextBox>
-            </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox Foreground="Black" Text="{Binding Customer.Name}" FontSize="12"></TextBox>
             </Border>
@@ -51,9 +42,6 @@
             </Border>
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                 <TextBox Foreground="Black" Text="{Binding Customer.ChamberOfCommerceNumber}" MaxLength="8" FontSize="12"></TextBox>
-            </Border>
-            <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                <DatePicker HorizontalAlignment="Center" VerticalAlignment="Center" Width="215" SelectedDate="{Binding Customer.StartingDate}"/>
             </Border>
         </StackPanel>
         <StackPanel Margin="5" Width="475" Orientation="Vertical">
@@ -80,7 +68,7 @@
                 <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
                     <Button Content="Annuleer" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
                     <Button Content="Verwijder" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DeleteCustomerCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
-                    <Button Content="Accepteer" Command="{Binding SaveChangesCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Accepteer" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditWindow}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
                 </DockPanel>
             </StackPanel>
         </StackPanel>

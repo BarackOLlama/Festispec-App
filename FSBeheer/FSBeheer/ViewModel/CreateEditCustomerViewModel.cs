@@ -16,7 +16,7 @@ namespace FSBeheer.ViewModel
     {
         public CustomerVM Customer { get; set; }
 
-        public RelayCommand SaveChangesCommand { get; set; }
+        public RelayCommand<Window> SaveChangesCommand { get; set; }
 
         public RelayCommand<Window> DiscardCommand { get; set; }
 
@@ -53,18 +53,18 @@ namespace FSBeheer.ViewModel
             Messenger.Default.Register<bool>(this, "UpdateContactList", cl => UpdateCustomers()); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
 
             UpdateCustomers();
-            SaveChangesCommand = new RelayCommand(SaveChanges);
+            SaveChangesCommand = new RelayCommand<Window>(SaveChanges);
             DiscardCommand = new RelayCommand<Window>(Discard);
             DeleteCustomerCommand = new RelayCommand<Window>(DeleteCustomer);
-            CreateContactWindowCommand = new RelayCommand(OpenCreateContact, CanOpenCreateContact);
+            CreateContactWindowCommand = new RelayCommand(OpenCreateContact);
             EditContactWindowCommand = new RelayCommand(OpenEditContact);
             //EditContactWindowCommand.RaiseCanExecuteChanged(); deze moet je ooit nog een keer aanroepen, zodat hij opnieuw de check CanOpenCreateContact uitvoert!
         }
 
-        private bool CanOpenCreateContact()
-        {
-            return Customer?.Id != 0;
-        }
+        //private bool CanOpenCreateContact()
+        //{
+        //    return Customer?.Id != 0;
+        //}
 
         internal void UpdateCustomers()
         {
@@ -78,6 +78,11 @@ namespace FSBeheer.ViewModel
 
         private bool CustomerIsValid()
         {
+            if (Customer.Address == null)
+            {
+                MessageBox.Show("Een klant moet een adres hebben.");
+                return false;
+            }
 
             if (Customer.Address.Trim() == string.Empty)
             {
@@ -91,9 +96,21 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
+            if (Customer.City == string.Empty)
+            {
+                MessageBox.Show("Een klant moet een stad hebben.");
+                return false;
+            }
+
             if (Customer.City.Trim() == string.Empty)
             {
                 MessageBox.Show("Een klant moet een stad hebben.");
+                return false;
+            }
+
+            if (Customer.Name == null)
+            {
+                MessageBox.Show("Een klant moet een naam hebben.");
                 return false;
             }
 
@@ -106,6 +123,12 @@ namespace FSBeheer.ViewModel
             if (Customer.StartingDate <= new DateTime(1990, 1, 1))
             {
                 MessageBox.Show("De geselecteerde startdatum is incorrect.");
+                return false;
+            }
+
+            if (Customer.ZipCode == null)
+            {
+                MessageBox.Show("Een klant moet een postcode hebben.");
                 return false;
             }
 
@@ -174,7 +197,7 @@ namespace FSBeheer.ViewModel
             // _Context.SaveChanges();
         }
 
-        private void SaveChanges()
+        private void SaveChanges(Window window)
         {
             if (!CustomerIsValid()) return;
 
@@ -183,8 +206,10 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
+                    Customer.StartingDate = DateTime.Today; // TODO test
                     _context.CustomerCrud.GetAllCustomers().Add(Customer);
                     _context.SaveChanges();
+                    window.Close();
 
                     Messenger.Default.Send(true, "UpdateCustomerList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
                 }
