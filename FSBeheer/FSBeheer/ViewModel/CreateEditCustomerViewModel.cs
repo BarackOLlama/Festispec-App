@@ -58,13 +58,7 @@ namespace FSBeheer.ViewModel
             DeleteCustomerCommand = new RelayCommand<Window>(DeleteCustomer);
             CreateContactWindowCommand = new RelayCommand(OpenCreateContact);
             EditContactWindowCommand = new RelayCommand(OpenEditContact);
-            //EditContactWindowCommand.RaiseCanExecuteChanged(); deze moet je ooit nog een keer aanroepen, zodat hij opnieuw de check CanOpenCreateContact uitvoert!
         }
-
-        //private bool CanOpenCreateContact()
-        //{
-        //    return Customer?.Id != 0;
-        //}
 
         internal void UpdateCustomers()
         {
@@ -155,8 +149,6 @@ namespace FSBeheer.ViewModel
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
 
-        // TODO: Found bug when making a contact it loses the selected customer
-
         private void OpenEditContact()
         {
             if (IsInternetConnected())
@@ -182,19 +174,15 @@ namespace FSBeheer.ViewModel
             {
                 Customer = new CustomerVM();
                 _context.Customers.Add(Customer.ToModel());
-                RaisePropertyChanged(nameof(Customer)); // a sign that a property has changed for viewing
+                RaisePropertyChanged(nameof(Customer));
             }
             else
             {
                 Customer = new CustomerVM(_context.Customers.FirstOrDefault(c => c.Id == customer.Id));
                 RaisePropertyChanged(nameof(Customer));
             }
-            Contacts = _context.ContactCrud.GetContactByCustomer(Customer); // TODO kan beter
+            Contacts = _context.ContactCrud.GetContactByCustomer(Customer);
             RaisePropertyChanged(nameof(Contacts));
-
-
-            // TODO: Try Savechanges before to prevent issue with making contact first?
-            // _Context.SaveChanges();
         }
 
         private void SaveChanges(Window window)
@@ -206,7 +194,7 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Save changes?", "Confirm action", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    Customer.StartingDate = DateTime.Today; // TODO test
+                    Customer.StartingDate = DateTime.Today; 
                     _context.CustomerCrud.GetAllCustomers().Add(Customer);
                     _context.SaveChanges();
                     window.Close();
@@ -247,7 +235,7 @@ namespace FSBeheer.ViewModel
                     {
                         e.IsDeleted = true;
                     }
-                    _context.SaveChanges(); // TODO: Changes of last changes to customer stays, do we want that?
+                    _context.SaveChanges();
                     window.Close();
 
                     Messenger.Default.Send(true, "UpdateCustomerList");
