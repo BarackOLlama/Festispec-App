@@ -53,9 +53,6 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-        private bool CustomerIsValid()
-        {
-
             if (Customer.Address.Trim() == string.Empty)
             {
                 MessageBox.Show("Een klant moet een adres hebben.");
