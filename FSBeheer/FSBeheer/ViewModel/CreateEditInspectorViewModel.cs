@@ -51,7 +51,7 @@ namespace FSBeheer.ViewModel
 
         private void SaveChanges()
         {
-            if (InspectorIsValid()) return;
+            if (!InspectorIsValid()) return;
 
             if (IsInternetConnected())
             {
@@ -107,6 +107,7 @@ namespace FSBeheer.ViewModel
 
             if (Inspector.Address.Trim() == string.Empty)
             {
+                MessageBox.Show("Een inspecteur moet een adres hebben.");
                 return false;
             }
 
@@ -212,7 +213,7 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (!Regex.Match(Inspector.Zipcode, "^[0-9]{5}(?:-[0-9]{4})?$").Success)
+            if (!Regex.Match(Inspector.Zipcode, "^[0-9]{4}[A-Z]{2}$").Success)
             {
                 MessageBox.Show("De ingevoerde zipcode is incorrect.");
                 return false;

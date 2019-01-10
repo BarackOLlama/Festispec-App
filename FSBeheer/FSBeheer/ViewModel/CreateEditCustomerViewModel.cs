@@ -144,7 +144,7 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (!Regex.Match(Customer.ZipCode, "^[0-9]{5}(?:-[0-9]{4})?$").Success)
+            if (!Regex.Match(Customer.ZipCode, "^[0-9]{4}[A-Z]{2}$").Success)
             {
                 MessageBox.Show("De ingevoerde postcode is incorrect.");
                 return false;
