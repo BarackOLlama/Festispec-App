@@ -23,7 +23,6 @@ namespace FSBeheer.Model
         public string ZipCode { get; set; }
         public DateTime? StartingDate { get; set; }
         public decimal? ChamberOfCommerceNumber { get; set; }
-        public int ContactId { get; set; }
         public virtual ObservableCollection<Contact> Contacts { get; set; }
         public virtual ObservableCollection<Event> Events { get; set; }
         public bool IsDeleted { get; set; }
