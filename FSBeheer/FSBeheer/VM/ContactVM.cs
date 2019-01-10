@@ -61,7 +61,7 @@ namespace FSBeheer.VM
         public CustomerVM Customer
         {
             get { return new CustomerVM(_contact.Customer); }
-            set { _contact.Customer = value.ToModel(); }
+            set { _contact.Customer = value.ToModel(); } 
         }
 
         public bool IsDeleted

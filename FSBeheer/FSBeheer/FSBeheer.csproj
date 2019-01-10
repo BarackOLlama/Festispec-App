@@ -174,6 +174,7 @@
     <Compile Include="View\QuotationManagementView.xaml.cs">
       <DependentUpon>QuotationManagementView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VM\EventDateVM.cs" />
     <Compile Include="VM\QuestionnaireVM.cs" />
     <Compile Include="View\BaseView.cs" />
     <Compile Include="View\CreateEditEventView.xaml.cs">

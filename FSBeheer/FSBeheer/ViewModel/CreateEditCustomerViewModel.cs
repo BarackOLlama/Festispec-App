@@ -53,6 +53,9 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
+        private bool CustomerIsValid()
+        {
+
             if (Customer.Address.Trim() == string.Empty)
             {
                 MessageBox.Show("Een klant moet een adres hebben.");
@@ -89,6 +92,12 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
+            if (Customer.StartingDate == null)
+            {
+                MessageBox.Show("Een klant moet een startdatum hebben.");
+                return false;
+            }
+
             if (Customer.StartingDate <= new DateTime(1990, 1, 1))
             {
                 MessageBox.Show("De geselecteerde startdatum is incorrect.");
@@ -107,7 +116,7 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (!Regex.Match(Customer.ZipCode, "^[0-9]{5}(?:-[0-9]{4})?$").Success)
+            if (!Regex.Match(Customer.ZipCode, "^[0-9]{4}[A-Z]{2}$").Success)
             {
                 MessageBox.Show("De ingevoerde postcode is incorrect.");
                 return false;

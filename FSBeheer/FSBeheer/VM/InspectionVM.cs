@@ -44,7 +44,8 @@ namespace FSBeheer.VM
                     _inspection.Event = new Event() { Customer = new Customer() };
                 else
                     _inspection.Event = value.ToModel();
-                RaisePropertyChanged(nameof(_inspection));
+                RaisePropertyChanged(nameof(_inspection.Event));
+                RaisePropertyChanged(nameof(_inspection.Event.Customer));
             }
         }
 

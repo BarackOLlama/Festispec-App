@@ -86,6 +86,12 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
+            if (Contact.Email == null)
+            {
+                MessageBox.Show("Een contactpersoon moet een e-mail adres hebben");
+                return false;
+            }
+
             if (Contact.Email.Trim() == string.Empty)
             {
                 MessageBox.Show("Een contactpersoon moet een e-mail adres hebben");
@@ -116,9 +122,9 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (!Regex.Match(Contact.PhoneNumber, @"^(\+[0-9]{9})$").Success)
+            if (!Regex.Match(Contact.PhoneNumber.Trim(), @"^((((\+|(00))(31))6?)|(06))?[0-9]{8}$").Success)
             {
-                MessageBox.Show("De ingevoerde telefoonnummer is onjuist.");
+                MessageBox.Show("Het ingevoerde telefoonnummer is incorrect.");
                 return false;
             }
 
