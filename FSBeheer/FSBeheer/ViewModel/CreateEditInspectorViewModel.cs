@@ -48,7 +48,7 @@ namespace FSBeheer.ViewModel
 
         private void SaveChanges()
         {
-            if (InspectorIsValid()) return;
+            if (!InspectorIsValid()) return;
 
             if (IsInternetConnected())
             {
@@ -104,6 +104,7 @@ namespace FSBeheer.ViewModel
 
             if (Inspector.Address.Trim() == string.Empty)
             {
+                MessageBox.Show("Een inspecteur moet een adres hebben.");
                 return false;
             }
 
