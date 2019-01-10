@@ -9,10 +9,18 @@
         DataContext="{Binding GenerateReport, Source={StaticResource Locator}}">
     <StackPanel Margin="20">
         <StackPanel Margin="30">
-            <StackPanel>
+            <WrapPanel>
                 <Label Content="Titel: "/>
-                <TextBox 
-            </StackPanel>
+                <TextBox Text="{Binding Inspection.Name, Mode=TwoWay}" Width="350"/>
+            </WrapPanel>
+        </StackPanel>
+        <StackPanel Margin="10">
+            <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Questionnaire}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Inspectienummer" Binding="{Binding Id}" Width="200"></DataGridTextColumn>
+                    <DataGridCheckBoxColumn Header="Checkbox" Binding="{Binding }"></DataGridCheckBoxColumn>
+                </DataGrid.Columns>
+            </DataGrid>
         </StackPanel>
     </StackPanel>
 </local:BaseView>
