@@ -70,8 +70,8 @@
                                     <Label Grid.Row="1" Grid.Column="1" Content="{Binding Inspection.Event.Address}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     <Label Grid.Row="2" Grid.Column="1" Content="{Binding Inspection.Event.City}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     <Label Grid.Row="3" Grid.Column="1" Content="{Binding Inspection.Event.Zipcode}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="4" Grid.Column="1" Content="{Binding }" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                                    <Label Grid.Row="5" Grid.Column="1" Content="{Binding }" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="4" Grid.Column="1" Content="{Binding Inspection.Event.EventDate.StartDate}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Grid.Row="5" Grid.Column="1" Content="{Binding Inspection.Event.EventDate.EndDate}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
                                 </Grid>
 
