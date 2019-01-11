@@ -32,6 +32,9 @@ namespace FSBeheer.ViewModel
                 base.RaisePropertyChanged(nameof(SelectedQuestion));
             }
         }
+
+        public string SelectedQuestionnaireTemplate { get; set; }
+        public ObservableCollection<string> QuestionnaireTemplateNames { get; set; }
         public ObservableCollection<InspectionVM> Inspections { get; set; }
         public ObservableCollection<QuestionVM> Questions { get; set; }
         private InspectionVM _selectedInspection;
@@ -70,7 +73,7 @@ namespace FSBeheer.ViewModel
             FetchAndSetQuestions(questionnaireId);
             SelectedQuestion = Questions.FirstOrDefault();
             InitializeCommands();
-            FetchAndSetInspectionNumbersAndSelectedInspection();
+            //FetchAndSetInspectionNumbersAndSelectedInspection();
         }
 
         public CreateEditQuestionnaireViewModel()
@@ -80,6 +83,12 @@ namespace FSBeheer.ViewModel
             Questionnaire = new QuestionnaireVM();
             InitializeCommands();
             FetchAndSetInspectionNumbersAndSelectedInspection();
+            QuestionnaireTemplateNames = new ObservableCollection<string>()
+            {
+                "geen",
+                "Template A"
+            };
+            SelectedQuestionnaireTemplate = QuestionnaireTemplateNames.First();
         }
 
         //methods
@@ -90,7 +99,7 @@ namespace FSBeheer.ViewModel
             SaveQuestionnaireChangesCommand = new RelayCommand<Window>(SaveQuestionnaireChanges);
             OpenEditQuestionViewCommand = new RelayCommand(OpenEditQuestionView);
             DeleteQuestionCommand = new RelayCommand(DeleteQuestion);
-            CreateQuestionnaireCommand = new RelayCommand<Window>(SaveQuestionnaire);
+            CreateQuestionnaireCommand = new RelayCommand<Window>(CreateQuestionnaire);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
@@ -188,23 +197,20 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public void UpdateQuestions()
-        {
-            Questions = _context.QuestionCrud.GetAllQuestions();
-            RaisePropertyChanged(nameof(Questions));
-        }
-
-        private void SaveQuestionnaire(Window window)
+        private void CreateQuestionnaire(Window window)
         {
             if (!QuestionnaireIsValid()) return;
 
             if (IsInternetConnected())
             {
-
                 var result = MessageBox.Show("Opslaan nieuwe vragenlijst?", "Nieuwe vragenlijst", MessageBoxButton.OKCancel);
 
                 if (result == MessageBoxResult.OK)
                 {
+                    if (SelectedQuestionnaireTemplate != "geen")
+                    {
+                        SetQuestionnaireFromTemplate();
+                    }
                     _context.Questionnaires.Add(Questionnaire.ToModel());
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateQuestionnaires");
@@ -215,6 +221,23 @@ namespace FSBeheer.ViewModel
             else
             {
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
+            }
+        }
+
+        public void SetQuestionnaireFromTemplate()
+        {
+            switch (SelectedQuestionnaireTemplate)
+            {
+                case "Template A":
+                    Questionnaire.Questions = new ObservableCollection<QuestionVM>();
+                    Questionnaire.Questions.Add(new QuestionVM()
+                    {
+                        Content = "Template vraag",
+                        Type = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        Comments = "Commentaar",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    break;
             }
         }
 
