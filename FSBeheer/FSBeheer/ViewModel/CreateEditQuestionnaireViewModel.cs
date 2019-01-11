@@ -236,9 +236,24 @@ namespace FSBeheer.ViewModel
                     Questionnaire.Questions = new ObservableCollection<QuestionVM>();
                     _context.Questions.Add(new Question()
                     {
-                        Content = "Template vraag",
+                        Content = "Hebben alle bands al hun nummers kunnen spelen?",
                         QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
-                        Comments = "Commentaar",
+                        Comments = "",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Zijn er nog grote complicaties opgetreden?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
+                        Comments = "Hierbij worden problemen bedoelt die voor vertraging van optredens e.d. hebben gezorgd.",
+                        Options= "A|Ja;B|Nee",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Hoe is de sfeer?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        Comments = "Deze vraag is het best beantwoord tegen het einde van het concert.",
                         QuestionnaireId = Questionnaire.Id
                     });
                     break;
