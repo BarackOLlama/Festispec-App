@@ -18,9 +18,9 @@
         <TextBlock Margin="10,5,0,0">Commentaar:</TextBlock>
         <TextBox Text="{Binding Question.Comments}" Margin="10"></TextBox>
         <TextBlock Text="Opties:* multiple choice" Margin="10,5,0,0"></TextBlock>
-        <TextBox Text="{Binding Question.Options}" IsEnabled="{Binding OptionsIsEnabled}" Margin="10"></TextBox>
+        <TextBox Text="{Binding Question.Options}" ToolTip="Voorbeeld: A|Ja;B|Nee" IsEnabled="{Binding OptionsIsEnabled}" Margin="10"></TextBox>
         <TextBlock Text="Kolommen" Margin="10,5,0,0"></TextBlock>
-        <TextBox Text="{Binding Question.Columns}" IsEnabled="{Binding ColumnsIsEnabled}" Margin="10"></TextBox>
+        <TextBox Text="{Binding Question.Columns}" ToolTip="Voorbeeld: 1|Kolomnaam 1|Kolomnaam 2" IsEnabled="{Binding ColumnsIsEnabled}" Margin="10"></TextBox>
         <Grid Margin="10,5,0,0">
             <Button Content="Opslaan" Command="{Binding CreateQuestionCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}"
                     Width="100"  HorizontalAlignment="Left" Margin="5,5,0,0" />
