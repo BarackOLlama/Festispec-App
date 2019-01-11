@@ -1,4 +1,5 @@
-﻿using FSBeheer.View;
+﻿using FSBeheer.Model;
+using FSBeheer.View;
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -80,7 +81,10 @@ namespace FSBeheer.ViewModel
         {
             //create
             _context = new CustomFSContext();
-            Questionnaire = new QuestionnaireVM();
+            Questionnaire = new QuestionnaireVM
+            {
+                Id = _context.Questionnaires.ToList().Max(e => e.Id) + 1;
+            };
             InitializeCommands();
             FetchAndSetInspectionNumbersAndSelectedInspection();
             QuestionnaireTemplateNames = new ObservableCollection<string>()
@@ -230,10 +234,10 @@ namespace FSBeheer.ViewModel
             {
                 case "Template A":
                     Questionnaire.Questions = new ObservableCollection<QuestionVM>();
-                    Questionnaire.Questions.Add(new QuestionVM()
+                    _context.Questions.Add(new Question()
                     {
                         Content = "Template vraag",
-                        Type = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
                         Comments = "Commentaar",
                         QuestionnaireId = Questionnaire.Id
                     });
