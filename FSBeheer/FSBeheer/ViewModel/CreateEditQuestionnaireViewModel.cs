@@ -188,12 +188,6 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public void UpdateQuestions()
-        {
-            Questions = _context.QuestionCrud.GetAllQuestions();
-            RaisePropertyChanged(nameof(Questions));
-        }
-
         private void SaveQuestionnaire(Window window)
         {
             if (!QuestionnaireIsValid()) return;
