@@ -11,6 +11,11 @@ namespace FSBeheer.VM
             _event = e;
         }
 
+        public EventVM()
+        {
+            _event = new Event();
+        }
+
         public int Id
         {
             get { return _event.Id; }
