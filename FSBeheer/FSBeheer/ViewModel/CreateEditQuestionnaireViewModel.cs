@@ -83,7 +83,7 @@ namespace FSBeheer.ViewModel
             _context = new CustomFSContext();
             Questionnaire = new QuestionnaireVM
             {
-                Id = _context.Questionnaires.ToList().Max(e => e.Id) + 1;
+                Id = _context.Questionnaires.ToList().Max(e => e.Id) + 1
             };
             InitializeCommands();
             FetchAndSetInspectionNumbersAndSelectedInspection();
