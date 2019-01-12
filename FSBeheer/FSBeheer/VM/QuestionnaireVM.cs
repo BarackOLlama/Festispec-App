@@ -31,6 +31,7 @@ namespace FSBeheer.VM
         public int Id
         {
             get { return _questionnaire.Id; }
+            set { _questionnaire.Id = value; }
         }
 
         public string Name

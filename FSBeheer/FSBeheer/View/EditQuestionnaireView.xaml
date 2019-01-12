@@ -13,8 +13,8 @@
             <TextBlock>Vragenlijstnaam:</TextBlock>
             <TextBox Text="{Binding Questionnaire.Name, Mode=TwoWay}"></TextBox>
             <!--<TextBlock>Inspectie:</TextBlock>-->
-            <!--<ComboBox Width="300" HorizontalAlignment="Left" ItemsSource="{Binding Inspections}" SelectedItem="{Binding SelectedInspection}">
-            </ComboBox>-->
+            <!--<ComboBox Width="300" HorizontalAlignment="Left" ItemsSource="{Binding Inspections}" SelectedItem="{Binding SelectedInspection}">-->
+            <!--</ComboBox>-->
         </StackPanel>
 
         <StackPanel Margin="0,10,0,0">

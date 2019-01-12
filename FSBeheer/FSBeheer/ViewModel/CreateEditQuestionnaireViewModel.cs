@@ -1,4 +1,5 @@
-﻿using FSBeheer.View;
+﻿using FSBeheer.Model;
+using FSBeheer.View;
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -32,6 +33,9 @@ namespace FSBeheer.ViewModel
                 base.RaisePropertyChanged(nameof(SelectedQuestion));
             }
         }
+
+        public string SelectedQuestionnaireTemplate { get; set; }
+        public ObservableCollection<string> QuestionnaireTemplateNames { get; set; }
         public ObservableCollection<InspectionVM> Inspections { get; set; }
         public ObservableCollection<QuestionVM> Questions { get; set; }
         private InspectionVM _selectedInspection;
@@ -70,16 +74,25 @@ namespace FSBeheer.ViewModel
             FetchAndSetQuestions(questionnaireId);
             SelectedQuestion = Questions.FirstOrDefault();
             InitializeCommands();
-            FetchAndSetInspectionNumbersAndSelectedInspection();
+            //FetchAndSetInspectionNumbersAndSelectedInspection();
         }
 
         public CreateEditQuestionnaireViewModel()
         {
             //create
             _context = new CustomFSContext();
-            Questionnaire = new QuestionnaireVM();
+            Questionnaire = new QuestionnaireVM
+            {
+                Id = _context.Questionnaires.ToList().Max(e => e.Id) + 1
+            };
             InitializeCommands();
             FetchAndSetInspectionNumbersAndSelectedInspection();
+            QuestionnaireTemplateNames = new ObservableCollection<string>()
+            {
+                "geen",
+                "Template A"
+            };
+            SelectedQuestionnaireTemplate = QuestionnaireTemplateNames.First();
         }
 
         //methods
@@ -90,7 +103,7 @@ namespace FSBeheer.ViewModel
             SaveQuestionnaireChangesCommand = new RelayCommand<Window>(SaveQuestionnaireChanges);
             OpenEditQuestionViewCommand = new RelayCommand(OpenEditQuestionView);
             DeleteQuestionCommand = new RelayCommand(DeleteQuestion);
-            CreateQuestionnaireCommand = new RelayCommand<Window>(SaveQuestionnaire);
+            CreateQuestionnaireCommand = new RelayCommand<Window>(CreateQuestionnaire);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
@@ -188,17 +201,20 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        private void SaveQuestionnaire(Window window)
+        private void CreateQuestionnaire(Window window)
         {
             if (!QuestionnaireIsValid()) return;
 
             if (IsInternetConnected())
             {
-
                 var result = MessageBox.Show("Opslaan nieuwe vragenlijst?", "Nieuwe vragenlijst", MessageBoxButton.OKCancel);
 
                 if (result == MessageBoxResult.OK)
                 {
+                    if (SelectedQuestionnaireTemplate != "geen")
+                    {
+                        SetQuestionnaireFromTemplate();
+                    }
                     _context.Questionnaires.Add(Questionnaire.ToModel());
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateQuestionnaires");
@@ -209,6 +225,38 @@ namespace FSBeheer.ViewModel
             else
             {
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
+            }
+        }
+
+        public void SetQuestionnaireFromTemplate()
+        {
+            switch (SelectedQuestionnaireTemplate)
+            {
+                case "Template A":
+                    Questionnaire.Questions = new ObservableCollection<QuestionVM>();
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Hebben alle bands al hun nummers kunnen spelen?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        Comments = "",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Zijn er nog grote complicaties opgetreden?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
+                        Comments = "Hierbij worden problemen bedoelt die voor vertraging van optredens e.d. hebben gezorgd.",
+                        Options= "A|Ja;B|Nee",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Hoe is de sfeer?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        Comments = "Deze vraag is het best beantwoord tegen het einde van het concert.",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    break;
             }
         }
 
