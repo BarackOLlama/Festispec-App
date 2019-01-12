@@ -67,10 +67,10 @@ namespace FSBeheer.ViewModel
             RaisePropertyChanged(nameof(Title));
         }
 
-        private int GetIndex(CustomerVM Obj, ObservableCollection<CustomerVM> List)
+        private int GetIndex(CustomerVM customer, ObservableCollection<CustomerVM> customerList)
         {
-            for (int i = 0; i < List.Count; i++)
-                if (List[i].Id == Obj.Id)
+            for (int i = 0; i < customerList.Count; i++)
+                if (customerList[i].Id == customer.Id)
                     return i;
             return -1;
         }

@@ -6,12 +6,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="Vraag aanpassen" Height="430" Width="340"
+        Title="Vraag aanpassen" Height="450" Width="340"
         DataContext="{Binding EditQuestion, Source={StaticResource Locator}}">
     <StackPanel>
         <TextBlock Text="Vraag aanpassen" FontSize="28" Margin="5,5,0,0"/>
         <TextBlock Text="Vraag:" Margin="10,5,0,0"  />
-        <TextBox MaxLength="50" Text="{Binding Question.Content, Mode=TwoWay}" Margin="10"/>
+        <TextBox MaxLength="150" Text="{Binding Question.Content, Mode=TwoWay}" TextWrapping="Wrap" AcceptsReturn="True" Height="40" Margin="10"/>
         <TextBlock Text="Vraag type:" Margin="10,5,0,0"  />
         <ComboBox ItemsSource="{Binding QuestionTypes}" SelectedItem="{Binding SelectedQuestionType}" HorizontalAlignment="Left" Width="292" Margin="10"/>
         <TextBlock Margin="10,5,0,0">Commentaar:</TextBlock>

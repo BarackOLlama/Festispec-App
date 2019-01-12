@@ -189,9 +189,9 @@ namespace FSBeheer.ViewModel
 
                 var columnResults = Question.Columns.Split('|');
 
-                if (columnResults.Length < 2)
+                if (columnResults.Length < 3)
                 {
-                    MessageBox.Show("Incorrecte syntax. Voer een getal (1-9) voor het aantal antwoorden, vervolgt met een '|' en een kolomnaam.");
+                    MessageBox.Show("Incorrecte syntax. Voer een getal (1-9) voor het aantal antwoorden, vervolgt met een '|' en een kolomnaam.\nEen kolomvraag moet minstens 2 kolomnamen hebben.");
                     return false;
                 }
 
