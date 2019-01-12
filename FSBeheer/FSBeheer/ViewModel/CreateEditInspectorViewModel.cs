@@ -180,9 +180,9 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (!Regex.Match(Inspector.PhoneNumber.Trim(), @"^((((\+|(00))(31))6?)|(06))?[0-9]{8}$").Success)
+            if (!Regex.Match(Inspector.PhoneNumber.Trim(), @"^\+{1}[0-9]{11}$").Success)
             {
-                MessageBox.Show("Het ingevoerde telefoonnummer is incorrect.");
+                MessageBox.Show("Het ingevoerde telefoonnummer is incorrect.\nEen valide telefoonnummer is bijvoorbeeld +31601234567.");
                 return false;
             }
 
