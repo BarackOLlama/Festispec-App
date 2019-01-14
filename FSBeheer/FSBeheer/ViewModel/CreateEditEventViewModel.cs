@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -112,10 +113,13 @@ namespace FSBeheer.ViewModel
                 {
                     MessageBox.Show("Het veld Postcode mag niet leeg zijn");
                     return false;
-                }
-                else if (Event.Customer == null)
+                } else if (!Regex.IsMatch(Event.Zipcode, @"^[0-9]{4}[A-Z]{2}$"))
                 {
-                    MessageBox.Show("U moet een klant kiezen");
+                    MessageBox.Show("De postcode is niet valide.\nEen valide postcode is bijvoorbeeld: 1245AB.");
+                    return false;
+                }else if(Event.Customer == null)
+                {
+                    MessageBox.Show("Een evenement moet een klant hebben.");
                     return false;
                 }
                 else
