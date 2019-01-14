@@ -38,12 +38,8 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowCreateEditViewCommand { get; set; }
         public RelayCommand ShowBusinessDataViewCommand { get; set; }
 
-        public RelayCommand ShowPDFViewCommand { get; set; }
-
         public HomeViewModel(AccountVM account)
         {
-            ShowPDFViewCommand = new RelayCommand(ShowPDFView);
-
             _context = new CustomFSContext();
             _account = account;
             AccountRole = _context.Roles.ToList().Where(e => e.Id == _account.RoleId).FirstOrDefault().Content;
@@ -68,11 +64,6 @@ namespace FSBeheer.ViewModel
             // Place brakepoint here
             Console.WriteLine("");
             //this.ShowLoginView();
-        }
-
-        private void ShowPDFView()
-        {
-            new TestPDFView().Show();
         }
 
         private void ShowBusinessDataView()

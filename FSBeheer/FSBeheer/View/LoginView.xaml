@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="Festispec - Login" Height="230" Width="300"
         DataContext="{Binding LoginViewModel, Source={StaticResource Locator}}">
     <StackPanel>

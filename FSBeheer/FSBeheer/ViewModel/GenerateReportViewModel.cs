@@ -1,11 +1,14 @@
 ﻿using FSBeheer.VM;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
@@ -15,14 +18,46 @@ namespace FSBeheer.ViewModel
         public InspectionVM SelectedInspection { get; set; }
         public QuestionnaireVM Questionnaire { get; set; }
         public ObservableCollection<QuestionVM> Questions { get; set; }
-        public string Title { get;
-            set; }
+        public RelayCommand CreateStandardPDFCommand { get; set; }
+
+        private PDFGenerator pdfGenerator;
+
+        public string Filename { get; set; }
+
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
+        public string Advice { get; set; }
+
+        public bool BarChart { get; set; }
+
+        public bool DoNotShow { get; set; }
+
+        public bool PieChart { get; set; }
+
+        public RelayCommand CreateBarChartCommand { get; set; }
+
+        public RelayCommand CreatePieChartCommand { get; set; }
 
         public GenerateReportViewModel()
         {
             _context = new CustomFSContext();
+            Description = "";
 
-            Title = "";
+            CreateStandardPDFCommand = new RelayCommand(CreatePDF);         
+        }
+
+        private void CreatePDF()
+        {
+            if (Filename != null && Title != null && Questions != null)
+            {
+                pdfGenerator = new PDFGenerator(Filename, Title, Description, Advice, Questions);
+                pdfGenerator.CreateStandardPDF();
+            } else
+            {
+                MessageBox.Show("Sonuvabitch you have not filled the required fields");
+            }
         }
 
         public void SetInspection(int inspectionId)
