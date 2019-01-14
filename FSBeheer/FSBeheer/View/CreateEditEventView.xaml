@@ -25,34 +25,34 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Naam: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                    <TextBox Text="{Binding Event.Name}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
+                    <TextBox Text="{Binding Event.Name, Mode=TwoWay}" Width="200"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Adres: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                    <TextBox Text="{Binding Event.Address}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
+                    <TextBox Text="{Binding Event.Address, Mode=TwoWay}" Width="200"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Plaats: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                    <TextBox Text="{Binding Event.City}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
+                    <TextBox Text="{Binding Event.City, Mode=TwoWay}" Width="200"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Postcode: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                    <TextBox Text="{Binding Event.Zipcode}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
+                    <TextBox Text="{Binding Event.Zipcode, Mode=TwoWay}" Width="200"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Startdatum: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                    <TextBox Text="{Binding Event.EventDate.StartDate}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
+                    <DatePicker Text="{Binding Event.EventDate.StartDate, Mode=TwoWay}"></DatePicker>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Einddatum: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                    <TextBox Text="{Binding Event.EventDate.EndDate}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
+                    <DatePicker Text="{Binding Event.EventDate, Mode=TwoWay}"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="20">
-                    <Button Content="Opslaan" Command="{Binding SaveChangesCommand}" Template="{DynamicResource InterfaceButtonTemplate}"/>
-                    <Button Content="Annuleren" Command="{Binding DiscardChangesCommand}" Template="{DynamicResource InterfaceButtonTemplate}"/>
-                    <Button Content="Verwijderen" Template="{DynamicResource InterfaceButtonTemplate}"/>
+                    <Button Content="Opslaan" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditEvent}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+                    <Button Content="Annuleren" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=CreateEditEvent}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+                    <!--<Button Content="Verwijderen" Command="{Binding ElementName=CreateEditEvent}" Template="{DynamicResource InterfaceButtonTemplate}"/>-->
                 </StackPanel>
             </StackPanel>
         </StackPanel>
