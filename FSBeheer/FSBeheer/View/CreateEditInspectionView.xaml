@@ -13,8 +13,8 @@
 
     <StackPanel Margin="20">
 
-        <StackPanel Name="EventSelection" Margin="0,30,0,0">
-
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Name="EventSelection" Margin="0,30,0,0">
+            <Label>Evenement:</Label>
             <ComboBox ItemsSource="{Binding Events}"
                                             SelectedItem="{Binding Inspection.Event}"
                                             SelectedIndex="{Binding SelectedIndex}"
@@ -214,7 +214,7 @@
 
             <TextBlock Foreground="Red" Text="{Binding WarningText}"/>
             <Button Content="Opslaan" Command="{Binding AddInspectionCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
-            <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+            <Button Content="Annuleren" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
         </StackPanel>
     </StackPanel>
 </local:BaseView>
