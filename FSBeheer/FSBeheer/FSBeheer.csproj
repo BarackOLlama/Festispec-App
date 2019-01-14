@@ -158,6 +158,7 @@
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
     <Compile Include="ViewModel\TestPDFViewModel.cs" />
+    <Compile Include="View\BoolVisibilityConverter.cs" />
     <Compile Include="View\GenerateReportView.xaml.cs">
       <DependentUpon>GenerateReportView.xaml</DependentUpon>
     </Compile>
