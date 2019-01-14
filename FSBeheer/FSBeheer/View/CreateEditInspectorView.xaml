@@ -107,7 +107,7 @@
 
             <StackPanel Margin="5" >
                 <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
-                    <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Annuleren" Command="{Binding DiscardCommand }" CommandParameter="{Binding ElementName=CreateEditWindow}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
                     <Button Content="Bevestig" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditWindow}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
                 </DockPanel>
             </StackPanel>

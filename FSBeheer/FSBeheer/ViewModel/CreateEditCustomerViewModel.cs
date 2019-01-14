@@ -175,7 +175,7 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                MessageBoxResult result = MessageBox.Show("Verwijder de selecteerde klant?", "Bevestig verwijdering", MessageBoxButton.OKCancel);
+                MessageBoxResult result = MessageBox.Show("Verwijder de geselecteerde klant?", "Bevestig verwijdering", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
                     Customer.IsDeleted = true;
