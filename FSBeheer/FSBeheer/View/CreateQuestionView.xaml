@@ -15,11 +15,11 @@
         <TextBox MaxLength="150" Text="{Binding Question.Content, Mode=TwoWay}" TextWrapping="Wrap" AcceptsReturn="True" Height="40" Margin="10"/>
         <TextBlock Text="Vraag type:" Margin="10,5,0,0"  />
         <ComboBox ItemsSource="{Binding QuestionTypes}" SelectedItem="{Binding SelectedQuestionType}" HorizontalAlignment="Left" Width="292" Margin="10"/>
-        <TextBlock Margin="10,5,0,0">Commentaar:</TextBlock>
-        <TextBox Text="{Binding Question.Comments}" Margin="10"></TextBox>
-        <TextBlock Text="Opties:* multiple choice" Margin="10,5,0,0"></TextBlock>
+        <TextBlock Margin="10,5,0,0" ToolTip="Voor nadere uitleg over de vraag">Commentaar:</TextBlock>
+        <TextBox Text="{Binding Question.Comments}" ToolTip="Voor nadere uitleg over de vraag" Margin="10"></TextBox>
+        <TextBlock Text="Opties:* multiple choice" ToolTip="Voorbeeld: A|Ja;B|Nee" Margin="10,5,0,0"></TextBlock>
         <TextBox Text="{Binding Question.Options}" ToolTip="Voorbeeld: A|Ja;B|Nee" IsEnabled="{Binding OptionsIsEnabled}" Margin="10"></TextBox>
-        <TextBlock Text="Kolommen" Margin="10,5,0,0"></TextBlock>
+        <TextBlock Text="Kolommen" ToolTip="Voorbeeld: 1|Kolomnaam 1|Kolomnaam 2" Margin="10,5,0,0"></TextBlock>
         <TextBox Text="{Binding Question.Columns}" ToolTip="Voorbeeld: 1|Kolomnaam 1|Kolomnaam 2" IsEnabled="{Binding ColumnsIsEnabled}" Margin="10"></TextBox>
         <Grid Margin="10,5,0,0">
             <Button Content="Opslaan" Command="{Binding CreateQuestionCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}"
