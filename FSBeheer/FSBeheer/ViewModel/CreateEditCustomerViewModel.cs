@@ -89,18 +89,6 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (Customer.StartingDate == null)
-            {
-                MessageBox.Show("Een klant moet een startdatum hebben.");
-                return false;
-            }
-
-            if (Customer.StartingDate <= new DateTime(1990, 1, 1))
-            {
-                MessageBox.Show("De geselecteerde startdatum is incorrect.");
-                return false;
-            }
-
             if (Customer.ZipCode == null)
             {
                 MessageBox.Show("Een klant moet een postcode hebben.");
