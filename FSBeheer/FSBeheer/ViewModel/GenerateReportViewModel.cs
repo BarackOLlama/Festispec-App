@@ -35,7 +35,8 @@ namespace FSBeheer.ViewModel
 
         public bool BarChart { get; set; }
 
-        public bool DoNotShow { get; set; }
+        public bool DoNotShow { get;
+            set; }
 
         public bool PieChart { get; set; }
 
@@ -92,10 +93,6 @@ namespace FSBeheer.ViewModel
             {
                 StartDate = inspectionVM.InspectionDate.StartDate;
                 EndDate = inspectionVM.InspectionDate.EndDate;
-            }
-            else
-            {
-                // work in progress
             }
         }
 
