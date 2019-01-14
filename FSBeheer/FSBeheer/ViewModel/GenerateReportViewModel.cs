@@ -16,6 +16,9 @@ namespace FSBeheer.ViewModel
     {
         private CustomFSContext _context;
         public InspectionVM SelectedInspection { get; set; }
+        public CustomerVM Customer { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public QuestionnaireVM Questionnaire { get; set; }
         public ObservableCollection<QuestionVM> Questions { get; set; }
         public RelayCommand CreateStandardPDFCommand { get; set; }
@@ -45,7 +48,7 @@ namespace FSBeheer.ViewModel
             _context = new CustomFSContext();
             Description = "";
 
-            CreateStandardPDFCommand = new RelayCommand(CreatePDF);         
+            CreateStandardPDFCommand = new RelayCommand(CreatePDF);
         }
 
         private void CreatePDF()
@@ -68,6 +71,31 @@ namespace FSBeheer.ViewModel
                 RetrieveQuestionnaire(inspectionId);
                 RetrieveQuestions();
                 RaisePropertyChanged(nameof(Questions));
+                RetrieveCustomer(SelectedInspection);
+                RetrieveDate(SelectedInspection);
+            }
+        }
+
+        private void RetrieveCustomer(InspectionVM inspectionVM)
+        {
+            EventVM eventVM = new EventVM();
+            CustomerVM customerVM = new CustomerVM();
+            if (inspectionVM.Event != null && inspectionVM.Event.Zipcode != null)
+                eventVM = inspectionVM.Event;
+            if (eventVM.Customer != null)
+                Customer = eventVM.Customer;
+        }
+
+        private void RetrieveDate(InspectionVM inspectionVM)
+        {
+            if (inspectionVM.InspectionDate.StartDate != null && inspectionVM.InspectionDate.EndDate != null)
+            {
+                StartDate = inspectionVM.InspectionDate.StartDate;
+                EndDate = inspectionVM.InspectionDate.EndDate;
+            }
+            else
+            {
+                // work in progress
             }
         }
 
