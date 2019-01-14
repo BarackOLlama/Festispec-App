@@ -13,8 +13,8 @@
 
     <StackPanel Margin="20">
 
-        <StackPanel Name="EventSelection" Margin="0,30,0,0">
-
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Name="EventSelection" Margin="0,30,0,0">
+            <Label>Evenement:</Label>
             <ComboBox ItemsSource="{Binding Events}"
                                             SelectedItem="{Binding Inspection.Event}"
                                             SelectedIndex="{Binding SelectedIndex}"
@@ -155,8 +155,8 @@
                             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Inspection.Name, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <DatePicker Grid.Row="1" Grid.Column="1" SelectedDateFormat="Short" SelectedDate="{Binding Inspection.InspectionDate.StartDate, Mode=TwoWay}" DisplayDateStart="01/01/1900" DisplayDateEnd="12/31/2150" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <DatePicker Grid.Row="2" Grid.Column="1" SelectedDateFormat="Short" SelectedDate="{Binding Inspection.InspectionDate.EndDate, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
-                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Inspection.InspectionDate.StartTime, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
-                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Inspection.InspectionDate.EndTime, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
+                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Inspection.InspectionDate.StartTime, Mode=TwoWay}" MaxLength="8" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
+                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Inspection.InspectionDate.EndTime, Mode=TwoWay}" MaxLength="8" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center">
 
                                 <ListBox Height="40" DisplayMemberPath="Name" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="335" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8" ItemsSource="{Binding Inspection.Inspectors, UpdateSourceTrigger=PropertyChanged}">
@@ -214,7 +214,7 @@
 
             <TextBlock Foreground="Red" Text="{Binding WarningText}"/>
             <Button Content="Opslaan" Command="{Binding AddInspectionCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
-            <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+            <Button Content="Annuleren" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
         </StackPanel>
     </StackPanel>
 </local:BaseView>
