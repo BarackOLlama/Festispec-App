@@ -20,7 +20,6 @@ namespace FSBeheer.ViewModel
         private string _advice;
 
         private ObservableCollection<QuestionVM> QuestionsList;
-        private XFont font;
 
         public PDFGenerator(string Filename, string Title, string Description, string Advice, ObservableCollection<QuestionVM> Questions)
         {
@@ -33,18 +32,12 @@ namespace FSBeheer.ViewModel
             _description = Description;
             _advice = Advice;
             QuestionsList = Questions;
-            foreach (var question in QuestionsList)
-            {
-                Console.WriteLine(question.Type);
-            }
         }
 
         private void MakeFrontPage()
         {
             PdfPage page1 = document.AddPage();
             XGraphics gfx = XGraphics.FromPdfPage(page1);
-            XRect rect;
-            XPen pen;
             double x = 50, y = 100;
             XFont fontH1 = new XFont("Calibri", 18, XFontStyle.Bold);
             XFont font = new XFont("Calibri", 12);
@@ -56,6 +49,12 @@ namespace FSBeheer.ViewModel
               new XRect(0, 0, (page1.Width / 2), (page1.Height / 2)),
               XStringFormats.Center);
 
+            string path2 = Directory.GetCurrentDirectory() + "\\Resources\\festispecLogo.jpg";
+            if (File.Exists(path2))
+            {
+                XImage image2 = XImage.FromFile(path2);
+                gfx.DrawImage(image2, page1.Width * 0.2, page1.Height * 0.1, 150, 50);
+            }
 
             // Draw some text
             gfx.DrawString("Create PDF on the fly with PDFsharp",
@@ -102,23 +101,12 @@ namespace FSBeheer.ViewModel
             gfx.Restore(state);
         }
 
-        private void SavePDF()
+        private void SavePDF(string Filename)
         {
-            const string filename = "Inspectie PDF";
+            string filename = Filename;
             document.Save(filename);
             Process.Start(filename);
         }
-
-        public void CreateTestPDF()
-        {
-            MakeFrontPage();
-
-            // sh*t....
-
-            SavePDF();
-        }
-
-
 
         public void CreateStandardPDF()
         {
@@ -157,7 +145,7 @@ namespace FSBeheer.ViewModel
             gfx3.DrawRectangle(XBrushes.CadetBlue, rect);
             tf.DrawString(text, font, XBrushes.Black, rect, XStringFormats.TopLeft);
 
-            SavePDF();
+            SavePDF(_fileName);
         }
 
         public void DrawTitle(PdfPage page, XGraphics gfx, string title)
