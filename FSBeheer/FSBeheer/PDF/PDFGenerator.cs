@@ -81,12 +81,12 @@ namespace FSBeheer.ViewModel
             gfx.DrawString("Klant gegevens",
                 fontH2, XBrushes.Black, x, y);
             y += ls;
-            gfx.DrawString("Klant naam: " + _customer.Name, font, XBrushes.Black, x, y);
+            gfx.DrawString("Naam: " + _customer.Name, font, XBrushes.Black, x, y);
             y += ls;
-            gfx.DrawString("Klant adres: " + _customer.Address,
+            gfx.DrawString("Adres: " + _customer.Address,
                 font, XBrushes.Black, x, y);
             y += ls;
-            gfx.DrawString("Klant locatie: " + _customer.City,
+            gfx.DrawString("Stad: " + _customer.City,
                 font, XBrushes.Black, x, y);
             y += 1.2 * ls;
             gfx.DrawString("Contactpersoon - " + _customer.Contact.Name,
@@ -99,7 +99,7 @@ namespace FSBeheer.ViewModel
             gfx.DrawString("Inspectie gegevens",
                 fontH2, XBrushes.Black, x, y);
             y += ls;
-            gfx.DrawString("Inspectie naam: " + _inspection.Name, font, XBrushes.Black, x, y);
+            gfx.DrawString("Naam: " + _inspection.Name, font, XBrushes.Black, x, y);
             y += ls;
             gfx.DrawString("Event naam: " + _inspection.Event.Name, font, XBrushes.Black, x, y);
             y += 1.2 * ls;
