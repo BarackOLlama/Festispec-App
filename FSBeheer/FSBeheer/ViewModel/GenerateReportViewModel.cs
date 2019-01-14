@@ -56,7 +56,15 @@ namespace FSBeheer.ViewModel
         {
             if (Filename != null && Title != null && Questions != null)
             {
-                pdfGenerator = new PDFGenerator(Filename, Title, Description, Advice, Questions);
+                pdfGenerator = new PDFGenerator(Filename, 
+                    Title, 
+                    Description, 
+                    Advice, 
+                    Questions, 
+                    Customer, 
+                    SelectedInspection, 
+                    StartDate, 
+                    EndDate);
                 pdfGenerator.CreateStandardPDF();
             } else
             {

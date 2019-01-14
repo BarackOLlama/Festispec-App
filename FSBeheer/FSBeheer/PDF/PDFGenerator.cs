@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Windows;
 
 namespace FSBeheer.ViewModel
 {
@@ -18,12 +19,32 @@ namespace FSBeheer.ViewModel
         private string _title;
         private string _description;
         private string _advice;
-
         private ObservableCollection<QuestionVM> QuestionsList;
+        private CustomerVM _customer;
+        private InspectionVM _inspection;
+        private DateTime _startDate;
+        private DateTime _endDate;
 
-        public PDFGenerator(string Filename, string Title, string Description, string Advice, ObservableCollection<QuestionVM> Questions)
+        private XGraphics gfx;
+
+        private readonly XFont fontH1 = new XFont("Calibri", 16, XFontStyle.Underline);
+        private readonly XFont font = new XFont("Calibri", 12);
+        private readonly XFont fontH2 = new XFont("Calibri", 12, XFontStyle.Bold);
+        private readonly XFont fontItalic = new XFont("Calibri", 12, XFontStyle.BoldItalic);
+
+        private double x = 50;
+        private double y = 100;
+
+        public PDFGenerator(
+            string Filename, 
+            string Title, 
+            string Description, 
+            string Advice, 
+            ObservableCollection<QuestionVM> Questions, 
+            CustomerVM Customer, InspectionVM SelectedInspection, 
+            DateTime? StartDate, 
+            DateTime? EndDate)
         {
-            // Create a new PDF document
             document = new PdfDocument();
             document.Info.Title = "Created by Phi";
 
@@ -31,43 +52,62 @@ namespace FSBeheer.ViewModel
             _title = Title;
             _description = Description;
             _advice = Advice;
-            QuestionsList = Questions;
+            _customer = Customer;
+            _inspection = SelectedInspection;
+            _startDate = ((DateTime)StartDate).Date;
+            _endDate = ((DateTime)EndDate).Date;
+            QuestionsList = Questions;        
         }
 
         private void MakeFrontPage()
         {
             PdfPage page1 = document.AddPage();
-            XGraphics gfx = XGraphics.FromPdfPage(page1);
-            double x = 50, y = 100;
-            XFont fontH1 = new XFont("Calibri", 18, XFontStyle.Bold);
-            XFont font = new XFont("Calibri", 12);
-            XFont fontItalic = new XFont("Calibri", 12, XFontStyle.BoldItalic);
+            gfx = XGraphics.FromPdfPage(page1);
             double ls = font.GetHeight(gfx);
 
-            DrawTitle(page1, gfx, _title);
-            gfx.DrawString(DateTime.Now.ToShortDateString(), font, XBrushes.DarkSalmon,
-              new XRect(0, 0, (page1.Width / 2), (page1.Height / 2)),
-              XStringFormats.Center);
-
+            // Logo
             string path2 = Directory.GetCurrentDirectory() + "\\Resources\\festispecLogo.jpg";
             if (File.Exists(path2))
             {
                 XImage image2 = XImage.FromFile(path2);
-                gfx.DrawImage(image2, page1.Width * 0.2, page1.Height * 0.1, 150, 50);
+                gfx.DrawImage(image2, page1.Width * 0.65, page1.Height * 0.1, 122, 33);
             }
 
-            // Draw some text
-            gfx.DrawString("Create PDF on the fly with PDFsharp",
-                fontH1, XBrushes.Black, x, x);
-            gfx.DrawString("With PDFsharp you can use the same code to draw graphic, " +
-                "text and images on different targets.", font, XBrushes.Black, x, y);
+            // Info
+            gfx.DrawString("Festispec Rapportage: " + DateTime.Now.ToShortDateString(), 
+                fontH1, XBrushes.Black, x, x - 30);
+            gfx.DrawString("Rapportage: " + _title,
+                fontH1, XBrushes.Black, x, x + 5);
+            gfx.DrawString("Klant gegevens",
+                fontH2, XBrushes.Black, x, y);
             y += ls;
-            gfx.DrawString("The object used for drawing is the XGraphics object.",
+            gfx.DrawString("Klant naam: " + _customer.Name, font, XBrushes.Black, x, y);
+            y += ls;
+            gfx.DrawString("Klant adres: " + _customer.Address,
                 font, XBrushes.Black, x, y);
+            y += ls;
+            gfx.DrawString("Klant locatie: " + _customer.City,
+                font, XBrushes.Black, x, y);
+            y += 1.2 * ls;
+            gfx.DrawString("Festispec contactpersoon - " + _customer.Contact.Name,
+                fontH2, XBrushes.Black, x, y);
+            y += ls;
+            gfx.DrawString("Contact nummer: " + _customer.Contact.PhoneNumber, font, XBrushes.Black, x, y);
+            y += ls;
+            gfx.DrawString("Contact email: " + _customer.Contact.Email, font, XBrushes.Black, x, y);
+            y += 1.2 * ls;
+            gfx.DrawString("Inspectie gegevens",
+                fontH2, XBrushes.Black, x, y);
+            y += ls;
+            gfx.DrawString("Inspectie naam: " + _inspection.Name, font, XBrushes.Black, x, y);
+            y += ls;
+            gfx.DrawString("Event naam: " + _inspection.Event.Name, font, XBrushes.Black, x, y);
+            y += 1.2 * ls;
+            gfx.DrawString("Datum",
+                fontH2, XBrushes.Black, x, y);
+            y += ls;
+            gfx.DrawString(_startDate.ToShortDateString() + " tot " + _endDate.ToShortDateString(), font, XBrushes.Black, x, y);
             y += 2 * ls;
-
-            // Draw some more text
-            y += 60 + 2 * ls;
             gfx.DrawString("With XGraphics you can draw on a PDF page as well as " +
                 "on any System.Drawing.Graphics object.", font, XBrushes.Black, x, y);
             y += ls * 1.1;
@@ -95,55 +135,28 @@ namespace FSBeheer.ViewModel
             gfx.DrawString("Below this text is a PDF form that will be visible when " +
                 "viewed or printed with a PDF viewer.", fontItalic, XBrushes.Firebrick, x, y);
             y += ls * 1.1;
-            XGraphicsState state = gfx.Save();
-            XRect rcImage = new XRect(100, y, 100, 100 * Math.Sqrt(2));
-            gfx.DrawRectangle(XBrushes.Snow, rcImage);
-            gfx.Restore(state);
         }
 
         private void SavePDF(string Filename)
         {
-            string filename = Filename;
-            document.Save(filename);
-            Process.Start(filename);
+            try
+            {
+                string filename = Filename;
+                document.Save(filename); 
+                Process.Start(filename);
+            } catch
+            {
+                MessageBox.Show("You already have an existing document with that file name open! Close it first before opening a new again.");
+            }
         }
 
         public void CreateStandardPDF()
         {
             MakeFrontPage();
-            // Create an empty page
+
+            // foreach question, new page 
             PdfPage page2 = document.AddPage();
-            PdfPage page3 = document.AddPage();
-
-            // Get an XGraphics object for drawing
             XGraphics gfx2 = XGraphics.FromPdfPage(page2);
-            XGraphics gfx3 = XGraphics.FromPdfPage(page3);
-
-            // Create a font
-            XFont font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
-
-            // page 2
-            gfx2.DrawString("Hello, I died!", font, XBrushes.Black,
-              new XRect(100, 20, page2.Width, page2.Height),
-              XStringFormats.Center);
-
-            string path2 = Directory.GetCurrentDirectory() + "\\Resources\\nature.jpg";
-            if (File.Exists(path2))
-            {
-                XImage image2 = XImage.FromFile(path2);
-                gfx2.DrawImage(image2, page2.Width * 0.3, 0, 250, 250);
-            }
-
-            // page 3
-            const string text =
-              "Facin exeraessisit la consenim iureet " +
-              "min ut in ute doloboreet ip ex et am dunt at.";
-
-            XTextFormatter tf = new XTextFormatter(gfx3);
-
-            XRect rect = new XRect(40, 100, 250, 220);
-            gfx3.DrawRectangle(XBrushes.CadetBlue, rect);
-            tf.DrawString(text, font, XBrushes.Black, rect, XStringFormats.TopLeft);
 
             SavePDF(_fileName);
         }
