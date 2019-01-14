@@ -40,7 +40,7 @@ namespace FSBeheer.ViewModel
             return InternetGetConnectedState(out int description, 0);
         }
 
-        public RelayCommand<Window> CancelInspectionCommand { get; set; }
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
         public RelayCommand<Window> AddInspectionCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
         public RelayCommand PickInspectorsCommand { get; set; }
@@ -54,7 +54,7 @@ namespace FSBeheer.ViewModel
             Events = _context.EventCrud.GetAllEvents();
             Statuses = _context.StatusCrud.GetAllStatusVMs();
 
-            CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
+            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             AddInspectionCommand = new RelayCommand<Window>(AddInspection);
             CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
             PickInspectorsCommand = new RelayCommand(OpenAvailable);
@@ -105,9 +105,9 @@ namespace FSBeheer.ViewModel
             window.Close();
         }
 
-        private void CancelInspection(Window window)
+        private void CloseWindow(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Weet u zeker dat u deze inspectie wilt annuleren?", "Bevestig annulering inspectie", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Scherm sluiten?", "Scherm sluiten", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
                 _context.Dispose();
@@ -160,7 +160,7 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (Inspection.InspectionDate.EndDate <= Inspection.InspectionDate.StartDate)
+            if (Inspection.InspectionDate.EndDate < Inspection.InspectionDate.StartDate)
             {
                 MessageBox.Show("De einddatum mag niet voor de begindatum liggen.");
                 return false;

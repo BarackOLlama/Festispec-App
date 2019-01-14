@@ -288,7 +288,7 @@ namespace FSBeheer.ViewModel
 
         public void CloseWindow(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Aanpassing annuleren?", "Bevestig", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Scherm sluiten?", "Sluiten", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
                 window.Close();
