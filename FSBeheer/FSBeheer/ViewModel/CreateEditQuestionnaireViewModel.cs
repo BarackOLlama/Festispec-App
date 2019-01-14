@@ -69,7 +69,7 @@ namespace FSBeheer.ViewModel
         {
             //edit
             _context = new CustomFSContext();
-            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions(questionnaireId));
+            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions(Questionnaire.Id));
             Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
             FetchAndSetQuestions(questionnaireId);
             SelectedQuestion = Questions.FirstOrDefault();
