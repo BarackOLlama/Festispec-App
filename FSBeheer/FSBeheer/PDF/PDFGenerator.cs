@@ -67,35 +67,6 @@ namespace FSBeheer.ViewModel
                 font, XBrushes.Black, x, y);
             y += 2 * ls;
 
-            // Draw an arc
-            pen = new XPen(XColors.Red, 4);
-            pen.DashStyle = XDashStyle.Dash;
-            gfx.DrawArc(pen, x + 20, y, 100, 60, 150, 120);
-
-            // Draw a star
-            XGraphicsState gs = gfx.Save();
-            gfx.TranslateTransform(x + 140, y + 30);
-            for (int idx = 0; idx < 360; idx += 10)
-            {
-                gfx.RotateTransform(10);
-                gfx.DrawLine(XPens.DarkGreen, 0, 0, 30, 0);
-            }
-            gfx.Restore(gs);
-
-            // Draw a rounded rectangle
-            rect = new XRect(x + 230, y, 100, 60);
-            pen = new XPen(XColors.DarkBlue, 2.5);
-            XColor color1 = XColors.DarkSeaGreen;
-            XColor color2 = XColors.Red;
-            XLinearGradientBrush lbrush = new XLinearGradientBrush(rect, color1, color2,
-              XLinearGradientMode.Vertical);
-            gfx.DrawRoundedRectangle(pen, lbrush, rect, new XSize(10, 10));
-
-            // Draw a pie
-            pen = new XPen(XColors.DarkOrange, 1.5);
-            pen.DashStyle = XDashStyle.Dot;
-            gfx.DrawPie(pen, XBrushes.Blue, x + 360, y, 100, 60, -130, 135);
-
             // Draw some more text
             y += 60 + 2 * ls;
             gfx.DrawString("With XGraphics you can draw on a PDF page as well as " +
