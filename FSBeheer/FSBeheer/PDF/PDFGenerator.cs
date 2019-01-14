@@ -28,8 +28,6 @@ namespace FSBeheer.ViewModel
             document = new PdfDocument();
             document.Info.Title = "Created by Phi";
 
-            font3 = new XFont("Calibri", 20, XFontStyle.BoldItalic);
-
             _fileName = Filename;
             _title = Title;
             _description = Description;
