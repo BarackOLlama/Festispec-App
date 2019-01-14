@@ -161,12 +161,6 @@ namespace FSBeheer.ViewModel
 
         private void DeleteEvent(Window window)
         {
-            if (Event.Id == 0)//debugging code - remove prior to push - 
-            {
-                MessageBox.Show("Excuus, deze knop moet niet zichtbaar zijn wanneer je een evenement aan het aanmaken bent.");
-                return;
-            }
-
             if (IsInternetConnected())
             {
                 MessageBoxResult result = MessageBox.Show("Weet u zeker dat u dit evenement wilt verwijderen?", "Verwijder event", MessageBoxButton.OKCancel);
