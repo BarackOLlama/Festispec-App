@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -23,7 +24,7 @@ namespace FSBeheer.ViewModel
         public string WarningText { get; set; }
 
         public RelayCommand<Window> SaveChangesCommand { get; set; }
-        public RelayCommand<Window> DiscardChangesCommand { get; set; }
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
         public RelayCommand<Window> DeleteEventCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
 
@@ -39,13 +40,13 @@ namespace FSBeheer.ViewModel
             _context = new CustomFSContext();
             Customers = _context.CustomerCrud.GetAllCustomers();
 
-            SaveChangesCommand = new RelayCommand<Window>(SaveChanges, SaveAllowed);
-            DiscardChangesCommand = new RelayCommand<Window>(DiscardChanges);
+            SaveChangesCommand = new RelayCommand<Window>(SaveChanges);
+            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             DeleteEventCommand = new RelayCommand<Window>(DeleteEvent);
             CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
         }
 
-        public void SetEvent(int eventId)
+        public void SetEvent(int eventId = -1)
         {
             if (eventId == -1)
             {
@@ -77,8 +78,11 @@ namespace FSBeheer.ViewModel
 
         private void CloseWindow(Window window)
         {
-            _context.Dispose();
-            window.Close();
+            var result = MessageBox.Show("Scherm sluiten?", "Scherm sluiten", MessageBoxButton.OKCancel);
+            if(result == MessageBoxResult.OK)
+            {
+                window.Close();
+            }
         }
 
         private void CanExecuteChanged()
@@ -86,55 +90,54 @@ namespace FSBeheer.ViewModel
             SaveChangesCommand.RaiseCanExecuteChanged();
         }
 
-        private bool SaveAllowed(object args)
+        private bool SaveAllowed()
         {
             if (Event != null)
             {
                 if (string.IsNullOrEmpty(Event.Name))
                 {
-                    WarningText = "Het veld Naam mag niet leeg zijn";
-                    RaisePropertyChanged(nameof(WarningText));
+                    MessageBox.Show("Het veld Naam mag niet leeg zijn");
                     return false;
                 }
                 else if (string.IsNullOrEmpty(Event.Address))
                 {
-                    WarningText = "Het veld Adres mag niet leeg zijn";
-                    RaisePropertyChanged(nameof(WarningText));
+                    MessageBox.Show("Het veld Adres mag niet leeg zijn");
                     return false;
                 }
                 else if (string.IsNullOrEmpty(Event.City))
                 {
-                    WarningText = "Het veld Plaats mag niet leeg zijn";
-                    RaisePropertyChanged(nameof(WarningText));
+                    MessageBox.Show("Het veld Plaats mag niet leeg zijn");
                     return false;
                 }
                 else if (string.IsNullOrEmpty(Event.Zipcode))
                 {
-                    WarningText = "Het veld Postcode mag niet leeg zijn";
-                    RaisePropertyChanged(nameof(WarningText));
+                    MessageBox.Show("Het veld Postcode mag niet leeg zijn");
                     return false;
-                }
-                else if (Event.Customer == null)
+                } else if (!Regex.IsMatch(Event.Zipcode, @"^[0-9]{4}[A-Z]{2}$"))
                 {
-                    WarningText = "U moet een klant kiezen";
-                    RaisePropertyChanged(nameof(WarningText));
+                    MessageBox.Show("De postcode is niet valide.\nEen valide postcode is bijvoorbeeld: 1245AB.");
+                    return false;
+                }else if(Event.Customer == null)
+                {
+                    MessageBox.Show("Een evenement moet een klant hebben.");
                     return false;
                 }
                 else
                 {
-                    WarningText = "";
-                    RaisePropertyChanged(nameof(WarningText));
                     return true;
                 }
             }
             else
             {
+                MessageBox.Show("De onderliggende event is NULL. Rapporteer deze bug.");
                 return false;
             }
         }
 
         private void SaveChanges(Window window)
         {
+            if (!SaveAllowed()) return;
+
             if (IsInternetConnected())
             {
                 MessageBoxResult result = MessageBox.Show("Weet u zeker dat u dit evenement op wilt slaan?", "Bevestigen", MessageBoxButton.OKCancel);
@@ -142,21 +145,12 @@ namespace FSBeheer.ViewModel
                 {
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateEventList");
-                    CloseWindow(window);
+                    window.Close();
                 }
             }
             else
             {
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
-            }
-        }
-
-        private void DiscardChanges(Window window)
-        {
-            MessageBoxResult result = MessageBox.Show("Weet u zeker dat u wilt afsluiten zonder op te slaan?", "Bevestigen", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
-            {
-                CloseWindow(window);
             }
         }
 
