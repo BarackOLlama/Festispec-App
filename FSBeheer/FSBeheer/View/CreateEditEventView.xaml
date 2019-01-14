@@ -8,6 +8,9 @@
         x:Name="CreateEditEvent"
         Title="{Binding Title}" Height="400" Width="500"
         DataContext="{Binding CreateEditEvent, Source={StaticResource Locator}}">
+    <Window.Resources>
+        <local:BoolVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
     <Grid>
         <StackPanel Margin="0,20,0,0">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -25,19 +28,19 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Naam: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                    <TextBox Text="{Binding Event.Name, Mode=TwoWay}" Width="200"/>
+                    <TextBox Text="{Binding Event.Name, Mode=TwoWay}" Width="250"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Adres: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                    <TextBox Text="{Binding Event.Address, Mode=TwoWay}" Width="200"/>
+                    <TextBox Text="{Binding Event.Address, Mode=TwoWay}" Width="250"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Plaats: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                    <TextBox Text="{Binding Event.City, Mode=TwoWay}" Width="200"/>
+                    <TextBox Text="{Binding Event.City, Mode=TwoWay}" Width="250"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Postcode: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                    <TextBox Text="{Binding Event.Zipcode, Mode=TwoWay}" Width="200"/>
+                    <TextBox Text="{Binding Event.Zipcode, Mode=TwoWay}" Width="250"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="5">
                     <Label Content="Startdatum: " Template="{DynamicResource CreateEditLabelTemplate}"/>
@@ -52,7 +55,7 @@
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="20">
                     <Button Content="Opslaan" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditEvent}" Template="{DynamicResource InterfaceButtonTemplate}"/>
                     <Button Content="Annuleren" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=CreateEditEvent}" Template="{DynamicResource InterfaceButtonTemplate}"/>
-                    <Button Content="Verwijderen" Command="{Binding DeleteEventCommand}" CommandParameter="{Binding ElementName=CreateEditEvent}" IsEnabled="{Binding CurrentlyEditingEvent}" Template="{DynamicResource InterfaceButtonTemplate}"/>
+                    <Button Content="Verwijderen" Command="{Binding DeleteEventCommand}" CommandParameter="{Binding ElementName=CreateEditEvent}" Visibility="{Binding CurrentlyEditingEvent, Mode=OneWay, Converter={StaticResource BoolToVis}}" Template="{DynamicResource InterfaceButtonTemplate}"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

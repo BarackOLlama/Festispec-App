@@ -24,7 +24,6 @@ namespace FSBeheer.ViewModel
         public string WarningText { get; set; }
         public bool CurrentlyEditingEvent { get; set; }
 
-
         public RelayCommand<Window> SaveChangesCommand { get; set; }
         public RelayCommand<Window> CloseWindowCommand { get; set; }
         public RelayCommand<Window> DeleteEventCommand { get; set; }
@@ -59,12 +58,14 @@ namespace FSBeheer.ViewModel
                 _context.Events.Add(Event.ToModel());
                 Title = "Evenement aanmaken";
                 CurrentlyEditingEvent = false;
+                base.RaisePropertyChanged(nameof(CurrentlyEditingEvent));
             }
             else
             {
                 Event = _context.EventCrud.GetEventById(eventId);
                 Title = "Evenement wijzigen";
                 CurrentlyEditingEvent = true;
+                base.RaisePropertyChanged(nameof(CurrentlyEditingEvent));
             }
             SelectedIndex = GetIndex(Event.Customer, Customers);
             RaisePropertyChanged(nameof(SelectedIndex));
@@ -160,6 +161,12 @@ namespace FSBeheer.ViewModel
 
         private void DeleteEvent(Window window)
         {
+            if (Event.Id == 0)//debugging code - remove prior to push - 
+            {
+                MessageBox.Show("Excuus, deze knop moet niet zichtbaar zijn wanneer je een evenement aan het aanmaken bent.");
+                return;
+            }
+
             if (IsInternetConnected())
             {
                 MessageBoxResult result = MessageBox.Show("Weet u zeker dat u dit evenement wilt verwijderen?", "Verwijder event", MessageBoxButton.OKCancel);
