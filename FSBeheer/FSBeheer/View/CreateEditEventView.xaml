@@ -52,7 +52,7 @@
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Margin="20">
                     <Button Content="Opslaan" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditEvent}" Template="{DynamicResource InterfaceButtonTemplate}"/>
                     <Button Content="Annuleren" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=CreateEditEvent}" Template="{DynamicResource InterfaceButtonTemplate}"/>
-                    <!--<Button Content="Verwijderen" Command="{Binding ElementName=CreateEditEvent}" Template="{DynamicResource InterfaceButtonTemplate}"/>-->
+                    <Button Content="Verwijderen" Command="{Binding DeleteEventCommand}" CommandParameter="{Binding ElementName=CreateEditEvent}" IsEnabled="{Binding CurrentlyEditingEvent}" Template="{DynamicResource InterfaceButtonTemplate}"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

@@ -22,6 +22,8 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<CustomerVM> Customers { get; set; }
         public int SelectedIndex { get; set; }
         public string WarningText { get; set; }
+        public bool CurrentlyEditingEvent { get; set; }
+
 
         public RelayCommand<Window> SaveChangesCommand { get; set; }
         public RelayCommand<Window> CloseWindowCommand { get; set; }
@@ -56,11 +58,13 @@ namespace FSBeheer.ViewModel
                 });
                 _context.Events.Add(Event.ToModel());
                 Title = "Evenement aanmaken";
+                CurrentlyEditingEvent = false;
             }
             else
             {
                 Event = _context.EventCrud.GetEventById(eventId);
                 Title = "Evenement wijzigen";
+                CurrentlyEditingEvent = true;
             }
             SelectedIndex = GetIndex(Event.Customer, Customers);
             RaisePropertyChanged(nameof(SelectedIndex));
@@ -158,12 +162,12 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                MessageBoxResult result = MessageBox.Show("Weet u zeker dat u dit evenement wilt verwijderen?", "Bevestigen", MessageBoxButton.OKCancel);
+                MessageBoxResult result = MessageBox.Show("Weet u zeker dat u dit evenement wilt verwijderen?", "Verwijder event", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
                     _context.EventCrud.Delete(Event);
                     Messenger.Default.Send(true, "UpdateEventList");
-                    CloseWindow(window);
+                    window.Close();
                 }
             }
             else
