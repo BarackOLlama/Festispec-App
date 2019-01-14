@@ -89,12 +89,12 @@ namespace FSBeheer.ViewModel
             gfx.DrawString("Klant locatie: " + _customer.City,
                 font, XBrushes.Black, x, y);
             y += 1.2 * ls;
-            gfx.DrawString("Festispec contactpersoon - " + _customer.Contact.Name,
+            gfx.DrawString("Contactpersoon - " + _customer.Contact.Name,
                 fontH2, XBrushes.Black, x, y);
             y += ls;
-            gfx.DrawString("Contact nummer: " + _customer.Contact.PhoneNumber, font, XBrushes.Black, x, y);
+            gfx.DrawString("Telefoonnummer: " + _customer.Contact.PhoneNumber, font, XBrushes.Black, x, y);
             y += ls;
-            gfx.DrawString("Contact email: " + _customer.Contact.Email, font, XBrushes.Black, x, y);
+            gfx.DrawString("Email: " + _customer.Contact.Email, font, XBrushes.Black, x, y);
             y += 1.2 * ls;
             gfx.DrawString("Inspectie gegevens",
                 fontH2, XBrushes.Black, x, y);
