@@ -36,7 +36,7 @@
                     <DataGridTextColumn Header="Vraag" Binding="{Binding Content}" Width="355" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Vraagtype" Binding="{Binding Type.Name}" Width="150" IsReadOnly="True"></DataGridTextColumn>
                     <DataGridTextColumn Header="Beschrijving" Binding="{Binding Comments}" Width="*" IsReadOnly="True"></DataGridTextColumn>
-                    <DataGridCheckBoxColumn Header="Niet tonen" Binding="{Binding Path=DoNotShow, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridCheckBoxColumn}}}"  Width="70" ></DataGridCheckBoxColumn>
+                    <DataGridCheckBoxColumn Header="Niet tonen" Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.DoNotShow}"  Width="70" ></DataGridCheckBoxColumn>
                     <DataGridCheckBoxColumn Header="Staafdiagram" Binding="{Binding BarChart, UpdateSourceTrigger=PropertyChanged}" Width="80">
                         <DataGridCheckBoxColumn.CellStyle>
                             <Style TargetType="DataGridCell">
