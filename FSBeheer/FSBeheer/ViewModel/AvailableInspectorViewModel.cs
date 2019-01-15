@@ -16,24 +16,20 @@ namespace FSBeheer.ViewModel
 {
     public class AvailableInspectorViewModel : ViewModelBase
     {
-        private CustomFSContext _customFSContext;
+        private CustomFSContext _context;
 
         public ObservableCollection<InspectorVM> AvailableInspectors { get; set; }
-
         public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
+        public ObservableCollection<InspectorVM> RemovedInspectors { get; set; }
+
 
         public RelayCommand<InspectorVM> SetInspectorCommand { get; set; }
-
         public RelayCommand<InspectorVM> RemoveInspectorCommand { get; set; }
-
         public RelayCommand<Window> SaveChangesCommand { get; set; }
-
-        public RelayCommand<Window> DiscardChangesCommand { get; set; }
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
 
         private InspectorVM _selectedAvailableInspector { get; set; }
-
         private InspectorVM _selectedChosenInspector { get; set; }
-
         private InspectionVM _selectedInspection { get; set; }
 
         [DllImport("wininet.dll")]
@@ -45,14 +41,14 @@ namespace FSBeheer.ViewModel
 
         public AvailableInspectorViewModel()
         {
-            Init();
+            InitializeContext();
 
             ChosenInspectors = new ObservableCollection<InspectorVM>();
 
             SetInspectorCommand = new RelayCommand<InspectorVM>(AddInspector);
             RemoveInspectorCommand = new RelayCommand<InspectorVM>(RemoveInspector);
             SaveChangesCommand = new RelayCommand<Window>(SaveChanges);
-            DiscardChangesCommand = new RelayCommand<Window>(Discard);
+            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
         public InspectorVM SelectedAvailableInspector
@@ -75,20 +71,19 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public ObservableCollection<InspectorVM> RemovedInspectors { get; set; }
 
-        internal void Init()
+        internal void InitializeContext()
         {
-            _customFSContext = new CustomFSContext();
+            _context = new CustomFSContext();
         }
 
         public void SetContextInspectionId(CustomFSContext context, InspectionVM inspection)
         {
-            _customFSContext = context;
+            _context = context;
             //if (inspectionId > 0)
             //{
                 _selectedInspection = inspection;
-                AvailableInspectors = _customFSContext.InspectorCrud.GetAllInspectorsFilteredByAvailability(
+                AvailableInspectors = _context.InspectorCrud.GetAllInspectorsFilteredByAvailability(
                     new List<DateTime>{
                     _selectedInspection.InspectionDate.StartDate,
                     _selectedInspection.InspectionDate.EndDate
@@ -168,12 +163,12 @@ namespace FSBeheer.ViewModel
                                 ScheduleStartTime = _selectedInspection.InspectionDate.StartTime,
                                 ScheduleEndTime = _selectedInspection.InspectionDate.EndTime
                             };
-                            _customFSContext.Availabilities.Add(availabilityVM.ToModel());
+                            _context.Availabilities.Add(availabilityVM.ToModel());
                         }
                     }
 
                     
-                    _customFSContext.AvailabilityCrud.RemoveAvailabilitiesByInspectorList(RemovedInspectors, _selectedInspection);
+                    _context.AvailabilityCrud.RemoveAvailabilitiesByInspectorList(RemovedInspectors, _selectedInspection);
                     
 
                     window.Close();
@@ -186,13 +181,11 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        private void Discard(Window window)
+        private void CloseWindow(Window window)
         {
             MessageBoxResult result = MessageBox.Show("Sluiten zonder opslaan?", "Bevestiging annulering", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
-                _customFSContext.Dispose();
-                ChosenInspectors = null;
                 window.Close();
             }
         }
