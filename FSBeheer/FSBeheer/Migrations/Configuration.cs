@@ -49,7 +49,8 @@ namespace FSBeheer.Migrations
                 new QuestionType() { Name = "Open Vraag" },
                 new QuestionType() { Name = "Multiple Choice vraag" },
                 new QuestionType() { Name = "Open Tabelvraag" },
-                new QuestionType() { Name = "Multiple Choice Tabelvraag" }
+                new QuestionType() { Name = "Multiple Choice Tabelvraag" },
+                new QuestionType() { Name = "Schaal Vraag" }
             };
             context.QuestionTypes.AddRange(questiontypes);
 
@@ -116,7 +117,7 @@ namespace FSBeheer.Migrations
                     Salt = sjakieSalt,
                     IsAdmin = true,
                     IsDeleted = false
-                }            
+                }
             };
             context.Accounts.AddRange(accounts);
 
@@ -440,6 +441,14 @@ namespace FSBeheer.Migrations
                 },
                 new Question()
                 {
+                    Content = "Hoe is het weer?",
+                    Scale = "1:10:Slecht:Geweldig",
+                    Questionnaire = questionnaires[0],
+                    QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Schaal Vraag"),
+                    IsDeleted = false
+                },
+                new Question()
+                {
                     Content = "Hoe groot is het percentage van roest op het podium?",
                     Questionnaire = questionnaires[0],
                     QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Open Vraag"),
@@ -463,6 +472,14 @@ namespace FSBeheer.Migrations
                     IsDeleted = false
                 },
                 //appelpop
+                new Question()
+                {
+                    Content ="Hoe is de stemming?",
+                    Options="1:120:grimmig:gezellig",
+                    Questionnaire = questionnaires[1],
+                    QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Schaal Vraag"),
+                    IsDeleted = false
+                },
                 new Question()
                 {
                     Content="Worden er band shirts verkocht",

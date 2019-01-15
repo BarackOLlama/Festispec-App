@@ -19,6 +19,7 @@ namespace FSBeheer.Model
         public string Comments { get; set; }
         public string Options { get; set; }
         public string Columns { get; set; }
+        public string Scale { get; set; }
         public virtual ObservableCollection<Answer> Answers { get; set; }
         public int? QuestionnaireId { get; set; }
         public virtual Questionnaire Questionnaire { get; set; }
