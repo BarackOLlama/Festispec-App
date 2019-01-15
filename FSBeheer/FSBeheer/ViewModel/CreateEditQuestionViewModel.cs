@@ -218,7 +218,7 @@ namespace FSBeheer.ViewModel
                 }
             }
 
-            if (Question.Type.Name == "Schaal Vraag")
+            if (SelectedQuestionType.Name == "Schaal Vraag")
             {
                 if (Question.Scale == null)
                 {
@@ -232,9 +232,9 @@ namespace FSBeheer.ViewModel
                     return false;
                 }
 
-                if (!Regex.IsMatch(Question.Scale, @"^[0-9]{1,}:[0-9]{1,}:\w{1,}:\w{1,}$"))
+                if (!Regex.IsMatch(Question.Scale, @"^[0-9]{1,}:[0-9]{1,}:[A-Za-z ]{1,}:[A-Za-z ]{1,}$"))
                 {
-                    MessageBox.Show("De inhoud van de Schaal veld voldoet niet aan de juiste syntax.\nVoorbeeld: 1:2:negatief:positief");
+                    MessageBox.Show("De inhoud van de Schaal veld voldoet niet aan de juiste syntax.\nVoorbeeld: 1:2:Negatieve beschrijving:Positieve beschrijving");
                     return false;
                 }
                 else
