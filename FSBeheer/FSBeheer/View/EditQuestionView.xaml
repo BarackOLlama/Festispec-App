@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="Vraag aanpassen" Height="510" Width="340"
+        Title="Vraag aanpassen" Height="520" Width="340"
         DataContext="{Binding EditQuestion, Source={StaticResource Locator}}">
     <StackPanel>
         <TextBlock Text="Vraag aanpassen" FontSize="28" Margin="5,5,0,0"/>
