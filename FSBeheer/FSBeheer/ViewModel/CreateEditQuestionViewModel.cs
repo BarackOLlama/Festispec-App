@@ -18,7 +18,19 @@ namespace FSBeheer.ViewModel
     {
         //variables and properties
         private CustomFSContext _context;
-        public QuestionVM Question { get; set; }
+        private QuestionVM _question;
+        public QuestionVM Question
+        {
+            get
+            {
+                return _question;
+            }
+            set
+            {
+                _question = value;
+                base.RaisePropertyChanged(nameof(Question));
+            }
+        }
 
         private QuestionTypeVM _selectedQuestionType;
         public QuestionTypeVM SelectedQuestionType
@@ -34,8 +46,19 @@ namespace FSBeheer.ViewModel
                 HandleEnabledComponents();
             }
         }
-        public ObservableCollection<QuestionTypeVM> QuestionTypes { get; set; }
-
+        private ObservableCollection<QuestionTypeVM> _questionTypes;
+        public ObservableCollection<QuestionTypeVM> QuestionTypes
+        {
+            get
+            {
+                return _questionTypes;
+            }
+            set
+            {
+                _questionTypes = value;
+                base.RaisePropertyChanged(nameof(QuestionTypes));
+            }
+        }
         //enable/disable components
         private bool _columnsIsEnabled;
         public bool ColumnsIsEnabled
@@ -101,12 +124,12 @@ namespace FSBeheer.ViewModel
             InitializeQuestionTypesAndBooleans();
             InitializeCommands();
 
-            Question = new QuestionVM
+            _question = new QuestionVM
             {
-                Type = SelectedQuestionType.ToModel(),
+                Type = _selectedQuestionType.ToModel(),
                 QuestionnaireId = questionnaireId
             };
-
+            base.RaisePropertyChanged(nameof(Question));
 
         }
 
@@ -117,7 +140,8 @@ namespace FSBeheer.ViewModel
             InitializeQuestionTypesAndBooleans();
             InitializeCommands();
 
-            Question = _context.QuestionCrud.GetQuestionById(questionId);
+            _question = _context.QuestionCrud.GetQuestionById(questionId);
+            base.RaisePropertyChanged(nameof(Question));
         }
 
         //methods
@@ -134,8 +158,16 @@ namespace FSBeheer.ViewModel
                 .QuestionTypes
                 .ToList()
                 .Select(e => new QuestionTypeVM(e));
-            QuestionTypes = new ObservableCollection<QuestionTypeVM>(types);
-            _selectedQuestionType = QuestionTypes.FirstOrDefault();
+            _questionTypes = new ObservableCollection<QuestionTypeVM>(types);
+            base.RaisePropertyChanged(nameof(QuestionTypes));
+            if (_question == null)
+            {
+                _selectedQuestionType = QuestionTypes.FirstOrDefault();
+            }
+            else
+            {
+                _selectedQuestionType = new QuestionTypeVM(_question.Type);
+            }
             RaisePropertyChanged(nameof(SelectedQuestionType));
             _optionsIsEnabled = true;
             _columnsIsEnabled = false;
@@ -294,6 +326,29 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestiging", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
+                    //clear irrelevant fields to avoid confusion in case the user mistakenly filled them in.
+                    if (SelectedQuestionType.Name == "Multiple Choice Vraag")
+                    {//clear columns
+                        Question.Columns = null;
+                        Question.Scale = null;
+                    }
+                    else if (SelectedQuestionType.Name == "Open Vraag")
+                    {//clear options and columns
+                        Question.Columns = null;
+                        Question.Options = null;
+                        Question.Scale = null;
+                    }
+                    else if (SelectedQuestionType.Name == "Open Tabelvraag")
+                    {//clear options
+                        Question.Options = null;
+                        Question.Scale = null;
+                    }
+                    else if (SelectedQuestionType.Name == "Schaal Vraag")
+                    {//only scale.
+                        Question.Options = null;
+                        Question.Columns = null;
+                    }
+
                     Question.Type = SelectedQuestionType.ToModel();
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateQuestions");

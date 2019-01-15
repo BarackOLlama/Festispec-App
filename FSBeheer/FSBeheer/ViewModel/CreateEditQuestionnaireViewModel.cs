@@ -18,7 +18,16 @@ namespace FSBeheer.ViewModel
     public class CreateEditQuestionnaireViewModel : ViewModelBase
     {
         private CustomFSContext _context;
-        public QuestionnaireVM Questionnaire { get; set; }
+        private QuestionnaireVM _questionnaire;
+        public QuestionnaireVM Questionnaire
+        {
+            get { return _questionnaire; }
+            set
+            {
+                _questionnaire = value;
+                base.RaisePropertyChanged(nameof(Questionnaire));
+            }
+        }
 
         private QuestionVM _selectedQuestion;
         public QuestionVM SelectedQuestion
@@ -69,9 +78,9 @@ namespace FSBeheer.ViewModel
         {
             //edit
             _context = new CustomFSContext();
-            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions(Questionnaire.Id));
+            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions(_questionnaire.Id));
             Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
-            FetchAndSetQuestions(questionnaireId);
+            FetchAndSetQuestions(_questionnaire.Id);
             SelectedQuestion = Questions.FirstOrDefault();
             InitializeCommands();
             //FetchAndSetInspectionNumbersAndSelectedInspection();
