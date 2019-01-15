@@ -9,9 +9,12 @@ namespace FSBeheer.VM
     {
         private Inspection _inspection;
 
-        public InspectionVM(Inspection inspection)
+        public InspectionVM(Inspection inspection = null)
         {
-            _inspection = inspection;
+            if (inspection != null)
+                _inspection = inspection;
+            else
+                _inspection = new Inspection();
         }
 
         public int Id

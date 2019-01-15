@@ -8,7 +8,6 @@
         x:Name="AvailableInspectorName"
         DataContext="{Binding AvailableInspector, Source={StaticResource Locator}}"
         Title="Beschikbaarheid inspecteurs" Height="500" Width="950">
-    <!-- baseview resources (Bart) in progress no need to define them here -->
 
     <StackPanel Orientation="Horizontal">
         <StackPanel Orientation="Vertical">
