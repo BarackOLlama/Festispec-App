@@ -192,6 +192,15 @@ namespace FSBeheer.ViewModel
                 }
             }
 
+            if (Inspection.InspectionDate.StartDate == Inspection.InspectionDate.EndDate)
+            {
+                if (Inspection.InspectionDate.StartTime > Inspection.InspectionDate.EndTime)
+                {
+                    MessageBox.Show("De eindtijd van een inspectie kan niet eerder dan de begintijd van de inspectie zijn.");
+                    return false;
+                }
+            }
+
             if (Inspection.Name == null)
             {
                 MessageBox.Show("Een inspectie moet een naam hebben.");
