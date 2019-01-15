@@ -19,7 +19,7 @@ namespace FSBeheer.ViewModel
 
         public InspectorVM Inspector { get; set; }
 
-        public RelayCommand SaveChangesCommand { get; set; }
+        public RelayCommand<Window> SaveChangesCommand { get; set; }
 
         public RelayCommand AddCommand { get; set; }
 
@@ -37,7 +37,7 @@ namespace FSBeheer.ViewModel
         public CreateEditInspectorViewModel()
         {
             _context = new CustomFSContext();
-            SaveChangesCommand = new RelayCommand(SaveChanges);
+            SaveChangesCommand = new RelayCommand<Window>(SaveChanges);
         }
 
         private void AddInspector()
@@ -46,7 +46,7 @@ namespace FSBeheer.ViewModel
         }
 
 
-        private void SaveChanges()
+        private void SaveChanges(Window window)
         {
             if (!InspectorIsValid()) return;
 
@@ -57,8 +57,8 @@ namespace FSBeheer.ViewModel
                 {
                     _context.InspectorCrud.GetAllInspectors().Add(Inspector);
                     _context.SaveChanges();
-
                     Messenger.Default.Send(true, "UpdateInspectorList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
+                    window.Close();
                 }
             }
             else
@@ -117,6 +117,12 @@ namespace FSBeheer.ViewModel
             if (Inspector.BankNumber.Trim() == string.Empty)
             {
                 MessageBox.Show("Een inspecteur moet een banknummer hebben.");
+                return false;
+            }
+
+            if (!Regex.IsMatch(Inspector.BankNumber, @"^([A-Z]{2}[ \-]?[0-9]{2})(?=(?:[ \-]?[A-Z0-9]){9,30}$)((?:[ \-]?[A-Z0-9]{3,5}){2,7})([ \-]?[A-Z0-9]{1,3})?$"))
+            {
+                MessageBox.Show("De ingevoerde IBAN is onjuist.");
                 return false;
             }
 
@@ -180,7 +186,7 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (!Regex.Match(Inspector.PhoneNumber.Trim(), @"^\+{1}[0-9]{11}$").Success)
+            if (!Regex.Match(Inspector.PhoneNumber.Trim(), @"^\+?[0-9]{10,11}$").Success)
             {
                 MessageBox.Show("Het ingevoerde telefoonnummer is incorrect.\nEen valide telefoonnummer is bijvoorbeeld +31601234567.");
                 return false;

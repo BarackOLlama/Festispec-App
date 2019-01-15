@@ -93,10 +93,10 @@
                         <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.PhoneNumber, Mode=TwoWay}" FontSize="12"></TextBox>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="8" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.CertificationDate, Mode=TwoWay}" FontSize="12"></TextBox>
+                        <DatePicker Text="{Binding Inspector.CertificationDate, Mode=TwoWay}"></DatePicker>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="9" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.InvalidDate, Mode=TwoWay}" FontSize="12"></TextBox>
+                        <DatePicker Text="{Binding Inspector.InvalidDate, Mode=TwoWay}"></DatePicker>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="10" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                         <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.BankNumber, Mode=TwoWay}" FontSize="12"></TextBox>
