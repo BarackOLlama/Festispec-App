@@ -1,7 +1,7 @@
 ﻿using FSBeheer.Model;
 using GalaSoft.MvvmLight;
 
-namespace FSBeheer.ViewModel
+namespace FSBeheer.VM
 {
     public class QuestionTypeVM : ViewModelBase
     {

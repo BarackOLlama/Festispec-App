@@ -9,11 +9,13 @@ using System.Windows.Data;
 
 namespace FSBeheer.View
 {
-    class NullVisibilityConverter : IValueConverter
+    public class NullVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value == null ? Visibility.Collapsed : Visibility.Visible;
+            //return value == null ? Visibility.Collapsed : Visibility.Visible;
+            return value.Equals("Open vraag") ? false : true; 
+                    // if then                     //else
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

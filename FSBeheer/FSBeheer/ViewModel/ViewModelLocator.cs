@@ -168,14 +168,6 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public TestPDFViewModel TestPDF
-        {
-            get
-            {
-                return new TestPDFViewModel();
-            }
-        }
-
         public QuotationManagementViewModel QuotationManagement
         {
             get
