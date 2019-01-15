@@ -89,18 +89,6 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (Customer.StartingDate == null)
-            {
-                MessageBox.Show("Een klant moet een startdatum hebben.");
-                return false;
-            }
-
-            if (Customer.StartingDate <= new DateTime(1990, 1, 1))
-            {
-                MessageBox.Show("De geselecteerde startdatum is incorrect.");
-                return false;
-            }
-
             if (Customer.ZipCode == null)
             {
                 MessageBox.Show("Een klant moet een postcode hebben.");
@@ -187,7 +175,7 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                MessageBoxResult result = MessageBox.Show("Verwijder de selecteerde klant?", "Bevestig verwijdering", MessageBoxButton.OKCancel);
+                MessageBoxResult result = MessageBox.Show("Verwijder de geselecteerde klant?", "Bevestig verwijdering", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
                     Customer.IsDeleted = true;

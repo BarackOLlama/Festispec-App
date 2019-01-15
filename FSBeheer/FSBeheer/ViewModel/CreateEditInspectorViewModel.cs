@@ -38,6 +38,7 @@ namespace FSBeheer.ViewModel
         {
             _context = new CustomFSContext();
             SaveChangesCommand = new RelayCommand<Window>(SaveChanges);
+            DiscardCommand = new RelayCommand<Window>(Discard);
         }
 
         private void AddInspector()
@@ -57,6 +58,7 @@ namespace FSBeheer.ViewModel
                 {
                     _context.InspectorCrud.GetAllInspectors().Add(Inspector);
                     _context.SaveChanges();
+                    window.Close();
                     Messenger.Default.Send(true, "UpdateInspectorList"); // Stuurt object true naar ontvanger, die dan zijn methode init() uitvoert, stap II
                     window.Close();
                 }
@@ -84,11 +86,11 @@ namespace FSBeheer.ViewModel
         private void Discard(Window window)
         {
             MessageBoxResult result = MessageBox.Show("Sluiten zonder opslaan?", "Bevestiging annulering", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.Cancel)
+            if (result == MessageBoxResult.OK)
             {
                 _context.Dispose();
                 Inspector = null;
-                window?.Close();
+                window.Close();
             }
         }
 
