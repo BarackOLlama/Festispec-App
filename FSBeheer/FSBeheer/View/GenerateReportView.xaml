@@ -14,20 +14,20 @@
     <StackPanel Margin="20">
         <StackPanel Margin="30">
             <WrapPanel>
-                <Label Content="Bestandnaam: " Margin="40,0,0,0"/>
-                <TextBox Text="{Binding Filename, Mode=TwoWay}" Width="729" VerticalContentAlignment="Center"/>
+                <Label Content="Bestandsnaam: " Margin="40,0,0,0"/>
+                <TextBox Text="{Binding Filename, Mode=TwoWay}" Width="723" VerticalContentAlignment="Center"/>
             </WrapPanel>
             <WrapPanel Margin="18,10,0,10">
                 <Label Content="Titel: "/>
-                <TextBox Text="{Binding Title, Mode=TwoWay}" VerticalContentAlignment="Center" Width="800"/>
+                <TextBox Text="{Binding Title, Mode=TwoWay}" Width="800" VerticalContentAlignment="Center"/>
             </WrapPanel>
             <WrapPanel>
                 <Label Content="Omschrijving: "/>
-                <TextBox Text="{Binding Description, Mode=TwoWay}" VerticalContentAlignment="Center" Width="772"/>
+                <TextBox Text="{Binding Description, Mode=TwoWay}" Width="771" VerticalContentAlignment="Center" MaxLength="910"/>
             </WrapPanel>
             <WrapPanel Margin="18,10,0,10">
                 <Label Content="Advies: "/>
-                <TextBox Text="{Binding Advice, Mode=TwoWay}" Width="788.5" VerticalContentAlignment="Center"/>
+                <TextBox Text="{Binding Advice, Mode=TwoWay}" Width="787" VerticalContentAlignment="Center" MaxLength="910"/>
             </WrapPanel>
         </StackPanel>
         <StackPanel Margin="10">

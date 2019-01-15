@@ -26,6 +26,7 @@ namespace FSBeheer.ViewModel
         private DateTime _endDate;
 
         private XGraphics gfx;
+        private XTextFormatter tf;
 
         private readonly XFont fontH1 = new XFont("Calibri", 16, XFontStyle.Underline);
         private readonly XFont font = new XFont("Calibri", 12);
@@ -64,6 +65,7 @@ namespace FSBeheer.ViewModel
             PdfPage page1 = document.AddPage();
             gfx = XGraphics.FromPdfPage(page1);
             double ls = font.GetHeight(gfx);
+            tf = new XTextFormatter(gfx);
 
             // Logo
             string path2 = Directory.GetCurrentDirectory() + "\\Resources\\festispecLogo.jpg";
@@ -108,33 +110,41 @@ namespace FSBeheer.ViewModel
             y += ls;
             gfx.DrawString(_startDate.ToShortDateString() + " tot " + _endDate.ToShortDateString(), font, XBrushes.Black, x, y);
             y += 2 * ls;
-            gfx.DrawString("With XGraphics you can draw on a PDF page as well as " +
-                "on any System.Drawing.Graphics object.", font, XBrushes.Black, x, y);
-            y += ls * 1.1;
-            gfx.DrawString("Use the same code to", font, XBrushes.Black, x, y);
-            x += 10;
-            y += ls * 1.1;
-            gfx.DrawString("• draw on a newly created PDF page", font, XBrushes.Black, x, y);
-            y += ls;
-            gfx.DrawString("• draw above or beneath of the content of an existing PDF page",
-                font, XBrushes.Black, x, y);
-            y += ls;
-            gfx.DrawString("• draw in a window", font, XBrushes.Black, x, y);
-            y += ls;
-            gfx.DrawString("• draw on a printer", font, XBrushes.Black, x, y);
-            y += ls;
-            gfx.DrawString("• draw in a bitmap image", font, XBrushes.Black, x, y);
-            x -= 10;
-            y += ls * 1.1;
-            gfx.DrawString("You can also import an existing PDF page and use it like " +
-                "an image, e.g. draw it on another PDF page.", font, XBrushes.Black, x, y);
-            y += ls * 1.1 * 2;
-            gfx.DrawString("Imported PDF pages are neither drawn nor printed; create a " +
-                "PDF file to see or print them!", fontItalic, XBrushes.Firebrick, x, y);
-            y += ls * 1.1;
-            gfx.DrawString("Below this text is a PDF form that will be visible when " +
-                "viewed or printed with a PDF viewer.", fontItalic, XBrushes.Firebrick, x, y);
-            y += ls * 1.1;
+            gfx.DrawString("Omschrijving: ", font, XBrushes.Black, x, y);
+            y += ls * 1.8;
+
+            XRect descRect = new XRect(50, 350, 500, 220);
+            gfx.DrawRectangle(XBrushes.White, descRect);
+            tf.DrawString(_description, font, XBrushes.Black, descRect, XStringFormats.TopLeft);
+
+            gfx.DrawString("Advies: ", font, XBrushes.Black, x, 560);
+
+            XRect adviceRect = new XRect(50, 580, 500, 220);
+            gfx.DrawRectangle(XBrushes.White, adviceRect);
+            tf.DrawString(_advice, font, XBrushes.Black, adviceRect, XStringFormats.TopLeft);
+
+            //y += ls * 1.1;
+            //gfx.DrawString("• draw on a newly created PDF page", font, XBrushes.Black, x, y);
+            //y += ls;
+            //gfx.DrawString("• draw above or beneath of the content of an existing PDF page",
+            //    font, XBrushes.Black, x, y);
+            //y += ls;
+            //gfx.DrawString("• draw in a window", font, XBrushes.Black, x, y);
+            //y += ls;
+            //gfx.DrawString("• draw on a printer", font, XBrushes.Black, x, y);
+            //y += ls;
+            //gfx.DrawString("• draw in a bitmap image", font, XBrushes.Black, x, y);
+            //x -= 10;
+            //y += ls * 1.1;
+            //gfx.DrawString("You can also import an existing PDF page and use it like " +
+            //    "an image, e.g. draw it on another PDF page.", font, XBrushes.Black, x, y);
+            //y += ls * 1.1 * 2;
+            //gfx.DrawString("Imported PDF pages are neither drawn nor printed; create a " +
+            //    "PDF file to see or print them!", fontItalic, XBrushes.Firebrick, x, y);
+            //y += ls * 1.1;
+            //gfx.DrawString("Below this text is a PDF form that will be visible when " +
+            //    "viewed or printed with a PDF viewer.", fontItalic, XBrushes.Firebrick, x, y);
+            //y += ls * 1.1;
         }
 
         private void SavePDF(string Filename)
