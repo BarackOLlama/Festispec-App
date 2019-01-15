@@ -196,7 +196,7 @@ namespace FSBeheer.ViewModel
             {
                 if (Inspection.InspectionDate.StartTime > Inspection.InspectionDate.EndTime)
                 {
-                    MessageBox.Show("De eindtijd van een inspectie mar niet voor de begintijd van de inspectie zijn.");
+                    MessageBox.Show("De eindtijd van een inspectie kan niet eerder dan de begintijd van de inspectie zijn.");
                     return false;
                 }
             }
