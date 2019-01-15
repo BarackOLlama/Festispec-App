@@ -12,18 +12,17 @@
         DataContext="{Binding CreateEditInspection, Source={StaticResource Locator}}">
 
     <StackPanel Margin="20">
-
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Name="EventSelection" Margin="0,30,0,0">
             <Label>Evenement:</Label>
             <ComboBox ItemsSource="{Binding Events}"
-                                            SelectedItem="{Binding Inspection.Event}"
-                                            SelectedIndex="{Binding SelectedIndex}"
-                                            DisplayMemberPath="Name"
-                                            IsEditable="True"
-                                            IsTextSearchEnabled="True"
-                                            TextSearch.TextPath="Name"
-                                            StaysOpenOnEdit="True"
-                                            Width="250"/>
+                      SelectedItem="{Binding Inspection.Event}"
+                      SelectedIndex="{Binding SelectedIndex}"
+                      DisplayMemberPath="Name"
+                      IsEditable="True"
+                      IsTextSearchEnabled="True"
+                      TextSearch.TextPath="Name"
+                      Width="350"/>
+
         </StackPanel>
 
         <StackPanel Name="EventOverview" Margin="10,10,10,0" Height="500" Orientation="Horizontal">

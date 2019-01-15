@@ -1,14 +1,7 @@
 ﻿using FSBeheer.Model;
-using FSBeheer.View;
-using FSBeheer.VM;
-using GalaSoft.MvvmLight.Command;
-using System.Collections;
-using System.Collections.Generic;
+using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Input;
-using System;
-using GalaSoft.MvvmLight;
 
 namespace FSBeheer.VM
 {
@@ -95,23 +88,16 @@ namespace FSBeheer.VM
                 return amount;
             }
         }
-        
+
         public Event Event
         {
             get { return _questionnaire.Inspection?.Event; }
         }
 
-        public int? InspectionId
+        public InspectionVM Inspection
         {
-            get
-            {
-                return _questionnaire.InspectionId;
-            }
-            set
-            {
-                _questionnaire.InspectionId = value;
-                base.RaisePropertyChanged(nameof(InspectionId));
-            }
+            get { return new InspectionVM(_questionnaire.Inspection); }
+            set { _questionnaire.Inspection = value.ToModel(); }
         }
 
 
