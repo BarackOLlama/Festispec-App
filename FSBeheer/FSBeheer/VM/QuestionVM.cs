@@ -1,9 +1,5 @@
 ﻿using FSBeheer.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace FSBeheer.VM
 {
@@ -49,6 +45,23 @@ namespace FSBeheer.VM
             set { _question.Options = value; }
         }
 
+        public ObservableCollection<Option> OptionsDictionary
+        {
+            get
+            {
+                var collection = new ObservableCollection<Option>();
+                foreach (string s in _question.Options.Split(';'))
+                {
+                    collection.Add(new Option
+                    {
+                        Key = s.Split('|')[0],
+                        Value = s.Split('|')[1]
+                    });
+                }
+                return collection;
+            }
+        }
+
         public string Columns
         {
             get { return _question.Columns; }
@@ -89,5 +102,15 @@ namespace FSBeheer.VM
             return _question.QuestionType.Name;
         }
 
+    }
+
+    public class Option
+    {
+        public string Key { get; set; }
+        public string Value { get; set; }
+        public string OptionString
+        {
+            get { return Key + "|" + Value; }
+        }
     }
 }
