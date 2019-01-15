@@ -38,11 +38,16 @@ namespace FSBeheer.ViewModel
         public bool DoNotShow { get;
             set; }
 
+        public string DoNotShowTestProp { get;
+            set; }
+
         public bool PieChart { get; set; }
 
         public RelayCommand CreateBarChartCommand { get; set; }
 
         public RelayCommand CreatePieChartCommand { get; set; }
+
+        public RelayCommand DoNotShowCommand { get; set; }
 
         public GenerateReportViewModel()
         {
@@ -50,6 +55,7 @@ namespace FSBeheer.ViewModel
             Description = "";
 
             CreateStandardPDFCommand = new RelayCommand(CreatePDF);
+            //DoNotShowCommand = new RelayCommand(DoNotShowMethod, )
         }
 
         private void CreatePDF()
@@ -114,6 +120,11 @@ namespace FSBeheer.ViewModel
         {
             if (Questionnaire != null)
                 Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
+        }
+
+        public void DoNotShowMethod()
+        {
+
         }
     }
 }
