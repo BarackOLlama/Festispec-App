@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="BusinessDataView" Height="350" Width="450"
+        Title="Bedrijfsdata Festispec" Height="350" Width="450"
         DataContext="{Binding BusinessData, Source={StaticResource Locator}}">
     <Grid>
         <StackPanel HorizontalAlignment="Left" Width="225">

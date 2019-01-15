@@ -66,6 +66,20 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        private bool _scaleIsEnabled;
+        public bool ScaleIsEnabled
+        {
+            get
+            {
+                return _scaleIsEnabled;
+            }
+            set
+            {
+                _scaleIsEnabled = value;
+                base.RaisePropertyChanged(nameof(ScaleIsEnabled));
+            }
+        }
+
         //commands
         public RelayCommand<Window> SaveQuestionChangesCommand { get; set; }
         public RelayCommand<Window> CreateQuestionCommand { get; set; }
@@ -129,14 +143,29 @@ namespace FSBeheer.ViewModel
 
         public bool QuestionIsValid()
         {
-            if (Question == null)
+            if (Question.Type == null)
             {
-                MessageBox.Show("Iets is fout gegaan. Open dit scherm a.u.b. opnieuw.");
+                MessageBox.Show("Een vraag moet een vraagtype hebben.");
                 return false;
             }
+
+
+
+            if (Question.Content == null)
+            {
+                MessageBox.Show("Een vraag mag niet leeg zijn..");
+                return false;
+            }
+
             if (Question.Content.Trim() == string.Empty)
             {
                 MessageBox.Show("Een vraag mag niet leeg zijn..");
+                return false;
+            }
+
+            if (SelectedQuestionType == null)
+            {
+                MessageBox.Show("Een vraag moet een vraagtype hebben.");
                 return false;
             }
 
@@ -147,8 +176,14 @@ namespace FSBeheer.ViewModel
             //A | 100; c | 200
             //A | 200
 
-            if (SelectedQuestionType.Name != "Open Vraag" && SelectedQuestionType.Name != "Open Tabelvraag")
+            if (SelectedQuestionType.Name == "Multiple Choice vraag" || SelectedQuestionType.Name == "Multiple Choice Tabelvraag")
             {
+                if (Question.Options == null)
+                {
+                    MessageBox.Show("Het veld opties mag bij deze vraagtype niet leeg zijn.");
+                    return false;
+                }
+
                 if (!multiplechoiceRegex.IsMatch(Question.Options))
                 {
                     MessageBox.Show("De multiple choice syntax is incorrect.\n" +
@@ -160,11 +195,17 @@ namespace FSBeheer.ViewModel
 
             if (SelectedQuestionType.Name == "Open Tabelvraag" || SelectedQuestionType.Name == "Multiple Choice Tabelvraag")
             {
+                if (Question.Columns == null)
+                {
+                    MessageBox.Show("Bij de geselecteerde vraagtype mag het veld kolommen niet leeg zijn.");
+                    return false;
+                }
+
                 var columnResults = Question.Columns.Split('|');
 
-                if (columnResults.Length < 2)
+                if (columnResults.Length < 3)
                 {
-                    MessageBox.Show("Incorrecte syntax. Voer een getal (1-9) voor het aantal antwoorden, vervolgt met een '|' en een kolomnaam.");
+                    MessageBox.Show("Incorrecte syntax. Voer een getal (1-9) voor het aantal antwoorden, vervolgt met een '|' en een kolomnaam.\nEen kolomvraag moet minstens 2 kolomnamen hebben.");
                     return false;
                 }
 
@@ -174,6 +215,36 @@ namespace FSBeheer.ViewModel
                     MessageBox.Show("Het eerste karakter van de kolom moet een getal (1-9) zijn, vervolgt door een '|'+" +
                         "en een kolomnaam.\nVolg alle behalve de laatste kolomnaam met een '|'. ");
                     return false;
+                }
+            }
+
+            if (SelectedQuestionType.Name == "Schaal Vraag")
+            {
+                if (Question.Scale == null)
+                {
+                    MessageBox.Show("Voor het type schaalvraag met het veld Schaal niet leeg zijn.");
+                    return false;
+                }
+
+                if (Question.Scale.Trim() == string.Empty)
+                {
+                    MessageBox.Show("Voor het type schaalvraag met het veld Schaal niet leeg zijn.");
+                    return false;
+                }
+
+                if (!Regex.IsMatch(Question.Scale, @"^[0-9]{1,}:[0-9]{1,}:[A-Za-z ]{1,}:[A-Za-z ]{1,}$"))
+                {
+                    MessageBox.Show("De inhoud van de Schaal veld voldoet niet aan de juiste syntax.\nVoorbeeld: 1:2:Negatieve beschrijving:Positieve beschrijving");
+                    return false;
+                }
+                else
+                {
+                    var result = Question.Scale.Split(':');
+                    if (Convert.ToInt32(result[0]) > Convert.ToInt32(result[1]))
+                    {
+                        MessageBox.Show("Het eerste getal moet lager zijn dan het tweede getal.");
+                        return false;
+                    }
                 }
             }
 
@@ -188,21 +259,30 @@ namespace FSBeheer.ViewModel
                     //Multiple choice has options but no columns
                     OptionsIsEnabled = true;
                     ColumnsIsEnabled = false;
+                    ScaleIsEnabled = false;
                     break;
                 case "Open Vraag":
                     //Open question has neither options nor columns
                     OptionsIsEnabled = false;
                     ColumnsIsEnabled = false;
+                    ScaleIsEnabled = false;
                     break;
                 case "Open Tabelvraag":
                     //An open columnquestion has columns but no options
                     OptionsIsEnabled = false;
                     ColumnsIsEnabled = true;
+                    ScaleIsEnabled = false;
                     break;
                 case "Multiple Choice Tabelvraag":
                     //A multiple choice columnquestion has both options and columns
                     OptionsIsEnabled = true;
                     ColumnsIsEnabled = true;
+                    ScaleIsEnabled = false;
+                    break;
+                case "Schaal Vraag":
+                    OptionsIsEnabled = false;
+                    ColumnsIsEnabled = false;
+                    ScaleIsEnabled = true;
                     break;
             }
         }
@@ -210,17 +290,6 @@ namespace FSBeheer.ViewModel
         public void SaveQuestionChanges(Window window)
         {
             if (!QuestionIsValid()) return;
-
-            if (SelectedQuestionType.Name == "Open Vraag" || SelectedQuestionType.Name == "Open Tabelvraag")
-            {
-                Regex multiplechoiceRegex = new Regex("^(\\w{1}\\|{1}\\w{1,};?){2,}");
-                if (!multiplechoiceRegex.IsMatch(Question.Content))
-                {
-                    MessageBox.Show("De multiple choice syntax is incorrect.\n" +
-                        "Voorbeeld: A|Waar;B|Niet waar");
-                    return;
-                }
-            }
 
             if (IsInternetConnected())
             {
@@ -248,15 +317,23 @@ namespace FSBeheer.ViewModel
                     if (SelectedQuestionType.Name == "Multiple Choice Vraag")
                     {//clear columns
                         Question.Columns = null;
+                        Question.Scale = null;
                     }
                     else if (SelectedQuestionType.Name == "Open Vraag")
                     {//clear options and columns
                         Question.Columns = null;
                         Question.Options = null;
+                        Question.Scale = null;
                     }
                     else if (SelectedQuestionType.Name == "Open Tabelvraag")
                     {//clear options
                         Question.Options = null;
+                        Question.Scale = null;
+                    }
+                    else if (SelectedQuestionType.Name == "Schaal Vraag")
+                    {//only scale.
+                        Question.Options = null;
+                        Question.Columns = null;
                     }
                     _context.Questions.Add(Question.ToModel());
                     _context.SaveChanges();
@@ -272,7 +349,7 @@ namespace FSBeheer.ViewModel
 
         public void CloseWindow(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Aanpassing annuleren?", "Bevestig", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Scherm sluiten?", "Sluiten", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
                 window.Close();

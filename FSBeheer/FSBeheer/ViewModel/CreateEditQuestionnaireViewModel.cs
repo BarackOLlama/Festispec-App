@@ -1,4 +1,5 @@
-﻿using FSBeheer.View;
+﻿using FSBeheer.Model;
+using FSBeheer.View;
 using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -25,6 +26,9 @@ namespace FSBeheer.ViewModel
                 base.RaisePropertyChanged(nameof(SelectedQuestion));
             }
         }
+
+        public string SelectedQuestionnaireTemplate { get; set; }
+        public ObservableCollection<string> QuestionnaireTemplateNames { get; set; }
         public ObservableCollection<InspectionVM> Inspections { get; set; }
         public ObservableCollection<QuestionVM> Questions { get; set; }
         public int SelectedIndex { get; set; }
@@ -48,23 +52,32 @@ namespace FSBeheer.ViewModel
         {
             //edit
             _context = new CustomFSContext();
+            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions(Questionnaire.Id));
             Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
-            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions(questionnaireId));
             FetchAndSetQuestions(questionnaireId);
             SelectedQuestion = Questions.FirstOrDefault();
             InitializeCommands();
-            FetchAndSetInspectionNumbersAndSelectedInspection();
+            //FetchAndSetInspectionNumbersAndSelectedInspection();
         }
 
         public CreateEditQuestionnaireViewModel()
         {
             //create
-            //Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
-            //FetchAndSetQuestions();
             _context = new CustomFSContext();
-            Questionnaire = new QuestionnaireVM();
+            Questionnaire = new QuestionnaireVM
+            {
+                Id = _context.Questionnaires.ToList().Max(e => e.Id) + 1
+            };
             InitializeCommands();
             FetchAndSetInspectionNumbersAndSelectedInspection();
+            QuestionnaireTemplateNames = new ObservableCollection<string>()
+            {
+                "geen",
+                "Metal Festival",
+                "Winter Festival",
+                "Hard Bass Festival"
+            };
+            SelectedQuestionnaireTemplate = QuestionnaireTemplateNames.First();
         }
 
         //methods
@@ -75,7 +88,7 @@ namespace FSBeheer.ViewModel
             SaveQuestionnaireChangesCommand = new RelayCommand<Window>(SaveQuestionnaireChanges);
             OpenEditQuestionViewCommand = new RelayCommand(OpenEditQuestionView);
             DeleteQuestionCommand = new RelayCommand(DeleteQuestion);
-            CreateQuestionnaireCommand = new RelayCommand<Window>(SaveQuestionnaire);
+            CreateQuestionnaireCommand = new RelayCommand<Window>(CreateQuestionnaire);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
@@ -106,7 +119,7 @@ namespace FSBeheer.ViewModel
 
         private void CloseWindow(Window window)
         {
-            var result = MessageBox.Show("Terug gaan zonder wijzigingen op te slaan?", "", MessageBoxButton.OKCancel);
+            var result = MessageBox.Show("Terug gaan zonder wijzigingen op te slaan?", "Vragenlijst sluiten", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
                 window.Close();
@@ -115,6 +128,12 @@ namespace FSBeheer.ViewModel
 
         private bool QuestionnaireIsValid()
         {
+            if (Questionnaire.Name == null)
+            {
+                MessageBox.Show("Een vragenlijst moet een naam hebben.");
+                return false;
+            }
+
             if (Questionnaire.Name.Trim() == string.Empty)
             {
                 MessageBox.Show("Een vragenlijst moet een vraag hebben.");
@@ -168,26 +187,146 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public void UpdateQuestions()
-        {
-            Questions = _context.QuestionCrud.GetAllQuestions();
-            RaisePropertyChanged(nameof(Questions));
-        }
-
-        private void SaveQuestionnaire(Window window)
+        private void CreateQuestionnaire(Window window)
         {
             if (!QuestionnaireIsValid()) return;
 
             if (IsInternetConnected())
             {
-                _context.Questionnaires.Add(Questionnaire.ToModel());
-                _context.SaveChanges();
-                Messenger.Default.Send(true, "UpdateQuestionnaires");
-                window.Close();
+                var result = MessageBox.Show("Opslaan nieuwe vragenlijst?", "Nieuwe vragenlijst", MessageBoxButton.OKCancel);
+
+                if (result == MessageBoxResult.OK)
+                {
+                    if (SelectedQuestionnaireTemplate != "geen")
+                    {
+                        SetQuestionnaireFromTemplate();
+                    }
+                    _context.Questionnaires.Add(Questionnaire.ToModel());
+                    _context.SaveChanges();
+                    Messenger.Default.Send(true, "UpdateQuestionnaires");
+                    window.Close();
+                }
+
             }
             else
             {
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
+            }
+        }
+
+        public void SetQuestionnaireFromTemplate()
+        {
+            switch (SelectedQuestionnaireTemplate)
+            {
+                case "Metal Festival":
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Hebben alle bands al hun nummers kunnen spelen?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        Comments = "",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Zijn er nog grote complicaties opgetreden?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
+                        Comments = "Hierbij worden problemen bedoelt die voor vertraging van optredens e.d. hebben gezorgd.",
+                        Options = "A|Ja;B|Nee",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Hoe is de sfeer?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        Comments = "Deze vraag is het best beantwoord tegen het einde van het festival.",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Zijn er moshpits ontstaan tijdens het festival?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
+                        Options="A|Het gehele festival is een moshpit;B|Een paar",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Is er veel gevaarlijk afval op het festival?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        Columns = "Met gevaarlijk afval worden glasscherven e.d. bedoeld; dingen waar bezoekers zich snel aan kunnen bezeren.",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    break;
+                case "Winter Festival":
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Is er gluhwein te koop?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Dragen veel mensen kleding met een kerst-thema?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
+                        Options = "A|Jazeker;B|Nee;C|Misschien",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Is de Kerstman er ook?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Bij welke band was het publiek het meest enthousiast?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Heeft het tijdens het festival gesneeuwd?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
+                        Options = "A|Ja;B|Nee;C|Een heel klein beetje",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    break;
+                case "Hard Bass Festival":
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Hoe hoog is het volume dicht bij het podium?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
+                        Options="A|100DB of lager;B|120DB+;C|Mijn oren zijn stuk",
+                        Comments ="Gebruik hiervoor de decibelmeter.",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Lijken er veel bezoekers onder de invloed te zijn van iets anders dan alcohol?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
+                        Options = "A|Nee;B|Ja, een paar.;C|Het is een festival.",
+                        Comments="Onder de invloed van andere middelen zoals drugs en dergelijke middelen",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Is het druk op het festival?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Ligt er veel glas op de grond?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
+                        Options = "A|Ja;B|Nee",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Is het druk bij de bars?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    break;
             }
         }
 
@@ -205,6 +344,8 @@ namespace FSBeheer.ViewModel
                         _selectedQuestion.IsDeleted = true;
                         _context.SaveChanges();
                         this.FetchAndSetQuestions(Questionnaire.Id);
+                        //so that the Questionnaires in QuestionnaireManagementViewModel display the correct number of questions.
+                        Messenger.Default.Send(true, "UpdateQuestionnaires");
                     }
                 }
             }

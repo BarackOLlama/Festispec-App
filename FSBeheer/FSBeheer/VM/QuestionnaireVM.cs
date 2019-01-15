@@ -18,11 +18,13 @@ namespace FSBeheer.VM
         public QuestionnaireVM()
         {
             _questionnaire = new Questionnaire();
+            _questionnaire.Version = 1;
         }
 
         public int Id
         {
             get { return _questionnaire.Id; }
+            set { _questionnaire.Id = value; }
         }
 
         public string Name
@@ -35,6 +37,19 @@ namespace FSBeheer.VM
             {
                 _questionnaire.Name = value;
                 base.RaisePropertyChanged("Name");
+            }
+        }
+
+        public int Version
+        {
+            get
+            {
+                return _questionnaire.Version;
+            }
+            set
+            {
+                _questionnaire.Version = value;
+                base.RaisePropertyChanged(nameof(Version));
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using FSBeheer.ViewModel;
-using FSBeheer.VM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +16,14 @@ using System.Windows.Shapes;
 namespace FSBeheer.View
 {
     /// <summary>
-    /// Interaction logic for CreateEditContactView.xaml
+    /// Interaction logic for GenerateReportView.xaml
     /// </summary>
-    public partial class CreateEditContactView : BaseView
+    public partial class GenerateReportView : BaseView
     {
-        public CreateEditContactView(CustomerVM customer = null)
+        public GenerateReportView(int inspectionId = -1)
         {
             InitializeComponent();
-            (DataContext as CreateEditContactViewModel).SetContact(customer);
+            (DataContext as GenerateReportViewModel).SetInspection(inspectionId);
         }
     }
 }

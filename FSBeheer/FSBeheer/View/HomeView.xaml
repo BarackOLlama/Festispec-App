@@ -25,9 +25,9 @@
                 <Button Grid.Row="0" Grid.Column="1" Content="Evenementen" Command="{Binding ShowEventViewCommand}" Background="LightBlue" HorizontalAlignment="Center" Width="120" Height="30"/>
                 <Button Grid.Row="0" Grid.Column="2" Content="Klanten" Command="{Binding ShowCustomerViewCommand}" Background="LightBlue" HorizontalAlignment="Center" Width="120" Height="30"/>
                 <Button Grid.Row="1" Grid.Column="0" Content="Inspecteurs" Command="{Binding ShowInspectorViewCommand}"  Background="LightBlue" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="120" Height="30"/>
-                <Button Grid.Row="1" Grid.Column="1" Content="Offertes" Background="LightBlue" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Width="120" Height="30"/>
+                <Button Grid.Row="1" Grid.Column="1" Content="Offertes" Command="{Binding ShowQuotationViewCommand}" Background="LightBlue" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Width="120" Height="30"/>
                 <Button Grid.Row="1" Grid.Column="2" Content="Vragenlijsten" Command="{Binding ShowQuestionnaireManagementViewCommand}" Background="LightBlue" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="120" Height="30" Margin="0,20,0,0"/>
-                <Button Grid.Row="2" Grid.Column="0" Content="Data" Command="{Binding ShowBusinessDataViewCommand}" Background="LightBlue" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="120" Height="30" Margin="0,20,0,0"></Button>
+                <!--<Button Grid.Row="2" Grid.Column="1" Content="PDF" Command="{Binding ShowPDFViewCommand}" Background="LightBlue" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="120" Height="30" Margin="0,20,0,0"></Button>-->
                 <!--<Button Grid.Row="2" Grid.Column="1" Content="Login" Background="LightBlue" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="30" Width="120" Command="{Binding ShowLoginViewCommand}"></Button>-->
             </Grid>
         </StackPanel>

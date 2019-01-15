@@ -107,7 +107,7 @@ namespace FSBeheer.ViewModel
         private void OpenCreateEvent()
         {
             if (IsInternetConnected())
-                new CreateEditEventView().Show();
+                new CreateEditEventView().ShowDialog();
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
@@ -117,7 +117,7 @@ namespace FSBeheer.ViewModel
             if (IsInternetConnected())
             {
                 if (SelectedEvent != null)
-                    new CreateEditEventView(SelectedEvent.Id).Show();
+                    new CreateEditEventView(SelectedEvent.Id).ShowDialog();
             }
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");

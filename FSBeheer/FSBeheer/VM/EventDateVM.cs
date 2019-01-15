@@ -13,7 +13,13 @@ namespace FSBeheer.VM
 
         public EventDateVM(EventDate ed)
         {
-            _eventDate = ed;
+            if (ed != null) {
+                _eventDate = ed;
+            } else
+            {
+                _eventDate = new EventDate();
+            }
+            
         }
 
         public int Id

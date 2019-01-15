@@ -93,6 +93,11 @@ namespace FSBeheer.VM
             get { return _inspector.Inspections; }
         }
 
+        public ObservableCollection<Inspection> RecentInspection
+        {
+            get { return _inspector.Inspections; }
+        }
+
         public bool IsDeleted
         {
             get { return _inspector.IsDeleted; }

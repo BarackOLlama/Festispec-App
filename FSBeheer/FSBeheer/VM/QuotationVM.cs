@@ -10,61 +10,67 @@ namespace FSBeheer.VM
 {
     public class QuotationVM : ViewModelBase
     {
-        private Quotation _Quotation;
+        private Quotation _quotation;
 
         public QuotationVM(Quotation quotation)
         {
-            _Quotation = quotation;
+            _quotation = quotation;
+        }
+
+        public QuotationVM()
+        {
+            _quotation = new Quotation();
         }
 
         public int Id
         {
-            get { return _Quotation.Id; }
+            get { return _quotation.Id; }
+        }
+
+        internal Quotation ToModel()
+        {
+            return _quotation;
         }
 
         public decimal? Price
         {
-            get { return _Quotation.Price; }
+            get { return _quotation.Price; }
         }
 
         public DateTime? Date
         {
-            get { return _Quotation.Date; }
+            get { return _quotation.Date; }
         }
 
         public string Description
         {
-            get { return _Quotation.Description; }
+            get { return _quotation.Description; }
         }
 
         public int? CustomerId
         {
-            get { return _Quotation.CustomerId; }  
+            get { return _quotation.CustomerId; }
         }
 
         public CustomerVM Customer
         {
-            get { return new CustomerVM(_Quotation.Customer); }
+            get { return new CustomerVM(_quotation.Customer); }
+            set { _quotation.Customer = value.ToModel(); }
         }
 
         public int? InspectionId
         {
-            get { return _Quotation.InspectionId; }
+            get { return _quotation.InspectionId; }
         }
 
         public InspectionVM Inspection
         {
-            get { return new InspectionVM(_Quotation.Inspection); }
+            get { return new InspectionVM(_quotation.Inspection); }
         }
 
         public bool IsDeleted
         {
-            get { return _Quotation.IsDeleted; }
-        }
-
-        public Quotation ToModel
-        {
-            get { return _Quotation; }
+            get { return _quotation.IsDeleted; }
         }
     }
 }

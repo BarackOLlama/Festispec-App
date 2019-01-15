@@ -40,7 +40,7 @@ namespace FSBeheer.ViewModel
             return InternetGetConnectedState(out int description, 0);
         }
 
-        public RelayCommand<Window> CancelInspectionCommand { get; set; }
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
         public RelayCommand<Window> AddInspectionCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
         public RelayCommand PickInspectorsCommand { get; set; }
@@ -54,7 +54,7 @@ namespace FSBeheer.ViewModel
             Events = _context.EventCrud.GetAllEvents();
             Statuses = _context.StatusCrud.GetAllStatusVMs();
 
-            CancelInspectionCommand = new RelayCommand<Window>(CancelInspection);
+            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             AddInspectionCommand = new RelayCommand<Window>(AddInspection);
             CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
             PickInspectorsCommand = new RelayCommand(OpenAvailable);
@@ -105,9 +105,9 @@ namespace FSBeheer.ViewModel
             window.Close();
         }
 
-        private void CancelInspection(Window window)
+        private void CloseWindow(Window window)
         {
-            MessageBoxResult result = MessageBox.Show("Weet u zeker dat u deze inspectie wilt annuleren?", "Bevestig annulering inspectie", MessageBoxButton.OKCancel);
+            MessageBoxResult result = MessageBox.Show("Scherm sluiten?", "Scherm sluiten", MessageBoxButton.OKCancel);
             if (result == MessageBoxResult.OK)
             {
                 _context.Dispose();
@@ -154,7 +154,13 @@ namespace FSBeheer.ViewModel
         private bool InspectionIsValid()
         {
 
-            if (Inspection.InspectionDate.StartDate != null && Inspection.InspectionDate.EndDate != null && Inspection.InspectionDate.EndDate < Inspection.InspectionDate.StartDate)
+            if (Inspection.InspectionDate.StartDate == null)
+            {
+                MessageBox.Show("Een inspectie moet een startdatum hebben.");
+                return false;
+            }
+
+            if (Inspection.InspectionDate.EndDate < Inspection.InspectionDate.StartDate)
             {
                 MessageBox.Show("De einddatum mag niet voor de begindatum liggen.");
                 return false;
@@ -171,7 +177,7 @@ namespace FSBeheer.ViewModel
                 var regex = new Regex(@"^([0-1][0-9]|2[0-3]):([0-5][0-9])?:?([0-5][0-9])$");
                 if (!regex.IsMatch(Inspection.InspectionDate.StartTime.ToString()))
                 { 
-                    MessageBox.Show("De starttime is niet goed.");
+                    MessageBox.Show("De begintijd is niet goed.");
                     return false;
                 }
             }
@@ -181,12 +187,27 @@ namespace FSBeheer.ViewModel
                 var regex = new Regex(@"^([0-1][0-9]|2[0-3]):([0-5][0-9])?:?([0-5][0-9])$");
                 if (!regex.IsMatch(Inspection.InspectionDate.EndTime.ToString()))
                 {
-                    MessageBox.Show("De starttime is niet goed.");
+                    MessageBox.Show("De eindtijd is niet goed.");
                     return false;
                 }
             }
 
-            if (Inspection.Name != null && Inspection.Name.Trim() == string.Empty)
+            if (Inspection.InspectionDate.StartDate == Inspection.InspectionDate.EndDate)
+            {
+                if (Inspection.InspectionDate.StartTime > Inspection.InspectionDate.EndTime)
+                {
+                    MessageBox.Show("De eindtijd van een inspectie kan niet eerder dan de begintijd van de inspectie zijn.");
+                    return false;
+                }
+            }
+
+            if (Inspection.Name == null)
+            {
+                MessageBox.Show("Een inspectie moet een naam hebben.");
+                return false;
+            }
+
+            if (Inspection.Name.Trim() == string.Empty)
             {
                 MessageBox.Show("Een inspectie moet een naam hebben.");
                 return false;

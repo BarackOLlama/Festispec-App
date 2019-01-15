@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
         DataContext="{Binding CreateEditInspector, Source={StaticResource Locator}}"
-        Title="CreateEditInspectorView" Height="520" Width="800" Background="White">
+        Title="CreateEditInspectorView" Height="440" Width="800" Background="White">
     <StackPanel Margin="5">
 
         <StackPanel Margin="5">
@@ -33,12 +33,12 @@
                     </Grid.ColumnDefinitions>
 
 
-                    <Border Grid.Column="0" Grid.Row="0" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                    <!--<Border Grid.Column="0" Grid.Row="0" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                         <Label Foreground="Black" FontSize="12" Content="ID:" HorizontalAlignment="Right"></Label>
-                    </Border>
-                    <Border Grid.Column="0" Grid.Row="1" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                    </Border>-->
+                    <!--<Border Grid.Column="0" Grid.Row="1" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                         <Label Foreground="Black" FontSize="12" Content="AccountID:" VerticalAlignment="Center" HorizontalAlignment="Right"></Label>
-                    </Border>
+                    </Border>-->
                     <Border Grid.Column="0" Grid.Row="2" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                         <Label Foreground="Black" FontSize="12" Content="Naam:" HorizontalAlignment="Right"></Label>
                     </Border>
@@ -68,12 +68,12 @@
                     </Border>
 
 
-                    <Border Grid.Column="1" Grid.Row="0" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                    <!--<Border Grid.Column="1" Grid.Row="0" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                         <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.Id, Mode=OneWay}" FontSize="12" IsReadOnly="True"></TextBox>
-                    </Border>
-                    <Border Grid.Column="1" Grid.Row="1" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
+                    </Border>-->
+                    <!--<Border Grid.Column="1" Grid.Row="1" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                         <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.AccountId, Mode=OneWay}" FontSize="12" IsReadOnly="True"></TextBox>
-                    </Border>
+                    </Border>-->
                     <Border Grid.Column="1" Grid.Row="2" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                         <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.Name, Mode=TwoWay}" FontSize="12"></TextBox>
                     </Border>
@@ -93,10 +93,10 @@
                         <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.PhoneNumber, Mode=TwoWay}" FontSize="12"></TextBox>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="8" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.CertificationDate, Mode=TwoWay}" FontSize="12"></TextBox>
+                        <DatePicker Text="{Binding Inspector.CertificationDate, Mode=TwoWay}"></DatePicker>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="9" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.InvalidDate, Mode=TwoWay}" FontSize="12"></TextBox>
+                        <DatePicker Text="{Binding Inspector.InvalidDate, Mode=TwoWay}"></DatePicker>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="10" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                         <TextBox Foreground="Black" Background="LightGray" Text="{Binding Inspector.BankNumber, Mode=TwoWay}" FontSize="12"></TextBox>
@@ -107,8 +107,8 @@
 
             <StackPanel Margin="5" >
                 <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
-                    <Button Content="Annuleren" CommandParameter="{Binding ElementName=CreateEditInspectorView}" Command="{Binding DiscardCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
-                    <Button Content="Bevestig" Command="{Binding SaveChangesCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Annuleren" Command="{Binding DiscardCommand }" CommandParameter="{Binding ElementName=CreateEditWindow}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Bevestig" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditWindow}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
                 </DockPanel>
             </StackPanel>
 

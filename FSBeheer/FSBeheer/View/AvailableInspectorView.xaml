@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         x:Name="AvailableInspectorName"
         DataContext="{Binding AvailableInspector, Source={StaticResource Locator}}"
-        Title="AvailableInspectorView" Height="500" Width="950">
+        Title="Beschikbaarheid inspecteurs" Height="500" Width="950">
 
     <StackPanel Orientation="Horizontal">
         <StackPanel Orientation="Vertical">

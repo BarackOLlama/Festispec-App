@@ -1,6 +1,4 @@
-﻿using FSBeheer.ViewModel;
-using FSBeheer.VM;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,14 +15,13 @@ using System.Windows.Shapes;
 namespace FSBeheer.View
 {
     /// <summary>
-    /// Interaction logic for CreateEditContactView.xaml
+    /// Interaction logic for TestPDFView.xaml
     /// </summary>
-    public partial class CreateEditContactView : BaseView
+    public partial class TestPDFView : BaseView
     {
-        public CreateEditContactView(CustomerVM customer = null)
+        public TestPDFView()
         {
             InitializeComponent();
-            (DataContext as CreateEditContactViewModel).SetContact(customer);
         }
     }
 }
