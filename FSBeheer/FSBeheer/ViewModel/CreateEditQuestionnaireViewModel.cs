@@ -90,7 +90,9 @@ namespace FSBeheer.ViewModel
             QuestionnaireTemplateNames = new ObservableCollection<string>()
             {
                 "geen",
-                "Template A"
+                "Metal Festival",
+                "Winter Festival",
+                "Hard Bass Festival"
             };
             SelectedQuestionnaireTemplate = QuestionnaireTemplateNames.First();
         }
@@ -118,7 +120,8 @@ namespace FSBeheer.ViewModel
             if (Questionnaire.InspectionId == null)
             {
                 _selectedInspection = inspectionsList.FirstOrDefault();
-            }else
+            }
+            else
             {
                 _selectedInspection = inspectionsList
                     .FirstOrDefault(e => e.Id == Questionnaire.InspectionId);
@@ -232,8 +235,7 @@ namespace FSBeheer.ViewModel
         {
             switch (SelectedQuestionnaireTemplate)
             {
-                case "Template A":
-                    Questionnaire.Questions = new ObservableCollection<QuestionVM>();
+                case "Metal Festival":
                     _context.Questions.Add(new Question()
                     {
                         Content = "Hebben alle bands al hun nummers kunnen spelen?",
@@ -246,14 +248,99 @@ namespace FSBeheer.ViewModel
                         Content = "Zijn er nog grote complicaties opgetreden?",
                         QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
                         Comments = "Hierbij worden problemen bedoelt die voor vertraging van optredens e.d. hebben gezorgd.",
-                        Options= "A|Ja;B|Nee",
+                        Options = "A|Ja;B|Nee",
                         QuestionnaireId = Questionnaire.Id
                     });
                     _context.Questions.Add(new Question()
                     {
                         Content = "Hoe is de sfeer?",
                         QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
-                        Comments = "Deze vraag is het best beantwoord tegen het einde van het concert.",
+                        Comments = "Deze vraag is het best beantwoord tegen het einde van het festival.",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Zijn er moshpits ontstaan tijdens het festival?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
+                        Options="A|Het gehele festival is een moshpit;B|Een paar",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Is er veel gevaarlijk afval op het festival?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        Columns = "Met gevaarlijk afval worden glasscherven e.d. bedoeld; dingen waar bezoekers zich snel aan kunnen bezeren.",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    break;
+                case "Winter Festival":
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Is er gluhwein te koop?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Dragen veel mensen kleding met een kerst-thema?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
+                        Options = "A|Jazeker;B|Nee;C|Misschien",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Is de Kerstman er ook?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Bij welke band was het publiek het meest enthousiast?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Heeft het tijdens het festival gesneeuwd?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
+                        Options = "A|Ja;B|Nee;C|Een heel klein beetje",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    break;
+                case "Hard Bass Festival":
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Hoe hoog is het volume dicht bij het podium?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
+                        Options="A|100DB of lager;B|120DB+;C|Mijn oren zijn stuk",
+                        Comments ="Gebruik hiervoor de decibelmeter.",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Lijken er veel bezoekers onder de invloed te zijn van iets anders dan alcohol?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
+                        Options = "A|Nee;B|Ja, een paar.;C|Het is een festival.",
+                        Comments="Onder de invloed van andere middelen zoals drugs en dergelijke middelen",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Is het druk op het festival?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Ligt er veel glas op de grond?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Multiple Choice vraag"),
+                        Options = "A|Ja;B|Nee",
+                        QuestionnaireId = Questionnaire.Id
+                    });
+                    _context.Questions.Add(new Question()
+                    {
+                        Content = "Is het druk bij de bars?",
+                        QuestionType = _context.QuestionTypes.FirstOrDefault(e => e.Name == "Open Vraag"),
                         QuestionnaireId = Questionnaire.Id
                     });
                     break;
