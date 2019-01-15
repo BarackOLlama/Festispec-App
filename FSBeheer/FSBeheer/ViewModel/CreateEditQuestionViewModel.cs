@@ -149,8 +149,6 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-
-
             if (Question.Content == null)
             {
                 MessageBox.Show("Een vraag mag niet leeg zijn..");
@@ -296,6 +294,7 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestiging", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
+                    Question.Type = SelectedQuestionType.ToModel();
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateQuestions");
                     window.Close();
