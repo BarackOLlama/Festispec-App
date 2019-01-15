@@ -55,6 +55,12 @@ namespace FSBeheer.VM
             set { _question.Columns = value; }
         }
 
+        public string Scale
+        {
+            get { return _question.Scale; }
+            set { _question.Scale = value; }
+        }
+
         public QuestionType Type
         {
             set { _question.QuestionType = value; }
