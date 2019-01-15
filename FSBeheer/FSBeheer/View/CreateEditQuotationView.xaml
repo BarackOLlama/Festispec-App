@@ -10,11 +10,15 @@
 
     <StackPanel VerticalAlignment="Center">
         <StackPanel Width="550" HorizontalAlignment="Center" Margin="0,30,0,20">
-            <local:FilteredComboBox ItemsSource="{Binding Customers}"
-                SelectedItem="{Binding Quotation.Customer}"
-                SelectedIndex="{Binding SelectedIndex}"
-                DisplayMemberPath="Name"
-                Template="{DynamicResource FilteredComboBoxTemplate}"/>
+            <ComboBox ItemsSource="{Binding Customers}"
+                                            SelectedItem="{Binding Quotation.Customer}"
+                                            SelectedIndex="{Binding SelectedIndex}"
+                                            DisplayMemberPath="Name"
+                                            IsEditable="True"
+                                            IsTextSearchEnabled="True"
+                                            TextSearch.TextPath="Name"
+                                            StaysOpenOnEdit="True"
+                                            Width="250"/>
         </StackPanel>
 
         <StackPanel Width="550" HorizontalAlignment="Center" Margin="0,0,0,0" >
@@ -25,7 +29,7 @@
                         <Label Height="50" Content="Offertegegevens" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="18"></Label>
                     </StackPanel>
 
-                    <Grid Height="140">
+                    <Grid Height="140" Margin="0,0,0,10">
                         <Grid.ColumnDefinitions>
 
                             <ColumnDefinition Width="110" />
@@ -38,23 +42,20 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
                             <RowDefinition Height="*" />
-                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
 
 
-                        <Label Grid.Row="0" Grid.Column="0" Content="Nummer:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <Label Grid.Row="1" Grid.Column="0" Content="Klantnaam:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <Label Grid.Row="2" Grid.Column="0" Content="E-mailadres:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <Label Grid.Row="3" Grid.Column="0" Content="Telefoonnummer:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <Label Grid.Row="4" Grid.Column="0" Content="Postcode:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <Label Grid.Row="0" Grid.Column="0" Content="Klantnaam:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <Label Grid.Row="1" Grid.Column="0" Content="E-mailadres:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <Label Grid.Row="2" Grid.Column="0" Content="Telefoonnummer:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <Label Grid.Row="3" Grid.Column="0" Content="Postcode:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
 
-                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedCustomer.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedCustomer.Address}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedCustomer.City}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedCustomer.Zipcode}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding }" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SelectedCustomer.Name}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedCustomer.Address}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SelectedCustomer.City}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding SelectedCustomer.Zipcode}" Template="{DynamicResource CreateEditTextBoxTemplate}"/>
 
                     </Grid>
 
