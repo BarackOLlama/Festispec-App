@@ -49,7 +49,8 @@ namespace FSBeheer.Migrations
                 new QuestionType() { Name = "Open Vraag" },
                 new QuestionType() { Name = "Multiple Choice vraag" },
                 new QuestionType() { Name = "Open Tabelvraag" },
-                new QuestionType() { Name = "Multiple Choice Tabelvraag" }
+                new QuestionType() { Name = "Multiple Choice Tabelvraag" },
+                new QuestionType() { Name = "Schaal Vraag" }
             };
             context.QuestionTypes.AddRange(questiontypes);
 
@@ -116,7 +117,7 @@ namespace FSBeheer.Migrations
                     Salt = sjakieSalt,
                     IsAdmin = true,
                     IsDeleted = false
-                }            
+                }
             };
             context.Accounts.AddRange(accounts);
 

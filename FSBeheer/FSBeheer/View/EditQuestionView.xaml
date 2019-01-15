@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="Vraag aanpassen" Height="450" Width="340"
+        Title="Vraag aanpassen" Height="510" Width="340"
         DataContext="{Binding EditQuestion, Source={StaticResource Locator}}">
     <StackPanel>
         <TextBlock Text="Vraag aanpassen" FontSize="28" Margin="5,5,0,0"/>
@@ -20,6 +20,8 @@
         <TextBox Text="{Binding Question.Options}" ToolTip="Voorbeeld: A|Ja;B|Nee" IsEnabled="{Binding OptionsIsEnabled}" Margin="10"></TextBox>
         <TextBlock Text="Kolommen" ToolTip="Voorbeeld: 1|Kolomnaam 1|Kolomnaam 2" Margin="10,5,0,0"></TextBlock>
         <TextBox Text="{Binding Question.Columns}" ToolTip="Voorbeeld: 1|Kolomnaam 1|Kolomnaam 2" IsEnabled="{Binding ColumnsIsEnabled}" Margin="10"></TextBox>
+        <TextBlock Text="Schaal" ToolTip="1:2:Negatief:Positief" Margin="10,5,0,0"></TextBlock>
+        <TextBox Text="{Binding Question.Scale}" ToolTip="1:2:Negatief:Positief" IsEnabled="{Binding ScaleIsEnabled}" Margin="10"></TextBox>
         <Grid Margin="10,5,0,0">
             <Button Content="Opslaan" Command="{Binding SaveQuestionChangesCommand}" CommandParameter="{Binding ElementName=EditWindow}"
                     Width="100"  HorizontalAlignment="Left" Margin="5,5,0,0" />
