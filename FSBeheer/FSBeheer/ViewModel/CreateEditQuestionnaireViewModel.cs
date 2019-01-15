@@ -4,13 +4,9 @@ using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
@@ -23,10 +19,7 @@ namespace FSBeheer.ViewModel
         private QuestionVM _selectedQuestion;
         public QuestionVM SelectedQuestion
         {
-            get
-            {
-                return _selectedQuestion;
-            }
+            get { return _selectedQuestion; }
             set
             {
                 _selectedQuestion = value;
@@ -38,17 +31,7 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<string> QuestionnaireTemplateNames { get; set; }
         public ObservableCollection<InspectionVM> Inspections { get; set; }
         public ObservableCollection<QuestionVM> Questions { get; set; }
-        private InspectionVM _selectedInspection;
-        public InspectionVM SelectedInspection
-        {
-            get { return _selectedInspection; }
-            set
-            {
-                _selectedInspection = value;
-                base.RaisePropertyChanged(nameof(SelectedInspection));
-                Questionnaire.InspectionId = _selectedInspection.Id;
-            }
-        }
+        public int SelectedIndex { get; set; }
 
         public RelayCommand OpenCreateQuestionViewCommand { get; set; }
         public RelayCommand<Window> SaveQuestionnaireChangesCommand { get; set; }
@@ -111,21 +94,21 @@ namespace FSBeheer.ViewModel
 
         private void FetchAndSetInspectionNumbersAndSelectedInspection()
         {
-            var inspectionsList = _context
-                .Inspections
-                .ToList()
-                .Where(e => !e.IsDeleted)
-                .Select(e => new InspectionVM(e));
-            Inspections = new ObservableCollection<InspectionVM>(inspectionsList);
-            if (Questionnaire.InspectionId == null)
+            Inspections = _context.InspectionCrud.GetAllInspections();
+            if (Questionnaire.Inspection == null)
             {
-                _selectedInspection = inspectionsList.FirstOrDefault();
+                Questionnaire.Inspection = new InspectionVM();
             }
-            else
-            {
-                _selectedInspection = inspectionsList
-                    .FirstOrDefault(e => e.Id == Questionnaire.InspectionId);
-            }
+            SelectedIndex = GetIndex(Questionnaire.Inspection, Inspections);
+            RaisePropertyChanged(nameof(SelectedIndex));
+        }
+
+        private int GetIndex(InspectionVM Obj, ObservableCollection<InspectionVM> List)
+        {
+            for (int i = 0; i < List.Count; i++)
+                if (List[i].Id == Obj.Id)
+                    return i;
+            return -1;
         }
 
         private void FetchAndSetQuestions(int questionnaireId)
