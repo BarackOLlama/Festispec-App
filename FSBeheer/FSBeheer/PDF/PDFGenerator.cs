@@ -150,6 +150,21 @@ namespace FSBeheer.ViewModel
             MakeFrontPage();
 
             // foreach question, new page 
+            foreach (var question in QuestionsList)
+            {
+                switch(question.Type.Name)
+                {
+                    case "Open Vraag":
+
+                        break;
+                    case "Open Tabelvraag":
+                        break;
+                    case "Multiple Choice Tabelvraag":
+                        break;
+                    case "Multiple Choice vraag":
+                        break;
+                }
+            }
             PdfPage page2 = document.AddPage();
             XGraphics gfx2 = XGraphics.FromPdfPage(page2);
 
