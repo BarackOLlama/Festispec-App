@@ -47,6 +47,7 @@ namespace FSBeheer.PDF
                 }
             }
             else
+            // bar
             {
                 BarChart = new CartesianChart();
 
@@ -81,6 +82,7 @@ namespace FSBeheer.PDF
                         });
                     }
                 }
+                BarChart.MinHeight = 300;
             }
         }
 
@@ -90,6 +92,13 @@ namespace FSBeheer.PDF
             if (PieChart != null) chart = PieChart;
             else if (BarChart != null) chart = BarChart;
             else return null;
+
+           
+
+            chart.Width = 300;
+            chart.Height = 300;
+
+            chart.Update(true, true);
 
             var rtb = new RenderTargetBitmap((int)chart.ActualWidth, (int)chart.ActualHeight, 96, 96, PixelFormats.Pbgra32);
             rtb.Render(chart);

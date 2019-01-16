@@ -1,4 +1,5 @@
-﻿using FSBeheer.VM;
+﻿using FSBeheer.PDF;
+using FSBeheer.VM;
 using PdfSharp.Drawing;
 using PdfSharp.Drawing.Layout;
 using PdfSharp.Pdf;
@@ -68,12 +69,18 @@ namespace FSBeheer.ViewModel
             tf = new XTextFormatter(gfx);
 
             // Logo
-            string path2 = Directory.GetCurrentDirectory() + "\\Resources\\festispecLogo.jpg";
-            if (File.Exists(path2))
-            {
-                XImage image2 = XImage.FromFile(path2);
-                gfx.DrawImage(image2, page1.Width * 0.65, page1.Height * 0.1, 122, 33);
-            }
+            //string path2 = Directory.GetCurrentDirectory() + "\\Resources\\festispecLogo.jpg";
+            //if (File.Exists(path2))
+            //{
+            //    XImage image2 = XImage.FromFile(path2);
+            //    gfx.DrawImage(image2, page1.Width * 0.65, page1.Height * 0.1, 122, 33);
+            //}
+
+            // image test
+            // QuestionsList[1] is een multiple choice
+            ChartGenerator chartgen = new ChartGenerator(QuestionsList[0], "Bar");
+            XImage image2 = chartgen.GetImageFromChart();
+            gfx.DrawImage(image2, page1.Width * 0.65, page1.Height * 0.1, 122, 33);
 
             // Info
             gfx.DrawString("Festispec Rapportage: " + DateTime.Now.ToShortDateString(), 
