@@ -5,6 +5,8 @@ using LiveCharts.Wpf.Charts.Base;
 using PdfSharp.Drawing;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -28,7 +30,12 @@ namespace FSBeheer.PDF
 
             if (ChartType == "Pie")
             {
-                PieChart = new PieChart();
+                PieChart = new PieChart
+                {
+                    DisableAnimations = true,
+                    Width = 300,
+                    Height = 300
+                };
 
                 foreach (Option option in Options)
                 {
@@ -49,14 +56,19 @@ namespace FSBeheer.PDF
             else
             // bar
             {
-                BarChart = new CartesianChart();
+                BarChart = new CartesianChart
+                {
+                    DisableAnimations = true,
+                    Width = 300,
+                    Height = 300
+                };
 
                 BarChart.AxisY.Add(new Axis
                 {
                     Title = "Aantal keer gegeven",
                     MinValue = 0,
                     MaxValue = Options.Count,
-                    Separator = new Separator
+                    Separator = new LiveCharts.Wpf.Separator
                     {
                         Step = 1
                     }
@@ -82,7 +94,6 @@ namespace FSBeheer.PDF
                         });
                     }
                 }
-                BarChart.MinHeight = 300;
             }
         }
 
@@ -93,12 +104,14 @@ namespace FSBeheer.PDF
             else if (BarChart != null) chart = BarChart;
             else return null;
 
-           
-
-            chart.Width = 300;
-            chart.Height = 300;
-
-            chart.Update(true, true);
+            var viewbox = new Viewbox
+            {
+                Child = chart
+            };
+            viewbox.Measure(chart.RenderSize);
+            viewbox.Arrange(new Rect(new Point(0, 0), chart.RenderSize));
+            chart.Update(true, true); //force chart redraw
+            viewbox.UpdateLayout();
 
             var rtb = new RenderTargetBitmap((int)chart.ActualWidth, (int)chart.ActualHeight, 96, 96, PixelFormats.Pbgra32);
             rtb.Render(chart);

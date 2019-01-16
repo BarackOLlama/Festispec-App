@@ -77,10 +77,11 @@ namespace FSBeheer.ViewModel
             //}
 
             // image test
-            // QuestionsList[1] is een multiple choice
+            // QuestionsList[0] is een multiple choice
             ChartGenerator chartgen = new ChartGenerator(QuestionsList[0], "Bar");
             XImage image2 = chartgen.GetImageFromChart();
-            gfx.DrawImage(image2, page1.Width * 0.65, page1.Height * 0.1, 122, 33);
+
+            gfx.DrawImage(image2, page1.Width * 0.4, page1.Height * 0.1, image2.PixelWidth, image2.PixelHeight);
 
             // Info
             gfx.DrawString("Festispec Rapportage: " + DateTime.Now.ToShortDateString(), 
