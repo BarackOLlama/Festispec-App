@@ -21,20 +21,24 @@ namespace FSBeheer.PDF
         public ObservableCollection<Option> Options { get; set; }
         public ObservableCollection<AnswerVM> Answers { get; set; }
 
-        public ChartGenerator(QuestionVM SelectedQuestion, string ChartType)
+        public ChartGenerator(QuestionVM SelectedQuestion, string ChartType, int width, int height)
         {
             _context = new CustomFSContext();
 
             Answers = _context.AnswerCrud.GetAllAnswersByQuestionId(SelectedQuestion.Id);
             Options = SelectedQuestion.OptionsDictionary;
 
+            bool disableAnim = true;
+            int w = width;
+            int h = height;
+
             if (ChartType == "Pie")
             {
                 PieChart = new PieChart
                 {
-                    DisableAnimations = true,
-                    Width = 300,
-                    Height = 300
+                    DisableAnimations = disableAnim,
+                    Width = w,
+                    Height = h
                 };
 
                 foreach (Option option in Options)
@@ -58,9 +62,9 @@ namespace FSBeheer.PDF
             {
                 BarChart = new CartesianChart
                 {
-                    DisableAnimations = true,
-                    Width = 300,
-                    Height = 300
+                    DisableAnimations = disableAnim,
+                    Width = w,
+                    Height = h
                 };
 
                 BarChart.AxisY.Add(new Axis
