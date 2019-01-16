@@ -178,7 +178,6 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Opslaan wijzigingen?", "Bevestiging", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    _questionnaire.InspectionId = SelectedInspection.Id;
                     _context.Entry(Questionnaire.ToModel()).State = System.Data.Entity.EntityState.Modified;
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateQuestionnaires");
@@ -228,6 +227,7 @@ namespace FSBeheer.ViewModel
                     {
                         SetQuestionnaireFromTemplate();
                     }
+                    _questionnaire.InspectionId = SelectedInspection.Id;
                     _context.Questionnaires.Add(Questionnaire.ToModel());
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateQuestionnaires");
