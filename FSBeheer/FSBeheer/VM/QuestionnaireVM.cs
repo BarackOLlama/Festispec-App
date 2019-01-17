@@ -27,6 +27,19 @@ namespace FSBeheer.VM
             set { _questionnaire.Id = value; }
         }
 
+        public int? InspectionId
+        {
+            get
+            {
+                return _questionnaire.InspectionId;
+            }
+            set
+            {
+                _questionnaire.InspectionId = value;
+                base.RaisePropertyChanged(nameof(InspectionId));
+            }
+        }
+
         public string Name
         {
             get
