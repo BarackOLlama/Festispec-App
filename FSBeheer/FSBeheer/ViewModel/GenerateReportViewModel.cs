@@ -21,6 +21,7 @@ namespace FSBeheer.ViewModel
         public DateTime? EndDate { get; set; }
         public QuestionnaireVM Questionnaire { get; set; }
         public ObservableCollection<QuestionVM> Questions { get; set; }
+        public ObservableCollection<QuestionPDFVM> QuestionPDFs { get; set; }
         public RelayCommand CreateStandardPDFCommand { get; set; }
 
         private PDFGenerator pdfGenerator;
@@ -119,7 +120,10 @@ namespace FSBeheer.ViewModel
         private void RetrieveQuestions()
         {
             if (Questionnaire != null)
-                Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
+            {
+                var Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
+                QuestionPDFs = _context.QuestionPDFCrud.ConvertQuestionVMToQuestionPDFVM(Questions);
+            } 
         }
 
         public void DoNotShowMethod()

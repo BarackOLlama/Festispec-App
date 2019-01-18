@@ -124,6 +124,7 @@
     <Compile Include="Crud\EventCrud.cs" />
     <Compile Include="Crud\QuestionCrud.cs" />
     <Compile Include="Crud\QuestionnaireCrud.cs" />
+    <Compile Include="Crud\QuestionPDFCrud.cs" />
     <Compile Include="Crud\QuestionTypeCrud.cs" />
     <Compile Include="Crud\QuotationCrud.cs" />
     <Compile Include="Crud\StatusCrud.cs" />

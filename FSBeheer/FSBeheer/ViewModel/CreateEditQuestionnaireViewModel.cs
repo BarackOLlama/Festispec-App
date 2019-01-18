@@ -97,7 +97,7 @@ namespace FSBeheer.ViewModel
             SaveQuestionnaireChangesCommand = new RelayCommand<Window>(SaveQuestionnaireChanges);
             OpenEditQuestionViewCommand = new RelayCommand(OpenEditQuestionView);
             DeleteQuestionCommand = new RelayCommand(DeleteQuestion);
-            CreateQuestionnaireCommand = new RelayCommand<Window>(CreateQuestionnaire);
+            //CreateQuestionnaireCommand = new RelayCommand<Window>(CreateQuestionnaire);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
@@ -196,33 +196,33 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        private void CreateQuestionnaire(Window window)
-        {
-            if (!QuestionnaireIsValid()) return;
+        //private void CreateQuestionnaire(Window window)
+        //{
+        //    if (!QuestionnaireIsValid()) return;
 
-            if (IsInternetConnected())
-            {
-                var result = MessageBox.Show("Opslaan nieuwe vragenlijst?", "Nieuwe vragenlijst", MessageBoxButton.OKCancel);
+        //    if (IsInternetConnected())
+        //    {
+        //        var result = MessageBox.Show("Opslaan nieuwe vragenlijst?", "Nieuwe vragenlijst", MessageBoxButton.OKCancel);
 
-                if (result == MessageBoxResult.OK)
-                {
-                    if (SelectedQuestionnaireTemplate != "geen")
-                    {
-                        SetQuestionnaireFromTemplate();
-                    }
-                    _questionnaire.InspectionId = SelectedInspection.Id;
-                    _context.Questionnaires.Add(Questionnaire.ToModel());
-                    _context.SaveChanges();
-                    Messenger.Default.Send(true, "UpdateQuestionnaires");
-                    window.Close();
-                }
+        //        if (result == MessageBoxResult.OK)
+        //        {
+        //            if (SelectedQuestionnaireTemplate != "geen")
+        //            {
+        //                SetQuestionnaireFromTemplate();
+        //            }
+        //            _questionnaire.InspectionId = SelectedInspection.Id;
+        //            _context.Questionnaires.Add(Questionnaire.ToModel());
+        //            _context.SaveChanges();
+        //            Messenger.Default.Send(true, "UpdateQuestionnaires");
+        //            window.Close();
+        //        }
 
-            }
-            else
-            {
-                MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
-            }
-        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
+        //    }
+        //}
 
         public void SetQuestionnaireFromTemplate()
         {

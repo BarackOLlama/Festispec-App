@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.VM
 {
-    class QuestionPDFVM
+    public class QuestionPDFVM
     {
         private QuestionVM _questionVM;
 
@@ -21,9 +21,21 @@ namespace FSBeheer.VM
             {
                 return _questionVM.Content;
             }
-            set
-            {
+        }
 
+        public string Name
+        {
+            get
+            {
+                return _questionVM.Type.Name;
+            }
+        }
+
+        public string Comments
+        {
+            get
+            {
+                return _questionVM.Comments;
             }
         }
 
