@@ -143,6 +143,12 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
+            if(Questionnaire.Inspection == null)
+            {
+                MessageBox.Show("Een vragenlijst moet bij een inspectie horen.");
+                return false;
+            }
+
             if (Questionnaire.Name.Trim() == string.Empty)
             {
                 MessageBox.Show("Een vragenlijst moet een vraag hebben.");
@@ -229,6 +235,7 @@ namespace FSBeheer.ViewModel
             switch (SelectedQuestionnaireTemplate)
             {
                 case "Metal Festival":
+                    #region metal festival
                     _context.Questions.Add(new Question()
                     {
                         Content = "Hebben alle bands al hun nummers kunnen spelen?",
@@ -243,7 +250,7 @@ namespace FSBeheer.ViewModel
                         Comments = "Hierbij worden problemen bedoelt die voor vertraging van optredens e.d. hebben gezorgd.",
                         Options = "A|Ja;B|Nee",
                         QuestionnaireId = Questionnaire.Id
-                    });
+                    }); 
                     _context.Questions.Add(new Question()
                     {
                         Content = "Hoe is de sfeer?",
@@ -266,7 +273,9 @@ namespace FSBeheer.ViewModel
                         QuestionnaireId = Questionnaire.Id
                     });
                     break;
+                #endregion metal festival
                 case "Winter Festival":
+                    #region winter festival
                     _context.Questions.Add(new Question()
                     {
                         Content = "Is er gluhwein te koop?",
@@ -300,7 +309,9 @@ namespace FSBeheer.ViewModel
                         QuestionnaireId = Questionnaire.Id
                     });
                     break;
+                #endregion winter festival
                 case "Hard Bass Festival":
+                    #region hard bass
                     _context.Questions.Add(new Question()
                     {
                         Content = "Hoe hoog is het volume dicht bij het podium?",
@@ -337,6 +348,8 @@ namespace FSBeheer.ViewModel
                         QuestionnaireId = Questionnaire.Id
                     });
                     break;
+                    #endregion hard bass
+
             }
         }
 

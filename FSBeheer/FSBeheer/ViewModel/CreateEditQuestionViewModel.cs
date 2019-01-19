@@ -43,6 +43,7 @@ namespace FSBeheer.ViewModel
             {
                 _selectedQuestionType = value;
                 base.RaisePropertyChanged(nameof(SelectedQuestionType));
+                _question.Type = _selectedQuestionType.ToModel();
                 HandleEnabledComponents();
             }
         }
@@ -175,6 +176,7 @@ namespace FSBeheer.ViewModel
 
         public bool QuestionIsValid()
         {
+            #region basic question validation
             if (Question.Type == null)
             {
                 MessageBox.Show("Een vraag moet een vraagtype hebben.");
@@ -198,7 +200,9 @@ namespace FSBeheer.ViewModel
                 MessageBox.Show("Een vraag moet een vraagtype hebben.");
                 return false;
             }
+            #endregion basic question validation
 
+            #region multiple choice validation
             Regex multiplechoiceRegex = new Regex("^(\\w{1}\\|{1}\\w{1,};?){2,}");
             //https://regexr.com/
             //example data
@@ -220,9 +224,10 @@ namespace FSBeheer.ViewModel
                         "Voorbeeld: A|Waar;B|Niet waar");
                     return false;
                 }
-
             }
+            #endregion multiple choice validation
 
+            #region tabel validation
             if (SelectedQuestionType.Name == "Open Tabelvraag" || SelectedQuestionType.Name == "Multiple Choice Tabelvraag")
             {
                 if (Question.Columns == null)
@@ -246,7 +251,10 @@ namespace FSBeheer.ViewModel
                         "en een kolomnaam.\nVolg alle behalve de laatste kolomnaam met een '|'. ");
                     return false;
                 }
+
             }
+            #endregion tabel validation
+            #region schaal vraag validation
 
             if (SelectedQuestionType.Name == "Schaal Vraag")
             {
@@ -277,6 +285,7 @@ namespace FSBeheer.ViewModel
                     }
                 }
             }
+            #endregion schaal vraag validation
 
             return true;
         }
@@ -326,29 +335,7 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestiging", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    //clear irrelevant fields to avoid confusion in case the user mistakenly filled them in.
-                    if (SelectedQuestionType.Name == "Multiple Choice Vraag")
-                    {//clear columns
-                        Question.Columns = null;
-                        Question.Scale = null;
-                    }
-                    else if (SelectedQuestionType.Name == "Open Vraag")
-                    {//clear options and columns
-                        Question.Columns = null;
-                        Question.Options = null;
-                        Question.Scale = null;
-                    }
-                    else if (SelectedQuestionType.Name == "Open Tabelvraag")
-                    {//clear options
-                        Question.Options = null;
-                        Question.Scale = null;
-                    }
-                    else if (SelectedQuestionType.Name == "Schaal Vraag")
-                    {//only scale.
-                        Question.Options = null;
-                        Question.Columns = null;
-                    }
-
+                    RemoveRedundantProperties();
                     Question.Type = SelectedQuestionType.ToModel();
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateQuestions");
@@ -367,28 +354,7 @@ namespace FSBeheer.ViewModel
 
                 if (result == MessageBoxResult.OK)
                 {
-                    //clear irrelevant fields to avoid confusion in case the user mistakenly filled them in.
-                    if (SelectedQuestionType.Name == "Multiple Choice Vraag")
-                    {//clear columns
-                        Question.Columns = null;
-                        Question.Scale = null;
-                    }
-                    else if (SelectedQuestionType.Name == "Open Vraag")
-                    {//clear options and columns
-                        Question.Columns = null;
-                        Question.Options = null;
-                        Question.Scale = null;
-                    }
-                    else if (SelectedQuestionType.Name == "Open Tabelvraag")
-                    {//clear options
-                        Question.Options = null;
-                        Question.Scale = null;
-                    }
-                    else if (SelectedQuestionType.Name == "Schaal Vraag")
-                    {//only scale.
-                        Question.Options = null;
-                        Question.Columns = null;
-                    }
+                    RemoveRedundantProperties();
                     _context.Questions.Add(Question.ToModel());
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateQuestions");
@@ -398,6 +364,32 @@ namespace FSBeheer.ViewModel
             else
             {
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
+            }
+        }
+
+        private void RemoveRedundantProperties()
+        {
+            //clear irrelevant fields to avoid confusion in case the user mistakenly filled them in.
+            if (SelectedQuestionType.Name == "Multiple Choice Vraag")
+            {//clear columns
+                Question.Columns = null;
+                Question.Scale = null;
+            }
+            else if (SelectedQuestionType.Name == "Open Vraag")
+            {//clear options and columns
+                Question.Columns = null;
+                Question.Options = null;
+                Question.Scale = null;
+            }
+            else if (SelectedQuestionType.Name == "Open Tabelvraag")
+            {//clear options
+                Question.Options = null;
+                Question.Scale = null;
+            }
+            else if (SelectedQuestionType.Name == "Schaal Vraag")
+            {//only scale.
+                Question.Options = null;
+                Question.Columns = null;
             }
         }
 
