@@ -176,6 +176,7 @@ namespace FSBeheer.ViewModel
 
         public bool QuestionIsValid()
         {
+            #region basic question validation
             if (Question.Type == null)
             {
                 MessageBox.Show("Een vraag moet een vraagtype hebben.");
@@ -199,7 +200,9 @@ namespace FSBeheer.ViewModel
                 MessageBox.Show("Een vraag moet een vraagtype hebben.");
                 return false;
             }
+            #endregion basic question validation
 
+            #region multiple choice validation
             Regex multiplechoiceRegex = new Regex("^(\\w{1}\\|{1}\\w{1,};?){2,}");
             //https://regexr.com/
             //example data
@@ -221,9 +224,10 @@ namespace FSBeheer.ViewModel
                         "Voorbeeld: A|Waar;B|Niet waar");
                     return false;
                 }
-
             }
+            #endregion multiple choice validation
 
+            #region tabel validation
             if (SelectedQuestionType.Name == "Open Tabelvraag" || SelectedQuestionType.Name == "Multiple Choice Tabelvraag")
             {
                 if (Question.Columns == null)
@@ -247,7 +251,10 @@ namespace FSBeheer.ViewModel
                         "en een kolomnaam.\nVolg alle behalve de laatste kolomnaam met een '|'. ");
                     return false;
                 }
+
             }
+            #endregion tabel validation
+            #region schaal vraag validation
 
             if (SelectedQuestionType.Name == "Schaal Vraag")
             {
@@ -278,6 +285,7 @@ namespace FSBeheer.ViewModel
                     }
                 }
             }
+            #endregion schaal vraag validation
 
             return true;
         }
