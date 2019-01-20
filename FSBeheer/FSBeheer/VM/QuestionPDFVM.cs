@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FSBeheer.Model;
+using GalaSoft.MvvmLight;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.VM
 {
-    public class QuestionPDFVM
+    public class QuestionPDFVM : ViewModelBase
     {
         private QuestionVM _questionVM;
 
@@ -39,6 +41,14 @@ namespace FSBeheer.VM
             }
         }
 
+        public QuestionType Type
+        {
+            get
+            {
+                return _questionVM.Type;
+            }
+        }
+
         private bool _doNotShow;
         public bool DoNotShow
         {
@@ -49,7 +59,8 @@ namespace FSBeheer.VM
             set
             {
                 _doNotShow = value;
-                PieChart = BarChart = false;
+                _pieChart = _barChart = false;
+                RaisePropertyChanged("");
             }
         }
 
@@ -63,7 +74,8 @@ namespace FSBeheer.VM
             set
             {
                 _pieChart = value;
-                DoNotShow = BarChart = false;
+                _doNotShow = _barChart = false;
+                RaisePropertyChanged("");
             }
         }
 
@@ -77,7 +89,8 @@ namespace FSBeheer.VM
             set
             {
                 _barChart = value;
-                DoNotShow = PieChart = false;
+                _doNotShow = _pieChart = false;
+                RaisePropertyChanged("");
             }
         }
     }

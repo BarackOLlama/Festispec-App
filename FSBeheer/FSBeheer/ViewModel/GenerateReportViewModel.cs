@@ -34,21 +34,9 @@ namespace FSBeheer.ViewModel
 
         public string Advice { get; set; }
 
-        public bool BarChart { get; set; }
-
-        public bool DoNotShow { get;
-            set; }
-
-        public string DoNotShowTestProp { get;
-            set; }
-
-        public bool PieChart { get; set; }
-
         public RelayCommand CreateBarChartCommand { get; set; }
 
         public RelayCommand CreatePieChartCommand { get; set; }
-
-        public RelayCommand DoNotShowCommand { get; set; }
 
         public GenerateReportViewModel()
         {
@@ -56,11 +44,12 @@ namespace FSBeheer.ViewModel
             Description = "";
 
             CreateStandardPDFCommand = new RelayCommand(CreatePDF);
-            //DoNotShowCommand = new RelayCommand(DoNotShowMethod, )
         }
 
         private void CreatePDF()
         {
+            if (QuestionPDFs.Count == 0)
+                MessageBox.Show("Je kunt voor deze inspectie geen rapportage uitdraaien, omdat deze inspectie geen vragen bevat.");
             if (Filename != null && Title != null && Questions != null)
             {
                 pdfGenerator = new PDFGenerator(Filename, 
@@ -90,6 +79,7 @@ namespace FSBeheer.ViewModel
                 RetrieveCustomer(SelectedInspection);
                 RetrieveDate(SelectedInspection);
             }
+            RaisePropertyChanged(nameof(QuestionPDFs));
         }
 
         private void RetrieveCustomer(InspectionVM inspectionVM)
@@ -126,9 +116,9 @@ namespace FSBeheer.ViewModel
             } 
         }
 
-        public void DoNotShowMethod()
+        private void PassCorrectQuestions()
         {
-
+            
         }
     }
 }
