@@ -182,7 +182,7 @@ namespace FSBeheer.Migrations
             };
             context.Inspectors.AddRange(inspectors);
 
-            var availabilities = new List<ScheduleItem>
+            var scheduleItems = new List<ScheduleItem>
             {
                 new ScheduleItem()
                 {
@@ -240,7 +240,7 @@ namespace FSBeheer.Migrations
                     IsDeleted = false
                 }
             };
-            context.ScheduleItems.AddRange(availabilities);
+            context.ScheduleItems.AddRange(scheduleItems);
 
             var statuses = new List<Status>
             {

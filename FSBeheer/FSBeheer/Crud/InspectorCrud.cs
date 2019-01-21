@@ -61,7 +61,7 @@ namespace FSBeheer.Crud
                 .ToList()
                 .Where(i => IsAvailable(
                     new ObservableCollection<ScheduleItemVM>(
-                        i.Availabilities.ToList()
+                        i.ScheduleItems.ToList()
                         .Select(a => new ScheduleItemVM(a))
                     ),
                     dateRange))
@@ -69,14 +69,14 @@ namespace FSBeheer.Crud
             return new ObservableCollection<InspectorVM>(inspectors);
         }
 
-        private bool IsAvailable(ObservableCollection<ScheduleItemVM> availabilities, List<DateTime> dateRange)
+        private bool IsAvailable(ObservableCollection<ScheduleItemVM> scheduleItems, List<DateTime> dateRange)
         {
             List<bool> availableList = new List<bool>();
-            foreach(ScheduleItemVM availability in availabilities)
+            foreach(ScheduleItemVM scheduleItem in scheduleItems)
             {
-                if(availability.Date > dateRange[0] && availability.Date < dateRange[1])
+                if(scheduleItem.Date > dateRange[0] && scheduleItem.Date < dateRange[1])
                 {
-                    if(availability.Scheduled == false)
+                    if(scheduleItem.Scheduled == false)
                     {
                         availableList.Add(true);
                     }

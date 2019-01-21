@@ -20,14 +20,13 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<InspectorVM> Inspectors { get; set; }
         public InspectorVM SelectedInspector { get; set; }
 
-        public ObservableCollection<AvailabilityVM> Availabilities { get; set; }
-        public ObservableCollection<AvailabilityVM> SelectedAvailabilities { get; set; }
+        public ObservableCollection<ScheduleItemVM> ScheduleItems { get; set; }
+        public ObservableCollection<ScheduleItemVM> SelectedScheduleItems { get; set; }
 
         public RelayCommand<Window> BackHomeCommand { get; set; }
-        public RelayCommand GetAvailabilityCommand { get; set; }
-        public RelayCommand NewAvailabilityCommand { get; set; }
-        public RelayCommand EditAvailabilityCommand { get; set; }
-        public RelayCommand DeleteAvailabilityCommand { get; set; }
+        public RelayCommand GetScheduleItemsCommand { get; set; }
+        public RelayCommand NewScheduleItemCommand { get; set; }
+        public RelayCommand DeleteScheduleItemsCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
         public RelayCommand<object> DatagridSelectionChangedCommand { get; set; }
 
@@ -44,9 +43,9 @@ namespace FSBeheer.ViewModel
             Messenger.Default.Register<bool>(this, "UpdateSchedule", e => Init());
 
             BackHomeCommand = new RelayCommand<Window>(CloseAction);
-            GetAvailabilityCommand = new RelayCommand(GetAvailabilities);
-            DeleteAvailabilityCommand = new RelayCommand(DeleteAvailability, AvailabilitySelected);
-            NewAvailabilityCommand = new RelayCommand(NewAvailability, InspectorSelected);
+            GetScheduleItemsCommand = new RelayCommand(GetScheduleItems);
+            DeleteScheduleItemsCommand = new RelayCommand(DeleteScheduleItems, ScheduleItemSelected);
+            NewScheduleItemCommand = new RelayCommand(NewScheduleItem, InspectorSelected);
             CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
             DatagridSelectionChangedCommand = new RelayCommand<object>(DataGridSelectionChanged);
         }
@@ -80,15 +79,15 @@ namespace FSBeheer.ViewModel
             RaisePropertyChanged(nameof(Inspectors));
         }
 
-        public void GetAvailabilities()
+        public void GetScheduleItems()
         {
             if (IsInternetConnected())
             {
                 if (SelectedInspector != null)
                 {
-                    Availabilities = _Context.AvailabilityCrud.GetAllAvailabilitiesByInspector(SelectedInspector.Id);
+                    ScheduleItems = _Context.ScheduleItemCrud.GetAllScheduleItemsByInspector(SelectedInspector.Id);
                 }
-                RaisePropertyChanged(nameof(Availabilities));
+                RaisePropertyChanged(nameof(ScheduleItems));
             }
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
@@ -97,16 +96,16 @@ namespace FSBeheer.ViewModel
         private void DataGridSelectionChanged(object dataset)
         {
             if(dataset != null)
-                SelectedAvailabilities = new ObservableCollection<AvailabilityVM>((dataset as IEnumerable).Cast<AvailabilityVM>());
+                SelectedScheduleItems = new ObservableCollection<ScheduleItemVM>((dataset as IEnumerable).Cast<ScheduleItemVM>());
         }
 
         private void CanExecuteChanged()
         {
-            DeleteAvailabilityCommand.RaiseCanExecuteChanged();
-            NewAvailabilityCommand.RaiseCanExecuteChanged();
+            DeleteScheduleItemsCommand.RaiseCanExecuteChanged();
+            NewScheduleItemCommand.RaiseCanExecuteChanged();
 
             RaisePropertyChanged(nameof(SelectedInspector));
-            RaisePropertyChanged(nameof(SelectedAvailabilities));
+            RaisePropertyChanged(nameof(SelectedScheduleItems));
         }
 
         private bool InspectorSelected()
@@ -114,9 +113,9 @@ namespace FSBeheer.ViewModel
             return SelectedInspector != null;
         }
 
-        private bool AvailabilitySelected()
+        private bool ScheduleItemSelected()
         {
-            return SelectedAvailabilities != null && SelectedAvailabilities.Count != 0;
+            return SelectedScheduleItems != null && SelectedScheduleItems.Count != 0;
         }
 
         private void CloseAction(Window window)
@@ -124,14 +123,14 @@ namespace FSBeheer.ViewModel
             window.Close();
         }
 
-        private void DeleteAvailability()
+        private void DeleteScheduleItems()
         {
             if (IsInternetConnected())
             {
                 var result = MessageBox.Show("Weet u zeker dat u deze roosteritems wilt verwijderen?\nLet op: Alleen roosteritems van het type Verlof kunnen hier verwijderd worden.", "Bevestigen", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    foreach(var item in SelectedAvailabilities)
+                    foreach(var item in SelectedScheduleItems)
                     {
 
                     }
@@ -141,7 +140,7 @@ namespace FSBeheer.ViewModel
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
         }
 
-        private void NewAvailability()
+        private void NewScheduleItem()
         {
             if (IsInternetConnected())
             {

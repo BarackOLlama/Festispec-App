@@ -33,16 +33,16 @@
                           Width="250">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding GetAvailabilityCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding GetScheduleItemCommand}"/>
                             <i:InvokeCommandAction Command="{Binding CanExecuteChangedCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </ComboBox>
             </StackPanel>
             <StackPanel Visibility="{Binding SelectedInspector, Converter={StaticResource NullVisibilityConverter}}">
-                <DataGrid Name="AvailabilityDataGrid"
-                          ItemsSource="{Binding Availabilities}"
-                          SelectedItem="{Binding SelectedAvailability}"
+                <DataGrid Name="ScheduleItemDataGrid"
+                          ItemsSource="{Binding ScheduleItems}"
+                          SelectedItem="{Binding SelectedScheduleItem}"
                           MaxHeight="250"
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
@@ -55,7 +55,7 @@
                     </DataGrid.Columns>
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding DatagridSelectionChangedCommand}" CommandParameter="{Binding ElementName=AvailabilityDataGrid, Path=SelectedItems}" />
+                            <i:InvokeCommandAction Command="{Binding DatagridSelectionChangedCommand}" CommandParameter="{Binding ElementName=ScheduleItemDataGrid, Path=SelectedItems}" />
                             <i:InvokeCommandAction Command="{Binding CanExecuteChangedCommand}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -64,8 +64,8 @@
         </StackPanel>
         <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"                    
                     Orientation="Horizontal" Margin="0,0,25,0">
-            <Button Content="Verwijder" Command="{Binding DeleteAvailabilityCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
-            <Button Content="Nieuw roosteritem" Command="{Binding NewAvailabilityCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+            <Button Content="Verwijder" Command="{Binding DeleteScheduleItemsCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+            <Button Content="Nieuw roosteritem" Command="{Binding NewScheduleItemCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
         </StackPanel>
     </StackPanel>
 </local:BaseView>

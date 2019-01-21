@@ -12,7 +12,7 @@ namespace FSBeheer.ViewModel
     {
         private CustomFSContext _Context;
 
-        public AvailabilityVM Availability { get; set; }
+        public ScheduleItemVM ScheduleItem { get; set; }
 
         public CreateEditScheduleViewModel()
         {

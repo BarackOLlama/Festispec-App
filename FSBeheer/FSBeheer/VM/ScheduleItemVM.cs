@@ -10,22 +10,22 @@ namespace FSBeheer.VM
 {
     public class ScheduleItemVM : ViewModelBase
     {
-        private ScheduleItem _Availability;
+        private ScheduleItem _ScheduleItem;
 
-        public ScheduleItemVM(ScheduleItem availability)
+        public ScheduleItemVM(ScheduleItem scheduleItem)
         {
-            _Availability = availability;
+            _ScheduleItem = scheduleItem;
         }
 
         public int Id
         {
-            get { return _Availability.Id; }
+            get { return _ScheduleItem.Id; }
         }
 
         public DateTime? Date
         {
-            get { return _Availability.Date; }
-            set { _Availability.Date = value; RaisePropertyChanged(nameof(Date)); }
+            get { return _ScheduleItem.Date; }
+            set { _ScheduleItem.Date = value; RaisePropertyChanged(nameof(Date)); }
         }
 
         public string DateString
@@ -35,30 +35,30 @@ namespace FSBeheer.VM
 
         public TimeSpan? AvailableStartTime
         {
-            get { return _Availability.AvailableStartTime; }
+            get { return _ScheduleItem.AvailableStartTime; }
         }
 
         public TimeSpan? AvailableEndTime
         {
-            get { return _Availability.AvailableEndTime; }
+            get { return _ScheduleItem.AvailableEndTime; }
         }
 
         public TimeSpan? ScheduleStartTime
         {
-            get { return _Availability.ScheduleStartTime; }
-            set { _Availability.ScheduleStartTime = value; RaisePropertyChanged(nameof(ScheduleStartTime)); }
+            get { return _ScheduleItem.ScheduleStartTime; }
+            set { _ScheduleItem.ScheduleStartTime = value; RaisePropertyChanged(nameof(ScheduleStartTime)); }
         }
 
         public TimeSpan? ScheduleEndTime
         {
-            get { return _Availability.ScheduleEndTime; }
-            set { _Availability.ScheduleEndTime = value; RaisePropertyChanged(nameof(ScheduleEndTime)); }
+            get { return _ScheduleItem.ScheduleEndTime; }
+            set { _ScheduleItem.ScheduleEndTime = value; RaisePropertyChanged(nameof(ScheduleEndTime)); }
         }
 
         public bool Scheduled
         {
-            get { return _Availability.Scheduled; }
-            set { _Availability.Scheduled = value; RaisePropertyChanged(nameof(Scheduled)); }
+            get { return _ScheduleItem.Scheduled; }
+            set { _ScheduleItem.Scheduled = value; RaisePropertyChanged(nameof(Scheduled)); }
         }
 
         public string ScheduledString
@@ -68,24 +68,24 @@ namespace FSBeheer.VM
 
         public int? InspectorId
         {
-            get { return _Availability.InspectorId; }
+            get { return _ScheduleItem.InspectorId; }
         }
 
         // not sure about this one
         public virtual Inspector Inspector
         {
-            get { return _Availability.Inspector; }
-            set { _Availability.Inspector = value; RaisePropertyChanged(nameof(Inspector)); }
+            get { return _ScheduleItem.Inspector; }
+            set { _ScheduleItem.Inspector = value; RaisePropertyChanged(nameof(Inspector)); }
         }
 
         internal ScheduleItem ToModel()
         {
-            return _Availability;
+            return _ScheduleItem;
         }
 
         public bool IsDeleted
         {
-            get { return _Availability.IsDeleted; }
+            get { return _ScheduleItem.IsDeleted; }
         }
     }
 }

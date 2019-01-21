@@ -23,7 +23,7 @@ namespace FSBeheer.Crud
                 .Where(s => s.IsDeleted == false)
                 .Where(s => s.Inspector.Id == inspectorId)
                 .Select(i => new ScheduleItemVM(i));
-            var _scheduleitems = new ObservableCollection<AvailabilityVM>(scheduleitems);
+            var _scheduleitems = new ObservableCollection<ScheduleItemVM>(scheduleitems);
             return _scheduleitems;
         }
 
@@ -49,7 +49,7 @@ namespace FSBeheer.Crud
             return _scheduleitem;
         }
 
-        public void RemoveScheduleItemByInspectorList(ObservableCollection<InspectorVM> inspectorList, InspectionVM inspection)
+        public void RemoveScheduleItemsByInspectorList(ObservableCollection<InspectorVM> inspectorList, InspectionVM inspection)
         {
             var startRemoveDate = inspection.InspectionDate.StartDate;
             var endRemoveDate = inspection.InspectionDate.EndDate;
