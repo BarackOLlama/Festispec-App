@@ -60,19 +60,19 @@ namespace FSBeheer.Crud
             var inspectors = CustomFSContext.Inspectors
                 .ToList()
                 .Where(i => IsAvailable(
-                    new ObservableCollection<AvailabilityVM>(
+                    new ObservableCollection<ScheduleItemVM>(
                         i.Availabilities.ToList()
-                        .Select(a => new AvailabilityVM(a))
+                        .Select(a => new ScheduleItemVM(a))
                     ),
                     dateRange))
                 .Select(i => new InspectorVM(i));
             return new ObservableCollection<InspectorVM>(inspectors);
         }
 
-        private bool IsAvailable(ObservableCollection<AvailabilityVM> availabilities, List<DateTime> dateRange)
+        private bool IsAvailable(ObservableCollection<ScheduleItemVM> availabilities, List<DateTime> dateRange)
         {
             List<bool> availableList = new List<bool>();
-            foreach(AvailabilityVM availability in availabilities)
+            foreach(ScheduleItemVM availability in availabilities)
             {
                 if(availability.Date > dateRange[0] && availability.Date < dateRange[1])
                 {
