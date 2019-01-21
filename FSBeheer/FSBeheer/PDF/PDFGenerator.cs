@@ -179,6 +179,7 @@ namespace FSBeheer.ViewModel
                         font, XBrushes.Black, x2, y2);
                         y += ls;
                         answersList = _context.AnswerCrud.GetAllAnswersByQuestionId(question.Id);
+                        
                         y += ls;
                         // antwoorden uit question crud met zijn id
                         // if y groter dan pagina > new page
@@ -203,9 +204,14 @@ namespace FSBeheer.ViewModel
                         font, XBrushes.Black, x2, y2);
                         y += ls;
                         break;
+                    case "Schaal Vraag":
+                        gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
+                        gfxAll.DrawString("Schaal vraag: " + question.Content,
+                        font, XBrushes.Black, x2, y2);
+                        y += ls;
+                        break;
                 }
             }
-
             SavePDF(_fileName);
         }
 
