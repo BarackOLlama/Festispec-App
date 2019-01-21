@@ -46,6 +46,7 @@ namespace FSBeheer.ViewModel
         {
             if (QuestionPDFs.Count == 0)
                 MessageBox.Show("Je kunt voor deze inspectie geen rapportage uitdraaien, omdat deze inspectie geen vragen bevat.");
+            PassCorrectQuestions();
             if (Filename != null && Title != null && Questions != null)
             {
                 pdfGenerator = new PDFGenerator(Filename, 
@@ -116,7 +117,14 @@ namespace FSBeheer.ViewModel
 
         private void PassCorrectQuestions()
         {
-            
+            var removeList = new List<QuestionVM>();
+            foreach (QuestionPDFVM questionPDF in QuestionPDFs)
+                if (questionPDF.DoNotShow)
+                    for (int i = Questions.Count - 1; i >= 0; i--)
+                        if (Questions[i].Content == questionPDF.Content)
+                            removeList.Add(Questions[i]);
+            foreach (QuestionVM question in removeList)
+                Questions.Remove(question);
         }
     }
 }
