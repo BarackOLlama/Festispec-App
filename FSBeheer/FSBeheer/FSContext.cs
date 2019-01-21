@@ -17,7 +17,6 @@ namespace FSBeheer
 
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Answer> Answers { get; set; }
-        public virtual DbSet<ScheduleItem> ScheduleItems { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Event> Events { get; set; }
@@ -30,6 +29,7 @@ namespace FSBeheer
         public virtual DbSet<QuestionType> QuestionTypes { get; set; }
         public virtual DbSet<Quotation> Quotations { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<ScheduleItem> ScheduleItems { get; set; }
         public virtual DbSet<Status> Statuses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

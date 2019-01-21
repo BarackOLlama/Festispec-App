@@ -1,0 +1,71 @@
+﻿<local:BaseView x:Class="FSBeheer.View.ScheduleManagementView"
+        x:Name="ScheduleManagementViewName"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:local="clr-namespace:FSBeheer.View"
+        mc:Ignorable="d"
+        DataContext="{Binding ScheduleManagement, Source={StaticResource Locator}}"
+        Title="Rooster" Height="450" Width="800">
+    <Window.Resources>
+        <local:NullVisibilityConverter x:Key="NullVisibilityConverter"/>
+    </Window.Resources>
+    
+    <StackPanel Margin="20">
+        <StackPanel Name="spBackButton" HorizontalAlignment="Left">
+            <Button Content="Back"
+                    Command="{Binding BackHomeCommand}"
+                    CommandParameter="{Binding ElementName=ScheduleManagementViewName}"
+                    Template="{DynamicResource InterfaceButtonTemplate}"/>
+        </StackPanel>
+        <StackPanel Name="spContent" Margin="10">
+            <StackPanel Name="spFilter" Orientation="Horizontal" Margin="0,0,0,10">
+                <Label Content="Inspecteur: " Template="{DynamicResource CreateEditLabelTemplate}"/>
+                <ComboBox ItemsSource="{Binding Inspectors}"
+                          SelectedItem="{Binding SelectedInspector}"
+                          IsEditable="True"
+                          DisplayMemberPath="Name"
+                          IsTextSearchEnabled="True"
+                          TextSearch.TextPath="Name"
+                          StaysOpenOnEdit="True"
+                          Width="250">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding GetScheduleItemCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding CanExecuteChangedCommand}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Visibility="{Binding SelectedInspector, Converter={StaticResource NullVisibilityConverter}}">
+                <DataGrid Name="ScheduleItemDataGrid"
+                          ItemsSource="{Binding ScheduleItems}"
+                          SelectedItem="{Binding SelectedScheduleItem}"
+                          MaxHeight="250"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Datum" Binding="{Binding DateString}" IsReadOnly="True" Width="*"/>
+                        <DataGridTextColumn Header="Type" Binding="{Binding ScheduledString}" IsReadOnly="True" Width="*"/>
+                        <DataGridTextColumn Header="Begintijd" Binding="{Binding ScheduleStartTime}" IsReadOnly="True" Width="*"/>
+                        <DataGridTextColumn Header="Eindtijd" Binding="{Binding ScheduleEndTime}" IsReadOnly="True" Width="*"/>
+                    </DataGrid.Columns>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding DatagridSelectionChangedCommand}" CommandParameter="{Binding ElementName=ScheduleItemDataGrid, Path=SelectedItems}" />
+                            <i:InvokeCommandAction Command="{Binding CanExecuteChangedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DataGrid>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"                    
+                    Orientation="Horizontal" Margin="0,0,25,0">
+            <Button Content="Verwijder" Command="{Binding DeleteScheduleItemsCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+            <Button Content="Nieuw roosteritem" Command="{Binding NewScheduleItemCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+        </StackPanel>
+    </StackPanel>
+</local:BaseView>

@@ -157,10 +157,14 @@
     <Compile Include="ViewModel\GenerateReportViewModel.cs" />
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
+    <Compile Include="ViewModel\ScheduleManagementViewModel.cs" />
     <Compile Include="ViewModel\TestPDFViewModel.cs" />
     <Compile Include="View\BoolVisibilityConverter.cs" />
     <Compile Include="View\GenerateReportView.xaml.cs">
       <DependentUpon>GenerateReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ScheduleManagementView.xaml.cs">
+      <DependentUpon>ScheduleManagementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\TestPDFView.xaml.cs">
       <DependentUpon>TestPDFView.xaml</DependentUpon>
@@ -367,6 +371,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\QuotationManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ScheduleManagementView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

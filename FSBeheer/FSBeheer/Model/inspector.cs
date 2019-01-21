@@ -14,7 +14,7 @@ namespace FSBeheer.Model
         public Inspector()
         {
             Inspections = new ObservableCollection<Inspection>();
-            Availabilities = new ObservableCollection<ScheduleItem>();
+            ScheduleItems = new ObservableCollection<ScheduleItem>();
         }
 
         [Key]
@@ -31,7 +31,7 @@ namespace FSBeheer.Model
         public int? AccountId { get; set; }
         public virtual Account Account { get; set; }
         public virtual ObservableCollection<Inspection> Inspections { get; set; }
-        public virtual ObservableCollection<ScheduleItem> Availabilities { get; set; }
+        public virtual ObservableCollection<ScheduleItem> ScheduleItems { get; set; }
         public bool IsDeleted { get; set; }
     }
 }
