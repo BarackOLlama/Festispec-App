@@ -165,6 +165,7 @@ namespace FSBeheer.ViewModel
 
             double x2 = 75;
             double y2 = 50;
+            ObservableCollection<AnswerVM> answersList;
 
             // checkbox nagaan
 
@@ -177,10 +178,12 @@ namespace FSBeheer.ViewModel
                         gfxAll.DrawString("Open vraag: " + question.Content,
                         font, XBrushes.Black, x2, y2);
                         y += ls;
-                        // _context.AnswerCrud.GetAllAnswersByQuestionId(question.Id);
+                        answersList = _context.AnswerCrud.GetAllAnswersByQuestionId(question.Id);
+                        
+                        y += ls;
                         // antwoorden uit question crud met zijn id
                         // if y groter dan pagina > new page
-                        
+
                         // live chart bool wel of geen
                         break;
                     case "Open Tabelvraag":
@@ -201,9 +204,14 @@ namespace FSBeheer.ViewModel
                         font, XBrushes.Black, x2, y2);
                         y += ls;
                         break;
+                    case "Schaal Vraag":
+                        gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
+                        gfxAll.DrawString("Schaal vraag: " + question.Content,
+                        font, XBrushes.Black, x2, y2);
+                        y += ls;
+                        break;
                 }
             }
-
             SavePDF(_fileName);
         }
 

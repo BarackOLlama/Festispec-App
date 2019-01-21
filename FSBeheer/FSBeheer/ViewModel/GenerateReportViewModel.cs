@@ -37,7 +37,6 @@ namespace FSBeheer.ViewModel
         public GenerateReportViewModel()
         {
             _context = new CustomFSContext();
-            Description = "";
 
             CreateStandardPDFCommand = new RelayCommand(CreatePDF);
         }
