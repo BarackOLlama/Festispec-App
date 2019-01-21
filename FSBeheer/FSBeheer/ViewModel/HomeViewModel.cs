@@ -37,13 +37,10 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowQuestionnaireManagementViewCommand { get; set; }
         public RelayCommand ShowCreateEditViewCommand { get; set; }
         public RelayCommand ShowBusinessDataViewCommand { get; set; }
-
-        public RelayCommand ShowPDFViewCommand { get; set; }
+        public RelayCommand ShowScheduleViewCommand { get; set; }
 
         public HomeViewModel(AccountVM account)
         {
-            ShowPDFViewCommand = new RelayCommand(ShowPDFView);
-
             _context = new CustomFSContext();
             _account = account;
             AccountRole = _context.Roles.ToList().Where(e => e.Id == _account.RoleId).FirstOrDefault().Content;
@@ -55,6 +52,7 @@ namespace FSBeheer.ViewModel
             ShowQuotationViewCommand = new RelayCommand(ShowQuotationView);
             ShowCreateEditViewCommand = new RelayCommand(ShowCreateEditInspectionView);
             ShowQuestionnaireManagementViewCommand = new RelayCommand(ShowQuestionnaireManagementView);
+            ShowScheduleViewCommand = new RelayCommand(ShowScheduleView);
             ShowBusinessDataViewCommand = new RelayCommand(ShowBusinessDataView);
 
             LoginTime = DateTime.Now;
@@ -69,12 +67,7 @@ namespace FSBeheer.ViewModel
             Console.WriteLine("");
             //this.ShowLoginView();
         }
-
-        private void ShowPDFView()
-        {
-            new TestPDFView().Show();
-        }
-
+        
         private void ShowBusinessDataView()
         {
             MessageBox.Show("Account username:"+Account.Username+"\nIngelogd sinds:"+LoginTime+"\nFunctie"+AccountRole);
@@ -113,6 +106,10 @@ namespace FSBeheer.ViewModel
         private void ShowQuestionnaireManagementView()
         {
             new QuestionnaireManagementView().ShowDialog();
+        }
+        private void ShowScheduleView()
+        {
+            new ScheduleManagementView().Show();
         }
     }
 }

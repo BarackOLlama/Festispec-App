@@ -16,22 +16,33 @@ namespace FSBeheer.Crud
 
         }
 
+        public ObservableCollection<AvailabilityVM> GetAllAvailabilitiesByInspector(int inspectorId)
+        {
+            var availabilities = CustomFSContext.Availabilities
+                .ToList()
+                .Where(s => s.IsDeleted == false)
+                .Where(s => s.Inspector.Id == inspectorId)
+                .Select(i => new AvailabilityVM(i));
+            var _availabilities = new ObservableCollection<AvailabilityVM>(availabilities);
+            return _availabilities;
+        }
+
         public ObservableCollection<AvailabilityVM> GetAvailabilities()
         {
             var availability = CustomFSContext.Availabilities
                 .ToList()
+                .Where(s => s.IsDeleted == false)
                 .Where(s => s.Scheduled == false)
                 .Select(i => new AvailabilityVM(i));
             var _availability = new ObservableCollection<AvailabilityVM>(availability);
             return _availability;
         }
 
-
-
         public ObservableCollection<AvailabilityVM> GetUnavailable()
         {
             var availability = CustomFSContext.Availabilities
                 .ToList()
+                .Where(s => s.IsDeleted == false)
                 .Where(s => s.Scheduled == true)
                 .Select(i => new AvailabilityVM(i));
             var _availability = new ObservableCollection<AvailabilityVM>(availability);

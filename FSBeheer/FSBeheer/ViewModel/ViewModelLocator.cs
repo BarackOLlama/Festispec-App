@@ -209,6 +209,19 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        public ScheduleManagementViewModel ScheduleManagement
+        {
+            get
+            {
+                return new ScheduleManagementViewModel();
+            }
+        }
+
+        public CreateEditScheduleViewModel CreateEditSchedule
+        {
+            get { return new CreateEditScheduleViewModel(); }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

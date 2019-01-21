@@ -28,6 +28,11 @@ namespace FSBeheer.VM
             set { _Availability.Date = value; RaisePropertyChanged(nameof(Date)); }
         }
 
+        public string DateString
+        {
+            get { return ((DateTime)Date).ToShortDateString(); }
+        }
+
         public TimeSpan? AvailableStartTime
         {
             get { return _Availability.AvailableStartTime; }
@@ -54,6 +59,11 @@ namespace FSBeheer.VM
         {
             get { return _Availability.Scheduled; }
             set { _Availability.Scheduled = value; RaisePropertyChanged(nameof(Scheduled)); }
+        }
+
+        public string ScheduledString
+        {
+            get { if (Scheduled) return "Inspectie"; else return "Verlof"; }
         }
 
         public int? InspectorId
