@@ -38,8 +38,13 @@ namespace FSBeheer.ViewModel
         private double x = 50;
         private double y = 100;
         private double ls;
+        private double x2 = 50;
+        private double y2 = 75;
 
+        private XGraphics gfxAll;
         private CustomFSContext _context;
+        private ObservableCollection<AnswerVM> answersList;
+
 
         public PDFGenerator(
             string Filename,
@@ -56,7 +61,6 @@ namespace FSBeheer.ViewModel
             this._context = _context;
             document = new PdfDocument();
             document.Info.Title = "Created by Phi";
-
 
             _fileName = Filename;
             _title = Title;
@@ -89,7 +93,6 @@ namespace FSBeheer.ViewModel
             // QuestionsList[0] is een multiple choice
             // ChartGenerator chartgen = new ChartGenerator(QuestionsList[1], "Bar", 300, 300);
             // XImage image2 = chartgen.GetImageFromChart();
-
             // gfx.DrawImage(image2, page1.Width * 0.4, page1.Height * 0.1, image2.PixelWidth, image2.PixelHeight);
 
             // Info
@@ -161,97 +164,69 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        // TODO: live chart 
         public void CreateStandardPDF()
         {
             MakeFrontPage();
-            XGraphics gfxAll;
 
-            double x2 = 75;
-            double y2 = 50;
-            ObservableCollection<AnswerVM> answersList;
-
-            // checkbox nagaan
-
-            //foreach (var question in QuestionsList)
+            
             for (int i = 0; i < QuestionsList.Count; i++)
             {
                 switch(QuestionsList[i].Type.Name)
                 {
                     case "Open Vraag":
-                        gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
-                        gfxAll.DrawString("Open vraag: " + QuestionsList[i].Content,
-                        font, XBrushes.Black, x2, y2);
-                        y += ls;
-                        answersList = _context.AnswerCrud.GetAllAnswersByQuestionId(QuestionsList[i].Id);
-                        
-                        y += ls;
-                        // antwoorden uit question crud met zijn id
-                        // if y groter dan pagina > new page
-
-                        // live chart bool wel of geen
-                        if (_selectedCharts[i] == "BarChart")
-                        {
-
-                        }
-                        else if (_selectedCharts[i] == "PieChart")
-                        {
-
-                        }
-                        else
-                        {
-
-                        }
+                        DrawInformation("Open vraag: ", question);
                         break;
                     case "Open Tabelvraag":
-                        gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
-                        gfxAll.DrawString("Open tabelvraag: " + QuestionsList[i].Content,
-                        font, XBrushes.Black, x2, y2);
-                        y += ls;
+                        DrawInformation("Open tabelvraag: ", question);
                         break;
                     case "Multiple Choice Tabelvraag":
-                        gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
-                        gfxAll.DrawString("Meerkeuze tabelvraag: " + QuestionsList[i].Content,
-                        font, XBrushes.Black, x2, y2);
-                        y += ls;
+                        DrawInformation("Meerkeuze tabelvraag: ", question);
                         break;
                     case "Multiple Choice vraag":
-                        gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
-                        gfxAll.DrawString("Meerkeuze vraag: " + QuestionsList[i].Content,
-                        font, XBrushes.Black, x2, y2);
-                        y += ls;
+                        DrawInformation("Meerkeuze vraag: ", question);
                         break;
                     case "Schaal Vraag":
-                        gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
-                        gfxAll.DrawString("Schaal vraag: " + QuestionsList[i].Content,
-                        font, XBrushes.Black, x2, y2);
-                        y += ls;
+                        DrawInformation("Schaal vraag: ", question);
                         break;
                 }
             }
             SavePDF(_fileName);
         }
 
-        public void DrawTitle(PdfPage page, XGraphics gfx, string title)
+        private void DrawInformation(string value, QuestionVM question)
         {
-            XRect rect = new XRect(new XPoint(), gfx.PageSize);
-            rect.Inflate(-10, -15);
-            XFont font = new XFont("Verdana", 14, XFontStyle.Bold);
-            gfx.DrawString(title, font, XBrushes.MidnightBlue, rect, XStringFormats.TopCenter);
-
-            rect.Offset(0, 5);
-            font = new XFont("Verdana", 8, XFontStyle.Italic);
-            XStringFormat format = new XStringFormat
+            // question
+            gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
+            gfxAll.DrawString(value + question.Content,
+            font, XBrushes.Black, x2, y2);
+            if (question.Options != null)
             {
-                Alignment = XStringAlignment.Near,
-                LineAlignment = XLineAlignment.Far
-            };
-            gfx.DrawString("Created with " + PdfSharp.ProductVersionInfo.Producer, font, XBrushes.DarkOrchid, rect, format);
+                y2 += ls + 5;
+                string setOptions = question.Options;
+                gfxAll.DrawString("Mogelijke antwoorden: " + setOptions,
+                font, XBrushes.Black, x2, y2);
+            }
 
-            font = new XFont("Verdana", 8);
-            format.Alignment = XStringAlignment.Center;
-            gfx.DrawString(document.PageCount.ToString(), font, XBrushes.DarkOrchid, rect, format);
-
-            document.Outlines.Add(title, page, true);
+            // answers
+            y2 += ls + 5;
+            gfxAll.DrawString("Antwoorden: ", font, XBrushes.Black, x2, y2);
+            y2 += ls + 10;
+            answersList = _context.AnswerCrud.GetAllAnswersByQuestionId(question.Id);
+            foreach (var answer in answersList)
+            {
+                gfxAll.DrawString(answer.Content,
+                font, XBrushes.Black, x2, y2);
+                y2 += ls;
+                if (y > 820)
+                {
+                    gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
+                    x2 = 50;
+                    y2 = 75;
+                }
+            }
+            x2 = 50;
+            y2 = 75;
         }
     }
 }
