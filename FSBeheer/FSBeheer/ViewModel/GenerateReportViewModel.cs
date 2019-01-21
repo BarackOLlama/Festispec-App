@@ -22,6 +22,7 @@ namespace FSBeheer.ViewModel
         public QuestionnaireVM Questionnaire { get; set; }
         public ObservableCollection<QuestionVM> Questions { get; set; }
         public ObservableCollection<QuestionPDFVM> QuestionPDFs { get; set; }
+        public List<string> CheckboxesSelected { get; set; }
         public RelayCommand CreateStandardPDFCommand { get; set; }
 
         private PDFGenerator pdfGenerator;
@@ -37,7 +38,7 @@ namespace FSBeheer.ViewModel
         public GenerateReportViewModel()
         {
             _context = new CustomFSContext();
-
+            CheckboxesSelected = new List<string>();
             CreateStandardPDFCommand = new RelayCommand(CreatePDF);
         }
 
@@ -45,14 +46,16 @@ namespace FSBeheer.ViewModel
         {
             if (QuestionPDFs.Count == 0)
                 MessageBox.Show("Je kunt voor deze inspectie geen rapportage uitdraaien, omdat deze inspectie geen vragen bevat.");
-            PassCorrectQuestions();
+            PassSelectedQuestions();
+            PassSelectedCharts();
             if (Filename != null && Title != null && Questions != null)
             {
                 pdfGenerator = new PDFGenerator(Filename, 
                     Title, 
                     Description, 
                     Advice, 
-                    Questions, 
+                    Questions,
+                    CheckboxesSelected,
                     Customer, 
                     SelectedInspection, 
                     StartDate, 
@@ -63,6 +66,8 @@ namespace FSBeheer.ViewModel
             {
                 MessageBox.Show("You have not entered all necessary fields (Bestandnaam, Titel)");
             }
+            ResetQuestions();
+            CheckboxesSelected = new List<string>();
         }
 
         public void SetInspection(int inspectionId)
@@ -71,7 +76,7 @@ namespace FSBeheer.ViewModel
             {
                 SelectedInspection = _context.InspectionCrud.GetInspectionById(inspectionId);
                 RetrieveQuestionnaire(inspectionId);
-                RetrieveQuestions();
+                RetrieveQuestionsAndQuestionPDFs();
                 RaisePropertyChanged(nameof(Questions));
                 RetrieveCustomer(SelectedInspection);
                 RetrieveDate(SelectedInspection);
@@ -105,7 +110,7 @@ namespace FSBeheer.ViewModel
                 Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireByInspectionId(inspectionId);
         }
 
-        private void RetrieveQuestions()
+        private void RetrieveQuestionsAndQuestionPDFs()
         {
             if (Questionnaire != null)
             {
@@ -114,16 +119,63 @@ namespace FSBeheer.ViewModel
             } 
         }
 
-        private void PassCorrectQuestions()
+        private void PassSelectedQuestions()
         {
-            var removeList = new List<QuestionVM>();
+            var removeQuestionsList = new List<QuestionVM>();
             foreach (QuestionPDFVM questionPDF in QuestionPDFs)
                 if (questionPDF.DoNotShow)
                     for (int i = Questions.Count - 1; i >= 0; i--)
                         if (Questions[i].Content == questionPDF.Content)
-                            removeList.Add(Questions[i]);
-            foreach (QuestionVM question in removeList)
+                            removeQuestionsList.Add(Questions[i]);
+            foreach (QuestionVM question in removeQuestionsList)
+            {
                 Questions.Remove(question);
+            }
+
+        }
+
+        private void PassSelectedCharts()
+        {
+            int counter;
+            var removeQuestionPDFsList = new List<QuestionPDFVM>();
+            foreach (QuestionPDFVM questionPDF in QuestionPDFs)
+            {
+                counter = 0;
+                foreach (QuestionVM question in Questions)
+                {
+                    // als de twee objecten niet gelijk zijn
+                    if (questionPDF.Content != question.Content)
+                        counter++;
+                    if (counter == Questions.Count())
+                        removeQuestionPDFsList.Add(questionPDF);
+                }
+            }
+            //foreach (QuestionPDFVM questionPDF in removeQuestionPDFsList)
+            //{
+            //    QuestionPDFs.Remove(questionPDF);
+            //}
+
+            foreach (QuestionPDFVM questionPDF in QuestionPDFs)
+            {
+                if (!removeQuestionPDFsList.Contains(questionPDF))
+                    if (questionPDF.BarChart)
+                    {
+                        CheckboxesSelected.Add("BarChart");
+                    }
+                    else if (questionPDF.PieChart)
+                    {
+                        CheckboxesSelected.Add("PieChart");
+                    }
+                    else
+                    {
+                        CheckboxesSelected.Add("NoChart");
+                    }
+            }
+        }
+
+        private void ResetQuestions()
+        {
+            Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
         }
     }
 }

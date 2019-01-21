@@ -21,6 +21,7 @@ namespace FSBeheer.ViewModel
         private string _description;
         private string _advice;
         private ObservableCollection<QuestionVM> QuestionsList;
+        private List<string> _selectedCharts;
         private CustomerVM _customer;
         private InspectionVM _inspection;
         private DateTime _startDate;
@@ -41,11 +42,12 @@ namespace FSBeheer.ViewModel
         private CustomFSContext _context;
 
         public PDFGenerator(
-            string Filename, 
-            string Title, 
-            string Description, 
-            string Advice, 
-            ObservableCollection<QuestionVM> Questions, 
+            string Filename,
+            string Title,
+            string Description,
+            string Advice,
+            ObservableCollection<QuestionVM> Questions,
+            List<string> SelectedCharts,
             CustomerVM Customer, InspectionVM SelectedInspection, 
             DateTime? StartDate, 
             DateTime? EndDate,
@@ -64,7 +66,8 @@ namespace FSBeheer.ViewModel
             _inspection = SelectedInspection;
             _startDate = ((DateTime)StartDate).Date;
             _endDate = ((DateTime)EndDate).Date;
-            QuestionsList = Questions;        
+            QuestionsList = Questions;
+            _selectedCharts = SelectedCharts;
         }
 
         private void MakeFrontPage()
@@ -169,44 +172,57 @@ namespace FSBeheer.ViewModel
 
             // checkbox nagaan
 
-            foreach (var question in QuestionsList)
+            //foreach (var question in QuestionsList)
+            for (int i = 0; i < QuestionsList.Count; i++)
             {
-                switch(question.Type.Name)
+                switch(QuestionsList[i].Type.Name)
                 {
                     case "Open Vraag":
                         gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
-                        gfxAll.DrawString("Open vraag: " + question.Content,
+                        gfxAll.DrawString("Open vraag: " + QuestionsList[i].Content,
                         font, XBrushes.Black, x2, y2);
                         y += ls;
-                        answersList = _context.AnswerCrud.GetAllAnswersByQuestionId(question.Id);
+                        answersList = _context.AnswerCrud.GetAllAnswersByQuestionId(QuestionsList[i].Id);
                         
                         y += ls;
                         // antwoorden uit question crud met zijn id
                         // if y groter dan pagina > new page
 
                         // live chart bool wel of geen
+                        if (_selectedCharts[i] == "BarChart")
+                        {
+
+                        }
+                        else if (_selectedCharts[i] == "PieChart")
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
                         break;
                     case "Open Tabelvraag":
                         gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
-                        gfxAll.DrawString("Open tabelvraag: " + question.Content,
+                        gfxAll.DrawString("Open tabelvraag: " + QuestionsList[i].Content,
                         font, XBrushes.Black, x2, y2);
                         y += ls;
                         break;
                     case "Multiple Choice Tabelvraag":
                         gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
-                        gfxAll.DrawString("Meerkeuze tabelvraag: " + question.Content,
+                        gfxAll.DrawString("Meerkeuze tabelvraag: " + QuestionsList[i].Content,
                         font, XBrushes.Black, x2, y2);
                         y += ls;
                         break;
                     case "Multiple Choice vraag":
                         gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
-                        gfxAll.DrawString("Meerkeuze vraag: " + question.Content,
+                        gfxAll.DrawString("Meerkeuze vraag: " + QuestionsList[i].Content,
                         font, XBrushes.Black, x2, y2);
                         y += ls;
                         break;
                     case "Schaal Vraag":
                         gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
-                        gfxAll.DrawString("Schaal vraag: " + question.Content,
+                        gfxAll.DrawString("Schaal vraag: " + QuestionsList[i].Content,
                         font, XBrushes.Black, x2, y2);
                         y += ls;
                         break;
