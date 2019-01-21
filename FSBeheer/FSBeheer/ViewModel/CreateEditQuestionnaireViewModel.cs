@@ -210,6 +210,7 @@ namespace FSBeheer.ViewModel
                     {
                         SetQuestionnaireFromTemplate();
                     }
+                    _questionnaire.Inspection = Inspections[SelectedIndex];
                     _context.Questionnaires.Add(Questionnaire.ToModel());
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateQuestionnaires");
