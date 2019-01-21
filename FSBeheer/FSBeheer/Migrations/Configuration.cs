@@ -19,6 +19,7 @@ namespace FSBeheer.Migrations
         protected override void Seed(CustomFSContext context)
         {
             context.Answers.RemoveRange(context.Answers);
+            context.Quotations.RemoveRange(context.Quotations);
             context.Questions.RemoveRange(context.Questions);
             context.QuestionTypes.RemoveRange(context.QuestionTypes);
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.QuestionTypes', RESEED, 0)");
