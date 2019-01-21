@@ -38,6 +38,8 @@ namespace FSBeheer.ViewModel
         private double y = 100;
         private double ls;
 
+        private CustomFSContext _context;
+
         public PDFGenerator(
             string Filename, 
             string Title, 
@@ -46,10 +48,13 @@ namespace FSBeheer.ViewModel
             ObservableCollection<QuestionVM> Questions, 
             CustomerVM Customer, InspectionVM SelectedInspection, 
             DateTime? StartDate, 
-            DateTime? EndDate)
+            DateTime? EndDate,
+            CustomFSContext _context)
         {
+            this._context = _context;
             document = new PdfDocument();
             document.Info.Title = "Created by Phi";
+
 
             _fileName = Filename;
             _title = Title;
@@ -172,7 +177,7 @@ namespace FSBeheer.ViewModel
                         gfxAll.DrawString("Open vraag: " + question.Content,
                         font, XBrushes.Black, x2, y2);
                         y += ls;
-                        
+                        // _context.AnswerCrud.GetAllAnswersByQuestionId(question.Id);
                         // antwoorden uit question crud met zijn id
                         // if y groter dan pagina > new page
                         

@@ -56,7 +56,8 @@ namespace FSBeheer.ViewModel
                     Customer, 
                     SelectedInspection, 
                     StartDate, 
-                    EndDate);
+                    EndDate,
+                    _context);
                 pdfGenerator.CreateStandardPDF();
             } else
             {
