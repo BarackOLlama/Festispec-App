@@ -79,6 +79,7 @@ namespace FSBeheer.ViewModel
                 RetrieveCustomer(SelectedInspection);
                 RetrieveDate(SelectedInspection);
             }
+            RaisePropertyChanged(nameof(Questions));
             RaisePropertyChanged(nameof(QuestionPDFs));
         }
 
@@ -111,7 +112,7 @@ namespace FSBeheer.ViewModel
         {
             if (Questionnaire != null)
             {
-                var Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
+                Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
                 QuestionPDFs = _context.QuestionPDFCrud.ConvertQuestionVMToQuestionPDFVM(Questions);
             } 
         }

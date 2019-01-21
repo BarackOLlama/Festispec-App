@@ -119,18 +119,25 @@ namespace FSBeheer.ViewModel
             y += ls;
             gfx.DrawString(_startDate.ToShortDateString() + " tot " + _endDate.ToShortDateString(), font, XBrushes.Black, x, y);
             y += 2 * ls;
-            gfx.DrawString("Omschrijving: ", font, XBrushes.Black, x, y);
-            y += ls * 1.8;
 
-            XRect descRect = new XRect(50, 350, 500, 220);
-            gfx.DrawRectangle(XBrushes.White, descRect);
-            tf.DrawString(_description, font, XBrushes.Black, descRect, XStringFormats.TopLeft);
+            if (_description != null)
+            {
+                gfx.DrawString("Omschrijving: ", font, XBrushes.Black, x, y);
+                y += ls * 1.8;
 
-            gfx.DrawString("Advies: ", font, XBrushes.Black, x, 560);
+                XRect descRect = new XRect(50, 350, 500, 220);
+                gfx.DrawRectangle(XBrushes.White, descRect);
+                tf.DrawString(_description, font, XBrushes.Black, descRect, XStringFormats.TopLeft);
+            }
 
-            XRect adviceRect = new XRect(50, 580, 500, 220);
-            gfx.DrawRectangle(XBrushes.White, adviceRect);
-            tf.DrawString(_advice, font, XBrushes.Black, adviceRect, XStringFormats.TopLeft);
+            if (_advice != null)
+            {
+                gfx.DrawString("Advies: ", font, XBrushes.Black, x, 560);
+                
+                XRect adviceRect = new XRect(50, 580, 500, 220);
+                gfx.DrawRectangle(XBrushes.White, adviceRect);
+                tf.DrawString(_advice, font, XBrushes.Black, adviceRect, XStringFormats.TopLeft);
+            }
         }
 
         private void SavePDF(string Filename)
