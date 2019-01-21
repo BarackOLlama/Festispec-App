@@ -628,6 +628,48 @@ namespace FSBeheer.Migrations
                     Question = questions[3],
                     Inspector = inspectors[3],
                     IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "100",
+                    Question = questions[5],
+                    Inspector = inspectors[0],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "110",
+                    Question = questions[5],
+                    Inspector = inspectors[1],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "A|Jazeker",
+                    Question = questions[6],
+                    Inspector = inspectors[0],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "B|Nee",
+                    Question = questions[6],
+                    Inspector = inspectors[1],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Dan doen ze ja",
+                    Question = questions[7],
+                    Inspector = inspectors[0],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Nee, dat doen ze niet",
+                    Question = questions[7],
+                    Inspector = inspectors[1],
+                    IsDeleted = false
                 }
             };
             context.Answers.AddRange(answers);
