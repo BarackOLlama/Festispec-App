@@ -175,19 +175,19 @@ namespace FSBeheer.ViewModel
                 switch(QuestionsList[i].Type.Name)
                 {
                     case "Open Vraag":
-                        DrawInformation("Open vraag: ", question);
+                        DrawInformation("Open vraag: ", QuestionsList[i]);
                         break;
                     case "Open Tabelvraag":
-                        DrawInformation("Open tabelvraag: ", question);
+                        DrawInformation("Open tabelvraag: ", QuestionsList[i]);
                         break;
                     case "Multiple Choice Tabelvraag":
-                        DrawInformation("Meerkeuze tabelvraag: ", question);
+                        DrawInformation("Meerkeuze tabelvraag: ", QuestionsList[i]);
                         break;
                     case "Multiple Choice vraag":
-                        DrawInformation("Meerkeuze vraag: ", question);
+                        DrawInformation("Meerkeuze vraag: ", QuestionsList[i]);
                         break;
                     case "Schaal Vraag":
-                        DrawInformation("Schaal vraag: ", question);
+                        DrawInformation("Schaal vraag: ", QuestionsList[i]);
                         break;
                 }
             }
