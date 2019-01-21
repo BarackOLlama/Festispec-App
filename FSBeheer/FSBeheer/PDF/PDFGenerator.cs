@@ -175,26 +175,26 @@ namespace FSBeheer.ViewModel
                 switch(QuestionsList[i].Type.Name)
                 {
                     case "Open Vraag":
-                        DrawInformation("Open vraag: ", QuestionsList[i]);
+                        DrawInformation("Open vraag: ", QuestionsList[i], i);
                         break;
                     case "Open Tabelvraag":
-                        DrawInformation("Open tabelvraag: ", QuestionsList[i]);
+                        DrawInformation("Open tabelvraag: ", QuestionsList[i], i);
                         break;
                     case "Multiple Choice Tabelvraag":
-                        DrawInformation("Meerkeuze tabelvraag: ", QuestionsList[i]);
+                        DrawInformation("Meerkeuze tabelvraag: ", QuestionsList[i], i);
                         break;
                     case "Multiple Choice vraag":
-                        DrawInformation("Meerkeuze vraag: ", QuestionsList[i]);
+                        DrawInformation("Meerkeuze vraag: ", QuestionsList[i], i);
                         break;
                     case "Schaal Vraag":
-                        DrawInformation("Schaal vraag: ", QuestionsList[i]);
+                        DrawInformation("Schaal vraag: ", QuestionsList[i], i);
                         break;
                 }
             }
             SavePDF(_fileName);
         }
 
-        private void DrawInformation(string value, QuestionVM question)
+        private void DrawInformation(string value, QuestionVM question, int i)
         {
             // question
             gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
@@ -225,6 +225,20 @@ namespace FSBeheer.ViewModel
                     y2 = 75;
                 }
             }
+
+            y2 += ls + 10;
+
+            if (_selectedCharts[i] == "PieChart")
+            {
+                gfxAll.DrawString("This is a Pie Chart",
+                font, XBrushes.Black, x2, y2);
+            }
+            else if (_selectedCharts[i] == "BarChart")
+            {
+                gfxAll.DrawString("This is a Bar Chart",
+                font, XBrushes.Black, x2, y2);
+            }
+
             x2 = 50;
             y2 = 75;
         }
