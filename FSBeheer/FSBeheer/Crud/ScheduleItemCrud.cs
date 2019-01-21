@@ -16,38 +16,51 @@ namespace FSBeheer.Crud
 
         }
 
-        public ObservableCollection<ScheduleItemVM> GetAvailabilities()
+        public ObservableCollection<ScheduleItemVM> GetAllScheduleItemsByInspector(int inspectorId)
         {
-            var availability = CustomFSContext.ScheduleItems
+            var scheduleitems = CustomFSContext.ScheduleItems
                 .ToList()
+                .Where(s => s.IsDeleted == false)
+                .Where(s => s.Inspector.Id == inspectorId)
+                .Select(i => new ScheduleItemVM(i));
+            var _scheduleitems = new ObservableCollection<ScheduleItemVM>(scheduleitems);
+            return _scheduleitems;
+        }
+
+        public ObservableCollection<ScheduleItemVM> GetScheduled()
+        {
+            var scheduleitem = CustomFSContext.ScheduleItems
+                .ToList()
+                .Where(s => s.IsDeleted == false)
                 .Where(s => s.Scheduled == false)
                 .Select(i => new ScheduleItemVM(i));
-            var _availability = new ObservableCollection<ScheduleItemVM>(availability);
-            return _availability;
+            var _scheduleitem = new ObservableCollection<ScheduleItemVM>(scheduleitem);
+            return _scheduleitem;
         }
 
-        public ObservableCollection<ScheduleItemVM> GetUnavailable()
+        public ObservableCollection<ScheduleItemVM> GetNonScheduled()
         {
-            var availability = CustomFSContext.ScheduleItems
+            var scheduleitem = CustomFSContext.ScheduleItems
                 .ToList()
+                .Where(s => s.IsDeleted == false)
                 .Where(s => s.Scheduled == true)
                 .Select(i => new ScheduleItemVM(i));
-            var _availability = new ObservableCollection<ScheduleItemVM>(availability);
-            return _availability;
+            var _scheduleitem = new ObservableCollection<ScheduleItemVM>(scheduleitem);
+            return _scheduleitem;
         }
 
-        public void RemoveAvailabilitiesByInspectorList(ObservableCollection<InspectorVM> inspectorList, InspectionVM inspection)
+        public void RemoveScheduleItemsByInspectorList(ObservableCollection<InspectorVM> inspectorList, InspectionVM inspection)
         {
             var startRemoveDate = inspection.InspectionDate.StartDate;
             var endRemoveDate = inspection.InspectionDate.EndDate;
-            var allAvailabilityVMs = CustomFSContext.ScheduleItems.Select(a => new ScheduleItemVM(a));
+            var allScheduleItemVMs = CustomFSContext.ScheduleItems.Select(a => new ScheduleItemVM(a));
 
             foreach (InspectorVM inspectorVM in inspectorList)
             {
-                foreach (ScheduleItemVM availabilityVM in allAvailabilityVMs)
+                foreach (ScheduleItemVM scheduleItemVM in allScheduleItemVMs)
                 {
-                    if (availabilityVM.Date >= startRemoveDate && availabilityVM.Date <= endRemoveDate && availabilityVM.Inspector.Id == inspectorVM.Id)
-                        CustomFSContext.ScheduleItems.Remove(availabilityVM.ToModel());
+                    if (scheduleItemVM.Date >= startRemoveDate && scheduleItemVM.Date <= endRemoveDate && scheduleItemVM.Inspector.Id == inspectorVM.Id)
+                        CustomFSContext.ScheduleItems.Remove(scheduleItemVM.ToModel());
                 }
             }
         }

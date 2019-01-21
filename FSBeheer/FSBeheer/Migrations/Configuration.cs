@@ -182,7 +182,7 @@ namespace FSBeheer.Migrations
             };
             context.Inspectors.AddRange(inspectors);
 
-            var availabilities = new List<ScheduleItem>
+            var scheduleItems = new List<ScheduleItem>
             {
                 new ScheduleItem()
                 {
@@ -240,7 +240,7 @@ namespace FSBeheer.Migrations
                     IsDeleted = false
                 }
             };
-            context.ScheduleItems.AddRange(availabilities);
+            context.ScheduleItems.AddRange(scheduleItems);
 
             var statuses = new List<Status>
             {
@@ -627,6 +627,48 @@ namespace FSBeheer.Migrations
                     Content = "C|20",
                     Question = questions[3],
                     Inspector = inspectors[3],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "100",
+                    Question = questions[5],
+                    Inspector = inspectors[0],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "110",
+                    Question = questions[5],
+                    Inspector = inspectors[1],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "A|Jazeker",
+                    Question = questions[6],
+                    Inspector = inspectors[0],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "B|Nee",
+                    Question = questions[6],
+                    Inspector = inspectors[1],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Dan doen ze ja",
+                    Question = questions[7],
+                    Inspector = inspectors[0],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Nee, dat doen ze niet",
+                    Question = questions[7],
+                    Inspector = inspectors[1],
                     IsDeleted = false
                 }
             };
