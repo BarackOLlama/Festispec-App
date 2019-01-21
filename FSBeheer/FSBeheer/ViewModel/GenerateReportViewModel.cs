@@ -34,10 +34,6 @@ namespace FSBeheer.ViewModel
 
         public string Advice { get; set; }
 
-        public RelayCommand CreateBarChartCommand { get; set; }
-
-        public RelayCommand CreatePieChartCommand { get; set; }
-
         public GenerateReportViewModel()
         {
             _context = new CustomFSContext();
@@ -64,7 +60,7 @@ namespace FSBeheer.ViewModel
                 pdfGenerator.CreateStandardPDF();
             } else
             {
-                MessageBox.Show("Sonuvabitch you have not filled the required fields");
+                MessageBox.Show("You have not entered all necessary fields (Bestandnaam, Titel)");
             }
         }
 

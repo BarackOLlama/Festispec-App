@@ -158,34 +158,42 @@ namespace FSBeheer.ViewModel
             MakeFrontPage();
             XGraphics gfxAll;
 
-            // foreach question, new page 
+            double x2 = 75;
+            double y2 = 50;
+
+            // checkbox nagaan
+
             foreach (var question in QuestionsList)
             {
                 switch(question.Type.Name)
                 {
                     case "Open Vraag":
-                        //PdfPage page2 = document.AddPage();
                         gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
                         gfxAll.DrawString("Open vraag: " + question.Content,
-                        font, XBrushes.Black, x, y);
+                        font, XBrushes.Black, x2, y2);
                         y += ls;
+                        
+                        // antwoorden uit question crud met zijn id
+                        // if y groter dan pagina > new page
+                        
+                        // live chart bool wel of geen
                         break;
                     case "Open Tabelvraag":
                         gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
                         gfxAll.DrawString("Open tabelvraag: " + question.Content,
-                        font, XBrushes.Black, x, y);
+                        font, XBrushes.Black, x2, y2);
                         y += ls;
                         break;
                     case "Multiple Choice Tabelvraag":
                         gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
-                        gfxAll.DrawString("Multi keuze tabelvraag: " + question.Content,
-                        font, XBrushes.Black, x, y);
+                        gfxAll.DrawString("Meerkeuze tabelvraag: " + question.Content,
+                        font, XBrushes.Black, x2, y2);
                         y += ls;
                         break;
                     case "Multiple Choice vraag":
                         gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
-                        gfxAll.DrawString("Mutli keuze vraag: " + question.Content,
-                        font, XBrushes.Black, x, y);
+                        gfxAll.DrawString("Meerkeuze vraag: " + question.Content,
+                        font, XBrushes.Black, x2, y2);
                         y += ls;
                         break;
                 }

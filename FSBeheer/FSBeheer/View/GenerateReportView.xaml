@@ -36,8 +36,6 @@
                     <DataGridTextColumn Header="Vraag" Binding="{Binding Content}" Width="355" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Vraagtype" Binding="{Binding Type.Name}" Width="150" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Beschrijving" Binding="{Binding Comments}" Width="*" IsReadOnly="True"/>
-
-                    <!--<DataGridCheckBoxColumn Header="Niet tonen" Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.DoNotShowCommand}" Width="70" ></DataGridCheckBoxColumn>-->
                     <DataGridCheckBoxColumn Header="Niet tonen" Binding="{Binding DoNotShow, UpdateSourceTrigger=PropertyChanged}" Width="70"/>
                     <DataGridCheckBoxColumn Header="Staafdiagram" Binding="{Binding BarChart, UpdateSourceTrigger=PropertyChanged}" Width="80">
                         <DataGridCheckBoxColumn.CellStyle>
@@ -59,8 +57,6 @@
         <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"
                     Orientation="Horizontal" Margin="0,0,25,0">
             <Button Content="Generate Standard Report" Command="{Binding CreateStandardPDFCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
-            <Button Content="Generate Bar Chart" Command="{Binding CreateBarChartCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
-            <Button Content="Generate Pie Chart" Command="{Binding CreatePieChartCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
         </StackPanel>
     </StackPanel>
 </local:BaseView>
