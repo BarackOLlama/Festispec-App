@@ -217,11 +217,6 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public CreateEditScheduleViewModel CreateEditSchedule
-        {
-            get { return new CreateEditScheduleViewModel(); }
-        }
-
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

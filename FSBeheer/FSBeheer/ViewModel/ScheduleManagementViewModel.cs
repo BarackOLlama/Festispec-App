@@ -144,7 +144,7 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                new CreateEditScheduleView().ShowDialog();
+                
             }
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
