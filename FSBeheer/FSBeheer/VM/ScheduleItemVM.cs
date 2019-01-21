@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.VM
 {
-    public class AvailabilityVM : ViewModelBase
+    public class ScheduleItemVM : ViewModelBase
     {
-        private Availability _Availability;
+        private ScheduleItem _Availability;
 
-        public AvailabilityVM(Availability availability)
+        public ScheduleItemVM(ScheduleItem availability)
         {
             _Availability = availability;
         }
@@ -68,7 +68,7 @@ namespace FSBeheer.VM
             set { _Availability.Inspector = value; RaisePropertyChanged(nameof(Inspector)); }
         }
 
-        internal Availability ToModel()
+        internal ScheduleItem ToModel()
         {
             return _Availability;
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.Model
 {
-    public partial class Availability
+    public partial class ScheduleItem
     {
         [Key]
         public int Id { get; set; }
