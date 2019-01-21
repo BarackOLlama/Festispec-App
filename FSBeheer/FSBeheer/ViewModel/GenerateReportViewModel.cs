@@ -22,7 +22,7 @@ namespace FSBeheer.ViewModel
         public QuestionnaireVM Questionnaire { get; set; }
         public ObservableCollection<QuestionVM> Questions { get; set; }
         public ObservableCollection<QuestionPDFVM> QuestionPDFs { get; set; }
-        public RelayCommand CreateStandardPDFCommand { get; set; }
+        public RelayCommand CreatePDFCommand { get; set; }
 
         private PDFGenerator pdfGenerator;
 
@@ -38,7 +38,7 @@ namespace FSBeheer.ViewModel
         {
             _context = new CustomFSContext();
 
-            CreateStandardPDFCommand = new RelayCommand(CreatePDF);
+            CreatePDFCommand = new RelayCommand(CreatePDF);
         }
 
         private void CreatePDF()

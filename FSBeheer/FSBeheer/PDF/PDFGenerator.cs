@@ -198,14 +198,16 @@ namespace FSBeheer.ViewModel
             font, XBrushes.Black, x2, y2);
             if (question.Options != null)
             {
-                y2 += ls;
+                y2 += ls + 5;
                 string setOptions = question.Options;
                 gfxAll.DrawString("Mogelijke antwoorden: " + setOptions,
                 font, XBrushes.Black, x2, y2);
             }
 
             // answers
-            y2 += ls;
+            y2 += ls + 5;
+            gfxAll.DrawString("Antwoorden: ", font, XBrushes.Black, x2, y2);
+            y2 += ls + 10;
             answersList = _context.AnswerCrud.GetAllAnswersByQuestionId(question.Id);
             foreach (var answer in answersList)
             {
