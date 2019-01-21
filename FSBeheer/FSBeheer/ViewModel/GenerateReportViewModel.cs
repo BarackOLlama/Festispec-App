@@ -117,11 +117,14 @@ namespace FSBeheer.ViewModel
 
         private void PassCorrectQuestions()
         {
+            var removeList = new List<QuestionVM>();
             foreach (QuestionPDFVM questionPDF in QuestionPDFs)
                 if (questionPDF.DoNotShow)
                     for (int i = Questions.Count - 1; i >= 0; i--)
                         if (Questions[i].Content == questionPDF.Content)
-                            Questions.RemoveAt(i);
+                            removeList.Add(Questions[i]);
+            foreach (QuestionVM question in removeList)
+                Questions.Remove(question);
         }
     }
 }
