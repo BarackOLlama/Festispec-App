@@ -36,6 +36,7 @@ namespace FSBeheer.ViewModel
 
         private double x = 50;
         private double y = 100;
+        private double ls;
 
         public PDFGenerator(
             string Filename, 
@@ -65,23 +66,23 @@ namespace FSBeheer.ViewModel
         {
             PdfPage page1 = document.AddPage();
             gfx = XGraphics.FromPdfPage(page1);
-            double ls = font.GetHeight(gfx);
+            ls = font.GetHeight(gfx);
             tf = new XTextFormatter(gfx);
 
             // Logo
-            //string path2 = Directory.GetCurrentDirectory() + "\\Resources\\festispecLogo.jpg";
-            //if (File.Exists(path2))
-            //{
-            //    XImage image2 = XImage.FromFile(path2);
-            //    gfx.DrawImage(image2, page1.Width * 0.65, page1.Height * 0.1, 122, 33);
-            //}
+            string path2 = Directory.GetCurrentDirectory() + "\\Resources\\festispecLogo.jpg";
+            if (File.Exists(path2))
+            {
+                XImage image2 = XImage.FromFile(path2);
+                gfx.DrawImage(image2, page1.Width * 0.65, page1.Height * 0.1, 122, 33);
+            }
 
             // image test
             // QuestionsList[0] is een multiple choice
-            ChartGenerator chartgen = new ChartGenerator(QuestionsList[0], "Bar", 300, 300);
-            XImage image2 = chartgen.GetImageFromChart();
+            // ChartGenerator chartgen = new ChartGenerator(QuestionsList[1], "Bar", 300, 300);
+            // XImage image2 = chartgen.GetImageFromChart();
 
-            gfx.DrawImage(image2, page1.Width * 0.4, page1.Height * 0.1, image2.PixelWidth, image2.PixelHeight);
+            // gfx.DrawImage(image2, page1.Width * 0.4, page1.Height * 0.1, image2.PixelWidth, image2.PixelHeight);
 
             // Info
             gfx.DrawString("Festispec Rapportage: " + DateTime.Now.ToShortDateString(), 
@@ -148,6 +149,7 @@ namespace FSBeheer.ViewModel
         public void CreateStandardPDF()
         {
             MakeFrontPage();
+            XGraphics gfxAll;
 
             // foreach question, new page 
             foreach (var question in QuestionsList)
@@ -155,18 +157,32 @@ namespace FSBeheer.ViewModel
                 switch(question.Type.Name)
                 {
                     case "Open Vraag":
-
+                        //PdfPage page2 = document.AddPage();
+                        gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
+                        gfxAll.DrawString("Open vraag: " + question.Content,
+                        font, XBrushes.Black, x, y);
+                        y += ls;
                         break;
                     case "Open Tabelvraag":
+                        gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
+                        gfxAll.DrawString("Open tabelvraag: " + question.Content,
+                        font, XBrushes.Black, x, y);
+                        y += ls;
                         break;
                     case "Multiple Choice Tabelvraag":
+                        gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
+                        gfxAll.DrawString("Multi keuze tabelvraag: " + question.Content,
+                        font, XBrushes.Black, x, y);
+                        y += ls;
                         break;
                     case "Multiple Choice vraag":
+                        gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
+                        gfxAll.DrawString("Mutli keuze vraag: " + question.Content,
+                        font, XBrushes.Black, x, y);
+                        y += ls;
                         break;
                 }
             }
-            PdfPage page2 = document.AddPage();
-            XGraphics gfx2 = XGraphics.FromPdfPage(page2);
 
             SavePDF(_fileName);
         }
