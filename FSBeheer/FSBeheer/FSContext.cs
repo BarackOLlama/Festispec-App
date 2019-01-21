@@ -17,7 +17,7 @@ namespace FSBeheer
 
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Answer> Answers { get; set; }
-        public virtual DbSet<Availability> Availabilities { get; set; }
+        public virtual DbSet<ScheduleItem> ScheduleItems { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Event> Events { get; set; }

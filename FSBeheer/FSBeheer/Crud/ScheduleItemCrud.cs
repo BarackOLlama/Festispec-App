@@ -8,33 +8,31 @@ using System.Threading.Tasks;
 
 namespace FSBeheer.Crud
 {
-    public class AvailabilityCrud : AbstractCrud
+    public class ScheduleItemCrud : AbstractCrud
     {
 
-        public AvailabilityCrud(CustomFSContext customFSContext) : base(customFSContext)
+        public ScheduleItemCrud(CustomFSContext customFSContext) : base(customFSContext)
         {
 
         }
 
-        public ObservableCollection<AvailabilityVM> GetAvailabilities()
+        public ObservableCollection<ScheduleItemVM> GetAvailabilities()
         {
-            var availability = CustomFSContext.Availabilities
+            var availability = CustomFSContext.ScheduleItems
                 .ToList()
                 .Where(s => s.Scheduled == false)
-                .Select(i => new AvailabilityVM(i));
-            var _availability = new ObservableCollection<AvailabilityVM>(availability);
+                .Select(i => new ScheduleItemVM(i));
+            var _availability = new ObservableCollection<ScheduleItemVM>(availability);
             return _availability;
         }
 
-
-
-        public ObservableCollection<AvailabilityVM> GetUnavailable()
+        public ObservableCollection<ScheduleItemVM> GetUnavailable()
         {
-            var availability = CustomFSContext.Availabilities
+            var availability = CustomFSContext.ScheduleItems
                 .ToList()
                 .Where(s => s.Scheduled == true)
-                .Select(i => new AvailabilityVM(i));
-            var _availability = new ObservableCollection<AvailabilityVM>(availability);
+                .Select(i => new ScheduleItemVM(i));
+            var _availability = new ObservableCollection<ScheduleItemVM>(availability);
             return _availability;
         }
 
@@ -42,17 +40,16 @@ namespace FSBeheer.Crud
         {
             var startRemoveDate = inspection.InspectionDate.StartDate;
             var endRemoveDate = inspection.InspectionDate.EndDate;
-            var allAvailabilityVMs = CustomFSContext.Availabilities.Select(a => new AvailabilityVM(a));
+            var allAvailabilityVMs = CustomFSContext.ScheduleItems.Select(a => new ScheduleItemVM(a));
 
             foreach (InspectorVM inspectorVM in inspectorList)
             {
-                foreach (AvailabilityVM availabilityVM in allAvailabilityVMs)
+                foreach (ScheduleItemVM availabilityVM in allAvailabilityVMs)
                 {
                     if (availabilityVM.Date >= startRemoveDate && availabilityVM.Date <= endRemoveDate && availabilityVM.Inspector.Id == inspectorVM.Id)
-                        CustomFSContext.Availabilities.Remove(availabilityVM.ToModel());
+                        CustomFSContext.ScheduleItems.Remove(availabilityVM.ToModel());
                 }
             }
         }
-
     }
 }

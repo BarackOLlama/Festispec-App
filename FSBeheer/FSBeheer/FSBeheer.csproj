@@ -116,7 +116,7 @@
     <Compile Include="Crud\AccountCrud.cs" />
     <Compile Include="Crud\AnswerCrud.cs" />
     <Compile Include="Crud\ContactCrud.cs" />
-    <Compile Include="Crud\AvailabilityCrud.cs" />
+    <Compile Include="Crud\ScheduleItemCrud.cs" />
     <Compile Include="Crud\CustomerCrud.cs" />
     <Compile Include="Crud\InspectionCrud.cs" />
     <Compile Include="Crud\InspectionDateCrud.cs" />
@@ -131,7 +131,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Answer.cs" />
     <Compile Include="FSContext.cs" />
-    <Compile Include="Model\Availability.cs" />
+    <Compile Include="Model\ScheduleItem.cs" />
     <Compile Include="Model\Contact.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\Event.cs" />
@@ -245,7 +245,7 @@
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="VM\ContactVM.cs" />
-    <Compile Include="VM\AvailabilityVM.cs" />
+    <Compile Include="VM\ScheduleItemVM.cs" />
     <Compile Include="VM\CustomerVM.cs" />
     <Compile Include="VM\EventVM.cs" />
     <Compile Include="VM\InspectionDateVM.cs" />

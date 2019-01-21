@@ -155,7 +155,7 @@ namespace FSBeheer.ViewModel
                     {
                         for (var start = _selectedInspection.InspectionDate.StartDate; start <= _selectedInspection.InspectionDate.EndDate; start = start.AddDays(1))
                         {
-                            AvailabilityVM availabilityVM = new AvailabilityVM(new Availability())
+                            ScheduleItemVM availabilityVM = new ScheduleItemVM(new ScheduleItem())
                             {
                                 Inspector = inspectorVM.ToModel(),
                                 Scheduled = true,
@@ -163,7 +163,7 @@ namespace FSBeheer.ViewModel
                                 ScheduleStartTime = _selectedInspection.InspectionDate.StartTime,
                                 ScheduleEndTime = _selectedInspection.InspectionDate.EndTime
                             };
-                            _context.Availabilities.Add(availabilityVM.ToModel());
+                            _context.ScheduleItems.Add(availabilityVM.ToModel());
                         }
                     }
 

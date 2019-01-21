@@ -26,7 +26,7 @@ namespace FSBeheer.Migrations
             context.Inspections.RemoveRange(context.Inspections);
             context.InspectionDates.RemoveRange(context.InspectionDates);
             context.Inspectors.RemoveRange(context.Inspectors);
-            context.Availabilities.RemoveRange(context.Availabilities);
+            context.ScheduleItems.RemoveRange(context.ScheduleItems);
             context.Accounts.RemoveRange(context.Accounts);
             context.Roles.RemoveRange(context.Roles);
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.Roles', RESEED, 0)");
@@ -182,16 +182,16 @@ namespace FSBeheer.Migrations
             };
             context.Inspectors.AddRange(inspectors);
 
-            var availabilities = new List<Availability>
+            var availabilities = new List<ScheduleItem>
             {
-                new Availability()
+                new ScheduleItem()
                 {
                     Inspector = inspectors[0],
                     Date = new DateTime(2018, 3, 1),
                     Scheduled = false,
                     IsDeleted = false
                 },
-                new Availability()
+                new ScheduleItem()
                 {
                     Inspector = inspectors[0],
                     Date = new DateTime(2018, 3, 5),
@@ -200,14 +200,14 @@ namespace FSBeheer.Migrations
                     ScheduleEndTime = new TimeSpan(3, 0, 0),
                     IsDeleted = false
                 },
-                new Availability()
+                new ScheduleItem()
                 {
                     Inspector = inspectors[1],
                     Date = new DateTime(2018, 12, 3),
                     Scheduled = false,
                     IsDeleted = false
                 },
-                new Availability()
+                new ScheduleItem()
                 {
                     Inspector = inspectors[1],
                     Date = new DateTime(2018, 11, 21),
@@ -216,21 +216,21 @@ namespace FSBeheer.Migrations
                     ScheduleEndTime = new TimeSpan(23, 0, 0),
                     IsDeleted = false
                 },
-                new Availability()
+                new ScheduleItem()
                 {
                     Inspector = inspectors[2],
                     Date = new DateTime(2018, 12, 20),
                     Scheduled = false,
                     IsDeleted = false
                 },
-                new Availability()
+                new ScheduleItem()
                 {
                     Inspector = inspectors[3],
                     Date = new DateTime(2018, 12, 10),
                     Scheduled = false,
                     IsDeleted = false
                 },
-                new Availability()
+                new ScheduleItem()
                 {
                     Inspector = inspectors[3],
                     Date = new DateTime(2018, 12, 5),
@@ -240,7 +240,7 @@ namespace FSBeheer.Migrations
                     IsDeleted = false
                 }
             };
-            context.Availabilities.AddRange(availabilities);
+            context.ScheduleItems.AddRange(availabilities);
 
             var statuses = new List<Status>
             {
