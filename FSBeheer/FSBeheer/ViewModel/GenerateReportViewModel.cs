@@ -182,18 +182,31 @@ namespace FSBeheer.ViewModel
 
         private void WordWrapWhenNeeded()
         {
-            List<string> substrings = new List<string>();
-            substrings = Description.Split(' ').ToList();
+            //if (Description != "")
+            //{
+            //    List<string> substrings = new List<string>();
+            //    substrings = Description.Split(' ').ToList();
 
-            var removeEmptySubstringList = new List<string>();
-            foreach (string substring in substrings)
-                if (substring == "")
-                    removeEmptySubstringList.Add(substring);
+            //    var removeEmptySubstringList = new List<string>();
+            //    foreach (string substring in substrings)
+            //        if (substring == "")
+            //            removeEmptySubstringList.Add(substring);
 
-            foreach (string emptySubstring in removeEmptySubstringList)
-                substrings.Remove(emptySubstring);
+            //    foreach (string emptySubstring in removeEmptySubstringList)
+            //        substrings.Remove(emptySubstring);
 
+            //    //foreach (string substring in substrings)
+            //    //{
+            //    //    if (substring.Count() > 48)
+            //    //        substring
+            //    //}
 
+            //    string s = "";
+            //    foreach (string substring in substrings)
+            //    {
+            //        s += substring + " ";
+            //    }
+            }
         }
     }
 }
