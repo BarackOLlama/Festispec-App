@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Rapport genereren" Height="450" Width="1100"
+        Title="Rapport genereren" Height="800" Width="1150"
         DataContext="{Binding GenerateReport, Source={StaticResource Locator}}">
     <Window.Resources>
         <local:TypeToDisabledConverter x:Key="DisabledConverter"></local:TypeToDisabledConverter>
@@ -14,20 +14,20 @@
     <StackPanel Margin="20">
         <StackPanel Margin="30">
             <WrapPanel>
-                <Label Content="Bestandsnaam: " Margin="40,0,0,0"/>
-                <TextBox Text="{Binding Filename, Mode=TwoWay}" Width="723" VerticalContentAlignment="Center"/>
+                <Label Content="Bestandsnaam: " Margin="0,0,0,0"/>
+                <TextBox Text="{Binding Filename, Mode=TwoWay}" Width="900" VerticalContentAlignment="Center"/>
             </WrapPanel>
-            <WrapPanel Margin="18,10,0,10">
+            <WrapPanel Margin="54,10,0,10">
                 <Label Content="Titel: "/>
-                <TextBox Text="{Binding Title, Mode=TwoWay}" Width="800" VerticalContentAlignment="Center"/>
+                <TextBox Text="{Binding Title, Mode=TwoWay}" Width="900" VerticalContentAlignment="Center"/>
             </WrapPanel>
-            <WrapPanel>
+            <WrapPanel Margin="8,0,0,0">
                 <Label Content="Omschrijving: "/>
-                <TextBox Text="{Binding Description, Mode=TwoWay}" Width="771" VerticalContentAlignment="Center" MaxLength="910"/>
+                <TextBox Text="{Binding Description, Mode=TwoWay}" Width="900" Height="200" VerticalContentAlignment="Center" MaxLength="910" TextWrapping="Wrap"/>
             </WrapPanel>
-            <WrapPanel Margin="18,10,0,10">
+            <WrapPanel Margin="42,10,0,10">
                 <Label Content="Advies: "/>
-                <TextBox Text="{Binding Advice, Mode=TwoWay}" Width="787" VerticalContentAlignment="Center" MaxLength="910"/>
+                <TextBox Text="{Binding Advice, Mode=TwoWay}" Width="900" Height="200" VerticalContentAlignment="Center" MaxLength="910" TextWrapping="Wrap"/>
             </WrapPanel>
         </StackPanel>
         <StackPanel Margin="10">

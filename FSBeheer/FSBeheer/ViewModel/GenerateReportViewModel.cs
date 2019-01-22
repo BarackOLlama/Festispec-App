@@ -49,6 +49,7 @@ namespace FSBeheer.ViewModel
                 MessageBox.Show("Je kunt voor deze inspectie geen rapportage uitdraaien, omdat deze inspectie geen vragen bevat.");
             PassSelectedQuestions();
             PassSelectedCharts();
+            WordWrapWhenNeeded();
             if (Filename != null && Title != null && Questions != null)
             {
                 pdfGenerator = new PDFGenerator(Filename, 
@@ -177,6 +178,22 @@ namespace FSBeheer.ViewModel
         private void ResetQuestions()
         {
             Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
+        }
+
+        private void WordWrapWhenNeeded()
+        {
+            List<string> substrings = new List<string>();
+            substrings = Description.Split(' ').ToList();
+
+            var removeEmptySubstringList = new List<string>();
+            foreach (string substring in substrings)
+                if (substring == "")
+                    removeEmptySubstringList.Add(substring);
+
+            foreach (string emptySubstring in removeEmptySubstringList)
+                substrings.Remove(emptySubstring);
+
+
         }
     }
 }

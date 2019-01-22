@@ -3,6 +3,7 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Wpf.Charts.Base;
 using PdfSharp.Drawing;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -26,7 +27,14 @@ namespace FSBeheer.PDF
             _context = new CustomFSContext();
 
             Answers = _context.AnswerCrud.GetAllAnswersByQuestionId(SelectedQuestion.Id);
-            Options = SelectedQuestion.OptionsDictionary;
+            try
+            {
+                Options = SelectedQuestion.OptionsDictionary;
+            }catch (Exception e)
+            {
+                var error = e;
+            }
+            
 
             bool disableAnim = true;
             int w = width;

@@ -194,6 +194,8 @@ namespace FSBeheer.ViewModel
             SavePDF(_fileName);
         }
 
+        // mogelijke antwoorden
+
         private void DrawInformation(string value, QuestionVM question, int i)
         {
             // question
@@ -232,6 +234,12 @@ namespace FSBeheer.ViewModel
             {
                 gfxAll.DrawString("This is a Pie Chart",
                 font, XBrushes.Black, x2, y2);
+
+                // image test
+                // QuestionsList[0] is een multiple choice
+                ChartGenerator chartgen = new ChartGenerator(QuestionsList[i], "Pie", 300, 300);
+                XImage image2 = chartgen.GetImageFromChart();
+                gfx.DrawImage(image2, gfxAll.PdfPage.Width * 0.4, gfxAll.PdfPage.Height * 0.1, image2.PixelWidth, image2.PixelHeight);
             }
             else if (_selectedCharts[i] == "BarChart")
             {
