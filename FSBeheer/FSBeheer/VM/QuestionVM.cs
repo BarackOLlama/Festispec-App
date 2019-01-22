@@ -50,13 +50,30 @@ namespace FSBeheer.VM
             get
             {
                 var collection = new ObservableCollection<Option>();
-                foreach (string s in _question.Options.Split(';'))
+                if (_question.Options != null)
                 {
-                    collection.Add(new Option
+                    foreach (string s in _question.Options.Split(';'))
                     {
-                        Key = s.Split('|')[0],
-                        Value = s.Split('|')[1]
-                    });
+                        collection.Add(new Option
+                        {
+                            Key = s.Split('|')[0],
+                            Value = s.Split('|')[1]
+                        });
+                    }
+                } else
+                {
+                    // TODO
+                    //string letter = "A";
+                    //foreach (string s in _question.Scale.Split(':'))
+                    //{
+                        
+                    //    collection.Add(new Option {
+                    //        Key = letter,
+                    //        Value = s
+
+                    //    });
+                        
+                    //}
                 }
                 return collection;
             }

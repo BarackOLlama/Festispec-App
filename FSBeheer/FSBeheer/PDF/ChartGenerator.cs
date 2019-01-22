@@ -27,15 +27,8 @@ namespace FSBeheer.PDF
             _context = new CustomFSContext();
 
             Answers = _context.AnswerCrud.GetAllAnswersByQuestionId(SelectedQuestion.Id);
-            try
-            {
-                Options = SelectedQuestion.OptionsDictionary;
-            }catch (Exception e)
-            {
-                var error = e;
-            }
+            Options = SelectedQuestion.OptionsDictionary;
             
-
             bool disableAnim = true;
             int w = width;
             int h = height;

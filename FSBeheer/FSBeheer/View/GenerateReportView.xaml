@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
+        WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
-        Title="Rapport genereren" Height="800" Width="1150"
+        Title="Rapport genereren"
         DataContext="{Binding GenerateReport, Source={StaticResource Locator}}">
     <Window.Resources>
-        <local:TypeToDisabledConverter x:Key="DisabledConverter"></local:TypeToDisabledConverter>
+        <local:TypeToDisabledConverterBarChart x:Key="DisabledConverterBarChart"></local:TypeToDisabledConverterBarChart>
+        <local:TypeToDisabledConverterPieChart x:Key="DisabledConverterPieChart"></local:TypeToDisabledConverterPieChart>
     </Window.Resources>
     <StackPanel Margin="20">
         <StackPanel Margin="30">
@@ -40,14 +42,14 @@
                     <DataGridCheckBoxColumn Header="Staafdiagram" Binding="{Binding BarChart, UpdateSourceTrigger=PropertyChanged}" Width="80">
                         <DataGridCheckBoxColumn.CellStyle>
                             <Style TargetType="DataGridCell">
-                                <Setter Property="IsEnabled" Value="{Binding Type.Name, Converter= {StaticResource DisabledConverter}}"/>
+                                <Setter Property="IsEnabled" Value="{Binding Type.Name, Converter= {StaticResource DisabledConverterBarChart}}"/>
                             </Style>
                         </DataGridCheckBoxColumn.CellStyle>
                     </DataGridCheckBoxColumn>
                     <DataGridCheckBoxColumn Header="Cirkeldiagram" Binding="{Binding PieChart, UpdateSourceTrigger=PropertyChanged}" Width="85">
                         <DataGridCheckBoxColumn.CellStyle>
                             <Style TargetType="DataGridCell">
-                                <Setter Property="IsEnabled" Value="{Binding Type.Name, Converter= {StaticResource DisabledConverter}}"/>
+                                <Setter Property="IsEnabled" Value="{Binding Type.Name, Converter= {StaticResource DisabledConverterPieChart}}"/>
                             </Style>
                         </DataGridCheckBoxColumn.CellStyle>
                     </DataGridCheckBoxColumn>
