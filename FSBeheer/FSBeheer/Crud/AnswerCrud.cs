@@ -42,10 +42,21 @@ namespace FSBeheer.Crud
         {
             var _result = CustomFSContext.Answers
                .ToList()
-               .Select(c => new AnswerVM(c));
+                .Where(a => a.IsDeleted == false)
+               .Select(a => new AnswerVM(a));
             var result = new ObservableCollection<AnswerVM>(_result);
 
             return result;
+        }
+
+        public ObservableCollection<AnswerVM> GetAllAnswersByQuestionId(int questionId)
+        {
+            var _result = CustomFSContext.Answers
+                .ToList()
+                .Where(a => a.IsDeleted == false)
+                .Where(a => a.Question.Id == questionId)
+                .Select(a => new AnswerVM(a));
+            return new ObservableCollection<AnswerVM>(_result);
         }
 
 
@@ -56,8 +67,9 @@ namespace FSBeheer.Crud
         {
             var _answer = CustomFSContext.Answers
                .ToList()
-               .Where(c => c.Id == customer_id)
-               .Select(c => new AnswerVM(c));
+               .Where(a => a.IsDeleted == false)
+               .Where(a => a.Id == customer_id)
+               .Select(a => new AnswerVM(a));
             var answers = new ObservableCollection<AnswerVM>(_answer);
 
             return answers;

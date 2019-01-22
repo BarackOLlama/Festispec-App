@@ -35,12 +35,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BCrypt.Net-Next, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\BCrypt.Net-Next.3.1.0\lib\net452\BCrypt.Net-Next.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="BCrypt.Net-Next, Version=3.1.2.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.3.1.2\lib\net452\BCrypt.Net-Next.dll</HintPath>
     </Reference>
-    <Reference Include="Bogus, Version=25.0.2.0, Culture=neutral, PublicKeyToken=fa1bb3f3f218129a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Bogus.25.0.2\lib\net40\Bogus.dll</HintPath>
+    <Reference Include="Bogus, Version=25.0.3.0, Culture=neutral, PublicKeyToken=fa1bb3f3f218129a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bogus.25.0.3\lib\net40\Bogus.dll</HintPath>
     </Reference>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
@@ -112,6 +111,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\TypeToDisabledConverter.cs" />
     <Compile Include="Crud\AbstractCrud.cs" />
     <Compile Include="Crud\AccountCrud.cs" />
     <Compile Include="Crud\AnswerCrud.cs" />
@@ -124,6 +124,7 @@
     <Compile Include="Crud\EventCrud.cs" />
     <Compile Include="Crud\QuestionCrud.cs" />
     <Compile Include="Crud\QuestionnaireCrud.cs" />
+    <Compile Include="Crud\QuestionPDFCrud.cs" />
     <Compile Include="Crud\QuestionTypeCrud.cs" />
     <Compile Include="Crud\QuotationCrud.cs" />
     <Compile Include="Crud\StatusCrud.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Quotation.cs" />
     <Compile Include="Model\Role.cs" />
+    <Compile Include="PDF\ChartGenerator.cs" />
     <Compile Include="ViewModel\AvailableInspectorViewModel.cs" />
     <Compile Include="ViewModel\BusinessDataViewModel.cs" />
     <Compile Include="ViewModel\CreateEditInspectionViewModel.cs" />
@@ -158,16 +160,13 @@
     <Compile Include="ViewModel\InspectionManagementViewModel.cs" />
     <Compile Include="ViewModel\InspectorManagementViewModel.cs" />
     <Compile Include="ViewModel\ScheduleManagementViewModel.cs" />
-    <Compile Include="ViewModel\TestPDFViewModel.cs" />
     <Compile Include="View\BoolVisibilityConverter.cs" />
+    <Compile Include="PDF\PDFGenerator.cs" />
     <Compile Include="View\GenerateReportView.xaml.cs">
       <DependentUpon>GenerateReportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ScheduleManagementView.xaml.cs">
       <DependentUpon>ScheduleManagementView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\TestPDFView.xaml.cs">
-      <DependentUpon>TestPDFView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\BusinessDataView.xaml.cs">
       <DependentUpon>BusinessDataView.xaml</DependentUpon>
@@ -230,7 +229,7 @@
     <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\NullVisibilityConverter.cs" />
+    <Compile Include="Converter\NullVisibilityConverter.cs" />
     <Compile Include="VM\AccountVM.cs" />
     <Compile Include="View\QuestionnaireManagementView.xaml.cs">
       <DependentUpon>QuestionnaireManagementView.xaml</DependentUpon>
@@ -255,6 +254,7 @@
     <Compile Include="VM\InspectionDateVM.cs" />
     <Compile Include="VM\InspectionVM.cs" />
     <Compile Include="VM\InspectorVM.cs" />
+    <Compile Include="VM\QuestionPDFVM.cs" />
     <Compile Include="VM\QuestionTypeVM.cs" />
     <Compile Include="VM\QuestionVM.cs" />
     <Compile Include="VM\QuotationVM.cs" />
@@ -378,10 +378,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\TestPDFView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\testImage.jpg">
@@ -390,6 +386,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\nature.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\festispecLogo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

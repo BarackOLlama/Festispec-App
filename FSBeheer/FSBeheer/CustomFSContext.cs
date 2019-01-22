@@ -24,6 +24,7 @@ namespace FSBeheer
         public ContactCrud ContactCrud;
         public StatusCrud StatusCrud;
         public QuotationCrud QuotationCrud;
+        public QuestionPDFCrud QuestionPDFCrud;
 
         public CustomFSContext() : base()
         {
@@ -42,6 +43,7 @@ namespace FSBeheer
             ContactCrud = new ContactCrud(this);
             StatusCrud = new StatusCrud(this);
             QuotationCrud = new QuotationCrud(this);
+            QuestionPDFCrud = new QuestionPDFCrud(this);
         }
     }
 }

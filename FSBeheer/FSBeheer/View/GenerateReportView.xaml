@@ -5,34 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="Rapport genereren" Height="450" Width="1100"
         DataContext="{Binding GenerateReport, Source={StaticResource Locator}}">
+    <Window.Resources>
+        <local:TypeToDisabledConverter x:Key="DisabledConverter"></local:TypeToDisabledConverter>
+    </Window.Resources>
     <StackPanel Margin="20">
         <StackPanel Margin="30">
             <WrapPanel>
-                <Label Content="Titel: " Margin="40,0,0,0"/>
-                <TextBox Text="{Binding Title, Mode=TwoWay}" Width="350"/>
+                <Label Content="Bestandsnaam: " Margin="40,0,0,0"/>
+                <TextBox Text="{Binding Filename, Mode=TwoWay}" Width="723" VerticalContentAlignment="Center"/>
             </WrapPanel>
             <WrapPanel Margin="18,10,0,10">
-                <Label Content="Heading: "/>
-                <TextBox Text="{Binding Heading, Mode=TwoWay}" Width="900"/>
+                <Label Content="Titel: "/>
+                <TextBox Text="{Binding Title, Mode=TwoWay}" Width="800" VerticalContentAlignment="Center"/>
             </WrapPanel>
             <WrapPanel>
-                <Label Content="Beschrijving: "/>
-                <TextBox Text="{Binding Beschrijving, Mode=TwoWay}" Width="900"/>
+                <Label Content="Omschrijving: "/>
+                <TextBox Text="{Binding Description, Mode=TwoWay}" Width="771" VerticalContentAlignment="Center" MaxLength="910"/>
+            </WrapPanel>
+            <WrapPanel Margin="18,10,0,10">
+                <Label Content="Advies: "/>
+                <TextBox Text="{Binding Advice, Mode=TwoWay}" Width="787" VerticalContentAlignment="Center" MaxLength="910"/>
             </WrapPanel>
         </StackPanel>
         <StackPanel Margin="10">
-            <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Questions}" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding QuestionPDFs}" AutoGenerateColumns="False" CanUserAddRows="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Vraag" Binding="{Binding Content}" Width="*" IsReadOnly="True"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Vraagtype" Binding="{Binding Type.Name}" Width="150" IsReadOnly="True"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Beschrijving" Binding="{Binding Comments}" Width="*" IsReadOnly="True"></DataGridTextColumn>
-                    <DataGridCheckBoxColumn Header="Niet tonen" Binding="{Binding Niettonenbinding}" Width="70"></DataGridCheckBoxColumn>
-                    <DataGridCheckBoxColumn Header="Staafdiagram" Binding="{Binding Staafdiagrambinding}" Width="80"></DataGridCheckBoxColumn>
-                    <DataGridCheckBoxColumn Header="Cirkeldiagram" Binding="{Binding Cirkeldiagrambinding}" Width="90"></DataGridCheckBoxColumn>
+                    <DataGridTextColumn Header="Vraag" Binding="{Binding Content}" Width="355" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Vraagtype" Binding="{Binding Type.Name}" Width="150" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Beschrijving" Binding="{Binding Comments}" Width="*" IsReadOnly="True"/>
+                    <DataGridCheckBoxColumn Header="Niet tonen" Binding="{Binding DoNotShow, UpdateSourceTrigger=PropertyChanged}" Width="70"/>
+                    <DataGridCheckBoxColumn Header="Staafdiagram" Binding="{Binding BarChart, UpdateSourceTrigger=PropertyChanged}" Width="80">
+                        <DataGridCheckBoxColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="IsEnabled" Value="{Binding Type.Name, Converter= {StaticResource DisabledConverter}}"/>
+                            </Style>
+                        </DataGridCheckBoxColumn.CellStyle>
+                    </DataGridCheckBoxColumn>
+                    <DataGridCheckBoxColumn Header="Cirkeldiagram" Binding="{Binding PieChart, UpdateSourceTrigger=PropertyChanged}" Width="85">
+                        <DataGridCheckBoxColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="IsEnabled" Value="{Binding Type.Name, Converter= {StaticResource DisabledConverter}}"/>
+                            </Style>
+                        </DataGridCheckBoxColumn.CellStyle>
+                    </DataGridCheckBoxColumn>
                 </DataGrid.Columns>
             </DataGrid>
+        </StackPanel>
+        <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                    Orientation="Horizontal" Margin="0,0,25,0">
+            <Button Content="Genereer" Command="{Binding CreatePDFCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
         </StackPanel>
     </StackPanel>
 </local:BaseView>
