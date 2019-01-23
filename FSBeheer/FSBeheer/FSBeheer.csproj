@@ -162,6 +162,7 @@
     <Compile Include="ViewModel\ScheduleManagementViewModel.cs" />
     <Compile Include="View\BoolVisibilityConverter.cs" />
     <Compile Include="PDF\PDFGenerator.cs" />
+    <Compile Include="View\DateStringConverter.cs" />
     <Compile Include="View\GenerateReportView.xaml.cs">
       <DependentUpon>GenerateReportView.xaml</DependentUpon>
     </Compile>

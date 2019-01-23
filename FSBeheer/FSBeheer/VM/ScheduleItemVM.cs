@@ -12,9 +12,13 @@ namespace FSBeheer.VM
     {
         private ScheduleItem _ScheduleItem;
 
-        public ScheduleItemVM(ScheduleItem scheduleItem)
+        public ScheduleItemVM(ScheduleItem scheduleItem = null)
         {
-            _ScheduleItem = scheduleItem;
+            if (scheduleItem != null)
+                _ScheduleItem = scheduleItem;
+            else
+                _ScheduleItem = new ScheduleItem();
+            
         }
 
         public int Id

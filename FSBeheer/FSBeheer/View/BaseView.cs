@@ -41,6 +41,7 @@ namespace FSBeheer.View
             CreateEditLabelFactory.SetValue(Label.HorizontalContentAlignmentProperty, HorizontalAlignment.Right);
             CreateEditLabelFactory.SetValue(Label.VerticalContentAlignmentProperty, VerticalAlignment.Center);
             CreateEditLabelFactory.SetValue(Label.FontSizeProperty, DefaultFontSize);
+            CreateEditLabelFactory.SetValue(Label.FontWeightProperty, new TemplateBindingExtension(Label.FontWeightProperty));
             CreateEditLabelFactory.SetValue(Label.WidthProperty, (double)75);
 
             var CreateEditTextBoxFactory = new FrameworkElementFactory(typeof(TextBox));
