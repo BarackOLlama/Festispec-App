@@ -34,7 +34,7 @@
                           Width="250">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding GetScheduleItemCommand}"/>
+                            <i:InvokeCommandAction Command="{Binding GetScheduleItemsCommand}"/>
                             <i:InvokeCommandAction Command="{Binding CanExecuteChangedCommand}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -74,11 +74,23 @@
                         <Label Content="Nieuw item toevoegen:" FontWeight="Bold"></Label>
                         <StackPanel Orientation="Horizontal" Margin="5">
                             <Label Content="Startdatum: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                            <TextBox Text="{Binding StartingDate, Converter={StaticResource DateStringConverter}}" Width="250"/>
+                            <DatePicker SelectedDateFormat="Short" SelectedDate="{Binding StartingDate, Converter={StaticResource DateStringConverter}}" Width="250">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectedDateChanged">
+                                        <i:InvokeCommandAction Command="{Binding CanExecuteChangedCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </DatePicker>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="5">
                             <Label Content="Einddatum: " Template="{DynamicResource CreateEditLabelTemplate}"/>
-                            <TextBox Text="{Binding EndDate, Converter={StaticResource DateStringConverter}}" Width="250"/>
+                            <DatePicker SelectedDateFormat="Short" SelectedDate="{Binding EndDate, Converter={StaticResource DateStringConverter}}" Width="250">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectedDateChanged">
+                                        <i:InvokeCommandAction Command="{Binding CanExecuteChangedCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </DatePicker>
                         </StackPanel>
                     </StackPanel>
 

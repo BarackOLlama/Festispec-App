@@ -48,7 +48,7 @@ namespace FSBeheer.ViewModel
             BackHomeCommand = new RelayCommand<Window>(CloseAction);
             GetScheduleItemsCommand = new RelayCommand(GetScheduleItems);
             DeleteScheduleItemsCommand = new RelayCommand(DeleteScheduleItems, ScheduleItemSelected);
-            NewScheduleItemCommand = new RelayCommand(NewScheduleItem, InspectorSelected);
+            NewScheduleItemCommand = new RelayCommand(NewScheduleItem, CanCreate);
             CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
             DatagridSelectionChangedCommand = new RelayCommand<object>(DataGridSelectionChanged);
         }
@@ -113,6 +113,15 @@ namespace FSBeheer.ViewModel
             RaisePropertyChanged(nameof(SelectedScheduleItems));
         }
 
+        private bool CanCreate()
+        {
+            if (!InspectorSelected())
+                return false;
+            if (StartingDate > EndDate)
+                return false;
+            return true;
+        }
+
         private bool InspectorSelected()
         {
             return SelectedInspector != null;
@@ -135,10 +144,8 @@ namespace FSBeheer.ViewModel
                 var result = MessageBox.Show("Weet u zeker dat u deze roosteritems wilt verwijderen?\nLet op: Alleen roosteritems van het type Verlof kunnen hier verwijderd worden.", "Bevestigen", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    foreach(var item in SelectedScheduleItems)
-                    {
-
-                    }
+                    _Context.ScheduleItemCrud.DeleteScheduleItemsByDateRange(SelectedScheduleItems);
+                    GetScheduleItems();
                 }
             }
             else
@@ -149,10 +156,8 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                for (var start = StartingDate; start <= EndDate; start = start.AddDays(1))
-                {
-
-                }
+                _Context.ScheduleItemCrud.AddScheduleItemsByDateRange(StartingDate, EndDate, SelectedInspector);
+                GetScheduleItems();
             }
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
