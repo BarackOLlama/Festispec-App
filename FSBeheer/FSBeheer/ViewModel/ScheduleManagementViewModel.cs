@@ -23,6 +23,9 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<ScheduleItemVM> ScheduleItems { get; set; }
         public ObservableCollection<ScheduleItemVM> SelectedScheduleItems { get; set; }
 
+        public DateTime StartingDate { get; set; }
+        public DateTime EndDate { get; set; }
+
         public RelayCommand<Window> BackHomeCommand { get; set; }
         public RelayCommand GetScheduleItemsCommand { get; set; }
         public RelayCommand NewScheduleItemCommand { get; set; }
@@ -53,6 +56,8 @@ namespace FSBeheer.ViewModel
         public void Init()
         {
             _Context = new CustomFSContext();
+            StartingDate = DateTime.Now;
+            EndDate = DateTime.Now;
             GetData();
         }
 
@@ -144,7 +149,10 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                
+                for (var start = StartingDate; start <= EndDate; start = start.AddDays(1))
+                {
+
+                }
             }
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
