@@ -184,7 +184,7 @@ namespace FSBeheer.ViewModel
 
             if (Inspection.InspectionDate.EndTime != null)
             {
-                var regex = new Regex(@"^([0-1][0-9]|2[0-3]):([0-5][0-9])?:?([0-5][0-9])$");
+                var regex = new Regex(@"^([0-9]|1[0-9]|2[0 - 3])(:[0-5][0-9]|:[0-9]){0,2}$");
                 if (!regex.IsMatch(Inspection.InspectionDate.EndTime.ToString()))
                 {
                     MessageBox.Show("De eindtijd is niet goed.");
