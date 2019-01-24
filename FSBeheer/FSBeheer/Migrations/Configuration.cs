@@ -443,7 +443,7 @@ namespace FSBeheer.Migrations
                 new Question()
                 {
                     Content = "Hoe is het weer?",
-                    Scale = "1:10:Slecht:Geweldig",
+                    Options = "1|Slecht;10|Geweldig",
                     Questionnaire = questionnaires[0],
                     QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Schaal Vraag"),
                     IsDeleted = false
@@ -459,7 +459,7 @@ namespace FSBeheer.Migrations
                 {
                     Content = "Hoeveel klanten zijn er bij de bars?",
                     Questionnaire = questionnaires[0],
-                    Columns="1|Grolsch bar| Bavaria bar| Hertog Jan Bar",
+                    Columns="1;Grolsch bar; Bavaria bar; Hertog Jan Bar",
                     QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Open Tabelvraag"),
                     IsDeleted = false
                 },
@@ -467,7 +467,7 @@ namespace FSBeheer.Migrations
                 {
                     Content = "Hoeveel bars zijn er op het festival?",
                     Options = "A|1-3;B|40-50;C|90;D|500+",
-                    Columns="2|temp|voorbeeld|example",
+                    Columns="2;temp;voorbeeld;example",
                     Questionnaire = questionnaires[0],
                     QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice Tabelvraag"),
                     IsDeleted = false
@@ -476,7 +476,7 @@ namespace FSBeheer.Migrations
                 new Question()
                 {
                     Content ="Hoe is de stemming?",
-                    Options="1:120:grimmig:gezellig",
+                    Options="1|grimmig;120|gezellig",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Schaal Vraag"),
                     IsDeleted = false
@@ -499,7 +499,7 @@ namespace FSBeheer.Migrations
                 new Question()
                 {
                     Content="Verschillen tussen drankprijzen",
-                    Columns="2|Grolsch bar|Bavaria Bar|Hertog Jan Bar",
+                    Columns="2;Grolsch bar;Bavaria Bar;Hertog Jan Bar",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Open Tabelvraag"),
                     IsDeleted = false
@@ -508,7 +508,7 @@ namespace FSBeheer.Migrations
                 {
                     Content="Hoe combineer je een multiple choice vraag met een tabelvraag?",
                     Options="A|Dat is onmogelijk;B|Dat doe je zo.",
-                    Columns="1|Voorbeeld|Voorbeeld 2",
+                    Columns="1;Voorbeeld;Voorbeeld 2",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Multiple Choice Tabelvraag"),
                     IsDeleted = false
@@ -518,6 +518,7 @@ namespace FSBeheer.Migrations
 
             var answers = new List<Answer>
             {
+                // multiple choice vraag
                 new Answer()
                 {
                     Content = "B|200",
@@ -546,6 +547,7 @@ namespace FSBeheer.Migrations
                     Inspector = inspectors[3],
                     IsDeleted = false
                 },
+                // schaalvraag
                 new Answer()
                 {
                     Content = "A|10%",
@@ -574,6 +576,7 @@ namespace FSBeheer.Migrations
                     Inspector = inspectors[3],
                     IsDeleted = false
                 },
+                // open vraag
                 new Answer()
                 {
                     Content = "B|200kg",
@@ -602,6 +605,7 @@ namespace FSBeheer.Migrations
                     Inspector = inspectors[3],
                     IsDeleted = false
                 },
+                // open tabelvraag
                 new Answer()
                 {
                     Content = "C|20",
@@ -630,6 +634,36 @@ namespace FSBeheer.Migrations
                     Inspector = inspectors[3],
                     IsDeleted = false
                 },
+                // multiple choice tabelvraag
+                new Answer()
+                {
+                    Content = "temp antwoord 1a;A|1-3",
+                    Question = questions[4],
+                    Inspector = inspectors[0],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "temp antwoord 2a;B|40-50",
+                    Question = questions[4],
+                    Inspector = inspectors[0],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "temp antwoord 1b;C|90",
+                    Question = questions[4],
+                    Inspector = inspectors[1],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "temp antwoord 2b;D|500+",
+                    Question = questions[4],
+                    Inspector = inspectors[1],
+                    IsDeleted = false
+                },
+                // schaalvraag
                 new Answer()
                 {
                     Content = "100",
@@ -644,6 +678,7 @@ namespace FSBeheer.Migrations
                     Inspector = inspectors[1],
                     IsDeleted = false
                 },
+                // multiple choice
                 new Answer()
                 {
                     Content = "A|Jazeker",
@@ -658,6 +693,7 @@ namespace FSBeheer.Migrations
                     Inspector = inspectors[1],
                     IsDeleted = false
                 },
+                // open vraag
                 new Answer()
                 {
                     Content = "Dan doen ze ja",
