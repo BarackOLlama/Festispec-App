@@ -13,6 +13,8 @@
         <KeyBinding Command="{Binding CloseWindowCommand}"
                     CommandParameter="{Binding ElementName=EditWindow}"
                     Key="Esc"/>
+        <KeyBinding Command="{Binding CreateQuestionCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}" Gesture="CTRL+S"/>
+        <KeyBinding Command="{Binding CreateQuestionCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}" Key="F5"/>
     </Window.InputBindings>
     <StackPanel>
         <TextBlock Text="Vraag toevoegen" FontSize="28" Margin="5,5,0,0"/>

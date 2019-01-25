@@ -12,6 +12,8 @@
         <KeyBinding Command="{Binding CloseWindowCommand}"
                     CommandParameter="{Binding ElementName=EditWindow}"
                     Key="Esc"/>
+        <KeyBinding Command="{Binding SaveQuestionChangesCommand}" CommandParameter="{Binding ElementName=EditWindow}" Gesture="CTRL+S"/>
+        <KeyBinding Command="{Binding SaveQuestionChangesCommand}" CommandParameter="{Binding ElementName=EditWindow}" Key="F5"/>
     </Window.InputBindings>
     <StackPanel>
         <TextBlock Text="Vraag aanpassen" FontSize="28" Margin="5,5,0,0"/>

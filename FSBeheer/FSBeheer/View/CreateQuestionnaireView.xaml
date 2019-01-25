@@ -12,6 +12,8 @@
         <KeyBinding Command="{Binding CloseWindowCommand}"
                     CommandParameter="{Binding ElementName=WindowName}"
                     Key="Esc"/>
+        <KeyBinding Command="{Binding CreateQuestionnaireCommand}" CommandParameter="{Binding ElementName=WindowName}" Gesture="CTRL+S"/>
+        <KeyBinding Command="{Binding CreateQuestionnaireCommand}" CommandParameter="{Binding ElementName=WindowName}" Key="F5"/>
     </Window.InputBindings>
     <StackPanel Margin="5">
         <StackPanel Margin="5">
