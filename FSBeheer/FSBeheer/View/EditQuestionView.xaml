@@ -8,6 +8,11 @@
         mc:Ignorable="d"
         Title="Vraag aanpassen" Height="520" Width="340"
         DataContext="{Binding EditQuestion, Source={StaticResource Locator}}">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CloseWindowCommand}"
+                    CommandParameter="{Binding ElementName=EditWindow}"
+                    Key="Esc"/>
+    </Window.InputBindings>
     <StackPanel>
         <TextBlock Text="Vraag aanpassen" FontSize="28" Margin="5,5,0,0"/>
         <TextBlock Text="Vraag:" Margin="10,5,0,0"  />

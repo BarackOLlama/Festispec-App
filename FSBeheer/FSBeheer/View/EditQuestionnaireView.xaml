@@ -8,12 +8,16 @@
         mc:Ignorable="d"
         Title="Vragenlijst Aanpassen" Height="500" Width="840"
         DataContext="{Binding EditQuestionnaire, Source={StaticResource Locator}}">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CloseWindowCommand}"
+                    CommandParameter="{Binding ElementName=EditQuestionnaireWindow}"
+                    Key="Esc"/>
+    </Window.InputBindings>
     <StackPanel>
         <StackPanel  Margin="0,10,0,0" Width="500">
             <TextBlock>Vragenlijstnaam:</TextBlock>
             <TextBox Text="{Binding Questionnaire.Name, Mode=TwoWay}"></TextBox>
         </StackPanel>
-
         <StackPanel Margin="0,10,0,0">
             <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Questions}"  IsReadOnly="True" SelectedItem="{Binding SelectedQuestion}" AutoGenerateColumns="False">
                 <DataGrid.Columns>

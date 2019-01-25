@@ -8,7 +8,11 @@
         mc:Ignorable="d"
         Title="Vragenlijst aanmaken" Height="500" Width="800"
         DataContext="{Binding CreateQuestionnaire, Source={StaticResource Locator}}">
-    
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CloseWindowCommand}"
+                    CommandParameter="{Binding ElementName=WindowName}"
+                    Key="Esc"/>
+    </Window.InputBindings>
     <StackPanel Margin="5">
         <StackPanel Margin="5">
             <StackPanel>

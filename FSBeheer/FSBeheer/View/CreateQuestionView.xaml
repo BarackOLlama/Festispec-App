@@ -9,6 +9,11 @@
         Title="Vraag toevoegen" Height="520" Width="340"
         ResizeMode="NoResize"
         DataContext="{Binding CreateQuestion, Source={StaticResource Locator}}">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CloseWindowCommand}"
+                    CommandParameter="{Binding ElementName=EditWindow}"
+                    Key="Esc"/>
+    </Window.InputBindings>
     <StackPanel>
         <TextBlock Text="Vraag toevoegen" FontSize="28" Margin="5,5,0,0"/>
         <TextBlock Text="Vraag:" Margin="10,5,0,0"/>
