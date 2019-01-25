@@ -61,9 +61,9 @@ namespace FSBeheer.ViewModel
         {
             //edit
             _context = new CustomFSContext();
-            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions(_questionnaire.Id));
+            Messenger.Default.Register<bool>(this, "UpdateQuestions", cl => FetchAndSetQuestions());
             Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(questionnaireId);
-            FetchAndSetQuestions(_questionnaire.Id);
+            FetchAndSetQuestions();
             SelectedQuestion = Questions.FirstOrDefault();
             InitializeCommands();
             //FetchAndSetInspectionNumbersAndSelectedInspection();
@@ -120,10 +120,11 @@ namespace FSBeheer.ViewModel
             return -1;
         }
 
-        private void FetchAndSetQuestions(int questionnaireId)
+        private void FetchAndSetQuestions()
         {
-            Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
-            RaisePropertyChanged(nameof(Questions));
+            _context = new CustomFSContext();
+            Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(_questionnaire);
+            base.RaisePropertyChanged(nameof(Questions));
         }
 
         private void CloseWindow(Window window)
@@ -366,7 +367,7 @@ namespace FSBeheer.ViewModel
                     {
                         _selectedQuestion.IsDeleted = true;
                         _context.SaveChanges();
-                        this.FetchAndSetQuestions(Questionnaire.Id);
+                        this.FetchAndSetQuestions();
                         //so that the Questionnaires in QuestionnaireManagementViewModel display the correct number of questions.
                         Messenger.Default.Send(true, "UpdateQuestionnaires");
                     }
