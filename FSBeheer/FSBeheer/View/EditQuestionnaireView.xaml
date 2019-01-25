@@ -9,6 +9,11 @@
         Title="Vragenlijst Aanpassen" Height="500" Width="840"
         DataContext="{Binding EditQuestionnaire, Source={StaticResource Locator}}">
     <Window.InputBindings>
+        <KeyBinding Command="{Binding OpenEditQuestionViewCommand}" Gesture="CTRL+O"/>
+        <KeyBinding Command="{Binding OpenCreateQuestionViewCommand}" Gesture="CTRL+N"/>
+        <KeyBinding Command="{Binding DeleteQuestionCommand}" Key="Delete"/>
+        <KeyBinding Command="{Binding SaveQuestionnaireChangesCommand}" CommandParameter="{Binding ElementName=EditQuestionnaireWindow}" Gesture="CTRL+S"/>
+        <KeyBinding Command="{Binding SaveQuestionnaireChangesCommand}" CommandParameter="{Binding ElementName=EditQuestionnaireWindow}" Key="F5"/>
         <KeyBinding Command="{Binding CloseWindowCommand}"
                     CommandParameter="{Binding ElementName=EditQuestionnaireWindow}"
                     Key="Esc"/>
