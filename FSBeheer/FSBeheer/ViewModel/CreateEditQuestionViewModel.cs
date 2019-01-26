@@ -197,7 +197,7 @@ namespace FSBeheer.ViewModel
                     return false;
                 }
 
-                if (!Regex.IsMatch(Question.Options, @"^\w\|\w[\w ]*(;\w\|\w[\w ]*){2,}$"))
+                if (!Regex.IsMatch(Question.Options, @"^\w\|\w[\w ]*(;\w\|\w[\w ]*){1,}$"))
                 {
                     MessageBox.Show("De multiple choice syntax is incorrect.\n" +
                         "Voorbeeld: A|Waar;B|Niet waar");
