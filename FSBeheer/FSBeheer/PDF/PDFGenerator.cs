@@ -197,10 +197,10 @@ namespace FSBeheer.ViewModel
             gfxAll.DrawString(value + question.Content,
             font, XBrushes.Black, x2, y2);
             y2 += ls + 5;
-            gfxAll.DrawString("Mogelijke antwoorden: ",
-            font, XBrushes.Black, x2, y2);
             if (question.Options != null)
             {
+                gfxAll.DrawString("Mogelijke antwoorden: ",
+                font, XBrushes.Black, x2, y2);
                 y2 += ls + 5;
                 var setOptions = question.Options.Split(';');
                 foreach (var option in setOptions)
