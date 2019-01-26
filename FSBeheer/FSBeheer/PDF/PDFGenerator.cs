@@ -210,12 +210,18 @@ namespace FSBeheer.ViewModel
             y2 += ls + 10;
             answersList = _context.AnswerCrud.GetAllAnswersByQuestionId(question.Id);
 
-            if (question.Type.Name == "Multiple Choice Tabelvraag" || question.Type.Name == "Open Tabelvraag")
+            if (question.Type.Name == "Multiple Choice Tabelvraag")
             {
                 var collection = question.Columns.Split(';');
-                var firstColumn = collection[1];
-                var secondColumn = collection[2];
                 var columnCollection = collection[1] + "  |  " + collection[2];
+                gfxAll.DrawString(columnCollection, font, XBrushes.Black, x2, y2);
+                y2 += ls + 10;
+            }
+
+            if (question.Type.Name == "Open Tabelvraag")
+            {
+                var collection = question.Columns.Split(';');
+                var columnCollection = collection[0] + "  |  " + collection[1];
                 gfxAll.DrawString(columnCollection, font, XBrushes.Black, x2, y2);
                 y2 += ls + 10;
             }
@@ -239,14 +245,8 @@ namespace FSBeheer.ViewModel
                 }
                 else if (question.Type.Name == "Open Tabelvraag")
                 {
-                    // formaat per type (variabele)
-                    var collection = answer.Content.Split(';');
-                    var firstPart = collection[0];
-                    var secondPart = collection[1];
-                    var answerFormat = firstPart + "     |     " + secondPart;
-
-                    // tekenen
-                    gfxAll.DrawString(answerFormat,
+                    // TODO
+                    gfxAll.DrawString(answer.Content,
                     font, XBrushes.Black, x2, y2);
                     y2 += ls;
                 }

@@ -459,7 +459,7 @@ namespace FSBeheer.Migrations
                 {
                     Content = "Hoeveel klanten zijn er bij de bars?",
                     Questionnaire = questionnaires[0],
-                    Columns="2;Grolsch bar;Bavaria bar;Hertog Jan Bar",
+                    Columns="Barnaam;Antwoord",
                     QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Open Tabelvraag"),
                     IsDeleted = false
                 },
@@ -499,7 +499,7 @@ namespace FSBeheer.Migrations
                 new Question()
                 {
                     Content="Verschillen tussen drankprijzen",
-                    Columns="2;Grolsch bar;Bavaria Bar;Hertog Jan Bar",
+                    Columns="Barnaam;Antwoord",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Open Tabelvraag"),
                     IsDeleted = false
@@ -604,28 +604,28 @@ namespace FSBeheer.Migrations
                 },
                 new Answer()
                 {
-                    Content = "20;30",
+                    Content = "Specialty Bar|50",
                     Question = questions[3],
                     Inspector = inspectors[0],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "10;25",
+                    Content = "Grolsche Bar|40",
                     Question = questions[3],
                     Inspector = inspectors[1],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "20;40",
+                    Content = "Heineken Bar|30",
                     Question = questions[3],
                     Inspector = inspectors[2],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "20;12",
+                    Content = "Pub|20",
                     Question = questions[3],
                     Inspector = inspectors[3],
                     IsDeleted = false
