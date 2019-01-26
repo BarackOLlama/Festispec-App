@@ -632,56 +632,56 @@ namespace FSBeheer.Migrations
                 },
                 new Answer()
                 {
-                    Content = "Slecht;A|1-3",
+                    Content = "Bar 1;A|1-3",
                     Question = questions[4],
                     Inspector = inspectors[0],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "Minder slecht;A|1-3",
+                    Content = "Bar 2;A|1-3",
                     Question = questions[4],
                     Inspector = inspectors[0],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "Minder slecht;B|40-50",
+                    Content = "Bar 1;B|40-50",
                     Question = questions[4],
                     Inspector = inspectors[1],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "Goed;B|40-50",
+                    Content = "Bar 2;B|40-50",
                     Question = questions[4],
                     Inspector = inspectors[1],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "Goed;C|90",
+                    Content = "Bar 1;C|90",
                     Question = questions[4],
                     Inspector = inspectors[2],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "Geweldig;C|90",
+                    Content = "Bar 2;C|90",
                     Question = questions[4],
                     Inspector = inspectors[2],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "Geweldig;D|500+",
+                    Content = "Bar 1;D|500+",
                     Question = questions[4],
                     Inspector = inspectors[3],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "Uiterst geweldig;D|500+",
+                    Content = "Bar 2;D|500+",
                     Question = questions[4],
                     Inspector = inspectors[3],
                     IsDeleted = false
