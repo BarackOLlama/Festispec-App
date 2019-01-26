@@ -221,19 +221,9 @@ namespace FSBeheer.ViewModel
                     return false;
                 }
 
-                var columnResults = Question.Columns.Split('|');
-
-                if (columnResults.Length < 3)
+                if (!Regex.IsMatch(Question.Columns, @"^[3-9];[\w ]+;[\w ]+$"))
                 {
-                    MessageBox.Show("Incorrecte syntax. Voer een getal (1-9) voor het aantal antwoorden, vervolgt met een '|' en een kolomnaam.\nEen kolomvraag moet minstens 2 kolomnamen hebben.");
-                    return false;
-                }
-
-                //the string must begin with a number between 1 and 9
-                if (!new Regex("^[1-9]{1}$").IsMatch(columnResults[0]))
-                {
-                    MessageBox.Show("Het eerste karakter van de kolom moet een getal (1-9) zijn, vervolgt door een '|'+" +
-                        "en een kolomnaam.\nVolg alle behalve de laatste kolomnaam met een '|'. ");
+                    MessageBox.Show("Invalide syntax. aantal kolommen(2+);kolomnaam 1;kolomnaam 2\n (2;Vogels;Katten)");
                     return false;
                 }
 
