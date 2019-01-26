@@ -11,6 +11,9 @@
     <Window.Resources>
         <local:TypeToDisabledConverter x:Key="DisabledConverter"></local:TypeToDisabledConverter>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CreatePDFCommand}" Gesture="CTRL+ENTER"/>
+    </Window.InputBindings>
     <StackPanel Margin="20">
         <StackPanel Margin="30">
             <WrapPanel>
