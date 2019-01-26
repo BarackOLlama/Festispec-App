@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="Vraag toevoegen" Height="520" Width="340"
+        Title="Vraag toevoegen" Height="480" Width="340"
         ResizeMode="NoResize"
         DataContext="{Binding CreateQuestion, Source={StaticResource Locator}}">
     <Window.InputBindings>
@@ -21,15 +21,13 @@
         <TextBlock Text="Vraag:" Margin="10,5,0,0"/>
         <TextBox MaxLength="150" Text="{Binding Question.Content, Mode=TwoWay}" TextWrapping="Wrap" AcceptsReturn="True" Height="40" Margin="10"/>
         <TextBlock Text="Vraag type:" Margin="10,5,0,0"  />
-        <ComboBox ItemsSource="{Binding QuestionTypes}" SelectedItem="{Binding SelectedQuestionType}" HorizontalAlignment="Left" Width="292" Margin="10"/>
+        <ComboBox ItemsSource="{Binding QuestionTypes, Mode=TwoWay}" SelectedItem="{Binding SelectedQuestionType}" HorizontalAlignment="Left" Width="292" Margin="10"/>
         <TextBlock Margin="10,5,0,0" ToolTip="Voor nadere uitleg over de vraag">Commentaar:</TextBlock>
-        <TextBox Text="{Binding Question.Comments}" ToolTip="Voor nadere uitleg over de vraag" Margin="10"></TextBox>
-        <TextBlock Text="Opties:* multiple choice" ToolTip="Voorbeeld: A|Ja;B|Nee" Margin="10,5,0,0"></TextBlock>
-        <TextBox Text="{Binding Question.Options}" ToolTip="Voorbeeld: A|Ja;B|Nee" IsEnabled="{Binding OptionsIsEnabled}" Margin="10"></TextBox>
+        <TextBox Text="{Binding Question.Comments, Mode=TwoWay}" ToolTip="Voor nadere uitleg over de vraag" Margin="10"></TextBox>
+        <TextBlock Text="Opties:* multiple choice/schaal" ToolTip="Schaal:Slecht|1;Goed|10, multiple choice:A|Optie a;B|Optie b" Margin="10,5,0,0"></TextBlock>
+        <TextBox Text="{Binding Question.Options, Mode=TwoWay}" ToolTip="Schaal:Slecht|1;Goed|10, multiple choice:A|Optie a;B|Optie b" IsEnabled="{Binding OptionsIsEnabled}" Margin="10"></TextBox>
         <TextBlock Text="Kolommen" ToolTip="Voorbeeld: 1|Kolomnaam 1|Kolomnaam 2" Margin="10,5,0,0"></TextBlock>
-        <TextBox Text="{Binding Question.Columns}" ToolTip="Voorbeeld: 1|Kolomnaam 1|Kolomnaam 2" IsEnabled="{Binding ColumnsIsEnabled}" Margin="10"></TextBox>
-        <TextBlock Text="Schaal" ToolTip="1:2:Negatief:Positief" Margin="10,5,0,0"></TextBlock>
-        <TextBox Text="{Binding Question.Scale}" ToolTip="1:2:Negatief:Positief" IsEnabled="{Binding ScaleIsEnabled}" Margin="10"></TextBox>
+        <TextBox Text="{Binding Question.Columns, Mode=TwoWay}" ToolTip="Voorbeeld: 1|Kolomnaam 1|Kolomnaam 2" IsEnabled="{Binding ColumnsIsEnabled}" Margin="10"></TextBox>
         <Grid Margin="10,5,0,0">
             <Button Content="Opslaan" Command="{Binding CreateQuestionCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}"
                     Width="100"  HorizontalAlignment="Left" Margin="5,5,0,0" />
