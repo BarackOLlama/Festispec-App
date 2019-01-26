@@ -53,8 +53,8 @@ namespace FSBeheer.ViewModel
             string Advice,
             ObservableCollection<QuestionVM> Questions,
             List<string> SelectedCharts,
-            CustomerVM Customer, InspectionVM SelectedInspection, 
-            DateTime? StartDate, 
+            CustomerVM Customer, InspectionVM SelectedInspection,
+            DateTime? StartDate,
             DateTime? EndDate,
             CustomFSContext _context)
         {
@@ -89,14 +89,8 @@ namespace FSBeheer.ViewModel
                 gfx.DrawImage(image2, page1.Width * 0.65, page1.Height * 0.1, 122, 33);
             }
 
-            // image test
-            // QuestionsList[0] is een multiple choice
-            // ChartGenerator chartgen = new ChartGenerator(QuestionsList[1], "Bar", 300, 300);
-            // XImage image2 = chartgen.GetImageFromChart();
-            // gfx.DrawImage(image2, page1.Width * 0.4, page1.Height * 0.1, image2.PixelWidth, image2.PixelHeight);
-
             // Info
-            gfx.DrawString("Festispec Rapportage: " + DateTime.Now.ToShortDateString(), 
+            gfx.DrawString("Festispec Rapportage: " + DateTime.Now.ToShortDateString(),
                 fontH1, XBrushes.Black, x, x - 30);
             gfx.DrawString("Rapportage: " + _title,
                 fontH1, XBrushes.Black, x, x + 5);
@@ -123,7 +117,7 @@ namespace FSBeheer.ViewModel
             y += ls;
             gfx.DrawString("Naam: " + _inspection.Name, font, XBrushes.Black, x, y);
             y += ls;
-            gfx.DrawString("Event naam: " + _inspection.Event.Name, font, XBrushes.Black, x, y);
+            gfx.DrawString("Evenementnaam: " + _inspection.Event.Name, font, XBrushes.Black, x, y);
             y += 1.2 * ls;
             gfx.DrawString("Datum",
                 fontH2, XBrushes.Black, x, y);
@@ -144,7 +138,7 @@ namespace FSBeheer.ViewModel
             if (_advice != null)
             {
                 gfx.DrawString("Advies: ", font, XBrushes.Black, x, 560);
-                
+
                 XRect adviceRect = new XRect(50, 580, 500, 220);
                 gfx.DrawRectangle(XBrushes.White, adviceRect);
                 tf.DrawString(_advice, font, XBrushes.Black, adviceRect, XStringFormats.TopLeft);
@@ -156,9 +150,10 @@ namespace FSBeheer.ViewModel
             try
             {
                 string filename = Filename;
-                document.Save(filename); 
+                document.Save(filename);
                 Process.Start(filename);
-            } catch
+            }
+            catch
             {
                 MessageBox.Show("You already have an existing document with that file name open! Close it first before opening a new again.");
             }
@@ -169,10 +164,9 @@ namespace FSBeheer.ViewModel
         {
             MakeFrontPage();
 
-            
             for (int i = 0; i < QuestionsList.Count; i++)
             {
-                switch(QuestionsList[i].Type.Name)
+                switch (QuestionsList[i].Type.Name)
                 {
                     case "Open Vraag":
                         DrawInformation("Open vraag: ", QuestionsList[i], i);
@@ -215,11 +209,65 @@ namespace FSBeheer.ViewModel
             gfxAll.DrawString("Antwoorden: ", font, XBrushes.Black, x2, y2);
             y2 += ls + 10;
             answersList = _context.AnswerCrud.GetAllAnswersByQuestionId(question.Id);
+
+            if (question.Type.Name == "Multiple Choice Tabelvraag" || question.Type.Name == "Open Tabelvraag")
+            {
+                var collection = question.Columns.Split(';');
+                var firstColumn = collection[1];
+                var secondColumn = collection[2];
+                var columnCollection = collection[1] + "  |  " + collection[2];
+                gfxAll.DrawString(columnCollection, font, XBrushes.Black, x2, y2);
+                y2 += ls + 10;
+            }
+
             foreach (var answer in answersList)
             {
-                gfxAll.DrawString(answer.Content,
-                font, XBrushes.Black, x2, y2);
-                y2 += ls;
+                // check type vraag
+                if (question.Type.Name == "Multiple Choice Tabelvraag")
+                {
+                    // formaat per type (variabele)
+                    var collection = answer.Content.Split(';');
+                    var firstPart = collection[0];
+                    var SecondCollection = collection[1].Split('|');
+                    var secondPart = SecondCollection[0];
+                    var answerFormat = firstPart + "     |     " + secondPart;
+
+                    // tekenen
+                    gfxAll.DrawString(answerFormat,
+                    font, XBrushes.Black, x2, y2);
+                    y2 += ls;
+                }
+                else if (question.Type.Name == "Open Tabelvraag")
+                {
+                    // formaat per type (variabele)
+                    var collection = answer.Content.Split(';');
+                    var firstPart = collection[0];
+                    var secondPart = collection[1];
+                    var answerFormat = firstPart + "     |     " + secondPart;
+
+                    // tekenen
+                    gfxAll.DrawString(answerFormat,
+                    font, XBrushes.Black, x2, y2);
+                    y2 += ls;
+                }
+                else if (question.Type.Name == "Multiple Choice vraag")
+                {
+                    // formaat per type (variabele)
+                    var collection = answer.Content.Split('|');
+                    var answerFormat = collection[0];
+
+                    // tekenen
+                    gfxAll.DrawString(answerFormat,
+                    font, XBrushes.Black, x2, y2);
+                    y2 += ls;
+                }
+                else
+                {
+                    // tekenen
+                    gfxAll.DrawString(answer.Content,
+                    font, XBrushes.Black, x2, y2);
+                    y2 += ls;
+                }
                 if (y > 820)
                 {
                     gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));

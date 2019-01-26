@@ -576,56 +576,56 @@ namespace FSBeheer.Migrations
                 },
                 new Answer()
                 {
-                    Content = "B|200kg",
+                    Content = "10%",
                     Question = questions[2],
                     Inspector = inspectors[0],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "B|200kg",
+                    Content = "15%",
                     Question = questions[2],
                     Inspector = inspectors[1],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "B|200kg",
+                    Content = "30%",
                     Question = questions[2],
                     Inspector = inspectors[2],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "B|200kg",
+                    Content = "25%",
                     Question = questions[2],
                     Inspector = inspectors[3],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "C|20",
+                    Content = "20;30",
                     Question = questions[3],
                     Inspector = inspectors[0],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "B|10",
+                    Content = "10;25",
                     Question = questions[3],
                     Inspector = inspectors[1],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "D|40",
+                    Content = "20;40",
                     Question = questions[3],
                     Inspector = inspectors[2],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "C|20",
+                    Content = "20;12",
                     Question = questions[3],
                     Inspector = inspectors[3],
                     IsDeleted = false
