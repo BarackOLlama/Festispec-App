@@ -25,11 +25,11 @@ namespace FSBeheer.VM
             get { return _answer.QuestionId; }
         }
 
-        public int? InspectorId
+        public InspectorVM Inspector
         {
             get
             {
-                return _answer.InspectorId;
+                return new InspectorVM(_answer.Inspector);
             }
         }
 

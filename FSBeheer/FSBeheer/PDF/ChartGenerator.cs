@@ -4,6 +4,7 @@ using LiveCharts.Wpf;
 using LiveCharts.Wpf.Charts.Base;
 using PdfSharp.Drawing;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -68,35 +69,74 @@ namespace FSBeheer.PDF
                     Height = h
                 };
 
-                BarChart.AxisY.Add(new Axis
+                if (SelectedQuestion.Type.Name == "Schaal Vraag")
                 {
-                    Title = "Aantal keer gegeven",
-                    MinValue = 0,
-                    MaxValue = Options.Count,
-                    Separator = new LiveCharts.Wpf.Separator
+                    BarChart.AxisY.Add(new Axis
                     {
-                        Step = 1
-                    }
-                });
-                BarChart.AxisX.Add(new Axis
-                {
-                    Title = "Opties",
-                    ShowLabels = false
-                });
-
-                foreach (Option option in Options)
-                {
-                    //Determine how often this answer was given
-                    int count = Answers.Where(a => a.Content == option.OptionString).Count();
-
-                    if (count != 0)
-                    {
-                        BarChart.Series.Add(new ColumnSeries
+                        Title = "Score",
+                        MinValue = double.Parse(Options[0].Value),
+                        MaxValue = double.Parse(Options[1].Value),
+                        Separator = new LiveCharts.Wpf.Separator
                         {
-                            Values = new ChartValues<int> { count },
-                            DataLabels = true,
-                            LabelPoint = point => string.Format("{0}: {1}x", option.Key, point.Y)
-                        });
+                            Step = 1
+                        }
+                    });
+                    BarChart.AxisX.Add(new Axis
+                    {
+                        Title = "Inspecteurs",
+                        ShowLabels = false
+                    });
+
+                    var inspectors = new ObservableCollection<InspectorVM>();
+                    foreach (AnswerVM answer in Answers)
+                    {
+                        if (!inspectors.Contains(answer.Inspector))
+                            inspectors.Add(answer.Inspector);
+                    }
+                    foreach (InspectorVM inspector in inspectors)
+                    {
+                        var answer = Answers.Where(a => a.Inspector.Id == inspector.Id).First();
+                        if (int.TryParse(answer.Content, out int answerContent))
+                            BarChart.Series.Add(new ColumnSeries
+                            {
+                                Values = new ChartValues<int> { answerContent },
+                                DataLabels = true,
+                                LabelPoint = point => string.Format("{0}", inspector.Name)
+                            });
+                    }
+                }
+                else
+                {
+                    BarChart.AxisY.Add(new Axis
+                    {
+                        Title = "Aantal keer gegeven",
+                        MinValue = 0,
+                        MaxValue = Options.Count,
+                        Separator = new LiveCharts.Wpf.Separator
+                        {
+                            Step = 1
+                        }
+                    });
+                    BarChart.AxisX.Add(new Axis
+                    {
+                        Title = "Opties",
+                        ShowLabels = false
+                    });
+
+                    foreach (Option option in Options)
+                    {
+                        //Determine how often this answer was given
+                        int count = Answers.Where(a => a.Content == option.OptionString).Count();
+
+                        if (count != 0)
+                        {
+                            BarChart.Series.Add(new ColumnSeries
+                            {
+                                Values = new ChartValues<int> { count },
+                                DataLabels = true,
+                                LabelPoint = point => string.Format("{0}: {1}x", option.Key, point.Y)
+                            });
+                        }
                     }
                 }
             }

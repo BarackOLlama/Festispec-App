@@ -465,9 +465,9 @@ namespace FSBeheer.Migrations
                 },
                 new Question()
                 {
-                    Content = "Hoeveel bars zijn er op het festival?",
+                    Content = "Hoeveel soorten drank zijn er beschikbaar bij elke bar?",
                     Options = "A|1-3;B|40-50;C|90;D|500+",
-                    Columns="2;temp;voorbeeld;example",
+                    Columns="2;barnaam;antwoord",
                     Questionnaire = questionnaires[0],
                     QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice Tabelvraag"),
                     IsDeleted = false
@@ -548,28 +548,28 @@ namespace FSBeheer.Migrations
                 },
                 new Answer()
                 {
-                    Content = "A|10%",
+                    Content = "5",
                     Question = questions[1],
                     Inspector = inspectors[0],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "A|10%",
+                    Content = "2",
                     Question = questions[1],
                     Inspector = inspectors[1],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "A|10%",
+                    Content = "7",
                     Question = questions[1],
                     Inspector = inspectors[2],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "B|20%",
+                    Content = "9",
                     Question = questions[1],
                     Inspector = inspectors[3],
                     IsDeleted = false
