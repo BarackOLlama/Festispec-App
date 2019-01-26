@@ -14,7 +14,7 @@ namespace FSBeheer.View
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             //return value == null ? Visibility.Collapsed : Visibility.Visible;
-            return value.Equals("Open Vraag") || value.Equals("Open Tabelvraag") ? false : true; 
+            return value.Equals("Open Vraag") || value.Equals("Open Tabelvraag") || value.Equals("Multiple Choice Tabelvraag") ? false : true; 
                     // if then                                         //else
         }
 
