@@ -196,12 +196,20 @@ namespace FSBeheer.ViewModel
             gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
             gfxAll.DrawString(value + question.Content,
             font, XBrushes.Black, x2, y2);
+            y2 += ls + 5;
+            gfxAll.DrawString("Mogelijke antwoorden: ",
+            font, XBrushes.Black, x2, y2);
             if (question.Options != null)
             {
                 y2 += ls + 5;
-                string setOptions = question.Options;
-                gfxAll.DrawString("Mogelijke antwoorden: " + setOptions,
-                font, XBrushes.Black, x2, y2);
+                var setOptions = question.Options.Split(';');
+                foreach (var option in setOptions)
+                {
+                    gfxAll.DrawString(option,
+                    font, XBrushes.Black, x2, y2);
+                    y2 += ls + 5;
+
+                }
             }
 
             // answers
