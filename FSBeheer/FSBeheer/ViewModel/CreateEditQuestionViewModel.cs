@@ -256,7 +256,7 @@ namespace FSBeheer.ViewModel
                     return false;
                 }
 
-                if (!Regex.IsMatch(Question.Options, @"^\w+\|\d+;\w+\|\d+$"))
+                if (!Regex.IsMatch(Question.Options, @"^[A-Za-z ]+\|\d+;[A-Za-z ]+\|\d+$"))
                 {
                     MessageBox.Show("Een schaalvraag moet aan de volgende syntax voldoen: negatief|1;positief|10");
                     return false;
