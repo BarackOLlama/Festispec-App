@@ -188,12 +188,6 @@ namespace FSBeheer.ViewModel
             #endregion basic question validation
 
             #region multiple choice validation
-            Regex multiplechoiceRegex = new Regex("^(\\w{1}\\|{1}\\w{1,};?){2,}");
-            //https://regexr.com/
-            //example data
-            //A|100;B|200;C|500;D|1000
-            //A | 100; c | 200
-            //A | 200
 
             if (SelectedQuestionType.Name == "Multiple Choice vraag" || SelectedQuestionType.Name == "Multiple Choice Tabelvraag")
             {
@@ -203,7 +197,7 @@ namespace FSBeheer.ViewModel
                     return false;
                 }
 
-                if (!multiplechoiceRegex.IsMatch(Question.Options))
+                if (!Regex.IsMatch(Question.Options, @"^\w\|\w[\w ]*(;\w\|\w[\w ]*){2,}$"))
                 {
                     MessageBox.Show("De multiple choice syntax is incorrect.\n" +
                         "Voorbeeld: A|Waar;B|Niet waar");
@@ -221,7 +215,7 @@ namespace FSBeheer.ViewModel
                     return false;
                 }
 
-                if (!Regex.IsMatch(Question.Columns, @"^[2-9];\w[\w ]+;\w[\w ]+$"))
+                if (!Regex.IsMatch(Question.Columns, @"^[2-9];\w[\w ]*;\w[\w ]*$"))
                 {
                     MessageBox.Show("Invalide syntax. aantal kolommen(2+);kolomnaam 1;kolomnaam 2\n (2;Vogels;Katten)");
                     return false;
