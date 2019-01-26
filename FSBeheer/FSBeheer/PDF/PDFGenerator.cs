@@ -224,7 +224,7 @@ namespace FSBeheer.ViewModel
             if (question.Type.Name == "Open Tabelvraag")
             {
                 var collection = question.Columns.Split(';');
-                var columnCollection = collection[0] + "  |  " + collection[1];
+                var columnCollection = collection[1] + "  |  " + collection[2];
                 gfxAll.DrawString(columnCollection, font, XBrushes.Black, x2, y2);
                 y2 += ls + 10;
             }
@@ -245,7 +245,11 @@ namespace FSBeheer.ViewModel
                 }
                 else if (question.Type.Name == "Open Tabelvraag")
                 {
-                    gfxAll.DrawString(answer.Content,
+                    var collection = answer.Content.Split(';');
+                    var firstColumnAnswer = collection[0];
+                    var secondColumnAnswer = collection[1];
+                    var answerContent = firstColumnAnswer + "     |     " + secondColumnAnswer;
+                    gfxAll.DrawString(answerContent,
                     font, XBrushes.Black, x2, y2);
                     y2 += ls;
                 }
