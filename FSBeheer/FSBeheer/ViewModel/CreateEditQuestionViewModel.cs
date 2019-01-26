@@ -254,6 +254,7 @@ namespace FSBeheer.ViewModel
 
             }
             #endregion tabel validation
+
             #region schaal vraag validation
 
             if (SelectedQuestionType.Name == "Schaal Vraag")
