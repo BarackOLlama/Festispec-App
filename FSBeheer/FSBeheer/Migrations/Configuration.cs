@@ -459,15 +459,15 @@ namespace FSBeheer.Migrations
                 {
                     Content = "Hoeveel klanten zijn er bij de bars?",
                     Questionnaire = questionnaires[0],
-                    Columns="2|Grolsch bar| Bavaria bar| Hertog Jan Bar",
+                    Columns="2;Barnaam;Aantal klanten",
                     QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Open Tabelvraag"),
                     IsDeleted = false
                 },
                 new Question()
                 {
-                    Content = "Hoeveel bars zijn er op het festival?",
+                    Content = "Hoeveel soorten drank zijn er beschikbaar bij elke bar?",
                     Options = "A|1-3;B|40-50;C|90;D|500+",
-                    Columns="2|temp|voorbeeld|example",
+                    Columns="2;Bar;Aantal soorten drank",
                     Questionnaire = questionnaires[0],
                     QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice Tabelvraag"),
                     IsDeleted = false
@@ -476,14 +476,14 @@ namespace FSBeheer.Migrations
                 new Question()
                 {
                     Content ="Hoe is de stemming?",
-                    Options="grimmig|1;gezellig|120",
+                    Options="Grimmig|1;Gezellig|120",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Schaal Vraag"),
                     IsDeleted = false
                 },
                 new Question()
                 {
-                    Content="Worden er band shirts verkocht",
+                    Content="Worden er bandshirts verkocht",
                     Options="A|Jazeker;B|Nee;C|Misschien",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Multiple Choice vraag"),
@@ -499,7 +499,7 @@ namespace FSBeheer.Migrations
                 new Question()
                 {
                     Content="Verschillen tussen drankprijzen",
-                    Columns="2|Grolsch bar|Bavaria Bar|Hertog Jan Bar",
+                    Columns="2;Barnaam;Antwoord",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Open Tabelvraag"),
                     IsDeleted = false
@@ -508,7 +508,7 @@ namespace FSBeheer.Migrations
                 {
                     Content="Hoe combineer je een multiple choice vraag met een tabelvraag?",
                     Options="A|Dat is onmogelijk;B|Dat doe je zo.",
-                    Columns="3|Voorbeeld|Voorbeeld 2",
+                    Columns="2;Voorbeeld;Voorbeeld 2",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Multiple Choice Tabelvraag"),
                     IsDeleted = false
@@ -548,85 +548,141 @@ namespace FSBeheer.Migrations
                 },
                 new Answer()
                 {
-                    Content = "A|10%",
+                    Content = "5",
                     Question = questions[1],
                     Inspector = inspectors[0],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "A|10%",
+                    Content = "2",
                     Question = questions[1],
                     Inspector = inspectors[1],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "A|10%",
+                    Content = "7",
                     Question = questions[1],
                     Inspector = inspectors[2],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "B|20%",
+                    Content = "9",
                     Question = questions[1],
                     Inspector = inspectors[3],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "B|200kg",
+                    Content = "10%",
                     Question = questions[2],
                     Inspector = inspectors[0],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "B|200kg",
+                    Content = "15%",
                     Question = questions[2],
                     Inspector = inspectors[1],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "B|200kg",
+                    Content = "30%",
                     Question = questions[2],
                     Inspector = inspectors[2],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "B|200kg",
+                    Content = "25%",
                     Question = questions[2],
                     Inspector = inspectors[3],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "C|20",
+                    Content = "Specialty Bar;50",
                     Question = questions[3],
                     Inspector = inspectors[0],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "B|10",
+                    Content = "Grolsche Bar;40",
                     Question = questions[3],
                     Inspector = inspectors[1],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "D|40",
+                    Content = "Heineken Bar;30",
                     Question = questions[3],
                     Inspector = inspectors[2],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "C|20",
+                    Content = "Pub;20",
                     Question = questions[3],
+                    Inspector = inspectors[3],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Bar 1;A|1-3",
+                    Question = questions[4],
+                    Inspector = inspectors[0],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Bar 2;A|1-3",
+                    Question = questions[4],
+                    Inspector = inspectors[0],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Bar 1;B|40-50",
+                    Question = questions[4],
+                    Inspector = inspectors[1],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Bar 2;B|40-50",
+                    Question = questions[4],
+                    Inspector = inspectors[1],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Bar 1;C|90",
+                    Question = questions[4],
+                    Inspector = inspectors[2],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Bar 2;C|90",
+                    Question = questions[4],
+                    Inspector = inspectors[2],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Bar 1;D|500+",
+                    Question = questions[4],
+                    Inspector = inspectors[3],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Bar 2;D|500+",
+                    Question = questions[4],
                     Inspector = inspectors[3],
                     IsDeleted = false
                 },
