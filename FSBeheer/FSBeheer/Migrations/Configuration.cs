@@ -499,7 +499,7 @@ namespace FSBeheer.Migrations
                 new Question()
                 {
                     Content="Verschillen tussen drankprijzen",
-                    Columns="Barnaam;Antwoord",
+                    Columns="2;Barnaam;Antwoord",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Open Tabelvraag"),
                     IsDeleted = false
@@ -604,28 +604,28 @@ namespace FSBeheer.Migrations
                 },
                 new Answer()
                 {
-                    Content = "Specialty Bar|50",
+                    Content = "Specialty Bar;50",
                     Question = questions[3],
                     Inspector = inspectors[0],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "Grolsche Bar|40",
+                    Content = "Grolsche Bar;40",
                     Question = questions[3],
                     Inspector = inspectors[1],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "Heineken Bar|30",
+                    Content = "Heineken Bar;30",
                     Question = questions[3],
                     Inspector = inspectors[2],
                     IsDeleted = false
                 },
                 new Answer()
                 {
-                    Content = "Pub|20",
+                    Content = "Pub;20",
                     Question = questions[3],
                     Inspector = inspectors[3],
                     IsDeleted = false
