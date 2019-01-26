@@ -443,7 +443,7 @@ namespace FSBeheer.Migrations
                 new Question()
                 {
                     Content = "Hoe is het weer?",
-                    Scale = "1:10:Slecht:Geweldig",
+                    Options = "Slecht|1;Geweldig|10",
                     Questionnaire = questionnaires[0],
                     QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Schaal Vraag"),
                     IsDeleted = false
@@ -459,7 +459,7 @@ namespace FSBeheer.Migrations
                 {
                     Content = "Hoeveel klanten zijn er bij de bars?",
                     Questionnaire = questionnaires[0],
-                    Columns="1|Grolsch bar| Bavaria bar| Hertog Jan Bar",
+                    Columns="2|Grolsch bar| Bavaria bar| Hertog Jan Bar",
                     QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Open Tabelvraag"),
                     IsDeleted = false
                 },
@@ -476,7 +476,7 @@ namespace FSBeheer.Migrations
                 new Question()
                 {
                     Content ="Hoe is de stemming?",
-                    Options="1:120:grimmig:gezellig",
+                    Options="grimmig|1;gezellig|120",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Schaal Vraag"),
                     IsDeleted = false
@@ -508,7 +508,7 @@ namespace FSBeheer.Migrations
                 {
                     Content="Hoe combineer je een multiple choice vraag met een tabelvraag?",
                     Options="A|Dat is onmogelijk;B|Dat doe je zo.",
-                    Columns="1|Voorbeeld|Voorbeeld 2",
+                    Columns="3|Voorbeeld|Voorbeeld 2",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Multiple Choice Tabelvraag"),
                     IsDeleted = false
