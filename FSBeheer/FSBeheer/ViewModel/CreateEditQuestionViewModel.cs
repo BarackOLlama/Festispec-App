@@ -226,7 +226,6 @@ namespace FSBeheer.ViewModel
                     MessageBox.Show("Invalide syntax. aantal kolommen(2+);kolomnaam 1;kolomnaam 2\n (2;Vogels;Katten)");
                     return false;
                 }
-
             }
             #endregion tabel validation
 
