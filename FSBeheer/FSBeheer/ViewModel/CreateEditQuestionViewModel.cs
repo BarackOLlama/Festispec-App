@@ -90,24 +90,9 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        private bool _scaleIsEnabled;
-        public bool ScaleIsEnabled
-        {
-            get
-            {
-                return _scaleIsEnabled;
-            }
-            set
-            {
-                _scaleIsEnabled = value;
-                base.RaisePropertyChanged(nameof(ScaleIsEnabled));
-            }
-        }
-
         //commands
         public RelayCommand<Window> SaveQuestionChangesCommand { get; set; }
         public RelayCommand<Window> CreateQuestionCommand { get; set; }
-
         public RelayCommand<Window> CloseWindowCommand { get; set; }
 
         [DllImport("wininet.dll")]
@@ -259,30 +244,33 @@ namespace FSBeheer.ViewModel
 
             if (SelectedQuestionType.Name == "Schaal Vraag")
             {
-                if (Question.Scale == null)
+                if (Question.Options == null)
                 {
                     MessageBox.Show("Voor het type schaalvraag met het veld Schaal niet leeg zijn.");
                     return false;
                 }
 
-                if (Question.Scale.Trim() == string.Empty)
+                if (Question.Options.Trim() == string.Empty)
                 {
                     MessageBox.Show("Voor het type schaalvraag met het veld Schaal niet leeg zijn.");
                     return false;
                 }
 
-                if (!Regex.IsMatch(Question.Scale, @"^[0-9]{1,}:[0-9]{1,}:[A-Za-z ]{1,}:[A-Za-z ]{1,}$"))
+                if (!Regex.IsMatch(Question.Options, @"^\w+\|\d+;\w+\|\d+$"))
                 {
-                    MessageBox.Show("De inhoud van de Schaal veld voldoet niet aan de juiste syntax.\nVoorbeeld: 1:2:Negatieve beschrijving:Positieve beschrijving");
+                    MessageBox.Show("Een schaalvraag moet aan de volgende syntax voldoen: negatief|1;positief|10");
                     return false;
                 }
                 else
                 {
-                    var result = Question.Scale.Split(':');
-                    if (Convert.ToInt32(result[0]) > Convert.ToInt32(result[1]))
+                    var scales = Question.Options.Split(';');
+                    var scale1 = scales[0].Split('|');
+                    var scale2 = scales[2].Split('|');
+
+                    if (Int32.Parse(scale1[1]) >= Int32.Parse(scale2[1]))
                     {
-                        MessageBox.Show("Het eerste getal moet lager zijn dan het tweede getal.");
-                        return false;
+                        MessageBox.Show("De syntax voor een schaalvraag is negatief|1;positief|10\n" +
+                            "De waarde na de eerste '|' moet lager zijn dan die achter de tweede.");
                     }
                 }
             }
@@ -299,30 +287,25 @@ namespace FSBeheer.ViewModel
                     //Multiple choice has options but no columns
                     OptionsIsEnabled = true;
                     ColumnsIsEnabled = false;
-                    ScaleIsEnabled = false;
                     break;
                 case "Open Vraag":
                     //Open question has neither options nor columns
                     OptionsIsEnabled = false;
                     ColumnsIsEnabled = false;
-                    ScaleIsEnabled = false;
                     break;
                 case "Open Tabelvraag":
                     //An open columnquestion has columns but no options
                     OptionsIsEnabled = false;
                     ColumnsIsEnabled = true;
-                    ScaleIsEnabled = false;
                     break;
                 case "Multiple Choice Tabelvraag":
                     //A multiple choice columnquestion has both options and columns
                     OptionsIsEnabled = true;
                     ColumnsIsEnabled = true;
-                    ScaleIsEnabled = false;
                     break;
                 case "Schaal Vraag":
-                    OptionsIsEnabled = false;
+                    OptionsIsEnabled = true;
                     ColumnsIsEnabled = false;
-                    ScaleIsEnabled = true;
                     break;
             }
         }
@@ -374,22 +357,18 @@ namespace FSBeheer.ViewModel
             if (SelectedQuestionType.Name == "Multiple Choice Vraag")
             {//clear columns
                 Question.Columns = null;
-                Question.Scale = null;
             }
             else if (SelectedQuestionType.Name == "Open Vraag")
             {//clear options and columns
                 Question.Columns = null;
                 Question.Options = null;
-                Question.Scale = null;
             }
             else if (SelectedQuestionType.Name == "Open Tabelvraag")
             {//clear options
                 Question.Options = null;
-                Question.Scale = null;
             }
             else if (SelectedQuestionType.Name == "Schaal Vraag")
             {//only scale.
-                Question.Options = null;
                 Question.Columns = null;
             }
         }
