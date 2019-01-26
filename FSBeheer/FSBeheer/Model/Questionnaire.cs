@@ -15,6 +15,7 @@ namespace FSBeheer.Model
         }
 
         public int Id { get; set; }
+        [MaxLength(99)]
         public string Name { get; set; }
         public string Instructions { get; set; }
         public int Version { get; set; }

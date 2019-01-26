@@ -11,6 +11,7 @@ namespace FSBeheer.Model
     {
         [Key]
         public int Id { get; set; }
+        [MaxLength(99)]
         public string Username { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }

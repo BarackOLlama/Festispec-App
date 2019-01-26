@@ -17,6 +17,7 @@ namespace FSBeheer.Model
 
         [Key]
         public int Id { get; set; }
+        [MaxLength(99)]
         public string Name { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
