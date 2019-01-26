@@ -459,7 +459,7 @@ namespace FSBeheer.Migrations
                 {
                     Content = "Hoeveel klanten zijn er bij de bars?",
                     Questionnaire = questionnaires[0],
-                    Columns="Barnaam;Antwoord",
+                    Columns="2;Barnaam;Aantal klanten",
                     QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Open Tabelvraag"),
                     IsDeleted = false
                 },
@@ -467,7 +467,7 @@ namespace FSBeheer.Migrations
                 {
                     Content = "Hoeveel soorten drank zijn er beschikbaar bij elke bar?",
                     Options = "A|1-3;B|40-50;C|90;D|500+",
-                    Columns="2;barnaam;antwoord",
+                    Columns="2;Bar;Aantal soorten drank",
                     Questionnaire = questionnaires[0],
                     QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice Tabelvraag"),
                     IsDeleted = false
@@ -476,14 +476,14 @@ namespace FSBeheer.Migrations
                 new Question()
                 {
                     Content ="Hoe is de stemming?",
-                    Options="grimmig|1;gezellig|120",
+                    Options="Grimmig|1;Gezellig|120",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Schaal Vraag"),
                     IsDeleted = false
                 },
                 new Question()
                 {
-                    Content="Worden er band shirts verkocht",
+                    Content="Worden er bandshirts verkocht",
                     Options="A|Jazeker;B|Nee;C|Misschien",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Multiple Choice vraag"),
