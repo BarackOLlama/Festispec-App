@@ -443,7 +443,7 @@ namespace FSBeheer.Migrations
                 new Question()
                 {
                     Content = "Hoe is het weer?",
-                    Scale = "1:10:Slecht:Geweldig",
+                    Options = "Slecht|1;Geweldig|10",
                     Questionnaire = questionnaires[0],
                     QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Schaal Vraag"),
                     IsDeleted = false
@@ -459,7 +459,7 @@ namespace FSBeheer.Migrations
                 {
                     Content = "Hoeveel klanten zijn er bij de bars?",
                     Questionnaire = questionnaires[0],
-                    Columns="1|Grolsch bar| Bavaria bar| Hertog Jan Bar",
+                    Columns="2;Grolsch bar;Bavaria bar;Hertog Jan Bar",
                     QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Open Tabelvraag"),
                     IsDeleted = false
                 },
@@ -467,7 +467,7 @@ namespace FSBeheer.Migrations
                 {
                     Content = "Hoeveel bars zijn er op het festival?",
                     Options = "A|1-3;B|40-50;C|90;D|500+",
-                    Columns="2|temp|voorbeeld|example",
+                    Columns="2;temp;voorbeeld;example",
                     Questionnaire = questionnaires[0],
                     QuestionType = questiontypes.FirstOrDefault(qt => qt.Name == "Multiple Choice Tabelvraag"),
                     IsDeleted = false
@@ -476,7 +476,7 @@ namespace FSBeheer.Migrations
                 new Question()
                 {
                     Content ="Hoe is de stemming?",
-                    Options="1:120:grimmig:gezellig",
+                    Options="grimmig|1;gezellig|120",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Schaal Vraag"),
                     IsDeleted = false
@@ -499,7 +499,7 @@ namespace FSBeheer.Migrations
                 new Question()
                 {
                     Content="Verschillen tussen drankprijzen",
-                    Columns="2|Grolsch bar|Bavaria Bar|Hertog Jan Bar",
+                    Columns="2;Grolsch bar;Bavaria Bar;Hertog Jan Bar",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Open Tabelvraag"),
                     IsDeleted = false
@@ -508,7 +508,7 @@ namespace FSBeheer.Migrations
                 {
                     Content="Hoe combineer je een multiple choice vraag met een tabelvraag?",
                     Options="A|Dat is onmogelijk;B|Dat doe je zo.",
-                    Columns="1|Voorbeeld|Voorbeeld 2",
+                    Columns="2;Voorbeeld;Voorbeeld 2",
                     Questionnaire = questionnaires[1],
                     QuestionType = questiontypes.FirstOrDefault(e=> e.Name == "Multiple Choice Tabelvraag"),
                     IsDeleted = false
@@ -627,6 +627,62 @@ namespace FSBeheer.Migrations
                 {
                     Content = "C|20",
                     Question = questions[3],
+                    Inspector = inspectors[3],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Slecht;A|1-3",
+                    Question = questions[4],
+                    Inspector = inspectors[0],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Minder slecht;A|1-3",
+                    Question = questions[4],
+                    Inspector = inspectors[0],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Minder slecht;B|40-50",
+                    Question = questions[4],
+                    Inspector = inspectors[1],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Goed;B|40-50",
+                    Question = questions[4],
+                    Inspector = inspectors[1],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Goed;C|90",
+                    Question = questions[4],
+                    Inspector = inspectors[2],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Geweldig;C|90",
+                    Question = questions[4],
+                    Inspector = inspectors[2],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Geweldig;D|500+",
+                    Question = questions[4],
+                    Inspector = inspectors[3],
+                    IsDeleted = false
+                },
+                new Answer()
+                {
+                    Content = "Uiterst geweldig;D|500+",
+                    Question = questions[4],
                     Inspector = inspectors[3],
                     IsDeleted = false
                 },
