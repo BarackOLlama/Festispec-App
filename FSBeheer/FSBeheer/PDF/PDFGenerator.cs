@@ -45,7 +45,6 @@ namespace FSBeheer.ViewModel
         private CustomFSContext _context;
         private ObservableCollection<AnswerVM> answersList;
 
-
         public PDFGenerator(
             string Filename,
             string Title,
@@ -53,8 +52,8 @@ namespace FSBeheer.ViewModel
             string Advice,
             ObservableCollection<QuestionVM> Questions,
             List<string> SelectedCharts,
-            CustomerVM Customer, InspectionVM SelectedInspection, 
-            DateTime? StartDate, 
+            CustomerVM Customer, InspectionVM SelectedInspection,
+            DateTime? StartDate,
             DateTime? EndDate,
             CustomFSContext _context)
         {
@@ -73,7 +72,6 @@ namespace FSBeheer.ViewModel
             QuestionsList = Questions;
             _selectedCharts = SelectedCharts;
         }
-
         private void MakeFrontPage()
         {
             PdfPage page1 = document.AddPage();
@@ -89,14 +87,8 @@ namespace FSBeheer.ViewModel
                 gfx.DrawImage(image2, page1.Width * 0.65, page1.Height * 0.1, 122, 33);
             }
 
-            // image test
-            // QuestionsList[0] is een multiple choice
-            // ChartGenerator chartgen = new ChartGenerator(QuestionsList[1], "Bar", 300, 300);
-            // XImage image2 = chartgen.GetImageFromChart();
-            // gfx.DrawImage(image2, page1.Width * 0.4, page1.Height * 0.1, image2.PixelWidth, image2.PixelHeight);
-
             // Info
-            gfx.DrawString("Festispec Rapportage: " + DateTime.Now.ToShortDateString(), 
+            gfx.DrawString("Festispec Rapportage: " + DateTime.Now.ToShortDateString(),
                 fontH1, XBrushes.Black, x, x - 30);
             gfx.DrawString("Rapportage: " + _title,
                 fontH1, XBrushes.Black, x, x + 5);
@@ -123,7 +115,7 @@ namespace FSBeheer.ViewModel
             y += ls;
             gfx.DrawString("Naam: " + _inspection.Name, font, XBrushes.Black, x, y);
             y += ls;
-            gfx.DrawString("Event naam: " + _inspection.Event.Name, font, XBrushes.Black, x, y);
+            gfx.DrawString("Evenementnaam: " + _inspection.Event.Name, font, XBrushes.Black, x, y);
             y += 1.2 * ls;
             gfx.DrawString("Datum",
                 fontH2, XBrushes.Black, x, y);
@@ -144,7 +136,7 @@ namespace FSBeheer.ViewModel
             if (_advice != null)
             {
                 gfx.DrawString("Advies: ", font, XBrushes.Black, x, 560);
-                
+
                 XRect adviceRect = new XRect(50, 580, 500, 220);
                 gfx.DrawRectangle(XBrushes.White, adviceRect);
                 tf.DrawString(_advice, font, XBrushes.Black, adviceRect, XStringFormats.TopLeft);
@@ -156,23 +148,22 @@ namespace FSBeheer.ViewModel
             try
             {
                 string filename = Filename;
-                document.Save(filename); 
+                document.Save(filename);
                 Process.Start(filename);
-            } catch
+            }
+            catch
             {
                 MessageBox.Show("You already have an existing document with that file name open! Close it first before opening a new again.");
             }
         }
 
-        // TODO: live chart 
         public void CreateStandardPDF()
         {
             MakeFrontPage();
 
-            
             for (int i = 0; i < QuestionsList.Count; i++)
             {
-                switch(QuestionsList[i].Type.Name)
+                switch (QuestionsList[i].Type.Name)
                 {
                     case "Open Vraag":
                         DrawInformation("Open vraag: ", QuestionsList[i], i);
@@ -194,18 +185,27 @@ namespace FSBeheer.ViewModel
             SavePDF(_fileName);
         }
 
+        // mogelijke antwoorden
+
         private void DrawInformation(string value, QuestionVM question, int i)
         {
             // question
             gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
             gfxAll.DrawString(value + question.Content,
             font, XBrushes.Black, x2, y2);
+            y2 += ls + 5;
             if (question.Options != null)
             {
-                y2 += ls + 5;
-                string setOptions = question.Options;
-                gfxAll.DrawString("Mogelijke antwoorden: " + setOptions,
+                gfxAll.DrawString("Mogelijke antwoorden: ",
                 font, XBrushes.Black, x2, y2);
+                y2 += ls + 5;
+                var setOptions = question.Options.Split(';');
+                foreach (var option in setOptions)
+                {
+                    gfxAll.DrawString(option,
+                    font, XBrushes.Black, x2, y2);
+                    y2 += ls + 5;
+                }
             }
 
             // answers
@@ -213,11 +213,57 @@ namespace FSBeheer.ViewModel
             gfxAll.DrawString("Antwoorden: ", font, XBrushes.Black, x2, y2);
             y2 += ls + 10;
             answersList = _context.AnswerCrud.GetAllAnswersByQuestionId(question.Id);
+
+            if (question.Type.Name == "Multiple Choice Tabelvraag")
+            {
+                var collection = question.Columns.Split(';');
+                var columnCollection = collection[1] + "  |  " + collection[2];
+                gfxAll.DrawString(columnCollection, font, XBrushes.Black, x2, y2);
+                y2 += ls + 10;
+            }
+            if (question.Type.Name == "Open Tabelvraag")
+            {
+                var collection = question.Columns.Split(';');
+                var columnCollection = collection[0] + "  |  " + collection[1];
+                gfxAll.DrawString(columnCollection, font, XBrushes.Black, x2, y2);
+                y2 += ls + 10;
+            }
+
             foreach (var answer in answersList)
             {
-                gfxAll.DrawString(answer.Content,
-                font, XBrushes.Black, x2, y2);
-                y2 += ls;
+                if (question.Type.Name == "Multiple Choice Tabelvraag")
+                {
+                    var collection = answer.Content.Split(';');
+                    var firstPart = collection[0];
+                    var SecondCollection = collection[1].Split('|');
+                    var secondPart = SecondCollection[0];
+                    var answerFormat = firstPart + "     |     " + secondPart;
+
+                    gfxAll.DrawString(answerFormat,
+                    font, XBrushes.Black, x2, y2);
+                    y2 += ls;
+                }
+                else if (question.Type.Name == "Open Tabelvraag")
+                {
+                    gfxAll.DrawString(answer.Content,
+                    font, XBrushes.Black, x2, y2);
+                    y2 += ls;
+                }
+                else if (question.Type.Name == "Multiple Choice vraag")
+                {
+                    var collection = answer.Content.Split('|');
+                    var answerFormat = collection[0];
+
+                    gfxAll.DrawString(answerFormat,
+                    font, XBrushes.Black, x2, y2);
+                    y2 += ls;
+                }
+                else
+                {
+                    gfxAll.DrawString(answer.Content,
+                    font, XBrushes.Black, x2, y2);
+                    y2 += ls;
+                }
                 if (y > 820)
                 {
                     gfxAll = XGraphics.FromPdfPage(document.AddPage(new PdfPage()));
@@ -225,20 +271,20 @@ namespace FSBeheer.ViewModel
                     y2 = 75;
                 }
             }
-
             y2 += ls + 10;
 
             if (_selectedCharts[i] == "PieChart")
             {
-                gfxAll.DrawString("This is a Pie Chart",
-                font, XBrushes.Black, x2, y2);
+                ChartGenerator chartgen = new ChartGenerator(QuestionsList[i], "Pie", 300, 300);
+                XImage image2 = chartgen.GetImageFromChart();
+                gfxAll.DrawImage(image2, gfxAll.PdfPage.Width * 0.4, gfxAll.PdfPage.Height * 0.1, image2.PixelWidth, image2.PixelHeight);
             }
             else if (_selectedCharts[i] == "BarChart")
             {
-                gfxAll.DrawString("This is a Bar Chart",
-                font, XBrushes.Black, x2, y2);
+                ChartGenerator chartgen = new ChartGenerator(QuestionsList[i], "Bar", 300, 300);
+                XImage image2 = chartgen.GetImageFromChart();
+                gfxAll.DrawImage(image2, gfxAll.PdfPage.Width * 0.4, gfxAll.PdfPage.Height * 0.1, image2.PixelWidth, image2.PixelHeight);
             }
-
             x2 = 50;
             y2 = 75;
         }

@@ -39,7 +39,6 @@ namespace FSBeheer.ViewModel
         {
             _context = new CustomFSContext();
             CheckboxesSelected = new List<string>();
-
             CreatePDFCommand = new RelayCommand(CreatePDF);
         }
 
@@ -51,19 +50,20 @@ namespace FSBeheer.ViewModel
             PassSelectedCharts();
             if (Filename != null && Title != null && Questions != null)
             {
-                pdfGenerator = new PDFGenerator(Filename, 
-                    Title, 
-                    Description, 
-                    Advice, 
+                pdfGenerator = new PDFGenerator(Filename,
+                    Title,
+                    Description,
+                    Advice,
                     Questions,
                     CheckboxesSelected,
-                    Customer, 
-                    SelectedInspection, 
-                    StartDate, 
+                    Customer,
+                    SelectedInspection,
+                    StartDate,
                     EndDate,
                     _context);
                 pdfGenerator.CreateStandardPDF();
-            } else
+            }
+            else
             {
                 MessageBox.Show("You have not entered all necessary fields (Bestandnaam, Titel)");
             }
@@ -117,7 +117,7 @@ namespace FSBeheer.ViewModel
             {
                 Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(Questionnaire);
                 QuestionPDFs = _context.QuestionPDFCrud.ConvertQuestionVMToQuestionPDFVM(Questions);
-            } 
+            }
         }
 
         private void PassSelectedQuestions()
@@ -132,7 +132,6 @@ namespace FSBeheer.ViewModel
             {
                 Questions.Remove(question);
             }
-
         }
 
         private void PassSelectedCharts()
@@ -151,11 +150,6 @@ namespace FSBeheer.ViewModel
                         removeQuestionPDFsList.Add(questionPDF);
                 }
             }
-            //foreach (QuestionPDFVM questionPDF in removeQuestionPDFsList)
-            //{
-            //    QuestionPDFs.Remove(questionPDF);
-            //}
-
             foreach (QuestionPDFVM questionPDF in QuestionPDFs)
             {
                 if (!removeQuestionPDFsList.Contains(questionPDF))

@@ -111,7 +111,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converter\TypeToDisabledConverter.cs" />
+    <Compile Include="Converter\TypeToDisabledConverterPieChart.cs" />
+    <Compile Include="Converter\TypeToDisabledConverterBarChart.cs" />
     <Compile Include="Crud\AbstractCrud.cs" />
     <Compile Include="Crud\AccountCrud.cs" />
     <Compile Include="Crud\AnswerCrud.cs" />

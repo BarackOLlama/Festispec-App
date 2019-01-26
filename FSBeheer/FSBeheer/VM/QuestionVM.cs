@@ -1,5 +1,6 @@
 ﻿using FSBeheer.Model;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace FSBeheer.VM
 {
@@ -50,14 +51,17 @@ namespace FSBeheer.VM
             get
             {
                 var collection = new ObservableCollection<Option>();
-                foreach (string s in _question.Options.Split(';'))
-                {
-                    collection.Add(new Option
+                    if (_question.Options != null)
                     {
-                        Key = s.Split('|')[0],
-                        Value = s.Split('|')[1]
-                    });
-                }
+                        foreach (string s in _question.Options.Split(';'))
+                        {
+                            collection.Add(new Option
+                            {
+                                Key = s.Split('|')[0],
+                                Value = s.Split('|')[1]
+                            });
+                        }
+                    }
                 return collection;
             }
         }

@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
+        WindowState="Maximized"
         WindowStartupLocation="CenterScreen"
-        Title="Rapport genereren" Height="450" Width="1100"
+        Title="Rapport genereren"
         DataContext="{Binding GenerateReport, Source={StaticResource Locator}}">
     <Window.Resources>
-        <local:TypeToDisabledConverter x:Key="DisabledConverter"></local:TypeToDisabledConverter>
+        <local:TypeToDisabledConverterBarChart x:Key="DisabledConverterBarChart"></local:TypeToDisabledConverterBarChart>
+        <local:TypeToDisabledConverterPieChart x:Key="DisabledConverterPieChart"></local:TypeToDisabledConverterPieChart>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Command="{Binding CreatePDFCommand}" Gesture="CTRL+ENTER"/>
@@ -17,20 +19,20 @@
     <StackPanel Margin="20">
         <StackPanel Margin="30">
             <WrapPanel>
-                <Label Content="Bestandsnaam: " Margin="40,0,0,0"/>
-                <TextBox Text="{Binding Filename, Mode=TwoWay}" Width="723" VerticalContentAlignment="Center"/>
+                <Label Content="Bestandsnaam: " Margin="0,0,0,0"/>
+                <TextBox Text="{Binding Filename, Mode=TwoWay}" Width="900" VerticalContentAlignment="Center"/>
             </WrapPanel>
-            <WrapPanel Margin="18,10,0,10">
+            <WrapPanel Margin="54,10,0,10">
                 <Label Content="Titel: "/>
-                <TextBox Text="{Binding Title, Mode=TwoWay}" Width="800" VerticalContentAlignment="Center"/>
+                <TextBox Text="{Binding Title, Mode=TwoWay}" Width="900" VerticalContentAlignment="Center"/>
             </WrapPanel>
-            <WrapPanel>
+            <WrapPanel Margin="8,0,0,0">
                 <Label Content="Omschrijving: "/>
-                <TextBox Text="{Binding Description, Mode=TwoWay}" Width="771" VerticalContentAlignment="Center" MaxLength="910"/>
+                <TextBox Text="{Binding Description, Mode=TwoWay}" Width="900" Height="200" VerticalContentAlignment="Center" MaxLength="910" TextWrapping="Wrap"/>
             </WrapPanel>
-            <WrapPanel Margin="18,10,0,10">
+            <WrapPanel Margin="42,10,0,10">
                 <Label Content="Advies: "/>
-                <TextBox Text="{Binding Advice, Mode=TwoWay}" Width="787" VerticalContentAlignment="Center" MaxLength="910"/>
+                <TextBox Text="{Binding Advice, Mode=TwoWay}" Width="900" Height="200" VerticalContentAlignment="Center" MaxLength="910" TextWrapping="Wrap"/>
             </WrapPanel>
         </StackPanel>
         <StackPanel Margin="10">
@@ -43,14 +45,14 @@
                     <DataGridCheckBoxColumn Header="Staafdiagram" Binding="{Binding BarChart, UpdateSourceTrigger=PropertyChanged}" Width="80">
                         <DataGridCheckBoxColumn.CellStyle>
                             <Style TargetType="DataGridCell">
-                                <Setter Property="IsEnabled" Value="{Binding Type.Name, Converter= {StaticResource DisabledConverter}}"/>
+                                <Setter Property="IsEnabled" Value="{Binding Type.Name, Converter= {StaticResource DisabledConverterBarChart}}"/>
                             </Style>
                         </DataGridCheckBoxColumn.CellStyle>
                     </DataGridCheckBoxColumn>
                     <DataGridCheckBoxColumn Header="Cirkeldiagram" Binding="{Binding PieChart, UpdateSourceTrigger=PropertyChanged}" Width="85">
                         <DataGridCheckBoxColumn.CellStyle>
                             <Style TargetType="DataGridCell">
-                                <Setter Property="IsEnabled" Value="{Binding Type.Name, Converter= {StaticResource DisabledConverter}}"/>
+                                <Setter Property="IsEnabled" Value="{Binding Type.Name, Converter= {StaticResource DisabledConverterPieChart}}"/>
                             </Style>
                         </DataGridCheckBoxColumn.CellStyle>
                     </DataGridCheckBoxColumn>
