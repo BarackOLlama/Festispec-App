@@ -45,7 +45,6 @@ namespace FSBeheer.ViewModel
         private CustomFSContext _context;
         private ObservableCollection<AnswerVM> answersList;
 
-
         public PDFGenerator(
             string Filename,
             string Title,
@@ -73,7 +72,6 @@ namespace FSBeheer.ViewModel
             QuestionsList = Questions;
             _selectedCharts = SelectedCharts;
         }
-
         private void MakeFrontPage()
         {
             PdfPage page1 = document.AddPage();
@@ -159,7 +157,6 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        // TODO: live chart 
         public void CreateStandardPDF()
         {
             MakeFrontPage();
@@ -208,7 +205,6 @@ namespace FSBeheer.ViewModel
                     gfxAll.DrawString(option,
                     font, XBrushes.Black, x2, y2);
                     y2 += ls + 5;
-
                 }
             }
 
@@ -225,7 +221,6 @@ namespace FSBeheer.ViewModel
                 gfxAll.DrawString(columnCollection, font, XBrushes.Black, x2, y2);
                 y2 += ls + 10;
             }
-
             if (question.Type.Name == "Open Tabelvraag")
             {
                 var collection = question.Columns.Split(';');
@@ -236,42 +231,35 @@ namespace FSBeheer.ViewModel
 
             foreach (var answer in answersList)
             {
-                // check type vraag
                 if (question.Type.Name == "Multiple Choice Tabelvraag")
                 {
-                    // formaat per type (variabele)
                     var collection = answer.Content.Split(';');
                     var firstPart = collection[0];
                     var SecondCollection = collection[1].Split('|');
                     var secondPart = SecondCollection[0];
                     var answerFormat = firstPart + "     |     " + secondPart;
 
-                    // tekenen
                     gfxAll.DrawString(answerFormat,
                     font, XBrushes.Black, x2, y2);
                     y2 += ls;
                 }
                 else if (question.Type.Name == "Open Tabelvraag")
                 {
-                    // TODO
                     gfxAll.DrawString(answer.Content,
                     font, XBrushes.Black, x2, y2);
                     y2 += ls;
                 }
                 else if (question.Type.Name == "Multiple Choice vraag")
                 {
-                    // formaat per type (variabele)
                     var collection = answer.Content.Split('|');
                     var answerFormat = collection[0];
 
-                    // tekenen
                     gfxAll.DrawString(answerFormat,
                     font, XBrushes.Black, x2, y2);
                     y2 += ls;
                 }
                 else
                 {
-                    // tekenen
                     gfxAll.DrawString(answer.Content,
                     font, XBrushes.Black, x2, y2);
                     y2 += ls;
@@ -283,28 +271,20 @@ namespace FSBeheer.ViewModel
                     y2 = 75;
                 }
             }
-
             y2 += ls + 10;
 
             if (_selectedCharts[i] == "PieChart")
             {
-                gfxAll.DrawString("This is a Pie Chart",
-                font, XBrushes.Black, x2, y2);
-
                 ChartGenerator chartgen = new ChartGenerator(QuestionsList[i], "Pie", 300, 300);
                 XImage image2 = chartgen.GetImageFromChart();
                 gfxAll.DrawImage(image2, gfxAll.PdfPage.Width * 0.4, gfxAll.PdfPage.Height * 0.1, image2.PixelWidth, image2.PixelHeight);
             }
             else if (_selectedCharts[i] == "BarChart")
             {
-                gfxAll.DrawString("This is a Bar Chart",
-                font, XBrushes.Black, x2, y2);
-
                 ChartGenerator chartgen = new ChartGenerator(QuestionsList[i], "Bar", 300, 300);
                 XImage image2 = chartgen.GetImageFromChart();
                 gfxAll.DrawImage(image2, gfxAll.PdfPage.Width * 0.4, gfxAll.PdfPage.Height * 0.1, image2.PixelWidth, image2.PixelHeight);
             }
-
             x2 = 50;
             y2 = 75;
         }
