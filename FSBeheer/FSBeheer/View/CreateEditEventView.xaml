@@ -11,6 +11,11 @@
     <Window.Resources>
         <local:BoolVisibilityConverter x:Key="BoolToVis"/>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=CreateEditEvent}" Key="Esc"/>
+        <KeyBinding Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditEvent}" Key="F5"/>
+        <KeyBinding Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditEvent}" Gesture="CTRL+S"/>
+    </Window.InputBindings>
     <Grid>
         <StackPanel Margin="0,20,0,0">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">

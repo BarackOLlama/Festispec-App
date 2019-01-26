@@ -31,6 +31,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowGenerateReportViewCommand { get; set; }
         public RelayCommand ShowEditInspectionViewCommand { get; set; }
         public RelayCommand ShowCreateInspectionViewCommand { get; set; }
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
 
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int description, int reservedValue);
@@ -47,7 +48,12 @@ namespace FSBeheer.ViewModel
             ShowGenerateReportViewCommand = new RelayCommand(ShowGenerateReportView);
             ShowEditInspectionViewCommand = new RelayCommand(ShowEditInspectionView);
             ShowCreateInspectionViewCommand = new RelayCommand(ShowCreateInspectionView);
-            //BackHomeCommand = new RelayCommand<Window>(CloseAction);
+            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
+        }
+
+        private void CloseWindow(Window window)
+        {
+            window.Close();
         }
 
         internal void Init()

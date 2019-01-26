@@ -9,7 +9,10 @@
         mc:Ignorable="d"
         DataContext="{Binding CreateEditContact, Source={StaticResource Locator}}"
         Title="CreateEditContactView" Height="400" Width="385">
-
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding DiscardContactCommand}" CommandParameter="{Binding ElementName=CreateEditContactWindow}" Key="Esc"/>
+        <KeyBinding Command="{Binding SaveChangesContactCommand}" CommandParameter="{Binding ElementName=CreateEditContactWindow}" Key="F5"/>
+    </Window.InputBindings>
     <StackPanel Orientation="Horizontal">
         <StackPanel Margin="5 5, 5, 5" Width="100">
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">

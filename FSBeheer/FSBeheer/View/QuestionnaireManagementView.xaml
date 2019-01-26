@@ -8,7 +8,12 @@
         mc:Ignorable="d"
         DataContext="{Binding QuestionnaireList, Source={StaticResource Locator}}"
         Title="Vragenlijst beheer" Height="450" Width="800">
-
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=QuestionnaireManagementWindow}" Key="Esc"/>
+        <KeyBinding Command="{Binding CreateQuestionnaireCommand}" Gesture="CTRL+N"/>
+        <KeyBinding Command="{Binding DeleteQuestionnaireCommand}" Key="Delete"/>
+        <KeyBinding Command="{Binding ShowEditQuestionnaireViewCommand}" Gesture="CTRL+O"/>
+    </Window.InputBindings>
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <Button Content="Terug" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=QuestionnaireManagementWindow}" HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="60"/>
