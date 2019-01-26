@@ -221,7 +221,7 @@ namespace FSBeheer.ViewModel
                     return false;
                 }
 
-                if (!Regex.IsMatch(Question.Columns, @"^[3-9];[\w ]+;[\w ]+$"))
+                if (!Regex.IsMatch(Question.Columns, @"^[2-9];[\w ]+;[\w ]+$"))
                 {
                     MessageBox.Show("Invalide syntax. aantal kolommen(2+);kolomnaam 1;kolomnaam 2\n (2;Vogels;Katten)");
                     return false;
