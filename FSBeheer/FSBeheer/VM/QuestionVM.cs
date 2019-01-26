@@ -60,7 +60,7 @@ namespace FSBeheer.VM
                             Value = s.Split('|')[1]
                         });
                     }
-                } else
+                } else // scale question
                 {
                     // TODO
                     //string letter = "A";
