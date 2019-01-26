@@ -22,11 +22,11 @@
         <TextBlock Text="Vraag type:" Margin="10,5,0,0"  />
         <ComboBox ItemsSource="{Binding QuestionTypes}" SelectedItem="{Binding SelectedQuestionType}" HorizontalAlignment="Left" Width="292" Margin="10"/>
         <TextBlock Margin="10,5,0,0" ToolTip="Nadere uitleg over de vraag">Commentaar:</TextBlock>
-        <TextBox Text="{Binding Question.Comments}" ToolTip="Nadere uitleg over de vraag" Margin="10"></TextBox>
+        <TextBox Text="{Binding Question.Comments, Mode=TwoWay}" ToolTip="Nadere uitleg over de vraag" Margin="10"></TextBox>
         <TextBlock Text="Opties:* multiple choice" ToolTip="Schaal:Slecht|1;Goed|10, multiple choice:A|Optie a;B|Optie b"></TextBlock>
-        <TextBox Text="{Binding Question.Options}" ToolTip="Schaal:Slecht|1;Goed|10, multiple choice:A|Optie a;B|Optie b" IsEnabled="{Binding OptionsIsEnabled}" Margin="10"></TextBox>
+        <TextBox Text="{Binding Question.Options, Mode=TwoWay}" ToolTip="Schaal:Slecht|1;Goed|10, multiple choice:A|Optie a;B|Optie b" IsEnabled="{Binding OptionsIsEnabled}" Margin="10"></TextBox>
         <TextBlock Text="Kolommen" ToolTip="Voorbeeld: 1|Kolomnaam 1|Kolomnaam 2" Margin="10,5,0,0"></TextBlock>
-        <TextBox Text="{Binding Question.Columns}" ToolTip="Voorbeeld: 1|Kolomnaam 1|Kolomnaam 2" IsEnabled="{Binding ColumnsIsEnabled}" Margin="10"></TextBox>
+        <TextBox Text="{Binding Question.Columns, Mode=TwoWay}" ToolTip="Voorbeeld: 1|Kolomnaam 1|Kolomnaam 2" IsEnabled="{Binding ColumnsIsEnabled}" Margin="10"></TextBox>
         <Grid Margin="10,5,0,0">
             <Button Content="Opslaan" Command="{Binding SaveQuestionChangesCommand}" CommandParameter="{Binding ElementName=EditWindow}"
                     Width="100"  HorizontalAlignment="Left" Margin="5,5,0,0" />

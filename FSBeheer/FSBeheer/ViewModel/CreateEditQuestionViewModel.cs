@@ -246,7 +246,7 @@ namespace FSBeheer.ViewModel
             {
                 if (Question.Options == null)
                 {
-                    MessageBox.Show("Voor het type schaalvraag met het veld Schaal niet leeg zijn.");
+                    MessageBox.Show("Voor het type schaalvraag met het veld opties niet leeg zijn.");
                     return false;
                 }
 
@@ -265,12 +265,13 @@ namespace FSBeheer.ViewModel
                 {
                     var scales = Question.Options.Split(';');
                     var scale1 = scales[0].Split('|');
-                    var scale2 = scales[2].Split('|');
+                    var scale2 = scales[1].Split('|');
 
                     if (Int32.Parse(scale1[1]) >= Int32.Parse(scale2[1]))
                     {
                         MessageBox.Show("De syntax voor een schaalvraag is negatief|1;positief|10\n" +
                             "De waarde na de eerste '|' moet lager zijn dan die achter de tweede.");
+                        return false;
                     }
                 }
             }

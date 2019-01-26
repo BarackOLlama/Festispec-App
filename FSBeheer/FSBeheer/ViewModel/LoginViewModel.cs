@@ -24,9 +24,11 @@ namespace FSBeheer.ViewModel
         {
             //this.CreateNewAccount();
             VerifyLoginCommand = new RelayCommand<Window>(VerifyLogin);
-            Account = new AccountVM();
-            Account.Username = "sjakie@festispec.com";
-            Account.Password = "password";
+            Account = new AccountVM
+            {
+                Username = "sjakie@festispec.com",
+                Password = "password"
+            };
         }
 
         public void VerifyLogin(Window window)
