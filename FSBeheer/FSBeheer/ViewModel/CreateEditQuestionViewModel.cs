@@ -199,7 +199,7 @@ namespace FSBeheer.ViewModel
 
                 if (!Regex.IsMatch(Question.Options, @"^\w\|\w[\w ]*(;\w\|\w[\w ]*){1,}$"))
                 {
-                    MessageBox.Show("De multiple choice syntax is incorrect.\n" +
+                    MessageBox.Show("Incorrecte syntax.\n" +
                         "Voorbeeld: A|Waar;B|Niet waar");
                     return false;
                 }
@@ -217,7 +217,7 @@ namespace FSBeheer.ViewModel
 
                 if (!Regex.IsMatch(Question.Columns, @"^[2-9];\w[\w ]*;\w[\w ]*$"))
                 {
-                    MessageBox.Show("Invalide syntax. aantal kolommen(2+);kolomnaam 1;kolomnaam 2\n (2;Vogels;Katten)");
+                    MessageBox.Show("Incorrecte syntax. Aantal kolommen(2+);Kolomnaam 1;Kolomnaam 2\n (2;Vogels;Katten)");
                     return false;
                 }
             }
@@ -241,7 +241,7 @@ namespace FSBeheer.ViewModel
 
                 if (!Regex.IsMatch(Question.Options, @"^[A-Za-z ]+\|\d+;[A-Za-z ]+\|\d+$"))
                 {
-                    MessageBox.Show("Een schaalvraag moet aan de volgende syntax voldoen: negatief|1;positief|10");
+                    MessageBox.Show("Incorrecte syntex. Voorbeeld: negatief|1;positief|10");
                     return false;
                 }
                 else
@@ -252,8 +252,7 @@ namespace FSBeheer.ViewModel
 
                     if (Int32.Parse(scale1[1]) >= Int32.Parse(scale2[1]))
                     {
-                        MessageBox.Show("De syntax voor een schaalvraag is negatief|1;positief|10\n" +
-                            "De waarde na de eerste '|' moet lager zijn dan die achter de tweede.");
+                        MessageBox.Show("De tweede waarde moet hoger zijn dan de eerste waarde.");
                         return false;
                     }
                 }
