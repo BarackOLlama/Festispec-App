@@ -8,7 +8,11 @@
         mc:Ignorable="d"
         DataContext="{Binding CreateEditCustomer, Source={StaticResource Locator}}"
         Title="CreateEditCustomerView" Height="450" Width="850" Background="White">
-
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding DiscardCommand}" CommandParameter="{Binding ElementName=CreateEditWindow}" Key="Esc"/>
+        <KeyBinding Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditWindow}" Key="F5"/>
+        <KeyBinding Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditWindow}" Gesture="CTRL+S"/>
+    </Window.InputBindings>
     <StackPanel Orientation="Horizontal" Margin="5">
         <StackPanel Margin="5"  Width="100">
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">

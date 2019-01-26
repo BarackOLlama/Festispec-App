@@ -9,9 +9,12 @@
         Title="Inspectielijst" Height="450" Width="800"
         x:Name="InspectionManagementViewName"
         DataContext="{Binding InspectionManagement, Source={StaticResource Locator}}">
-
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=InspectionManagementViewName}" Key="Esc"/>
+        <KeyBinding Command="{Binding ShowCreateInspectionViewCommand}" Gesture="CTRL+N"/>
+        <KeyBinding Command="{Binding ShowEditInspectionViewCommand}" Gesture="CTRL+O"/>
+    </Window.InputBindings>
     <StackPanel Margin="20">
-        
         <StackPanel Name="spContent" Margin="30">
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <local:FilterTextBox Template="{DynamicResource SearchTextBoxTemplate}"/>

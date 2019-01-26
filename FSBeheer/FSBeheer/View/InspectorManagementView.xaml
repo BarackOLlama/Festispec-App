@@ -8,7 +8,11 @@
        
         Title="InspectorManagementView" Height="450" Width="800"
         DataContext="{Binding InspectorManagement, Source={StaticResource Locator}}">
-
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding BackHomeCommand}" CommandParameter="{Binding ElementName=InspectorManagementViewName}" Key="Esc"/>
+        <KeyBinding Command="{Binding ShowCreateInspectorViewCommand}" Gesture="CTRL+N"/>
+        <KeyBinding Command="{Binding ShowEditInspectorViewCommand}" Gesture="CTRL+O"/>
+    </Window.InputBindings>
     <StackPanel Margin="20">
         <StackPanel Name="spBackButton" HorizontalAlignment="Left">
             <Button Content="Back"

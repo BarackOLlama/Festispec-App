@@ -10,7 +10,11 @@
       x:Name="EventManagementViewName"
       Title="EventManagementView"
       DataContext="{Binding EventManagement, Source={StaticResource Locator}}">
-
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding BackHomeCommand}" CommandParameter="{Binding ElementName=EventManagementViewName}" Key="Esc"/>
+        <KeyBinding Command="{Binding CreateEventCommand}" Gesture="CTRL+N"/>
+        <KeyBinding Command="{Binding EditEventCommand}" Gesture="CTRL+O"/>
+    </Window.InputBindings>
     <StackPanel Margin="20">
         <StackPanel Name="spBackButton" HorizontalAlignment="Left">
             <Button Content="Back"

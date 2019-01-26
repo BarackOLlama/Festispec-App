@@ -23,6 +23,9 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<ScheduleItemVM> ScheduleItems { get; set; }
         public ObservableCollection<ScheduleItemVM> SelectedScheduleItems { get; set; }
 
+        public DateTime StartingDate { get; set; }
+        public DateTime EndDate { get; set; }
+
         public RelayCommand<Window> BackHomeCommand { get; set; }
         public RelayCommand GetScheduleItemsCommand { get; set; }
         public RelayCommand NewScheduleItemCommand { get; set; }
@@ -45,7 +48,7 @@ namespace FSBeheer.ViewModel
             BackHomeCommand = new RelayCommand<Window>(CloseAction);
             GetScheduleItemsCommand = new RelayCommand(GetScheduleItems);
             DeleteScheduleItemsCommand = new RelayCommand(DeleteScheduleItems, ScheduleItemSelected);
-            NewScheduleItemCommand = new RelayCommand(NewScheduleItem, InspectorSelected);
+            NewScheduleItemCommand = new RelayCommand(NewScheduleItem, CanCreate);
             CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
             DatagridSelectionChangedCommand = new RelayCommand<object>(DataGridSelectionChanged);
         }
@@ -53,6 +56,8 @@ namespace FSBeheer.ViewModel
         public void Init()
         {
             _Context = new CustomFSContext();
+            StartingDate = DateTime.Now;
+            EndDate = DateTime.Now;
             GetData();
         }
 
@@ -108,6 +113,15 @@ namespace FSBeheer.ViewModel
             RaisePropertyChanged(nameof(SelectedScheduleItems));
         }
 
+        private bool CanCreate()
+        {
+            if (!InspectorSelected())
+                return false;
+            if (StartingDate > EndDate)
+                return false;
+            return true;
+        }
+
         private bool InspectorSelected()
         {
             return SelectedInspector != null;
@@ -130,10 +144,8 @@ namespace FSBeheer.ViewModel
                 var result = MessageBox.Show("Weet u zeker dat u deze roosteritems wilt verwijderen?\nLet op: Alleen roosteritems van het type Verlof kunnen hier verwijderd worden.", "Bevestigen", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    foreach(var item in SelectedScheduleItems)
-                    {
-
-                    }
+                    _Context.ScheduleItemCrud.DeleteScheduleItemsByDateRange(SelectedScheduleItems);
+                    GetScheduleItems();
                 }
             }
             else
@@ -144,7 +156,8 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                
+                _Context.ScheduleItemCrud.AddScheduleItemsByDateRange(StartingDate, EndDate, SelectedInspector);
+                GetScheduleItems();
             }
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");

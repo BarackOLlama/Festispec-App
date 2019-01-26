@@ -9,6 +9,9 @@
         WindowStartupLocation="CenterScreen"
         Title="Festispec - Login" Height="230" Width="300"
         DataContext="{Binding LoginViewModel, Source={StaticResource Locator}}">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding VerifyLoginCommand}" CommandParameter="{Binding ElementName=WindowName}" Gesture="CTRL+ENTER"/>
+    </Window.InputBindings>
     <StackPanel>
         <Label Margin="10,0,0,0" FontSize="15">Gebruikersnaam:</Label>
         <TextBox Text="{Binding Path=Account.Username, Mode=TwoWay}" Margin="10,5,10,5"></TextBox>

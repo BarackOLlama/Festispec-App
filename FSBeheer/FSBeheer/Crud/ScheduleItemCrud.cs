@@ -64,5 +64,30 @@ namespace FSBeheer.Crud
                 }
             }
         }
+
+        public void AddScheduleItemsByDateRange(DateTime startDate, DateTime endDate, InspectorVM inspector, InspectionVM inspection = null)
+        {
+
+            for(var date = startDate.Date; date <= endDate.Date; date = date.AddDays(1))
+            {
+                ScheduleItemVM scheduleItemVM = new ScheduleItemVM
+                {
+                    Inspector = inspector.ToModel(),
+                    Scheduled = inspection == null ? false : true,
+                    Date = (DateTime?)date,
+                    ScheduleStartTime = inspection?.InspectionDate.StartTime,
+                    ScheduleEndTime = inspection?.InspectionDate.EndTime
+                };
+                CustomFSContext.ScheduleItems.Add(scheduleItemVM.ToModel());
+                CustomFSContext.SaveChanges();
+            }
+        }
+
+        public void DeleteScheduleItemsByDateRange(ObservableCollection<ScheduleItemVM> list)
+        {
+            var modelList = list.Select(s => s.ToModel());
+            CustomFSContext.ScheduleItems.RemoveRange(modelList);
+            CustomFSContext.SaveChanges();
+        }
     }
 }

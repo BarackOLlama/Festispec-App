@@ -122,9 +122,20 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (!Regex.Match(Contact.PhoneNumber.Trim(), @"^\+{1}[0-9]{11}$").Success)
+            if (Regex.IsMatch(Contact.PhoneNumber, @"^\+361"))//mobile number
             {
-                MessageBox.Show("Het ingevoerde telefoonnummer is incorrect.\nEen valide telefoonnummer is bijvoorbeeld +31601234567.");
+                if (!Regex.IsMatch(Contact.PhoneNumber, @"^\+361 ?[0-9]{4} ?[0-9]{4}$"))
+                {
+                    MessageBox.Show("Het ingevoerde nummer voldoet niet aan de juiste opmaak.\n" +
+                        "+361 1234 5678 heeft een correcte opbouw. Spaties zijn optioneel.");
+                    return false;
+                }
+            }
+            else if (!Regex.IsMatch(Contact.PhoneNumber, @"^\d{3} ?\d{4} ?\d{3}$"))//not a mobile number
+            {
+                MessageBox.Show("Het ingevoerde telefoonnummer voldoet niet aan de juiste opbouw.\n" +
+                    "Een correct telefoonnummer is bijvoorbeeld 072 5505 232. Spaties zijn optioneel.\n" +
+                    "Als het telefoonnummer mobiel is begin dan met +316.");
                 return false;
             }
 
@@ -154,7 +165,7 @@ namespace FSBeheer.ViewModel
                         Customer.Contact = new ContactVM();
                     }
                     window.Close();
-                    
+
                     Messenger.Default.Send(true, "UpdateContactList");
                 }
             }

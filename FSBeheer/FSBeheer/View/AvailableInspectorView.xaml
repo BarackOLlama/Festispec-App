@@ -8,6 +8,11 @@
         x:Name="AvailableInspectorName"
         DataContext="{Binding AvailableInspector, Source={StaticResource Locator}}"
         Title="Beschikbaarheid inspecteurs" Height="500" Width="950">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=AvailableInspectorName}" Key="F5"/>
+        <KeyBinding Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=AvailableInspectorName}" Gesture="CTRL+S"/>
+        <KeyBinding Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=AvailableInspectorName}" Key="Esc"/>
+    </Window.InputBindings>
 
     <StackPanel Orientation="Horizontal">
         <StackPanel Orientation="Vertical">

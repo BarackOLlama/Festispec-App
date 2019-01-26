@@ -10,7 +10,11 @@
         mc:Ignorable="d"
         Title="CreateEditInspectionView" Height="750" Width="1000"
         DataContext="{Binding CreateEditInspection, Source={StaticResource Locator}}">
-
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Key="Esc"/>
+        <KeyBinding Command="{Binding AddInspectionCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Key="F5"/>
+        <KeyBinding Command="{Binding AddInspectionCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Gesture="CTRL+S"/>
+    </Window.InputBindings>
     <StackPanel Margin="20">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Name="EventSelection" Margin="0,30,0,0">
             <Label>Evenement:</Label>

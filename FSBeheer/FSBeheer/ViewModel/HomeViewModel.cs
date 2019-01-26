@@ -38,7 +38,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand ShowCreateEditViewCommand { get; set; }
         public RelayCommand ShowBusinessDataViewCommand { get; set; }
         public RelayCommand ShowScheduleViewCommand { get; set; }
-
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
         public HomeViewModel(AccountVM account)
         {
             _context = new CustomFSContext();
@@ -54,6 +54,7 @@ namespace FSBeheer.ViewModel
             ShowQuestionnaireManagementViewCommand = new RelayCommand(ShowQuestionnaireManagementView);
             ShowScheduleViewCommand = new RelayCommand(ShowScheduleView);
             ShowBusinessDataViewCommand = new RelayCommand(ShowBusinessDataView);
+            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
 
             LoginTime = DateTime.Now;
 
@@ -67,7 +68,12 @@ namespace FSBeheer.ViewModel
             Console.WriteLine("");
             //this.ShowLoginView();
         }
-        
+
+        private void CloseWindow(Window window)
+        {
+            window.Close();
+        }
+
         private void ShowBusinessDataView()
         {
             MessageBox.Show("Account username:"+Account.Username+"\nIngelogd sinds:"+LoginTime+"\nFunctie"+AccountRole);
