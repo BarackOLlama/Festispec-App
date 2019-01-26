@@ -13,6 +13,9 @@
         <local:TypeToDisabledConverterBarChart x:Key="DisabledConverterBarChart"></local:TypeToDisabledConverterBarChart>
         <local:TypeToDisabledConverterPieChart x:Key="DisabledConverterPieChart"></local:TypeToDisabledConverterPieChart>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding CreatePDFCommand}" Gesture="CTRL+ENTER"/>
+    </Window.InputBindings>
     <StackPanel Margin="20">
         <StackPanel Margin="30">
             <WrapPanel>
