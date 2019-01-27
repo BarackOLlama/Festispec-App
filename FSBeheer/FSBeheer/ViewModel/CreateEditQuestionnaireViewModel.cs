@@ -138,6 +138,13 @@ namespace FSBeheer.ViewModel
 
         private bool QuestionnaireIsValid()
         {
+
+            if (SelectedIndex==-1)
+            {
+                MessageBox.Show("Een vragenlijst moet aan een inspectie gekoppeld zijn.");
+                return false;
+            }
+
             if (Questionnaire.Name == null)
             {
                 MessageBox.Show("Een vragenlijst moet een naam hebben.");
