@@ -113,6 +113,7 @@ namespace FSBeheer.ViewModel
             if (SelectedInspector == null)
             {
                 MessageBox.Show("Er is geen inspector geselecteerd.");
+                return;
             }
 
             if (IsInternetConnected())
