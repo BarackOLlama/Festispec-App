@@ -2,6 +2,7 @@
 using GalaSoft.MvvmLight;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace FSBeheer.VM
 {
@@ -91,6 +92,20 @@ namespace FSBeheer.VM
         public ObservableCollection<Inspection> Inspection
         {
             get { return _inspector.Inspections; }
+        }
+
+        public InspectionVM CurrentInspection
+        {
+            get
+            {
+                //get the planned inspections
+                var plannedInspections = _inspector.Inspections?.Where(e => e.Status.StatusName == "Ingepland");
+                //get the ones whose 
+                var currentAndFutureInspections = plannedInspections?.Where(e => e.InspectionDate.EndDate >= DateTime.Now);
+                //order them by date
+                var orderedDates = currentAndFutureInspections?.OrderBy(e => e.InspectionDate.EndDate);
+                return new InspectionVM(orderedDates?.FirstOrDefault());
+            }
         }
 
         public ObservableCollection<Inspection> RecentInspection

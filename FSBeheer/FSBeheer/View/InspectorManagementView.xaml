@@ -31,7 +31,7 @@
                     <DataGridTextColumn Header="Naam" Binding="{Binding Name}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="Adres" Binding="{Binding Address}" Width="*"></DataGridTextColumn>
                     <DataGridTextColumn Header="Woonplaats" Binding="{Binding City}" Width="*"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Huidige Inspectie" Binding="{Binding Inspection}" Width="*"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Huidige Inspectie" Binding="{Binding CurrentInspection}" Width="*"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

@@ -82,32 +82,32 @@ namespace FSBeheer.ViewModel
 
         private void ShowCustomerView()
         {
-            new CustomerManagementView().Show();
+            new CustomerManagementView().ShowDialog();
         }
 
         private void ShowInspectionView()
         {
-            new InspectionManagementView().Show();
+            new InspectionManagementView().ShowDialog();
         }
 
         private void ShowEventView()
         {
-            new EventManagementView().Show();
+            new EventManagementView().ShowDialog();
         }
 
         private void ShowInspectorView()
         {
-            new InspectorManagementView().Show();
+            new InspectorManagementView().ShowDialog();
         }
 
         private void ShowQuotationView()
         {
-            new QuotationManagementView().Show();
+            new QuotationManagementView().ShowDialog();
         }
 
         private void ShowCreateEditInspectionView()
         {
-            new CreateEditInspectionView().Show();
+            new CreateEditInspectionView().ShowDialog();
         }
         private void ShowQuestionnaireManagementView()
         {
@@ -115,7 +115,7 @@ namespace FSBeheer.ViewModel
         }
         private void ShowScheduleView()
         {
-            new ScheduleManagementView().Show();
+            new ScheduleManagementView().ShowDialog();
         }
     }
 }

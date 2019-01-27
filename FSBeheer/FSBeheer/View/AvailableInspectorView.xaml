@@ -56,7 +56,7 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal" Margin="15,10,25,10">
-                    <Button Content="Annuleer" Margin="5" CommandParameter="{Binding ElementName=AvailableInspectorName}" Command="{Binding DiscardChangesCommand}"></Button>
+                    <Button Content="Annuleer" Margin="5" CommandParameter="{Binding ElementName=AvailableInspectorName}" Command="{Binding CloseWindowCommand}"></Button>
                     <Button Content="Accepteer" Margin="5" CommandParameter="{Binding ElementName=AvailableInspectorName}" Command="{Binding SaveChangesCommand}" ></Button>
                 </StackPanel>
             </StackPanel>

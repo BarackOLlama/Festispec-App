@@ -65,7 +65,13 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (Customer.City == string.Empty)
+            if (!Regex.IsMatch(Customer.ChamberOfCommerceNumber+"", @"^\d{8,}$"))
+            {
+                MessageBox.Show("De ingevoerde KVK is niet valide.\nEen KVK nummer moet minstens uit acht cijfers bestaan.");
+                return false;
+            }
+
+            if (Customer.City == null)
             {
                 MessageBox.Show("Een klant moet een stad hebben.");
                 return false;

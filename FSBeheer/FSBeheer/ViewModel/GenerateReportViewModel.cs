@@ -108,7 +108,17 @@ namespace FSBeheer.ViewModel
         private void RetrieveQuestionnaire(int inspectionId)
         {
             if (SelectedInspection != null)
+            {
+                var questionnaire = _context.Questionnaires.ToList().Where(e => e.InspectionId == SelectedInspection.Id).FirstOrDefault();
+                if (questionnaire == null)
+                {
+                    MessageBox.Show("De gekozen inspectie heeft geen vragenlijst.");
+                    return;
+                }
+
                 Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireByInspectionId(inspectionId);
+
+            }
         }
 
         private void RetrieveQuestionsAndQuestionPDFs()
