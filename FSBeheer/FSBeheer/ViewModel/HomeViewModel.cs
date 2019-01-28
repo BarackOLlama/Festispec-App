@@ -71,7 +71,13 @@ namespace FSBeheer.ViewModel
 
         private void CloseWindow(Window window)
         {
-            window.Close();
+            var result = MessageBox.Show("Scherm sluiten?", "Scherm sluiten", MessageBoxButton.OKCancel);
+
+            if (result == MessageBoxResult.OK)
+            {
+                window.Close();
+            }
+
         }
 
         private void ShowBusinessDataView()
