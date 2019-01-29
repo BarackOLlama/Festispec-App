@@ -13,7 +13,7 @@ namespace FSBeheer.ViewModel
 {
     public class CustomerManagementViewModel : ViewModelBase
     {
-        private CustomFSContext CustomFSContext;
+        private CustomFSContext _context;
         public ObservableCollection<CustomerVM> Customers { get; set; }
 
         public RelayCommand<Window> CloseWindowCommand { get; set; }
@@ -45,22 +45,17 @@ namespace FSBeheer.ViewModel
 
         public CustomerManagementViewModel()
         {
-            Messenger.Default.Register<bool>(this,"UpdateCustomerList", cl => Init()); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
+            Messenger.Default.Register<bool>(this,"UpdateCustomerList", cl => FetchAndSetCustomers()); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
 
-            Init();
+            FetchAndSetCustomers();
             CreateCustomerWindowCommand = new RelayCommand(OpenCreateCustomer);
             EditCustomerWindowCommand = new RelayCommand(OpenEditCustomer);
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
-        internal void Init()
+        internal void FetchAndSetCustomers()
         {
-            CustomFSContext = new CustomFSContext();
-            GetData();
-        }
-
-        private void GetData()
-        {
+            _context = new CustomFSContext();
             ObjectCache cache = MemoryCache.Default;
             CacheItemPolicy policy = new CacheItemPolicy
             {
@@ -68,7 +63,7 @@ namespace FSBeheer.ViewModel
             };
             if (IsInternetConnected())
             {
-                Customers = CustomFSContext.CustomerCrud.GetAllCustomers();
+                Customers = _context.CustomerCrud.GetAllCustomers();
                 cache.Set("customers", Customers, policy);
             }
             else
@@ -119,11 +114,11 @@ namespace FSBeheer.ViewModel
         {
             if (string.IsNullOrEmpty(filter))
             {
-                Customers = CustomFSContext.CustomerCrud.GetAllCustomers();
+                Customers = _context.CustomerCrud.GetAllCustomers();
             }
             else
             {
-                Customers = CustomFSContext.CustomerCrud.GetAllCustomersFiltered(filter);
+                Customers = _context.CustomerCrud.GetAllCustomersFiltered(filter);
             }
             RaisePropertyChanged(nameof(Customers));
         }
