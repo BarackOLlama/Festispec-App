@@ -27,7 +27,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding Id}" Foreground="#FF1D1616" />
                             <DataGridTextColumn Header="Naam" Binding="{Binding Name}" Width="*" />
-                            <DataGridTextColumn Header="Afstand" Binding="{Binding Distance}" Width="100" />
+                            <DataGridTextColumn Header="Afstand" Binding="{Binding TravelDistance}" Width="100" />
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
@@ -50,7 +50,7 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Foreground="#FF1D1616" />
                                 <DataGridTextColumn Header="Naam" Binding="{Binding Name}" Width="*" />
-                                <DataGridTextColumn Header="Distance" Binding="{Binding Distance}" Width="100"/>
+                                <DataGridTextColumn Header="Afstand" Binding="{Binding TravelDistance}" Width="100"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
