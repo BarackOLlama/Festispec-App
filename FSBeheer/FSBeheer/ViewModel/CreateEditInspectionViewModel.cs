@@ -57,7 +57,7 @@ namespace FSBeheer.ViewModel
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             AddInspectionCommand = new RelayCommand<Window>(AddInspection);
             CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
-            PickInspectorsCommand = new RelayCommand(OpenAvailable);
+            PickInspectorsCommand = new RelayCommand(OpenAvailableInspector);
         }
 
         public void SetInspection(int inspectionId)
@@ -134,7 +134,7 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public void OpenAvailable()
+        public void OpenAvailableInspector()
         {
             if (IsInternetConnected())
             {
