@@ -57,22 +57,12 @@ namespace FSBeheer.Crud
 
         public ObservableCollection<InspectorVM> GetAllInspectorsFilteredByAvailability(List<DateTime> dateRange) //Startdate and enddate of the inspection
         {
-            //var inspectors = CustomFSContext.Inspectors
-            //    .ToList()
-            //    .Where(i => IsAvailable(
-            //        new ObservableCollection<ScheduleItemVM>(
-            //            i.ScheduleItems.ToList()
-            //            .Select(a => new ScheduleItemVM(a))
-            //        ),
-            //        dateRange))
-            //    .Select(i => new InspectorVM(i));
             var inspectors = CustomFSContext.Inspectors.ToList().Select(i => new InspectorVM(i));
             var availableInspectors = new List<InspectorVM>();
             foreach (InspectorVM inspectorVM in inspectors)
             {
                 var scheduleItems = inspectorVM.ToModel().ScheduleItems.Select(s => new ScheduleItemVM(s));
                 var scheduleItemsCollection = new ObservableCollection<ScheduleItemVM>(scheduleItems);
-                //bool isAvailable = IsAvailable(scheduleItemsCollection, dateRange);
                 if (IsAvailable(scheduleItemsCollection, dateRange))
                 {
                     availableInspectors.Add(inspectorVM);
@@ -94,28 +84,6 @@ namespace FSBeheer.Crud
                 }
             }
             return true;
-
-            //List<bool> availableList = new List<bool>();
-            //foreach(ScheduleItemVM scheduleItem in scheduleItems)
-            //{
-            //    if(scheduleItem.Date >= dateRange[0] && scheduleItem.Date <= dateRange[1])
-            //    {
-            //        if(scheduleItem.Scheduled == false)
-            //        {
-            //            availableList.Add(true);
-            //        }
-            //        else
-            //        {
-            //            availableList.Add(false);
-            //        }
-            //    }
-            //}
-
-            //if(availableList.Count == 0)
-            //{
-            //    return true;
-            //}
-            //return !availableList.Contains(false);
         }
 
         public ObservableCollection<InspectorVM> GetInspectorsByList(ObservableCollection<InspectorVM> list)
