@@ -162,8 +162,6 @@ namespace FSBeheer.ViewModel
 
         private void SaveChanges(Window window)
         {
-            // moet nog gefixt worden
-
             if (IsInternetConnected())
             {
                 MessageBoxResult result = MessageBox.Show("Wilt u de veranderingen opslaan?", "Bevestigen", MessageBoxButton.OKCancel);
