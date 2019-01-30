@@ -72,7 +72,7 @@ namespace FSBeheer.Crud
             {
                 ScheduleItemVM scheduleItemVM = new ScheduleItemVM
                 {
-                    Inspector = inspector.ToModel(),
+                    Inspector = inspector,
                     Scheduled = inspection == null ? false : true,
                     Date = (DateTime?)date,
                     ScheduleStartTime = inspection?.InspectionDate.StartTime,
