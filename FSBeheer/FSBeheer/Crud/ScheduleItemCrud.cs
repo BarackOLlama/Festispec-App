@@ -53,7 +53,7 @@ namespace FSBeheer.Crud
         {
             var startRemoveDate = inspection.InspectionDate.StartDate;
             var endRemoveDate = inspection.InspectionDate.EndDate;
-            var allScheduleItemVMs = CustomFSContext.ScheduleItems.Select(a => new ScheduleItemVM(a));
+            var allScheduleItemVMs = CustomFSContext.ScheduleItems.ToList().Select(a => new ScheduleItemVM(a));
 
             foreach (InspectorVM inspectorVM in inspectorList)
             {
