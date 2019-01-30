@@ -153,11 +153,22 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Wijzigingen opslaan?", "Bevestig opslaan", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    Customer.StartingDate = DateTime.Now.Date; 
-                    _context.SaveChanges();
-                    window.Close();
+                    try
+                    {
+                        Customer.StartingDate = DateTime.Now.Date;
+                        _context.SaveChanges();
+                        window.Close();
 
-                    Messenger.Default.Send(true, "UpdateCustomerList"); 
+                        Messenger.Default.Send(true, "UpdateCustomerList");
+                    }
+                    catch (Exception error)
+                    {
+                        if (error is System.Data.Entity.Infrastructure.DbUpdateException)
+                        {
+                            MessageBox.Show("U probeerd een duplicaat toe te voegen in het systeem");
+                        }
+                    }
+
                 }
             }
             else
