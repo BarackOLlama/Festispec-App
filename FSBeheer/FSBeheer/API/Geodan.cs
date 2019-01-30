@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Windows;
 
 namespace FSBeheer.API
 {
@@ -19,19 +20,25 @@ namespace FSBeheer.API
             var coordsFrom = AddressToCoords(addressFrom);
             var coordsTo = AddressToCoords(addressTo);
 
-            var url = String.Format("https://services.geodan.nl/routing/route?fromcoordx={0}&fromcoordy={1}&tocoordx={2}&tocoordy={3}&outputformat=json&key={4}",
-                coordsFrom.X, coordsFrom.Y, coordsTo.X, coordsTo.Y, _Key);
-
-            using (var client = new HttpClient())
+            if (coordsFrom != null && coordsTo != null)
             {
-                var response = client.GetStringAsync(url).Result;
-                dynamic json = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
-                string km = json.features[0].properties.distance;
-                if (double.TryParse(km, out double kmDouble))
-                    return Math.Round(kmDouble, 2) + " km";
-                else
-                    return "Afstand onbekend";
+
+                var url = String.Format("https://services.geodan.nl/routing/route?fromcoordx={0}&fromcoordy={1}&tocoordx={2}&tocoordy={3}&outputformat=json&key={4}",
+                    coordsFrom.X, coordsFrom.Y, coordsTo.X, coordsTo.Y, _Key);
+
+                using (var client = new HttpClient())
+                {
+                    var response = client.GetStringAsync(url).Result;
+                    dynamic json = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
+                    string km = json.features[0].properties.distance;
+                    if (double.TryParse(km, out double kmDouble))
+                        return Math.Round(kmDouble, 2) + " km";
+                    else
+                        return "Afstand onbekend";
+                }
             }
+            else
+                return "-";
         }
 
         private Coordinates AddressToCoords(string address)
