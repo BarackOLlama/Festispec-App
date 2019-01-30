@@ -57,41 +57,33 @@ namespace FSBeheer.Crud
 
         public ObservableCollection<InspectorVM> GetAllInspectorsFilteredByAvailability(List<DateTime> dateRange) //Startdate and enddate of the inspection
         {
-            var inspectors = CustomFSContext.Inspectors
-                .ToList()
-                .Where(i => IsAvailable(
-                    new ObservableCollection<ScheduleItemVM>(
-                        i.ScheduleItems.ToList()
-                        .Select(a => new ScheduleItemVM(a))
-                    ),
-                    dateRange))
-                .Select(i => new InspectorVM(i));
-            return new ObservableCollection<InspectorVM>(inspectors);
+            var inspectors = CustomFSContext.Inspectors.ToList().Select(i => new InspectorVM(i));
+            var availableInspectors = new List<InspectorVM>();
+            foreach (InspectorVM inspectorVM in inspectors)
+            {
+                var scheduleItems = inspectorVM.ToModel().ScheduleItems.Select(s => new ScheduleItemVM(s));
+                var scheduleItemsCollection = new ObservableCollection<ScheduleItemVM>(scheduleItems);
+                if (IsAvailable(scheduleItemsCollection, dateRange))
+                {
+                    availableInspectors.Add(inspectorVM);
+                }
+            }
+            return new ObservableCollection<InspectorVM>(availableInspectors);
         }
 
         private bool IsAvailable(ObservableCollection<ScheduleItemVM> scheduleItems, List<DateTime> dateRange)
         {
-            List<bool> availableList = new List<bool>();
-            foreach(ScheduleItemVM scheduleItem in scheduleItems)
+            foreach (ScheduleItemVM scheduleItem in scheduleItems)
             {
-                if(scheduleItem.Date > dateRange[0] && scheduleItem.Date < dateRange[1])
+                if (scheduleItem.Date >= dateRange[0] && scheduleItem.Date <= dateRange[1])
                 {
-                    if(scheduleItem.Scheduled == false)
+                    if (scheduleItem.Scheduled == true)
                     {
-                        availableList.Add(true);
-                    }
-                    else
-                    {
-                        availableList.Add(false);
+                        return false;
                     }
                 }
             }
-
-            if(availableList.Count == 0)
-            {
-                return true;
-            }
-            return !availableList.Contains(false);
+            return true;
         }
 
         public ObservableCollection<InspectorVM> GetInspectorsByList(ObservableCollection<InspectorVM> list)

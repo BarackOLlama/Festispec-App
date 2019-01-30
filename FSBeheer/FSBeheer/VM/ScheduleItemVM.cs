@@ -70,16 +70,10 @@ namespace FSBeheer.VM
             get { if (Scheduled) return "Inspectie"; else return "Verlof"; }
         }
 
-        public int? InspectorId
+        public virtual InspectorVM Inspector
         {
-            get { return _ScheduleItem.InspectorId; }
-        }
-
-        // not sure about this one
-        public virtual Inspector Inspector
-        {
-            get { return _ScheduleItem.Inspector; }
-            set { _ScheduleItem.Inspector = value; RaisePropertyChanged(nameof(Inspector)); }
+            get { return new InspectorVM(_ScheduleItem.Inspector); }
+            set { _ScheduleItem.Inspector = value.ToModel(); }
         }
 
         internal ScheduleItem ToModel()

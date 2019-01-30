@@ -80,8 +80,7 @@ namespace FSBeheer.ViewModel
         public void SetContextInspectionId(CustomFSContext context, InspectionVM inspection)
         {
             _context = context;
-            //if (inspectionId > 0)
-            //{
+
             _selectedInspection = inspection;
             AvailableInspectors = _context.InspectorCrud.GetAllInspectorsFilteredByAvailability(
                 new List<DateTime>{
@@ -91,31 +90,17 @@ namespace FSBeheer.ViewModel
             ChosenInspectors = inspection.Inspectors;
             RemovedInspectors = new ObservableCollection<InspectorVM>();
 
-            foreach(var inspector in AvailableInspectors)
-            {
-                FindTravelDistance(inspector, inspection);
-            }
-            foreach (var inspector in ChosenInspectors)
-            {
-                FindTravelDistance(inspector, inspection);
-            }
+            //foreach(var inspector in AvailableInspectors)
+            //{
+            //    FindTravelDistance(inspector, inspection);
+            //}
+            //foreach (var inspector in ChosenInspectors)
+            //{
+            //    FindTravelDistance(inspector, inspection);
+            //}
 
             RaisePropertyChanged(nameof(AvailableInspectors));
             RaisePropertyChanged(nameof(ChosenInspectors));
-            //}
-            //else
-            //{
-            //    _selectedInspection = new InspectionVM(new Inspection());
-            //    _selectedInspection.InspectionDate = inspectionDate;
-            //    AvailableInspectors = _customFSContext.InspectorCrud.GetAllInspectorsFilteredByAvailability(
-            //        new List<DateTime>{
-            //        _selectedInspection.InspectionDate.StartDate,
-            //        _selectedInspection.InspectionDate.EndDate
-            //    });
-            //    ChosenInspectors = new ObservableCollection<InspectorVM>();
-            //    RemovedInspectors = new ObservableCollection<InspectorVM>();
-            //}
-            
         }
 
         private void FindTravelDistance(InspectorVM inspector, InspectionVM inspection)
@@ -156,6 +141,25 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        private bool checkIfScheduleItemExists(InspectorVM inspectorVM)
+        {
+            var test = _context.ScheduleItems.ToList();
+            var scheduleitems = _context.ScheduleItems
+                .ToList()
+                .Where(s => s.IsDeleted == false)
+                .Where(s => s.Inspector.Id == inspectorVM.Id)
+                .Select(i => new ScheduleItemVM(i));
+            var _scheduleitems = new ObservableCollection<ScheduleItemVM>(scheduleitems);
+            foreach (ScheduleItemVM scheduleItem in _scheduleitems)
+            {
+                if (scheduleItem.Date >= _selectedInspection.InspectionDate.StartDate && scheduleItem.Date <= _selectedInspection.InspectionDate.EndDate)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void SaveChanges(Window window)
         {
             // moet nog gefixt worden
@@ -168,18 +172,22 @@ namespace FSBeheer.ViewModel
                     _selectedInspection.Inspectors = ChosenInspectors;
                     foreach (InspectorVM inspectorVM in ChosenInspectors)
                     {
-                        for (var start = _selectedInspection.InspectionDate.StartDate; start <= _selectedInspection.InspectionDate.EndDate; start = start.AddDays(1))
-                        {
-                            ScheduleItemVM scheduleItemVM = new ScheduleItemVM(new ScheduleItem())
+                        if (!checkIfScheduleItemExists(inspectorVM))
+                            for (var start = _selectedInspection.InspectionDate.StartDate; start <= _selectedInspection.InspectionDate.EndDate; start = start.AddDays(1))
                             {
-                                Inspector = inspectorVM.ToModel(),
-                                Scheduled = true,
-                                Date = (DateTime?)start,
-                                ScheduleStartTime = _selectedInspection.InspectionDate.StartTime,
-                                ScheduleEndTime = _selectedInspection.InspectionDate.EndTime
-                            };
-                            _context.ScheduleItems.Add(scheduleItemVM.ToModel());
-                        }
+                                ScheduleItemVM scheduleItemVM = new ScheduleItemVM(new ScheduleItem())
+                                {
+                                    Inspector = inspectorVM,
+                                    Scheduled = true,
+                                    Date = (DateTime?)start,
+                                    ScheduleStartTime = _selectedInspection.InspectionDate.StartTime,
+                                    ScheduleEndTime = _selectedInspection.InspectionDate.EndTime
+                                };
+                                var test1 = _context.ScheduleItems.ToList();
+                                _context.ScheduleItems.Add(scheduleItemVM.ToModel());
+                                _context.SaveChanges();
+                                var test2 = _context.ScheduleItems.ToList();
+                            }
                     }
 
                     

@@ -27,7 +27,7 @@
                 <local:FilterTextBox x:Name="txtSearchInput"
                                      Template="{DynamicResource SearchTextBoxTemplate}"/>
             </StackPanel>
-            <DataGrid  ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedEvent}" MaxHeight="250" AutoGenerateColumns="False">
+            <DataGrid  ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedEvent}" MaxHeight="250" AutoGenerateColumns="False" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Naam" Binding="{Binding Name}" Width="*"/>
                     <DataGridTextColumn Header="Adres" Binding="{Binding Address}" Width="*"/>

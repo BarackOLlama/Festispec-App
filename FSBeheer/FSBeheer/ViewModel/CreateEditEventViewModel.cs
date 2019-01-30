@@ -148,9 +148,21 @@ namespace FSBeheer.ViewModel
                 MessageBoxResult result = MessageBox.Show("Weet u zeker dat u dit evenement op wilt slaan?", "Bevestigen", MessageBoxButton.OKCancel);
                 if (result == MessageBoxResult.OK)
                 {
-                    _context.SaveChanges();
-                    Messenger.Default.Send(true, "UpdateEventList");
-                    window.Close();
+                    try
+                    {
+                        _context.SaveChanges();
+                        Messenger.Default.Send(true, "UpdateEventList");
+                        window.Close();
+                    }
+                    catch (System.Exception error)
+                    {
+                        if (error is System.Data.Entity.Infrastructure.DbUpdateException)
+                        {
+                            MessageBox.Show("U probeerd een duplicaat toe te voegen in het systeem");
+                        }
+
+                    }
+
                 }
             }
             else

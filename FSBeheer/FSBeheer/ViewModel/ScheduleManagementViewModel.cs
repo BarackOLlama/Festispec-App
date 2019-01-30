@@ -100,7 +100,7 @@ namespace FSBeheer.ViewModel
 
         private void DataGridSelectionChanged(object dataset)
         {
-            if(dataset != null)
+            if (dataset != null)
                 SelectedScheduleItems = new ObservableCollection<ScheduleItemVM>((dataset as IEnumerable).Cast<ScheduleItemVM>());
         }
 
@@ -139,6 +139,29 @@ namespace FSBeheer.ViewModel
 
         private void DeleteScheduleItems()
         {
+            if (SelectedScheduleItems == null)
+            {
+                MessageBox.Show("Er is geen item geselecteerd.");
+                return;
+            }
+
+            foreach (var schedule in SelectedScheduleItems)
+            {
+                if (schedule.ScheduledString != "Verlof")
+                {
+                    if (SelectedScheduleItems.Count == 1)
+                    {
+                        MessageBox.Show("De geselecteerde item is van het type " + schedule.ScheduledString + " en mag niet worden verwijderd.");
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Een of meer van de geselecteerde items zijn van het type " + schedule.ScheduledString + " en mag niet worden verwijderd.");
+                        return;
+                    }
+                }
+            }
+
             if (IsInternetConnected())
             {
                 var result = MessageBox.Show("Weet u zeker dat u deze roosteritems wilt verwijderen?\nLet op: Alleen roosteritems van het type Verlof kunnen hier verwijderd worden.", "Bevestigen", MessageBoxButton.YesNo);
@@ -149,7 +172,9 @@ namespace FSBeheer.ViewModel
                 }
             }
             else
+            {
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
+            }
         }
 
         private void NewScheduleItem()
