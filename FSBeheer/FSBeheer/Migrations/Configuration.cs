@@ -221,7 +221,7 @@ namespace FSBeheer.Migrations
                 {
                     Inspector = inspectors[2],
                     Date = new DateTime(2018, 12, 20),
-                    Scheduled = false,
+                    Scheduled = true,
                     IsDeleted = false
                 },
                 new ScheduleItem()
@@ -238,6 +238,13 @@ namespace FSBeheer.Migrations
                     Scheduled = true,
                     ScheduleStartTime = new TimeSpan(20, 0, 0),
                     ScheduleEndTime = new TimeSpan(23, 0, 0),
+                    IsDeleted = false
+                },
+                new ScheduleItem()
+                {
+                    Inspector = inspectors[3],
+                    Date = new DateTime(2018, 12, 20),
+                    Scheduled = true,
                     IsDeleted = false
                 }
             };
