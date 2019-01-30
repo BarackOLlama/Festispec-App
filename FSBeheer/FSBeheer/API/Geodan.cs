@@ -52,6 +52,7 @@ namespace FSBeheer.API
                 string geom;
                 try { geom = json.response.docs[0].geom; }
                 catch (Exception) { return null; }
+                if (!geom.Contains("POINT")) return null;
                 string[] geomArr = geom.Split('(')[1].Split(')')[0].Split(' ');
                 var coords = new Coordinates(geomArr[0], geomArr[1]);
                 return coords;
