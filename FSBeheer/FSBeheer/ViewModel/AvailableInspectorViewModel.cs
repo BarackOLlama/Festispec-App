@@ -80,8 +80,7 @@ namespace FSBeheer.ViewModel
         public void SetContextInspectionId(CustomFSContext context, InspectionVM inspection)
         {
             _context = context;
-            //if (inspectionId > 0)
-            //{
+
             _selectedInspection = inspection;
             AvailableInspectors = _context.InspectorCrud.GetAllInspectorsFilteredByAvailability(
                 new List<DateTime>{
@@ -91,31 +90,17 @@ namespace FSBeheer.ViewModel
             ChosenInspectors = inspection.Inspectors;
             RemovedInspectors = new ObservableCollection<InspectorVM>();
 
-            foreach(var inspector in AvailableInspectors)
-            {
-                FindTravelDistance(inspector, inspection);
-            }
-            foreach (var inspector in ChosenInspectors)
-            {
-                FindTravelDistance(inspector, inspection);
-            }
+            //foreach(var inspector in AvailableInspectors)
+            //{
+            //    FindTravelDistance(inspector, inspection);
+            //}
+            //foreach (var inspector in ChosenInspectors)
+            //{
+            //    FindTravelDistance(inspector, inspection);
+            //}
 
             RaisePropertyChanged(nameof(AvailableInspectors));
             RaisePropertyChanged(nameof(ChosenInspectors));
-            //}
-            //else
-            //{
-            //    _selectedInspection = new InspectionVM(new Inspection());
-            //    _selectedInspection.InspectionDate = inspectionDate;
-            //    AvailableInspectors = _customFSContext.InspectorCrud.GetAllInspectorsFilteredByAvailability(
-            //        new List<DateTime>{
-            //        _selectedInspection.InspectionDate.StartDate,
-            //        _selectedInspection.InspectionDate.EndDate
-            //    });
-            //    ChosenInspectors = new ObservableCollection<InspectorVM>();
-            //    RemovedInspectors = new ObservableCollection<InspectorVM>();
-            //}
-            
         }
 
         private void FindTravelDistance(InspectorVM inspector, InspectionVM inspection)
