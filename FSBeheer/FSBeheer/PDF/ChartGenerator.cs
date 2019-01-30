@@ -71,14 +71,15 @@ namespace FSBeheer.PDF
 
                 if (SelectedQuestion.Type.Name == "Schaal Vraag")
                 {
+                    double.TryParse(Options[1].Value, out var maxVal);
                     BarChart.AxisY.Add(new Axis
                     {
                         Title = "Score",
                         MinValue = double.Parse(Options[0].Value),
-                        MaxValue = double.Parse(Options[1].Value),
+                        MaxValue = maxVal,
                         Separator = new LiveCharts.Wpf.Separator
                         {
-                            Step = 1
+                            Step = maxVal > 499 ? 50 : 10
                         }
                     });
                     BarChart.AxisX.Add(new Axis
