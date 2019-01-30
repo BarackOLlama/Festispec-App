@@ -82,17 +82,26 @@ namespace FSBeheer.ViewModel
             _context = context;
             //if (inspectionId > 0)
             //{
-                _selectedInspection = inspection;
-                // werkt niet goed, zelfs als het goed in de database staat  
-                AvailableInspectors = _context.InspectorCrud.GetAllInspectorsFilteredByAvailability(
-                    new List<DateTime>{
-                    _selectedInspection.InspectionDate.StartDate,
-                    _selectedInspection.InspectionDate.EndDate
-                });
-                ChosenInspectors = inspection.Inspectors;
-                RemovedInspectors = new ObservableCollection<InspectorVM>();
-                RaisePropertyChanged(nameof(AvailableInspectors));
-                RaisePropertyChanged(nameof(ChosenInspectors));
+            _selectedInspection = inspection;
+            AvailableInspectors = _context.InspectorCrud.GetAllInspectorsFilteredByAvailability(
+                new List<DateTime>{
+                _selectedInspection.InspectionDate.StartDate,
+                _selectedInspection.InspectionDate.EndDate
+            });
+            ChosenInspectors = inspection.Inspectors;
+            RemovedInspectors = new ObservableCollection<InspectorVM>();
+
+            foreach(var inspector in AvailableInspectors)
+            {
+                FindTravelDistance(inspector, inspection);
+            }
+            foreach (var inspector in ChosenInspectors)
+            {
+                FindTravelDistance(inspector, inspection);
+            }
+
+            RaisePropertyChanged(nameof(AvailableInspectors));
+            RaisePropertyChanged(nameof(ChosenInspectors));
             //}
             //else
             //{
@@ -107,6 +116,11 @@ namespace FSBeheer.ViewModel
             //    RemovedInspectors = new ObservableCollection<InspectorVM>();
             //}
             
+        }
+
+        private void FindTravelDistance(InspectorVM inspector, InspectionVM inspection)
+        {
+            inspector.SetTravelDistance(inspection.Event.Address);
         }
 
         private void AddInspector(InspectorVM inspectorAvailable)

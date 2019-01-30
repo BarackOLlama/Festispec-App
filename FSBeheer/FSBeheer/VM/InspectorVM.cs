@@ -1,4 +1,5 @@
-﻿using FSBeheer.Model;
+﻿using FSBeheer.API;
+using FSBeheer.Model;
 using GalaSoft.MvvmLight;
 using System;
 using System.Collections.ObjectModel;
@@ -111,6 +112,16 @@ namespace FSBeheer.VM
         public ObservableCollection<Inspection> RecentInspection
         {
             get { return _inspector.Inspections; }
+        }
+
+        public string TravelDistance { get; set; }
+
+        public void SetTravelDistance(string addressTo)
+        {
+            using (var geo = new Geodan())
+            {
+                this.TravelDistance = geo.FindRoute(_inspector.Address, addressTo);
+            }
         }
 
         public bool IsDeleted
