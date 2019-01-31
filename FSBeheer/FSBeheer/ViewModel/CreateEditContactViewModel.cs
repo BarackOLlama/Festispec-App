@@ -122,9 +122,9 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (Regex.IsMatch(Contact.PhoneNumber, @"^\+361"))//mobile number
+            if (Regex.IsMatch(Contact.PhoneNumber, @"\+316"))//mobile number
             {
-                if (!Regex.IsMatch(Contact.PhoneNumber, @"^\+361 ?[0-9]{4} ?[0-9]{4}$"))
+                if (!Regex.IsMatch(Contact.PhoneNumber, @"^\+316 ?\d{4} ?\d{4}$"))
                 {
                     MessageBox.Show("Het ingevoerde nummer voldoet niet aan de juiste opmaak.\n" +
                         "+361 1234 5678 heeft een correcte opbouw. Spaties zijn optioneel.");
