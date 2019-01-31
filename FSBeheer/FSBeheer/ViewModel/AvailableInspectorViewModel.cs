@@ -23,7 +23,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand<InspectorVM> SetInspectorCommand { get; set; }
         public RelayCommand<InspectorVM> RemoveInspectorCommand { get; set; }
         public RelayCommand<Window> SaveChangesCommand { get; set; }
-        public RelayCommand<Window> CloseWindowCommand { get; set; }
+        //public RelayCommand<Window> CloseWindowCommand { get; set; }
 
         private InspectorVM _selectedAvailableInspector { get; set; }
         private InspectorVM _selectedChosenInspector { get; set; }
@@ -43,7 +43,7 @@ namespace FSBeheer.ViewModel
             SetInspectorCommand = new RelayCommand<InspectorVM>(AddInspector);
             RemoveInspectorCommand = new RelayCommand<InspectorVM>(RemoveInspector);
             SaveChangesCommand = new RelayCommand<Window>(SaveChanges);
-            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
+            //CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
         public InspectorVM SelectedAvailableInspector
@@ -136,15 +136,15 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                MessageBoxResult result = MessageBox.Show("Wilt u de veranderingen opslaan?", "Bevestigen", MessageBoxButton.OKCancel);
-                if (result == MessageBoxResult.OK)
-                {
+                //MessageBoxResult result = MessageBox.Show("Wilt u de veranderingen opslaan?", "Bevestigen", MessageBoxButton.OKCancel);
+                //if (result == MessageBoxResult.OK)
+                //{
                     _selectedInspection.Inspectors = ChosenInspectors;
                     
                     window.Close();
                     ObservableCollection<InspectorVM>[] list = { ChosenInspectors, RemovedInspectors };
                     Messenger.Default.Send(list, "UpdateInspectorList");
-                }
+                //}
             }
             else
             {
@@ -152,13 +152,13 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        private void CloseWindow(Window window)
-        {
-            MessageBoxResult result = MessageBox.Show("Sluiten zonder opslaan?", "Bevestiging annulering", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
-            {
-                window.Close();
-            }
-        }
+        //private void CloseWindow(Window window)
+        //{
+        //    MessageBoxResult result = MessageBox.Show("Sluiten zonder opslaan?", "Bevestiging annulering", MessageBoxButton.OKCancel);
+        //    if (result == MessageBoxResult.OK)
+        //    {
+        //        window.Close();
+        //    }
+        //}
     }
 }
