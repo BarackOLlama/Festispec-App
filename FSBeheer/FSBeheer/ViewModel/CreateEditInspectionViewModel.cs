@@ -227,7 +227,7 @@ namespace FSBeheer.ViewModel
 
             if (_context.QuestionnaireCrud.GetQuestionnaireByInspectionId(Inspection.Id) == null && Inspection.Status.StatusName == "Ingepland")
             {
-                MessageBox.Show("De inspectie kan niet op \"Inplannen\" gezet worden omdat de inspectie geen vragenlijst heeft.");
+                MessageBox.Show("De inspectie kan niet op \"Ingepland\" gezet worden omdat de inspectie geen vragenlijst heeft.");
                 return false;
             }
 
