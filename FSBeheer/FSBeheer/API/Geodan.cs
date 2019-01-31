@@ -32,7 +32,7 @@ namespace FSBeheer.API
                     var response = client.GetStringAsync(url).Result;
                     dynamic json = Newtonsoft.Json.JsonConvert.DeserializeObject(response);
                     string km = json.features[0].properties.distance;
-                    if (double.TryParse(km, out double kmDouble))
+                    if (double.TryParse(km, NumberStyles.Any, CultureInfo.InvariantCulture, out double kmDouble))
                         return Math.Round(kmDouble, 2) + " km";
                     else
                         return "Afstand onbekend";
@@ -67,7 +67,7 @@ namespace FSBeheer.API
         {
             double.TryParse(X, NumberStyles.Any, CultureInfo.InvariantCulture, out double paramX);
             this.X = paramX;
-            double.TryParse(X, NumberStyles.Any, CultureInfo.InvariantCulture, out double paramY);
+            double.TryParse(Y, NumberStyles.Any, CultureInfo.InvariantCulture, out double paramY);
             this.Y = paramY;
         }
 
