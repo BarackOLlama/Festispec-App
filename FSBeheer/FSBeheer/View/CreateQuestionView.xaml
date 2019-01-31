@@ -11,7 +11,7 @@
         DataContext="{Binding CreateQuestion, Source={StaticResource Locator}}">
     <Window.InputBindings>
         <KeyBinding Command="{Binding CloseWindowCommand}"
-                    CommandParameter="{Binding ElementName=EditWindow}"
+                    CommandParameter="{Binding ElementName=CreateQuestionWindow}"
                     Key="Esc"/>
         <KeyBinding Command="{Binding CreateQuestionCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}" Gesture="CTRL+S"/>
         <KeyBinding Command="{Binding CreateQuestionCommand}" CommandParameter="{Binding ElementName=CreateQuestionWindow}" Key="F5"/>

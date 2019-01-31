@@ -9,10 +9,13 @@
         x:Name="QuotationManagementViewName"
         DataContext="{Binding QuotationManagement, Source={StaticResource Locator}}">
 
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding ShowCreateQuotationViewCommand}" Gesture="CTRL+N"/>
+        <KeyBinding Command="{Binding ShowEditQuotationViewCommand}" Gesture="CTRL+O"/>
+        <KeyBinding></KeyBinding>
+    </Window.InputBindings>
+    
     <StackPanel Margin="20">
-
-
-
         <StackPanel Name="spContent" Margin="30">
             <DataGrid MaxHeight="250" VerticalScrollBarVisibility="Auto" ItemsSource="{Binding Quotations}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedQuotation}">
                 <DataGrid.Columns>

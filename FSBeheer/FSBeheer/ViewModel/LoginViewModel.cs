@@ -19,16 +19,23 @@ namespace FSBeheer.ViewModel
         public AccountVM Account { get; set; }
 
         public RelayCommand<Window> VerifyLoginCommand { get; set; }
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
 
         public LoginViewModel()
         {
             //this.CreateNewAccount();
             VerifyLoginCommand = new RelayCommand<Window>(VerifyLogin);
+            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
             Account = new AccountVM
             {
                 Username = "sjakie@festispec.com",
                 Password = "password"
             };
+        }
+
+        private void CloseWindow(Window window)
+        {
+            window.Close();
         }
 
         public void VerifyLogin(Window window)

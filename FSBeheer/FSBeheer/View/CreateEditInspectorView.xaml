@@ -9,6 +9,8 @@
         DataContext="{Binding CreateEditInspector, Source={StaticResource Locator}}"
         Title="CreateEditInspectorView" Height="440" Width="800" Background="White">
     <Window.InputBindings>
+        <KeyBinding Command="{Binding}" CommandParameter="{Binding SaveChangesCommand}" Key="F5"/>
+        <KeyBinding Command="{Binding}" CommandParameter="{Binding SaveChangesCommand}" Gesture="CTRL+S"/>
         <KeyBinding Command="{Binding DiscardCommand}" CommandParameter="{Binding ElementName=CreateEditWindow}" Key="Esc"/>
     </Window.InputBindings>
     <StackPanel Margin="5">

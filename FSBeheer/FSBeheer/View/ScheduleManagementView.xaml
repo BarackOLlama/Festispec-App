@@ -14,6 +14,10 @@
         <local:DateStringConverter x:Key="DateStringConverter"/>
     </Window.Resources>
 
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding BackHomeCommand}" Key="Esc"/>
+    </Window.InputBindings>
+    
     <StackPanel Margin="20">
         <StackPanel Name="spBackButton" HorizontalAlignment="Left">
             <Button Content="Back"

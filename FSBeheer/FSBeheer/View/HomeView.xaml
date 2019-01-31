@@ -34,12 +34,12 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Button Grid.Row="0" Grid.Column="0" Content="Inspecties" Command="{Binding ShowInspectionViewCommand}" ToolTip="Shortcut: I"  Background="LightBlue" HorizontalAlignment="Center" Width="120" Height="30" Margin="20"/>
-                <Button Grid.Row="0" Grid.Column="1" Content="Evenementen" Command="{Binding ShowEventViewCommand}" ToolTip="Shortcut: E}" Background="LightBlue" HorizontalAlignment="Center" Width="120" Height="30"/>
+                <Button Grid.Row="0" Grid.Column="1" Content="Evenementen" Command="{Binding ShowEventViewCommand}" ToolTip="Shortcut: E5" Background="LightBlue" HorizontalAlignment="Center" Width="120" Height="30"/>
                 <Button Grid.Row="0" Grid.Column="2" Content="Klanten" Command="{Binding ShowCustomerViewCommand}" ToolTip="Shortcut: K" Background="LightBlue" HorizontalAlignment="Center" Width="120" Height="30"/>
                 <Button Grid.Row="1" Grid.Column="0" Content="Inspecteurs" Command="{Binding ShowInspectorViewCommand}" ToolTip="Shortcut: N" Background="LightBlue" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="120" Height="30"/>
                 <Button Grid.Row="1" Grid.Column="1" Content="Offertes" Command="{Binding ShowQuotationViewCommand}" ToolTip="O" Background="LightBlue" HorizontalAlignment="Center"  VerticalAlignment="Bottom" Width="120" Height="30"/>
                 <Button Grid.Row="1" Grid.Column="2" Content="Vragenlijsten" Command="{Binding ShowQuestionnaireManagementViewCommand}" ToolTip="Shortcut: V" Background="LightBlue" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="120" Height="30" Margin="0,20,0,0"/>
-                <Button Grid.Row="2" Grid.Column="1" Content="Rooster" Command="{Binding ShowScheduleViewCommand}" ToolTip="Shortcut: R}" Background="LightBlue" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="120" Height="30" Margin="0,20,0,0"></Button>
+                <Button Grid.Row="2" Grid.Column="1" Content="Rooster" Command="{Binding ShowScheduleViewCommand}" ToolTip="Shortcut: R" Background="LightBlue" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="120" Height="30" Margin="0,20,0,0"></Button>
             </Grid>
         </StackPanel>
 
