@@ -20,7 +20,7 @@ namespace FSBeheer.ViewModel
         public InspectorVM Inspector { get; set; }
 
         public RelayCommand<Window> SaveChangesCommand { get; set; }
-        public RelayCommand AddCommand { get; set; }
+        //public RelayCommand AddCommand { get; set; }
         public RelayCommand<Window> DiscardCommand { get; set; }
 
         [DllImport("wininet.dll")]
