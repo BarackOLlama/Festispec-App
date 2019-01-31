@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Windows;
 
@@ -64,9 +65,9 @@ namespace FSBeheer.API
     {
         public Coordinates(string X, string Y)
         {
-            double.TryParse(X, out double paramX);
+            double.TryParse(X, NumberStyles.Any, CultureInfo.InvariantCulture, out double paramX);
             this.X = paramX;
-            double.TryParse(Y, out double paramY);
+            double.TryParse(X, NumberStyles.Any, CultureInfo.InvariantCulture, out double paramY);
             this.Y = paramY;
         }
 
