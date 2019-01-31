@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -30,7 +31,6 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<EventVM> Events { get; set; }
         public int SelectedIndex { get; set; }
         public ObservableCollection<StatusVM> Statuses { get; set; }
-        public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
         public string Title { get; set; }
 
         [DllImport("wininet.dll")]
@@ -47,7 +47,7 @@ namespace FSBeheer.ViewModel
 
         public CreateEditInspectionViewModel()
         {
-            Messenger.Default.Register<bool>(this, "UpdateAvailableList", c => RaisePropertyChanged(nameof(Inspection)));
+            Messenger.Default.Register<ObservableCollection<InspectorVM>[]>(this, "UpdateInspectorList", c => UpdateInspectors(c));
 
             _context = new CustomFSContext();
             Customers = _context.CustomerCrud.GetAllCustomers();
@@ -58,6 +58,50 @@ namespace FSBeheer.ViewModel
             AddInspectionCommand = new RelayCommand<Window>(AddInspection);
             CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
             PickInspectorsCommand = new RelayCommand(OpenAvailableInspector);
+        }
+
+        private void UpdateInspectors(ObservableCollection<InspectorVM>[] ChosenAndRemovedInspectors)
+        {
+            var ChosenInspectors = ChosenAndRemovedInspectors[0];
+            foreach (InspectorVM inspectorVM in ChosenInspectors)
+            {
+                if (!CheckIfScheduleItemExists(inspectorVM))
+                    for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
+                    {
+                        ScheduleItemVM scheduleItemVM = new ScheduleItemVM(new ScheduleItem())
+                        {
+                            Inspector = inspectorVM,
+                            Scheduled = true,
+                            Date = (DateTime?)start,
+                            ScheduleStartTime = Inspection.InspectionDate.StartTime,
+                            ScheduleEndTime = Inspection.InspectionDate.EndTime
+                        };
+                        _context.ScheduleItems.Add(scheduleItemVM.ToModel());
+                    }
+            }
+            var RemovedInspectors = ChosenAndRemovedInspectors[1];
+            _context.ScheduleItemCrud.RemoveScheduleItemsByInspectorList(RemovedInspectors, Inspection);
+
+            RaisePropertyChanged(nameof(Inspection));
+        }
+
+        private bool CheckIfScheduleItemExists(InspectorVM inspectorVM)
+        {
+            var test = _context.ScheduleItems.ToList();
+            var scheduleitems = _context.ScheduleItems
+                .ToList()
+                .Where(s => s.IsDeleted == false)
+                .Where(s => s.Inspector.Id == inspectorVM.Id)
+                .Select(i => new ScheduleItemVM(i));
+            var _scheduleitems = new ObservableCollection<ScheduleItemVM>(scheduleitems);
+            foreach (ScheduleItemVM scheduleItem in _scheduleitems)
+            {
+                if (scheduleItem.Date >= Inspection.InspectionDate.StartDate && scheduleItem.Date <= Inspection.InspectionDate.EndDate)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void SetInspection(int inspectionId)
@@ -122,7 +166,9 @@ namespace FSBeheer.ViewModel
             {
                 if (InspectionIsValid())
                 {
-                    var inspection = Inspection;
+                    _context.SaveChanges();
+                    _context.Events.RemoveRange(_context.Events.Where(e => e.Name == null));
+                    _context.Customers.RemoveRange(_context.Customers.Where(c => c.Name == null));
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateInspectionList");
                     CloseAction(window);
