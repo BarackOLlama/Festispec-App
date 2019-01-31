@@ -90,14 +90,14 @@ namespace FSBeheer.ViewModel
             ChosenInspectors = inspection.Inspectors;
             RemovedInspectors = new ObservableCollection<InspectorVM>();
 
-            //foreach(var inspector in AvailableInspectors)
-            //{
-            //    FindTravelDistance(inspector, inspection);
-            //}
-            //foreach (var inspector in ChosenInspectors)
-            //{
-            //    FindTravelDistance(inspector, inspection);
-            //}
+            foreach (var inspector in AvailableInspectors)
+            {
+                FindTravelDistance(inspector, inspection);
+            }
+            foreach (var inspector in ChosenInspectors)
+            {
+                FindTravelDistance(inspector, inspection);
+            }
 
             RaisePropertyChanged(nameof(AvailableInspectors));
             RaisePropertyChanged(nameof(ChosenInspectors));
