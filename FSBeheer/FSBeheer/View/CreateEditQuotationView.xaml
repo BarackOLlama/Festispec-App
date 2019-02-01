@@ -17,14 +17,14 @@
     <StackPanel VerticalAlignment="Center">
         <StackPanel Width="550" HorizontalAlignment="Center" Margin="0,30,0,20">
             <ComboBox ItemsSource="{Binding Customers}"
-                                            SelectedItem="{Binding Quotation.Customer}"
-                                            SelectedIndex="{Binding SelectedIndex}"
-                                            DisplayMemberPath="Name"
-                                            IsEditable="True"
-                                            IsTextSearchEnabled="True"
-                                            TextSearch.TextPath="Name"
-                                            StaysOpenOnEdit="True"
-                                            Width="250"/>
+                      SelectedItem="{Binding Quotation.Customer}"
+                      SelectedIndex="{Binding SelectedIndex}"
+                      DisplayMemberPath="Name"
+                      IsEditable="True"
+                      IsTextSearchEnabled="True"
+                      TextSearch.TextPath="Name"
+                      StaysOpenOnEdit="True"
+                      Width="250"/>
         </StackPanel>
 
         <StackPanel Width="550" HorizontalAlignment="Center" Margin="0,0,0,0" >
