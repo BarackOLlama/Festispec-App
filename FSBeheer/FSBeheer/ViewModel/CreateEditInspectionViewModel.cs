@@ -34,6 +34,7 @@ namespace FSBeheer.ViewModel
         public string Title { get; set; }
         public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
         public ObservableCollection<InspectorVM> RemovedInspectors { get; set; }
+        public ObservableCollection<InspectorVM> ExistingInspectors { get; set; }
 
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int description, int reservedValue);
@@ -108,6 +109,7 @@ namespace FSBeheer.ViewModel
                     Status = new StatusVM(new Status())
                 };
                 _context.Inspections.Add(Inspection.ToModel());
+                ExistingInspectors = Inspection.Inspectors;
                 Title = "Inspectie aanmaken";
             }
             else
@@ -152,6 +154,7 @@ namespace FSBeheer.ViewModel
             {
                 if (InspectionIsValid())
                 {
+                    CreateMissingScheduleItems();
                     foreach (InspectorVM inspectorVM in ChosenInspectors)
                     {
                         if (!CheckIfScheduleItemExists(inspectorVM))
@@ -284,6 +287,25 @@ namespace FSBeheer.ViewModel
 
             return true;
 
+        }
+
+        private void CreateMissingScheduleItems()
+        {
+            if (ExistingInspectors != null && ExistingInspectors.Count() > 0)
+            {
+                foreach (InspectorVM inspector in ExistingInspectors)
+                {
+                    var scheduleItemsOfInspector = _context.ScheduleItemCrud.GetAllScheduleItemsByInspector(inspector.Id);
+                    bool scheduleItemExists = false;
+                    for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
+                    {
+                        foreach (ScheduleItemVM scheduleItem in scheduleItemsOfInspector)
+                        {
+                            if ()
+                        }
+                    }
+                }
+            }
         }
     }
 }
