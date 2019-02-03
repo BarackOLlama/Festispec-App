@@ -69,10 +69,10 @@
                         <TextBox Foreground="Black" Text="{Binding Questionnaire.Version, Mode=TwoWay}" FontSize="12"></TextBox>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="3" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Text="{Binding Questionnaire.Comments, Mode=TwoWay}" FontSize="12"></TextBox>
+                        <TextBox Foreground="Black" Text="{Binding Questionnaire.Comments, Mode=TwoWay}" TextWrapping="Wrap" AcceptsReturn="True" FontSize="12"></TextBox>
                     </Border>
                     <Border Height="100" Grid.Column="1" Grid.Row="4" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
-                        <TextBox Foreground="Black" Text="{Binding Questionnaire.Instructions, Mode=TwoWay}" FontSize="12"></TextBox>
+                        <TextBox Foreground="Black" Text="{Binding Questionnaire.Instructions, Mode=TwoWay}" TextWrapping="Wrap" AcceptsReturn="True" FontSize="12"></TextBox>
                     </Border>
                     <Border Grid.Column="1" Grid.Row="5" Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
                         <ComboBox Width="250" HorizontalAlignment="Center" ItemsSource="{Binding QuestionnaireTemplateNames}" SelectedItem="{Binding SelectedQuestionnaireTemplate}"/>

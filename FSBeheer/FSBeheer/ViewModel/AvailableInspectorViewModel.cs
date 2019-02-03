@@ -1,5 +1,4 @@
-﻿using FSBeheer.Model;
-using FSBeheer.VM;
+﻿using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -8,8 +7,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
@@ -26,7 +23,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand<InspectorVM> SetInspectorCommand { get; set; }
         public RelayCommand<InspectorVM> RemoveInspectorCommand { get; set; }
         public RelayCommand<Window> SaveChangesCommand { get; set; }
-        public RelayCommand<Window> CloseWindowCommand { get; set; }
+        //public RelayCommand<Window> CloseWindowCommand { get; set; }
 
         private InspectorVM _selectedAvailableInspector { get; set; }
         private InspectorVM _selectedChosenInspector { get; set; }
@@ -41,14 +38,12 @@ namespace FSBeheer.ViewModel
 
         public AvailableInspectorViewModel()
         {
-            InitializeContext();
-
             ChosenInspectors = new ObservableCollection<InspectorVM>();
 
             SetInspectorCommand = new RelayCommand<InspectorVM>(AddInspector);
             RemoveInspectorCommand = new RelayCommand<InspectorVM>(RemoveInspector);
             SaveChangesCommand = new RelayCommand<Window>(SaveChanges);
-            CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
+            //CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
         }
 
         public InspectorVM SelectedAvailableInspector
@@ -69,12 +64,6 @@ namespace FSBeheer.ViewModel
                 _selectedChosenInspector = value;
                 base.RaisePropertyChanged(nameof(SelectedChosenInspector));
             }
-        }
-
-
-        internal void InitializeContext()
-        {
-            _context = new CustomFSContext();
         }
 
         public void SetContextInspectionId(CustomFSContext context, InspectionVM inspection)
@@ -114,7 +103,8 @@ namespace FSBeheer.ViewModel
             {
                 ChosenInspectors.Add(inspectorAvailable);
                 AvailableInspectors.Remove(inspectorAvailable);
-            } else
+            }
+            else
             {
                 MessageBox.Show("Geen inspecteur geselecteerd.");
             }
@@ -135,68 +125,26 @@ namespace FSBeheer.ViewModel
                 }
                 ChosenInspectors.Remove(inspectorChosen);
                 AvailableInspectors.Add(inspectorChosen);
-            } else
+            }
+            else
             {
                 MessageBox.Show("Geen inspecteur geselecteerd.");
             }
         }
 
-        private bool checkIfScheduleItemExists(InspectorVM inspectorVM)
-        {
-            var test = _context.ScheduleItems.ToList();
-            var scheduleitems = _context.ScheduleItems
-                .ToList()
-                .Where(s => s.IsDeleted == false)
-                .Where(s => s.Inspector.Id == inspectorVM.Id)
-                .Select(i => new ScheduleItemVM(i));
-            var _scheduleitems = new ObservableCollection<ScheduleItemVM>(scheduleitems);
-            foreach (ScheduleItemVM scheduleItem in _scheduleitems)
-            {
-                if (scheduleItem.Date >= _selectedInspection.InspectionDate.StartDate && scheduleItem.Date <= _selectedInspection.InspectionDate.EndDate)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
         private void SaveChanges(Window window)
         {
-            // moet nog gefixt worden
-
             if (IsInternetConnected())
             {
-                MessageBoxResult result = MessageBox.Show("Wilt u de veranderingen opslaan?", "Bevestigen", MessageBoxButton.OKCancel);
-                if (result == MessageBoxResult.OK)
-                {
+                //MessageBoxResult result = MessageBox.Show("Wilt u de veranderingen opslaan?", "Bevestigen", MessageBoxButton.OKCancel);
+                //if (result == MessageBoxResult.OK)
+                //{
                     _selectedInspection.Inspectors = ChosenInspectors;
-                    foreach (InspectorVM inspectorVM in ChosenInspectors)
-                    {
-                        if (!checkIfScheduleItemExists(inspectorVM))
-                            for (var start = _selectedInspection.InspectionDate.StartDate; start <= _selectedInspection.InspectionDate.EndDate; start = start.AddDays(1))
-                            {
-                                ScheduleItemVM scheduleItemVM = new ScheduleItemVM(new ScheduleItem())
-                                {
-                                    Inspector = inspectorVM,
-                                    Scheduled = true,
-                                    Date = (DateTime?)start,
-                                    ScheduleStartTime = _selectedInspection.InspectionDate.StartTime,
-                                    ScheduleEndTime = _selectedInspection.InspectionDate.EndTime
-                                };
-                                var test1 = _context.ScheduleItems.ToList();
-                                _context.ScheduleItems.Add(scheduleItemVM.ToModel());
-                                _context.SaveChanges();
-                                var test2 = _context.ScheduleItems.ToList();
-                            }
-                    }
-
                     
-                    _context.ScheduleItemCrud.RemoveScheduleItemsByInspectorList(RemovedInspectors, _selectedInspection);
-                    
-
                     window.Close();
-                    Messenger.Default.Send(true, "UpdateAvailableList");
-                }
+                    ObservableCollection<InspectorVM>[] list = { ChosenInspectors, RemovedInspectors };
+                    Messenger.Default.Send(list, "UpdateInspectorList");
+                //}
             }
             else
             {
@@ -204,13 +152,13 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        private void CloseWindow(Window window)
-        {
-            MessageBoxResult result = MessageBox.Show("Sluiten zonder opslaan?", "Bevestiging annulering", MessageBoxButton.OKCancel);
-            if (result == MessageBoxResult.OK)
-            {
-                window.Close();
-            }
-        }
+        //private void CloseWindow(Window window)
+        //{
+        //    MessageBoxResult result = MessageBox.Show("Sluiten zonder opslaan?", "Bevestiging annulering", MessageBoxButton.OKCancel);
+        //    if (result == MessageBoxResult.OK)
+        //    {
+        //        window.Close();
+        //    }
+        //}
     }
 }

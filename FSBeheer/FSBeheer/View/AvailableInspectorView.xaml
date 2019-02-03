@@ -34,8 +34,8 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Width="100" VerticalAlignment="Center">
-            <Button Command="{Binding RemoveInspectorCommand}" CommandParameter="{Binding SelectedChosenInspector}" BorderThickness="1" BorderBrush="#FF999A9B" Foreground="White" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="20" Background="#FF6F9BDA">Links</Button>
             <Button Command="{Binding SetInspectorCommand}" CommandParameter="{Binding SelectedAvailableInspector}" BorderThickness="1" BorderBrush="#FF999A9B" Foreground="White" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="20" Background="#FF6F9BDA">Rechts</Button>
+            <Button Command="{Binding RemoveInspectorCommand}" CommandParameter="{Binding SelectedChosenInspector}" BorderThickness="1" BorderBrush="#FF999A9B" Foreground="White" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="20" Background="#FF6F9BDA">Links</Button>
         </StackPanel>
         <StackPanel Orientation="Vertical">
             <StackPanel>
@@ -50,15 +50,13 @@
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Foreground="#FF1D1616" />
                                 <DataGridTextColumn Header="Naam" Binding="{Binding Name}" Width="*" />
-                                <DataGridTextColumn Header="Afstand" Binding="{Binding Distance}" Width="100"/>
                                 <DataGridTextColumn Header="Afstand" Binding="{Binding TravelDistance}" Width="100"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Name="spInterfaceButtons" VerticalAlignment="Bottom" HorizontalAlignment="Right" Orientation="Horizontal" Margin="15,10,25,10">
-                    <Button Content="Annuleer" Margin="5" CommandParameter="{Binding ElementName=AvailableInspectorName}" Command="{Binding DiscardChangesCommand}"></Button>
-                    <Button Content="Accepteer" Margin="5" CommandParameter="{Binding ElementName=AvailableInspectorName}" Command="{Binding SaveChangesCommand}" ></Button>
+                    <Button Content="OK" Margin="5" CommandParameter="{Binding ElementName=AvailableInspectorName}" Command="{Binding SaveChangesCommand}" ></Button>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

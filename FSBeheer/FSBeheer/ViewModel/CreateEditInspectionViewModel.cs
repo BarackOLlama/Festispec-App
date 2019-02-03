@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -30,8 +31,10 @@ namespace FSBeheer.ViewModel
         public ObservableCollection<EventVM> Events { get; set; }
         public int SelectedIndex { get; set; }
         public ObservableCollection<StatusVM> Statuses { get; set; }
-        public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
         public string Title { get; set; }
+        public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
+        public ObservableCollection<InspectorVM> RemovedInspectors { get; set; }
+        public ObservableCollection<InspectorVM> ExistingInspectors { get; set; }
 
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int description, int reservedValue);
@@ -41,23 +44,51 @@ namespace FSBeheer.ViewModel
         }
 
         public RelayCommand<Window> CloseWindowCommand { get; set; }
-        public RelayCommand<Window> AddInspectionCommand { get; set; }
+        public RelayCommand<Window> SaveChangesCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
         public RelayCommand PickInspectorsCommand { get; set; }
 
         public CreateEditInspectionViewModel()
         {
-            Messenger.Default.Register<bool>(this, "UpdateAvailableList", c => RaisePropertyChanged(nameof(Inspection)));
+            Messenger.Default.Register<ObservableCollection<InspectorVM>[]>(this, "UpdateInspectorList", c => UpdateInspectors(c));
 
             _context = new CustomFSContext();
             Customers = _context.CustomerCrud.GetAllCustomers();
             Events = _context.EventCrud.GetAllEvents();
             Statuses = _context.StatusCrud.GetAllStatusVMs();
+            ChosenInspectors = new ObservableCollection<InspectorVM>();
+            RemovedInspectors = new ObservableCollection<InspectorVM>();
 
             CloseWindowCommand = new RelayCommand<Window>(CloseWindow);
-            AddInspectionCommand = new RelayCommand<Window>(AddInspection);
+            SaveChangesCommand = new RelayCommand<Window>(SaveChanges);
             CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
             PickInspectorsCommand = new RelayCommand(OpenAvailableInspector);
+        }
+
+        private void UpdateInspectors(ObservableCollection<InspectorVM>[] ChosenAndRemovedInspectors)
+        {
+            ChosenInspectors = ChosenAndRemovedInspectors[0];
+            RemovedInspectors = ChosenAndRemovedInspectors[1];
+            RaisePropertyChanged(nameof(Inspection));
+        }
+
+        private bool CheckIfScheduleItemExists(InspectorVM inspectorVM)
+        {
+            var test = _context.ScheduleItems.ToList();
+            var scheduleitems = _context.ScheduleItems
+                .ToList()
+                .Where(s => s.IsDeleted == false)
+                .Where(s => s.Inspector.Id == inspectorVM.Id)
+                .Select(i => new ScheduleItemVM(i));
+            var _scheduleitems = new ObservableCollection<ScheduleItemVM>(scheduleitems);
+            foreach (ScheduleItemVM scheduleItem in _scheduleitems)
+            {
+                if (scheduleItem.Date >= Inspection.InspectionDate.StartDate && scheduleItem.Date <= Inspection.InspectionDate.EndDate)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void SetInspection(int inspectionId)
@@ -83,6 +114,7 @@ namespace FSBeheer.ViewModel
             else
             {
                 Inspection = _context.InspectionCrud.GetInspectionById(inspectionId);
+                ExistingInspectors = Inspection.Inspectors;
                 Title = "Inspectie wijzigen";
             }
             SelectedIndex = GetIndex(Inspection.Event, Events);
@@ -116,15 +148,39 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public void AddInspection(Window window)
+        public void SaveChanges(Window window)
         {
             if (IsInternetConnected())
             {
                 if (InspectionIsValid())
                 {
-                    var inspection = Inspection;
+                    CreateMissingScheduleItems();
+                    _context.SaveChanges();
+                    foreach (InspectorVM inspectorVM in ChosenInspectors)
+                    {
+                        if (!CheckIfScheduleItemExists(inspectorVM))
+                            for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
+                            {
+                                ScheduleItemVM scheduleItemVM = new ScheduleItemVM(new ScheduleItem())
+                                {
+                                    Inspector = inspectorVM,
+                                    Scheduled = true,
+                                    Date = (DateTime?)start,
+                                    ScheduleStartTime = Inspection.InspectionDate.StartTime,
+                                    ScheduleEndTime = Inspection.InspectionDate.EndTime
+                                };
+                                _context.ScheduleItems.Add(scheduleItemVM.ToModel());
+                            }
+                    }
+                    _context.ScheduleItemCrud.RemoveScheduleItemsByInspectorList(RemovedInspectors, Inspection);
+
+                    _context.SaveChanges();
+                    _context.Events.RemoveRange(_context.Events.Where(e => e.Name == null));
+                    _context.Customers.RemoveRange(_context.Customers.Where(c => c.Name == null));
+                    _context.Statuses.RemoveRange(_context.Statuses.Where(s => s.StatusName == null));
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateInspectionList");
+                    MessageBox.Show("Inspection saved.");
                     CloseAction(window);
                 }
             }
@@ -148,7 +204,7 @@ namespace FSBeheer.ViewModel
 
         private void CanExecuteChanged()
         {
-            AddInspectionCommand.RaiseCanExecuteChanged();
+            SaveChangesCommand.RaiseCanExecuteChanged();
         }
 
         private bool InspectionIsValid()
@@ -174,7 +230,7 @@ namespace FSBeheer.ViewModel
 
             if (Inspection.InspectionDate.StartTime != null)
             {
-                var regex = new Regex(@"^([0-9]|1[0-9]|2[0-3])(:[0-5][0-9]|:[0-9]){0,2}$");
+                var regex = new Regex(@"^([0-1][0-9]|2[0-3])(:[0-5][0-9]|:[0-9]){0,2}$");
                 if (!regex.IsMatch(Inspection.InspectionDate.StartTime.ToString()))
                 { 
                     MessageBox.Show("De begintijd is niet goed.");
@@ -184,7 +240,7 @@ namespace FSBeheer.ViewModel
 
             if (Inspection.InspectionDate.EndTime != null)
             {
-                var regex = new Regex(@"^([0-9]|1[0-9]|2[0-3])(:[0-5][0-9]|:[0-9]){0,2}$");
+                var regex = new Regex(@"^([0-1][0-9]|2[0-3])(:[0-5][0-9]|:[0-9]){0,2}$");
                 if (!regex.IsMatch(Inspection.InspectionDate.EndTime.ToString()))
                 {
                     MessageBox.Show("De eindtijd is niet goed.");
@@ -225,8 +281,49 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
+            if (_context.QuestionnaireCrud.GetQuestionnaireByInspectionId(Inspection.Id) == null && Inspection.Status.StatusName == "Ingepland")
+            {
+                MessageBox.Show("De inspectie kan niet op \"Ingepland\" gezet worden omdat de inspectie geen vragenlijst heeft.");
+                return false;
+            }
+
             return true;
 
+        }
+
+        private void CreateMissingScheduleItems()
+        {
+            if (ExistingInspectors != null && ExistingInspectors.Count() > 0)
+            {
+                foreach (InspectorVM inspector in ExistingInspectors)
+                {
+                    var scheduleItemsOfInspector = _context.ScheduleItemCrud.GetAllScheduleItemsByInspector(inspector.Id);
+                    bool scheduleItemExists;
+                    for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
+                    {
+                        scheduleItemExists = false;
+                        // loop through all scheduleItems of this inspector to see if scheduleItem already exists for this date
+                        foreach (ScheduleItemVM scheduleItem in scheduleItemsOfInspector)
+                            // only check scheduleItems that are connected to this inspection
+                            if (scheduleItem.Inspector.Inspection.Count() != 0 &&
+                                scheduleItem.Inspector.Inspection.ToList().Select(i => i.Id).First() == Inspection.Id)
+                                if (scheduleItem.Date == start)
+                                    scheduleItemExists = true;
+                        if (!scheduleItemExists)
+                        {
+                            ScheduleItemVM scheduleItemVM = new ScheduleItemVM(new ScheduleItem())
+                            {
+                                Inspector = inspector,
+                                Scheduled = true,
+                                Date = (DateTime?)start,
+                                ScheduleStartTime = Inspection.InspectionDate.StartTime,
+                                ScheduleEndTime = Inspection.InspectionDate.EndTime
+                            };
+                            _context.ScheduleItems.Add(scheduleItemVM.ToModel());
+                        }
+                    }
+                }
+            }
         }
     }
 }
