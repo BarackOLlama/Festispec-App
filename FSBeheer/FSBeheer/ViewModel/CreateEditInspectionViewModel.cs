@@ -109,12 +109,12 @@ namespace FSBeheer.ViewModel
                     Status = new StatusVM(new Status())
                 };
                 _context.Inspections.Add(Inspection.ToModel());
-                ExistingInspectors = Inspection.Inspectors;
                 Title = "Inspectie aanmaken";
             }
             else
             {
                 Inspection = _context.InspectionCrud.GetInspectionById(inspectionId);
+                ExistingInspectors = Inspection.Inspectors;
                 Title = "Inspectie wijzigen";
             }
             SelectedIndex = GetIndex(Inspection.Event, Events);
@@ -155,6 +155,7 @@ namespace FSBeheer.ViewModel
                 if (InspectionIsValid())
                 {
                     CreateMissingScheduleItems();
+                    _context.SaveChanges();
                     foreach (InspectorVM inspectorVM in ChosenInspectors)
                     {
                         if (!CheckIfScheduleItemExists(inspectorVM))
@@ -179,6 +180,7 @@ namespace FSBeheer.ViewModel
                     _context.Statuses.RemoveRange(_context.Statuses.Where(s => s.StatusName == null));
                     _context.SaveChanges();
                     Messenger.Default.Send(true, "UpdateInspectionList");
+                    MessageBox.Show("Inspection saved.");
                     CloseAction(window);
                 }
             }
@@ -228,7 +230,7 @@ namespace FSBeheer.ViewModel
 
             if (Inspection.InspectionDate.StartTime != null)
             {
-                var regex = new Regex(@"^([0-9]|1[0-9]|2[0-3])(:[0-5][0-9]|:[0-9]){0,2}$");
+                var regex = new Regex(@"^([0-1][0-9]|2[0-3])(:[0-5][0-9]|:[0-9]){0,2}$");
                 if (!regex.IsMatch(Inspection.InspectionDate.StartTime.ToString()))
                 { 
                     MessageBox.Show("De begintijd is niet goed.");
@@ -238,7 +240,7 @@ namespace FSBeheer.ViewModel
 
             if (Inspection.InspectionDate.EndTime != null)
             {
-                var regex = new Regex(@"^([0-9]|1[0-9]|2[0-3])(:[0-5][0-9]|:[0-9]){0,2}$");
+                var regex = new Regex(@"^([0-1][0-9]|2[0-3])(:[0-5][0-9]|:[0-9]){0,2}$");
                 if (!regex.IsMatch(Inspection.InspectionDate.EndTime.ToString()))
                 {
                     MessageBox.Show("De eindtijd is niet goed.");
@@ -296,12 +298,28 @@ namespace FSBeheer.ViewModel
                 foreach (InspectorVM inspector in ExistingInspectors)
                 {
                     var scheduleItemsOfInspector = _context.ScheduleItemCrud.GetAllScheduleItemsByInspector(inspector.Id);
-                    bool scheduleItemExists = false;
+                    bool scheduleItemExists;
                     for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
                     {
+                        scheduleItemExists = false;
+                        // loop through all scheduleItems of this inspector to see if scheduleItem already exists for this date
                         foreach (ScheduleItemVM scheduleItem in scheduleItemsOfInspector)
+                            // only check scheduleItems that are connected to this inspection
+                            if (scheduleItem.Inspector.Inspection.Count() != 0 &&
+                                scheduleItem.Inspector.Inspection.ToList().Select(i => i.Id).First() == Inspection.Id)
+                                if (scheduleItem.Date == start)
+                                    scheduleItemExists = true;
+                        if (!scheduleItemExists)
                         {
-                            if ()
+                            ScheduleItemVM scheduleItemVM = new ScheduleItemVM(new ScheduleItem())
+                            {
+                                Inspector = inspector,
+                                Scheduled = true,
+                                Date = (DateTime?)start,
+                                ScheduleStartTime = Inspection.InspectionDate.StartTime,
+                                ScheduleEndTime = Inspection.InspectionDate.EndTime
+                            };
+                            _context.ScheduleItems.Add(scheduleItemVM.ToModel());
                         }
                     }
                 }
