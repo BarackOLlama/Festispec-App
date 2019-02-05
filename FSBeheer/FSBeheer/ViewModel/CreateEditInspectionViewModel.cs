@@ -225,22 +225,32 @@ namespace FSBeheer.ViewModel
 
             if (Inspection.InspectionDate.StartTime != null)
             {
-                var regex = new Regex(@"^([0-9]|1[0-9]|2[0-3])(:[0-5][0-9]|:[0-9]){0,2}$");
+                var regex = new Regex(@"^([0-9]|1[0-9]|2[0-3])(:[0-5][0-9]|:[0-9]){2}$");
                 if (!regex.IsMatch(Inspection.InspectionDate.StartTime.ToString()))
                 { 
-                    MessageBox.Show("De begintijd is niet goed.");
+                    MessageBox.Show("De begintijd voldoet niet aan de juiste opbouw\nVoorbeeld: 12:52:00\nLet op onnodige spaties");
                     return false;
                 }
+            }
+            else
+            {
+                MessageBox.Show("Een inspectie moet een begintijd hebben.");
+                return false;
             }
 
             if (Inspection.InspectionDate.EndTime != null)
             {
-                var regex = new Regex(@"^([0-9]|1[0-9]|2[0-3])(:[0-5][0-9]|:[0-9]){0,2}$");
+                var regex = new Regex(@"^([0-9]|1[0-9]|2[0-3])(:[0-5][0-9]|:[0-9]){2}$");
                 if (!regex.IsMatch(Inspection.InspectionDate.EndTime.ToString()))
                 {
-                    MessageBox.Show("De eindtijd is niet goed.");
+                    MessageBox.Show("De eindtijd voldoet niet aan de juiste opbouw\nVoorbeeld: 12:52:00\nLet op onnodige spaties.");
                     return false;
                 }
+            }
+            else
+            {
+                MessageBox.Show("Een inspectie moet een eindtijd hebben.");
+                return false;
             }
 
             if (Inspection.InspectionDate.StartDate == Inspection.InspectionDate.EndDate)
