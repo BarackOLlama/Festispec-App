@@ -34,6 +34,7 @@ namespace FSBeheer.Migrations
             context.Contacts.RemoveRange(context.Contacts);
             context.Customers.RemoveRange(context.Customers);
             context.Events.RemoveRange(context.Events);
+            context.EventDates.RemoveRange(context.EventDates);
             context.Statuses.RemoveRange(context.Statuses);
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT ('dbo.Status', RESEED, 0)");
 
