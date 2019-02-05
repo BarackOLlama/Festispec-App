@@ -19,10 +19,8 @@ namespace FSBeheer.ViewModel
         public int SelectedIndex { get; set; }
 
         public RelayCommand SaveChangesCommand { get; set; }
-
         public RelayCommand AddCommand { get; set; }
-
-        public RelayCommand<Window> DiscardCommand { get; set; }
+        public RelayCommand<Window> CloseWindowCommand { get; set; }
 
         private CustomFSContext _context;
 

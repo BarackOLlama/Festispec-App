@@ -38,7 +38,7 @@ namespace FSBeheer.ViewModel
             Messenger.Default.Register<bool>(this, "UpdateInspectorList", il => Init()); // registratie, ontvangt (recipient is dit zelf) Observable Collection van CustomerVM en token is CustomerList, en voeren uiteindelijk init() uit, stap I
 
             Init();
-            
+
             BackHomeCommand = new RelayCommand<Window>(CloseAction);
             ShowEditInspectorViewCommand = new RelayCommand(ShowEditInspectorView);
             ShowCreateInspectorViewCommand = new RelayCommand(ShowCreateInspectorView);
@@ -89,7 +89,7 @@ namespace FSBeheer.ViewModel
 
         private void ShowCreateInspectorView()
         {
-            if(IsInternetConnected())
+            if (IsInternetConnected())
                 new CreateEditInspectorView().Show();
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
@@ -97,10 +97,21 @@ namespace FSBeheer.ViewModel
 
         private void ShowEditInspectorView()
         {
-            if(IsInternetConnected())
-                new CreateEditInspectorView(SelectedInspector).Show();
+            if (IsInternetConnected())
+            {
+                if (SelectedInspector != null && !SelectedInspector.IsDeleted)
+                {
+                    new CreateEditInspectorView(SelectedInspector).Show();
+                }
+                else
+                {
+                    MessageBox.Show("Er is geen inspecteur geselecteerd.");
+                }
+            }
             else
+            {
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");
+            }
         }
 
         private void CloseAction(Window window)
@@ -110,7 +121,7 @@ namespace FSBeheer.ViewModel
 
         private void DeleteInspector()
         {
-            if (SelectedInspector == null)
+            if (SelectedInspector == null || SelectedInspector.IsDeleted)
             {
                 MessageBox.Show("Er is geen inspector geselecteerd.");
                 return;

@@ -53,15 +53,20 @@ namespace FSBeheer.Crud
         {
             var startRemoveDate = inspection.InspectionDate.StartDate;
             var endRemoveDate = inspection.InspectionDate.EndDate;
-            var allScheduleItemVMs = CustomFSContext.ScheduleItems.ToList().Select(a => new ScheduleItemVM(a));
+            var allScheduleItemVMs = CustomFSContext.ScheduleItems.ToList().Select(si => new ScheduleItemVM(si));
+            var removeScheduleItemsList = new List<ScheduleItemVM>();
 
             foreach (InspectorVM inspectorVM in inspectorList)
             {
                 foreach (ScheduleItemVM scheduleItemVM in allScheduleItemVMs)
                 {
                     if (scheduleItemVM.Date >= startRemoveDate && scheduleItemVM.Date <= endRemoveDate && scheduleItemVM.Inspector.Id == inspectorVM.Id)
-                        CustomFSContext.ScheduleItems.Remove(scheduleItemVM.ToModel());
+                        removeScheduleItemsList.Add(scheduleItemVM);
                 }
+            }
+            foreach (ScheduleItemVM scheduleItemVM in removeScheduleItemsList)
+            {
+                CustomFSContext.ScheduleItems.Remove(scheduleItemVM.ToModel());
             }
         }
 

@@ -128,8 +128,8 @@ namespace FSBeheer.Migrations
                 new Inspector()
                 {
                     Name = "Bart Koevoets",
-                    Address = "Bartsadres",
-                    City = "Bartsstad",
+                    Address = "Heubergerstraat 116",
+                    City = "Tilburg",
                     Zipcode = "1234BK",
                     Email = "bkoevoets@gmail.com",
                     PhoneNumber = "0612345678",
@@ -323,8 +323,8 @@ namespace FSBeheer.Migrations
                 new Event()
                 {
                     Name = "Pinkpop",
-                    Address = "Megaland",
-                    City = "Landgraaf",
+                    Address = "Lankforst 5316",
+                    City = "Nijmegen",
                     Zipcode = "6372 XC",
                     Customer = customers[0],
                     IsDeleted = false,
@@ -337,8 +337,8 @@ namespace FSBeheer.Migrations
                 new Event()
                 {
                     Name = "Appelpop",
-                    Address = "Grasweide 15",
-                    City = "Heusde",
+                    Address = "Hintam 48A",
+                    City = "Rosmalen",
                     Zipcode = "1234 AB",
                     Customer = customers[0],
                     IsDeleted = false,

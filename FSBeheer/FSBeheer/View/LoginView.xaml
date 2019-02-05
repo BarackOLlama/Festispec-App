@@ -11,6 +11,7 @@
         DataContext="{Binding LoginViewModel, Source={StaticResource Locator}}">
     <Window.InputBindings>
         <KeyBinding Command="{Binding VerifyLoginCommand}" CommandParameter="{Binding ElementName=WindowName}" Gesture="CTRL+ENTER"/>
+        <KeyBinding Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=WindowName}" Key="Esc"/>
     </Window.InputBindings>
     <StackPanel>
         <Label Margin="10,0,0,0" FontSize="15">Gebruikersnaam:</Label>

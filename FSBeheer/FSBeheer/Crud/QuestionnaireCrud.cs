@@ -60,7 +60,7 @@ namespace FSBeheer.Crud
             if (inspectionId > 0)
             {
                 var questionnaireList = CustomFSContext.Questionnaires.Include("Questions").ToList().Where(q => q.InspectionId == inspectionId).Select(q => new QuestionnaireVM(q)).ToList();
-                var questionnaire = questionnaireList.First();
+                var questionnaire = questionnaireList.FirstOrDefault();
                 return questionnaire;
             }
             return null;

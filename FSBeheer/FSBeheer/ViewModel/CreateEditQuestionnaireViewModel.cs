@@ -125,6 +125,8 @@ namespace FSBeheer.ViewModel
             _context = new CustomFSContext();
             Questions = _context.QuestionCrud.GetAllQuestionsByQuestionnaire(_questionnaire);
             base.RaisePropertyChanged(nameof(Questions));
+            Questionnaire = _context.QuestionnaireCrud.GetQuestionnaireById(_questionnaire.Id);
+            base.RaisePropertyChanged(nameof(Questionnaire));
         }
 
         private void CloseWindow(Window window)

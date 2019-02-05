@@ -3,6 +3,7 @@ using FSBeheer.VM;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -115,11 +116,27 @@ namespace FSBeheer.ViewModel
                 {
                     MessageBox.Show("Het veld Postcode mag niet leeg zijn");
                     return false;
-                } else if (!Regex.IsMatch(Event.Zipcode, @"^[0-9]{4}[A-Z]{2}$"))
+                } else if (!Regex.IsMatch(Event.Zipcode, @"^[0-9]{4} ?[A-Z]{2}$"))
                 {
                     MessageBox.Show("De postcode is niet valide.\nEen valide postcode is bijvoorbeeld: 1245AB.");
                     return false;
-                }else if(Event.Customer == null)
+                } else if (Event.Customer == null)
+                {
+                    MessageBox.Show("Een evenement moet een klant hebben.");
+                    return false;
+                } else if (Event.EventDate.StartDate == null)
+                {
+                    MessageBox.Show("Een evenement moet een startdatum hebben.");
+                    return false;
+                }else if (Event.EventDate.EndDate == null)
+                {
+                    MessageBox.Show("Een evenement moet een einddatum hebben.");
+                    return false;
+                }else if (Event.EventDate.EndDate < Event.EventDate.StartDate)
+                {
+                    MessageBox.Show("De einddatum van een evenement mag niet voor de startdatum zijn.");
+                    return false;
+                }else if (SelectedIndex == -1)
                 {
                     MessageBox.Show("Een evenement moet een klant hebben.");
                     return false;
