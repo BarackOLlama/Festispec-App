@@ -18,8 +18,6 @@ namespace FSBeheer.VM
             } else
             {
                 _eventDate = new EventDate();
-                StartDate = DateTime.Now;
-                EndDate = DateTime.Now;
             }
             
         }
