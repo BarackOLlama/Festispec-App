@@ -116,7 +116,7 @@ namespace FSBeheer.ViewModel
             else
             {
                 Inspection = _context.InspectionCrud.GetInspectionById(inspectionId);
-                ExistingInspectors = Inspection.Inspectors;
+                ChosenInspectors = Inspection.Inspectors;
                 OldStartDate = Inspection.InspectionDate.StartDate;
                 OldEndDate = Inspection.InspectionDate.EndDate;
                 Title = "Inspectie wijzigen";
@@ -158,24 +158,26 @@ namespace FSBeheer.ViewModel
             {
                 if (InspectionIsValid())
                 {
-                    CreateMissingScheduleItems();
+                    RemoveScheduleItemsOfInspection();
+                    //CreateMissingScheduleItems();
                     foreach (InspectorVM inspectorVM in ChosenInspectors)
                     {
-                        if (!CheckIfScheduleItemExists(inspectorVM))
-                            for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
+                        //if (!CheckIfScheduleItemExists(inspectorVM))
+                        for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
+                        {
+                            ScheduleItemVM scheduleItemVM = new ScheduleItemVM(new ScheduleItem())
                             {
-                                ScheduleItemVM scheduleItemVM = new ScheduleItemVM(new ScheduleItem())
-                                {
-                                    Inspector = inspectorVM,
-                                    Scheduled = true,
-                                    Date = (DateTime?)start,
-                                    ScheduleStartTime = Inspection.InspectionDate.StartTime,
-                                    ScheduleEndTime = Inspection.InspectionDate.EndTime
-                                };
-                                _context.ScheduleItems.Add(scheduleItemVM.ToModel());
-                            }
+                                Inspector = inspectorVM,
+                                Scheduled = true,
+                                Date = (DateTime?)start,
+                                ScheduleStartTime = Inspection.InspectionDate.StartTime,
+                                ScheduleEndTime = Inspection.InspectionDate.EndTime
+                            };
+                            _context.ScheduleItems.Add(scheduleItemVM.ToModel());
+                        }
+                        Inspection.Inspectors.Add(inspectorVM);
                     }
-                    _context.ScheduleItemCrud.RemoveScheduleItemsByInspectorList(RemovedInspectors, Inspection);
+                    //_context.ScheduleItemCrud.RemoveScheduleItemsByInspectorList(RemovedInspectors, Inspection);
 
                     _context.SaveChanges();
                     _context.Events.RemoveRange(_context.Events.Where(e => e.Name == null));
@@ -340,6 +342,23 @@ namespace FSBeheer.ViewModel
         //            }
         //}
 
-        //private void Remove
+        private void RemoveScheduleItemsOfInspection()
+        {
+            var removeScheduleItems = new ObservableCollection<ScheduleItem>();
+            var allScheduleItems = _context.ScheduleItems.ToList().Select(si => new ScheduleItemVM(si)).ToList();
+            foreach (ScheduleItemVM scheduleItem in allScheduleItems)
+            {
+                if (scheduleItem.Inspector.Inspection.Count() > 0 &&
+                    scheduleItem.Inspector.Inspection.ToList().Select(i => i.Id).First() == Inspection.Id)
+                    removeScheduleItems.Add(scheduleItem.ToModel());
+            }
+
+            _context.ScheduleItems.RemoveRange(removeScheduleItems);
+
+            foreach (InspectorVM inspector in ChosenInspectors)
+            {
+                Inspection.Inspectors.Remove(inspector);
+            }
+        }
     }
 }
