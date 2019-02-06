@@ -14,16 +14,14 @@ namespace FSBeheer.ViewModel
 {
     public class CreateEditCustomerViewModel : ViewModelBase
     {
+        private CustomFSContext _context;
         public ContactVM Contact { get; set; }
-
         public CustomerVM Customer { get; set; }
-        public RelayCommand EditContactWindowCommand { get; set; }
 
+        public RelayCommand EditContactWindowCommand { get; set; }
         public RelayCommand<Window> SaveChangesCommand { get; set; }
         public RelayCommand<Window> DiscardCommand { get; set; }
         public RelayCommand<Window> DeleteCustomerCommand { get; set; }
-
-        private CustomFSContext _context;
 
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int description, int reservedValue);
