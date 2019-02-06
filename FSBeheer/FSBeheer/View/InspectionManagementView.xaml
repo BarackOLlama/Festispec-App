@@ -16,6 +16,11 @@
     </Window.InputBindings>
     <StackPanel Margin="20">
         <StackPanel Name="spContent" Margin="30">
+            <Button Content="Back"
+                    Command="{Binding CloseWindowCommand}"
+                    CommandParameter="{Binding ElementName=InspectionManagementViewName}"
+                    Template="{DynamicResource InterfaceButtonTemplate}"
+                    HorizontalAlignment="Left"/>
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <local:FilterTextBox Template="{DynamicResource SearchTextBoxTemplate}"/>
             </StackPanel>

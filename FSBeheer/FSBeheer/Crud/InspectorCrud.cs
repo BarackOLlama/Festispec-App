@@ -77,10 +77,7 @@ namespace FSBeheer.Crud
             {
                 if (scheduleItem.Date >= dateRange[0] && scheduleItem.Date <= dateRange[1])
                 {
-                    if (scheduleItem.Scheduled == true)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
             return true;
