@@ -32,6 +32,8 @@ namespace FSBeheer.ViewModel
         public int SelectedIndex { get; set; }
         public ObservableCollection<StatusVM> Statuses { get; set; }
         public string Title { get; set; }
+        public DateTime? OldStartDate { get; set; }
+        public DateTime? OldEndDate { get; set; }
         public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
         public ObservableCollection<InspectorVM> RemovedInspectors { get; set; }
         public ObservableCollection<InspectorVM> ExistingInspectors { get; set; }
@@ -115,6 +117,8 @@ namespace FSBeheer.ViewModel
             {
                 Inspection = _context.InspectionCrud.GetInspectionById(inspectionId);
                 ExistingInspectors = Inspection.Inspectors;
+                OldStartDate = Inspection.InspectionDate.StartDate;
+                OldEndDate = Inspection.InspectionDate.EndDate;
                 Title = "Inspectie wijzigen";
             }
             SelectedIndex = GetIndex(Inspection.Event, Events);
@@ -155,7 +159,6 @@ namespace FSBeheer.ViewModel
                 if (InspectionIsValid())
                 {
                     CreateMissingScheduleItems();
-                    _context.SaveChanges();
                     foreach (InspectorVM inspectorVM in ChosenInspectors)
                     {
                         if (!CheckIfScheduleItemExists(inspectorVM))
@@ -222,17 +225,11 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (Inspection.InspectionDate.StartDate != null && Inspection.InspectionDate.StartDate < DateTime.Now.Date)
-            {
-                MessageBox.Show("Een inspectie kan niet in het verleden worden gepland.");
-                return false;
-            }
-
             if (Inspection.InspectionDate.StartTime != null)
             {
                 var regex = new Regex(@"^([0-1][0-9]|2[0-3])(:[0-5][0-9]|:[0-9]){0,2}$");
                 if (!regex.IsMatch(Inspection.InspectionDate.StartTime.ToString()))
-                { 
+                {
                     MessageBox.Show("De begintijd is niet goed.");
                     return false;
                 }
@@ -248,7 +245,7 @@ namespace FSBeheer.ViewModel
                 }
             }
 
-            if (Inspection.InspectionDate.StartDate == Inspection.InspectionDate.EndDate)
+            if (Inspection.InspectionDate.StartDate != null && Inspection.InspectionDate.StartDate == Inspection.InspectionDate.EndDate)
             {
                 if (Inspection.InspectionDate.StartTime > Inspection.InspectionDate.EndTime)
                 {
@@ -320,10 +317,29 @@ namespace FSBeheer.ViewModel
                                 ScheduleEndTime = Inspection.InspectionDate.EndTime
                             };
                             _context.ScheduleItems.Add(scheduleItemVM.ToModel());
+                            _context.SaveChanges();
                         }
                     }
                 }
             }
         }
+
+        //private void RemoveUnusedScheduleItems()
+        //{
+        //    if (OldStartDate != null)
+        //        if (OldStartDate < Inspection.InspectionDate.StartDate)
+        //            for (var start = OldStartDate; start < Inspection.InspectionDate.StartDate; start = start.Value.AddDays(1))
+        //            {
+
+        //            }
+        //    if (OldEndDate != null)
+        //        if (OldEndDate > Inspection.InspectionDate.EndDate)
+        //            for (var end = OldEndDate; end > Inspection.InspectionDate.EndDate; end = end.Value.AddDays(-1))
+        //            {
+
+        //            }
+        //}
+
+        //private void Remove
     }
 }
