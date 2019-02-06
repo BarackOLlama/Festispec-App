@@ -15,6 +15,7 @@ namespace FSBeheer.VM
         public EventVM()
         {
             _event = new Event();
+            EventDate = new EventDateVM();
         }
 
         public int Id

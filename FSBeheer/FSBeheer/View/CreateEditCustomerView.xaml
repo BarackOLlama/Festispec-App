@@ -13,6 +13,9 @@
         <KeyBinding Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditWindow}" Key="F5"/>
         <KeyBinding Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditWindow}" Gesture="CTRL+S"/>
     </Window.InputBindings>
+    <Window.Resources>
+        <local:BoolVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
     <StackPanel Orientation="Horizontal" Margin="5">
         <StackPanel Margin="5"  Width="100">
             <Border Background="White" BorderBrush="Black" BorderThickness="1" Margin="5">
@@ -87,7 +90,7 @@
             <StackPanel Height="50">
                 <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="3">
                     <Button Content="Annuleer" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DiscardCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
-                    <Button Content="Verwijder" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DeleteCustomerCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
+                    <Button Content="Verwijder" CommandParameter="{Binding ElementName=CreateEditWindow}" Command="{Binding DeleteCustomerCommand}" Visibility="{Binding CurrentlyEditingCustomer, Mode=OneWay, Converter={StaticResource BoolToVis}}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
                     <Button Content="Accepteer" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditWindow}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
                 </DockPanel>
             </StackPanel>

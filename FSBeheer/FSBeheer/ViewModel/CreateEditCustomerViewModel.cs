@@ -14,18 +14,15 @@ namespace FSBeheer.ViewModel
 {
     public class CreateEditCustomerViewModel : ViewModelBase
     {
-        public CustomerVM Customer { get; set; }
-
-        public RelayCommand<Window> SaveChangesCommand { get; set; }
-
-        public RelayCommand<Window> DiscardCommand { get; set; }
-
-        public RelayCommand<Window> DeleteCustomerCommand { get; set; }
-        public RelayCommand EditContactWindowCommand { get; set; }
-
-        public ContactVM Contact { get; set; }
-
         private CustomFSContext _context;
+        public ContactVM Contact { get; set; }
+        public CustomerVM Customer { get; set; }
+        public bool CurrentlyEditingCustomer { get; set; }
+
+        public RelayCommand EditContactWindowCommand { get; set; }
+        public RelayCommand<Window> SaveChangesCommand { get; set; }
+        public RelayCommand<Window> DiscardCommand { get; set; }
+        public RelayCommand<Window> DeleteCustomerCommand { get; set; }
 
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int description, int reservedValue);
@@ -135,13 +132,16 @@ namespace FSBeheer.ViewModel
                 };
                 _context.Customers.Add(Customer.ToModel());
                 RaisePropertyChanged(nameof(Customer));
+                CurrentlyEditingCustomer = false;
             }
             else
             {
                 Customer = new CustomerVM(_context.Customers.FirstOrDefault(c => c.Id == customer.Id));
                 RaisePropertyChanged(nameof(Customer));
+                CurrentlyEditingCustomer = true;
             }
             RaisePropertyChanged(nameof(Customer));
+            RaisePropertyChanged(nameof(CurrentlyEditingCustomer));
         }
 
         private void SaveChanges(Window window)
