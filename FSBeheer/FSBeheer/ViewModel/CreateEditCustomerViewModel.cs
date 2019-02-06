@@ -17,6 +17,7 @@ namespace FSBeheer.ViewModel
         private CustomFSContext _context;
         public ContactVM Contact { get; set; }
         public CustomerVM Customer { get; set; }
+        public bool CurrentlyEditingCustomer { get; set; }
 
         public RelayCommand EditContactWindowCommand { get; set; }
         public RelayCommand<Window> SaveChangesCommand { get; set; }
@@ -131,13 +132,16 @@ namespace FSBeheer.ViewModel
                 };
                 _context.Customers.Add(Customer.ToModel());
                 RaisePropertyChanged(nameof(Customer));
+                CurrentlyEditingCustomer = false;
             }
             else
             {
                 Customer = new CustomerVM(_context.Customers.FirstOrDefault(c => c.Id == customer.Id));
                 RaisePropertyChanged(nameof(Customer));
+                CurrentlyEditingCustomer = true;
             }
             RaisePropertyChanged(nameof(Customer));
+            RaisePropertyChanged(nameof(CurrentlyEditingCustomer));
         }
 
         private void SaveChanges(Window window)
