@@ -84,6 +84,7 @@ namespace FSBeheer.VM
         public bool IsDeleted
         {
             get { return _ScheduleItem.IsDeleted; }
+            set { _ScheduleItem.IsDeleted = value; }
         }
     }
 }

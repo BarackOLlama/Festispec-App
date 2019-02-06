@@ -34,11 +34,8 @@ namespace FSBeheer.ViewModel
         public int SelectedIndex { get; set; }
         public ObservableCollection<StatusVM> Statuses { get; set; }
         public string Title { get; set; }
-        public DateTime? OldStartDate { get; set; }
-        public DateTime? OldEndDate { get; set; }
         public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
         public ObservableCollection<InspectorVM> RemovedInspectors { get; set; }
-        public ObservableCollection<InspectorVM> ExistingInspectors { get; set; }
 
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int description, int reservedValue);
@@ -74,8 +71,9 @@ namespace FSBeheer.ViewModel
         private void DeleteInspection(Window window)
         {
             var result = MessageBox.Show("Inspectie verwijderen?", "Inspectie verwijderen", MessageBoxButton.OKCancel);
-            if(result == MessageBoxResult.OK)
+            if (result == MessageBoxResult.OK)
             {
+                RemoveScheduleItemsAndInspectorsOfInspection();
                 Inspection.IsDeleted = true;
                 _context.SaveChanges();
                 Messenger.Default.Send(true, "UpdateInspectionList");
@@ -134,6 +132,7 @@ namespace FSBeheer.ViewModel
             {
                 CurrentlyEditingInspection = true;
                 Inspection = _context.InspectionCrud.GetInspectionById(inspectionId);
+                ChosenInspectors = Inspection.Inspectors;
                 Title = "Inspectie wijzigen";
             }
             SelectedIndex = GetIndex(Inspection.Event, Events);
@@ -174,7 +173,7 @@ namespace FSBeheer.ViewModel
             {
                 if (InspectionIsValid())
                 {
-                    RemoveScheduleItemsOfInspection();
+                    RemoveScheduleItemsAndInspectorsOfInspection();
                     foreach (InspectorVM inspectorVM in ChosenInspectors)
                     {
                         for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
@@ -185,7 +184,8 @@ namespace FSBeheer.ViewModel
                                 Scheduled = true,
                                 Date = (DateTime?)start,
                                 ScheduleStartTime = Inspection.InspectionDate.StartTime,
-                                ScheduleEndTime = Inspection.InspectionDate.EndTime
+                                ScheduleEndTime = Inspection.InspectionDate.EndTime,
+                                IsDeleted = false
                             };
                             _context.ScheduleItems.Add(scheduleItemVM.ToModel());
                         }
@@ -303,7 +303,7 @@ namespace FSBeheer.ViewModel
 
         }
 
-        private void RemoveScheduleItemsOfInspection()
+        private void RemoveScheduleItemsAndInspectorsOfInspection()
         {
             var removeScheduleItems = new ObservableCollection<ScheduleItem>();
             var allScheduleItems = _context.ScheduleItems.ToList().Select(si => new ScheduleItemVM(si)).ToList();
@@ -314,7 +314,10 @@ namespace FSBeheer.ViewModel
                     removeScheduleItems.Add(scheduleItem.ToModel());
             }
 
-            _context.ScheduleItems.RemoveRange(removeScheduleItems);
+            foreach (ScheduleItem scheduleItem in removeScheduleItems)
+            {
+                _context.ScheduleItems.Where(si => si.Id == scheduleItem.Id).First().IsDeleted = true;
+            }
 
             foreach (InspectorVM inspector in ChosenInspectors)
             {
