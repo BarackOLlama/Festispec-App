@@ -337,7 +337,7 @@ namespace FSBeheer.Migrations
                 new Event()
                 {
                     Name = "Appelpop",
-                    Address = "Hintam 48A",
+                    Address = "Hintham 48A",
                     City = "Rosmalen",
                     Zipcode = "1234 AB",
                     Customer = customers[0],
