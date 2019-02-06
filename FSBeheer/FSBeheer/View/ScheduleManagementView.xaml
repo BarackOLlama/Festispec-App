@@ -15,7 +15,7 @@
     </Window.Resources>
 
     <Window.InputBindings>
-        <KeyBinding Command="{Binding BackHomeCommand}" Key="Esc"/>
+        <KeyBinding Command="{Binding BackHomeCommand}" CommandParameter="{Binding ElementName=ScheduleManagementViewName}" Key="Esc"/>
     </Window.InputBindings>
     
     <StackPanel Margin="20">
