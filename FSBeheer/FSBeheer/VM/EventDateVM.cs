@@ -11,7 +11,7 @@ namespace FSBeheer.VM
     {
         private EventDate _eventDate;
 
-        public EventDateVM(EventDate ed)
+        public EventDateVM(EventDate ed = null)
         {
             if (ed != null) {
                 _eventDate = ed;

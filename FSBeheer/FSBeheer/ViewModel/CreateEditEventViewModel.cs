@@ -52,7 +52,7 @@ namespace FSBeheer.ViewModel
         {
             if (eventId == -1)
             {
-                Event = new EventVM(new Event());
+                Event = new EventVM();
                 _context.Events.Add(Event.ToModel());
                 Title = "Evenement aanmaken";
                 CurrentlyEditingEvent = false;

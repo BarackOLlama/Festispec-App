@@ -14,16 +14,14 @@ namespace FSBeheer.ViewModel
 {
     public class CreateEditCustomerViewModel : ViewModelBase
     {
+        public ContactVM Contact { get; set; }
+
         public CustomerVM Customer { get; set; }
-
-        public RelayCommand<Window> SaveChangesCommand { get; set; }
-
-        public RelayCommand<Window> DiscardCommand { get; set; }
-
-        public RelayCommand<Window> DeleteCustomerCommand { get; set; }
         public RelayCommand EditContactWindowCommand { get; set; }
 
-        public ContactVM Contact { get; set; }
+        public RelayCommand<Window> SaveChangesCommand { get; set; }
+        public RelayCommand<Window> DiscardCommand { get; set; }
+        public RelayCommand<Window> DeleteCustomerCommand { get; set; }
 
         private CustomFSContext _context;
 
