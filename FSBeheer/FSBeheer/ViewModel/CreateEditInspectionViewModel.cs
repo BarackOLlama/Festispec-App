@@ -27,6 +27,8 @@ namespace FSBeheer.ViewModel
                 RaisePropertyChanged(nameof(Inspection));
             }
         }
+        public bool CurrentlyEditingInspection { get; set; }
+
         public ObservableCollection<CustomerVM> Customers { get; }
         public ObservableCollection<EventVM> Events { get; set; }
         public int SelectedIndex { get; set; }
@@ -49,6 +51,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand<Window> SaveChangesCommand { get; set; }
         public RelayCommand CanExecuteChangedCommand { get; set; }
         public RelayCommand PickInspectorsCommand { get; set; }
+        public RelayCommand<Window> DeleteInspectionCommand { get; set; }
 
         public CreateEditInspectionViewModel()
         {
@@ -65,6 +68,19 @@ namespace FSBeheer.ViewModel
             SaveChangesCommand = new RelayCommand<Window>(SaveChanges);
             CanExecuteChangedCommand = new RelayCommand(CanExecuteChanged);
             PickInspectorsCommand = new RelayCommand(OpenAvailableInspector);
+            DeleteInspectionCommand = new RelayCommand<Window>(DeleteInspection);
+        }
+
+        private void DeleteInspection(Window window)
+        {
+            var result = MessageBox.Show("Inspectie verwijderen?", "Inspectie verwijderen", MessageBoxButton.OKCancel);
+            if(result == MessageBoxResult.OK)
+            {
+                Inspection.IsDeleted = true;
+                _context.SaveChanges();
+                Messenger.Default.Send(true, "UpdateInspectionList");
+                window.Close();
+            }
         }
 
         private void UpdateInspectors(ObservableCollection<InspectorVM>[] ChosenAndRemovedInspectors)
@@ -97,6 +113,7 @@ namespace FSBeheer.ViewModel
         {
             if (inspectionId == -1)
             {
+                CurrentlyEditingInspection = false;
                 Inspection = new InspectionVM(new Inspection())
                 {
                     InspectionDate = new InspectionDateVM(new InspectionDate()
@@ -115,6 +132,7 @@ namespace FSBeheer.ViewModel
             }
             else
             {
+                CurrentlyEditingInspection = true;
                 Inspection = _context.InspectionCrud.GetInspectionById(inspectionId);
                 ChosenInspectors = Inspection.Inspectors;
                 OldStartDate = Inspection.InspectionDate.StartDate;
@@ -125,6 +143,7 @@ namespace FSBeheer.ViewModel
             RaisePropertyChanged(nameof(SelectedIndex));
             RaisePropertyChanged(nameof(Inspection));
             RaisePropertyChanged(nameof(Title));
+            base.RaisePropertyChanged(nameof(CurrentlyEditingInspection));
         }
 
         private int GetIndex(EventVM Obj, ObservableCollection<EventVM> List)

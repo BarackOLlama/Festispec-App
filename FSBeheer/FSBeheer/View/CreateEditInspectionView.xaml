@@ -15,6 +15,9 @@
         <KeyBinding Command="{Binding AddInspectionCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Key="F5"/>
         <KeyBinding Command="{Binding AddInspectionCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Gesture="CTRL+S"/>
     </Window.InputBindings>
+    <Window.Resources>
+        <local:BoolVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
     <StackPanel Margin="20">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Name="EventSelection" Margin="0,30,0,0">
             <Label>Evenement:</Label>
@@ -26,31 +29,22 @@
                       IsTextSearchEnabled="True"
                       TextSearch.TextPath="Name"
                       Width="350"/>
-
         </StackPanel>
-
         <StackPanel Name="EventOverview" Margin="10,10,10,0" Height="500" Orientation="Horizontal">
-
             <StackPanel Name="EventCustomerData" Height="600" Margin="10,0,0,5" Width="610" HorizontalAlignment="Left">
                 <StackPanel Height="200" Orientation="Horizontal" Margin="0,0,0,5">
-
                     <StackPanel Width="300" HorizontalAlignment="Left" Margin="0,0,5,0" >
                         <Border BorderBrush="Black" BorderThickness="1" Padding="0" VerticalAlignment="Top" >
                             <StackPanel>
-
                                 <StackPanel>
                                     <Label Height="45" Content="Evenementgegevens" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="18"></Label>
                                 </StackPanel>
-
                                 <Grid Height="150">
                                     <Grid.ColumnDefinitions>
-
                                         <ColumnDefinition Width="80" />
                                         <ColumnDefinition Width="*" />
-
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="*" />
@@ -58,9 +52,6 @@
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
-
-
-
                                     <Label Grid.Row="0" Grid.Column="0" Content="Naam:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                     <Label Grid.Row="1" Grid.Column="0" Content="Adres:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                     <Label Grid.Row="2" Grid.Column="0" Content="Plaats:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
@@ -68,22 +59,16 @@
                                     <Label Grid.Row="4" Grid.Column="0" Content="Startdatum:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                     <Label Grid.Row="5" Grid.Column="0" Content="Einddatum:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
-
                                     <Label Grid.Row="0" Grid.Column="1" Content="{Binding Inspection.Event.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     <Label Grid.Row="1" Grid.Column="1" Content="{Binding Inspection.Event.Address}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     <Label Grid.Row="2" Grid.Column="1" Content="{Binding Inspection.Event.City}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     <Label Grid.Row="3" Grid.Column="1" Content="{Binding Inspection.Event.Zipcode}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     <Label Grid.Row="4" Grid.Column="1" Content="{Binding Inspection.Event.EventDate.StartDate}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     <Label Grid.Row="5" Grid.Column="1" Content="{Binding Inspection.Event.EventDate.EndDate}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-
                                 </Grid>
-
                             </StackPanel>
                         </Border>
                     </StackPanel>
-
-
-
                     <StackPanel Width="300" HorizontalAlignment="Left" Margin="5,0,0,0">
                         <Border BorderBrush="Black" BorderThickness="1">
                             <StackPanel>
@@ -92,49 +77,37 @@
                                 </StackPanel>
                                 <Grid Height="150">
                                     <Grid.ColumnDefinitions>
-
                                         <ColumnDefinition Width="110" />
                                         <ColumnDefinition Width="*" />
-
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="*" />
-
                                     </Grid.RowDefinitions>
-
                                     <Label Grid.Row="0" Grid.Column="0" Content="Naam:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                     <Label Grid.Row="1" Grid.Column="0" Content="Adres:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                     <Label Grid.Row="2" Grid.Column="0" Content="Stad:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                                     <Label Grid.Row="3" Grid.Column="0" Content="Postcode:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
-
-
                                     <Label Grid.Row="0" Grid.Column="1" Content="{Binding Inspection.Event.Customer.Name}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     <Label Grid.Row="1" Grid.Column="1" Content="{Binding Inspection.Event.Customer.Address}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     <Label Grid.Row="2" Grid.Column="1" Content="{Binding Inspection.Event.Customer.City}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                     <Label Grid.Row="3" Grid.Column="1" Content="{Binding Inspection.Event.Customer.ZipCode}" VerticalAlignment="Center"/>
-
                                 </Grid>
                             </StackPanel>
                         </Border>
                     </StackPanel>
                 </StackPanel>
-
                 <StackPanel Margin="0,5,0,0">
                     <Border BorderBrush="Black" BorderThickness="1">
                         <Grid Height="285" Margin="0.2,0,-0.2,0">
                             <Grid.ColumnDefinitions>
-
                                 <ColumnDefinition Width="150" />
                                 <ColumnDefinition Width="*" />
-
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
@@ -142,8 +115,6 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="*" />
-
-
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0" Content="Naam" HorizontalAlignment="Right" VerticalAlignment="Center"/>
@@ -154,14 +125,12 @@
                             <Label Grid.Row="5" Grid.Column="0" Content="Inspecteur(s)" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                             <Label Grid.Row="6" Grid.Column="0" Content="Status" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
-
                             <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Inspection.Name, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <DatePicker Grid.Row="1" Grid.Column="1" SelectedDateFormat="Short" SelectedDate="{Binding Inspection.InspectionDate.StartDate, Mode=TwoWay}" DisplayDateStart="01/01/1900" DisplayDateEnd="12/31/2150" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <DatePicker Grid.Row="2" Grid.Column="1" SelectedDateFormat="Short" SelectedDate="{Binding Inspection.InspectionDate.EndDate, Mode=TwoWay}" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Inspection.InspectionDate.StartTime, Mode=TwoWay}" MaxLength="8" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Inspection.InspectionDate.EndTime, Mode=TwoWay}" MaxLength="8" Width="350" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8"/>
                             <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center">
-
                                 <ListBox Height="40" DisplayMemberPath="Name" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="335" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,8" ItemsSource="{Binding Inspection.Inspectors, UpdateSourceTrigger=PropertyChanged}">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -180,42 +149,26 @@
                         </Grid>
                     </Border>
                 </StackPanel>
-
-
-
             </StackPanel>
-
             <StackPanel Width="250" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10,0,0,0">
-
-
                 <Border BorderBrush="Black" BorderThickness="1">
                     <StackPanel Height="494">
-
                         <StackPanel>
                             <Label Height="50" Content="Voorkeuren klant" HorizontalAlignment="Center" VerticalContentAlignment="Center" FontSize="18"></Label>
                         </StackPanel>
-
                         <StackPanel Height="390" Margin="10,20,10,0">
                             <Border BorderBrush="Black" BorderThickness="1">
-
                                 <TextBox Text="{Binding Inspection.Notes, Mode=TwoWay}" Height="385" TextWrapping="Wrap"/>
-
                             </Border>
                         </StackPanel>
-
                     </StackPanel>
                 </Border>
             </StackPanel>
-
-
         </StackPanel>
-
-
-
         <StackPanel x:Name="spInterfaceButtons" VerticalAlignment="Bottom"
                     Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,20,0">
-
             <TextBlock Foreground="Red" Text="{Binding WarningText}"/>
+            <Button Content="Verwijderen" Command="{Binding DeleteInspectionCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Visibility="{Binding CurrentlyEditingInspection, Mode=OneWay, Converter={StaticResource BoolToVis}}" Template="{DynamicResource InterfaceButtonTemplate}"/>
             <Button Content="Opslaan" Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
             <Button Content="Annuleren" Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Template="{DynamicResource InterfaceButtonTemplate}"/>
         </StackPanel>

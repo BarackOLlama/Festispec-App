@@ -52,23 +52,23 @@ namespace FSBeheer.ViewModel
         {
             if (eventId == -1)
             {
-                Event = new EventVM(new Event() {
-                    Customer = new Customer(),
-                    EventDate = new EventDate()
-                });
+                Event = new EventVM();
                 _context.Events.Add(Event.ToModel());
                 Title = "Evenement aanmaken";
                 CurrentlyEditingEvent = false;
-                base.RaisePropertyChanged(nameof(CurrentlyEditingEvent));
+                RaisePropertyChanged(nameof(CurrentlyEditingEvent));
             }
             else
             {
                 Event = _context.EventCrud.GetEventById(eventId);
                 Title = "Evenement wijzigen";
                 CurrentlyEditingEvent = true;
-                base.RaisePropertyChanged(nameof(CurrentlyEditingEvent));
+                RaisePropertyChanged(nameof(CurrentlyEditingEvent));
             }
-            SelectedIndex = GetIndex(Event.Customer, Customers);
+            if (Event.Customer.ToModel() != null)
+                SelectedIndex = GetIndex(Event.Customer, Customers);
+            else
+                SelectedIndex = -1;
             RaisePropertyChanged(nameof(SelectedIndex));
             RaisePropertyChanged(nameof(Event));
             RaisePropertyChanged(nameof(Title));
