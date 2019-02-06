@@ -186,20 +186,9 @@ namespace FSBeheer.ViewModel
                 return false;
             }
 
-            if (Regex.IsMatch(Inspector.PhoneNumber, @"^\+361"))//mobile number
+            if (!Regex.IsMatch(Inspector.PhoneNumber, @"^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)[1-9]((\s|\s?\-\s?)?[0-9])((\s|\s?-\s?)?[0-9])((\s|\s?-\s?)?[0-9])\s?[0-9]\s?[0-9]\s?[0-9]\s?[0-9]\s?[0-9]$"))
             {
-                if (!Regex.IsMatch(Inspector.PhoneNumber, @"^\+361 ?[0-9]{4} ?[0-9]{4}$"))
-                {
-                    MessageBox.Show("Het ingevoerde nummer voldoet niet aan de juiste opmaak.\n" +
-                        "+361 1234 5678 heeft een correcte opbouw. Spaties zijn optioneel.");
-                    return false;
-                }
-            }
-            else if (!Regex.IsMatch(Inspector.PhoneNumber, @"^\d{3} ?\d{4} ?\d{3}$"))//not a mobile number
-            {
-                MessageBox.Show("Het ingevoerde telefoonnummer voldoet niet aan de juiste opbouw.\n" +
-                    "Een correct telefoonnummer is bijvoorbeeld 072 5505 232. Spaties zijn optioneel.\n" +
-                    "Als het telefoonnummer mobiel is begin dan met +316.");
+                MessageBox.Show("De ingevoerde telefoonnummer is niet valide.");
                 return false;
             }
 
