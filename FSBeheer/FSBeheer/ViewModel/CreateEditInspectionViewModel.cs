@@ -134,9 +134,6 @@ namespace FSBeheer.ViewModel
             {
                 CurrentlyEditingInspection = true;
                 Inspection = _context.InspectionCrud.GetInspectionById(inspectionId);
-                ChosenInspectors = Inspection.Inspectors;
-                OldStartDate = Inspection.InspectionDate.StartDate;
-                OldEndDate = Inspection.InspectionDate.EndDate;
                 Title = "Inspectie wijzigen";
             }
             SelectedIndex = GetIndex(Inspection.Event, Events);
@@ -178,10 +175,8 @@ namespace FSBeheer.ViewModel
                 if (InspectionIsValid())
                 {
                     RemoveScheduleItemsOfInspection();
-                    //CreateMissingScheduleItems();
                     foreach (InspectorVM inspectorVM in ChosenInspectors)
                     {
-                        //if (!CheckIfScheduleItemExists(inspectorVM))
                         for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
                         {
                             ScheduleItemVM scheduleItemVM = new ScheduleItemVM(new ScheduleItem())
@@ -196,7 +191,6 @@ namespace FSBeheer.ViewModel
                         }
                         Inspection.Inspectors.Add(inspectorVM);
                     }
-                    //_context.ScheduleItemCrud.RemoveScheduleItemsByInspectorList(RemovedInspectors, Inspection);
 
                     _context.SaveChanges();
                     _context.Events.RemoveRange(_context.Events.Where(e => e.Name == null));
@@ -308,58 +302,6 @@ namespace FSBeheer.ViewModel
             return true;
 
         }
-
-        private void CreateMissingScheduleItems()
-        {
-            if (ExistingInspectors != null && ExistingInspectors.Count() > 0)
-            {
-                foreach (InspectorVM inspector in ExistingInspectors)
-                {
-                    var scheduleItemsOfInspector = _context.ScheduleItemCrud.GetAllScheduleItemsByInspector(inspector.Id);
-                    bool scheduleItemExists;
-                    for (var start = Inspection.InspectionDate.StartDate; start <= Inspection.InspectionDate.EndDate; start = start.AddDays(1))
-                    {
-                        scheduleItemExists = false;
-                        // loop through all scheduleItems of this inspector to see if scheduleItem already exists for this date
-                        foreach (ScheduleItemVM scheduleItem in scheduleItemsOfInspector)
-                            // only check scheduleItems that are connected to this inspection
-                            if (scheduleItem.Inspector.Inspection.Count() != 0 &&
-                                scheduleItem.Inspector.Inspection.ToList().Select(i => i.Id).First() == Inspection.Id)
-                                if (scheduleItem.Date == start)
-                                    scheduleItemExists = true;
-                        if (!scheduleItemExists)
-                        {
-                            ScheduleItemVM scheduleItemVM = new ScheduleItemVM(new ScheduleItem())
-                            {
-                                Inspector = inspector,
-                                Scheduled = true,
-                                Date = (DateTime?)start,
-                                ScheduleStartTime = Inspection.InspectionDate.StartTime,
-                                ScheduleEndTime = Inspection.InspectionDate.EndTime
-                            };
-                            _context.ScheduleItems.Add(scheduleItemVM.ToModel());
-                            _context.SaveChanges();
-                        }
-                    }
-                }
-            }
-        }
-
-        //private void RemoveUnusedScheduleItems()
-        //{
-        //    if (OldStartDate != null)
-        //        if (OldStartDate < Inspection.InspectionDate.StartDate)
-        //            for (var start = OldStartDate; start < Inspection.InspectionDate.StartDate; start = start.Value.AddDays(1))
-        //            {
-
-        //            }
-        //    if (OldEndDate != null)
-        //        if (OldEndDate > Inspection.InspectionDate.EndDate)
-        //            for (var end = OldEndDate; end > Inspection.InspectionDate.EndDate; end = end.Value.AddDays(-1))
-        //            {
-
-        //            }
-        //}
 
         private void RemoveScheduleItemsOfInspection()
         {
