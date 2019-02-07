@@ -72,19 +72,21 @@ namespace FSBeheer.Crud
 
         public void AddScheduleItemsByDateRange(DateTime startDate, DateTime endDate, InspectorVM inspector, InspectionVM inspection = null)
         {
-
             for(var date = startDate.Date; date <= endDate.Date; date = date.AddDays(1))
             {
-                ScheduleItemVM scheduleItemVM = new ScheduleItemVM
+                if (CustomFSContext.ScheduleItems.Where(s => s.Date == date && s.Inspector.Id == inspector.Id).Count() == 0)
                 {
-                    Inspector = inspector,
-                    Scheduled = inspection == null ? false : true,
-                    Date = (DateTime?)date,
-                    ScheduleStartTime = inspection?.InspectionDate.StartTime,
-                    ScheduleEndTime = inspection?.InspectionDate.EndTime
-                };
-                CustomFSContext.ScheduleItems.Add(scheduleItemVM.ToModel());
-                CustomFSContext.SaveChanges();
+                    ScheduleItemVM scheduleItemVM = new ScheduleItemVM
+                    {
+                        Inspector = inspector,
+                        Scheduled = inspection == null ? false : true,
+                        Date = (DateTime?)date,
+                        ScheduleStartTime = inspection?.InspectionDate.StartTime,
+                        ScheduleEndTime = inspection?.InspectionDate.EndTime
+                    };
+                    CustomFSContext.ScheduleItems.Add(scheduleItemVM.ToModel());
+                    CustomFSContext.SaveChanges();
+                }
             }
         }
 

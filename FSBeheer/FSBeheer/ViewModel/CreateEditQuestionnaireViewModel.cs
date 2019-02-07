@@ -376,6 +376,8 @@ namespace FSBeheer.ViewModel
                     {
                         _selectedQuestion.IsDeleted = true;
                         _context.SaveChanges();
+                        _context.Inspections.RemoveRange(_context.Inspections.Where(i => i.Name == null));
+                        _context.SaveChanges();
                         this.FetchAndSetQuestions();
                         //so that the Questionnaires in QuestionnaireManagementViewModel display the correct number of questions.
                         Messenger.Default.Send(true, "UpdateQuestionnaires");

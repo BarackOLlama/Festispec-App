@@ -16,7 +16,7 @@
     </Window.InputBindings>
     <StackPanel Margin="20">
         <StackPanel Name="spContent" Margin="30">
-            <Button Content="Back"
+            <Button Content="Terug"
                     Command="{Binding CloseWindowCommand}"
                     CommandParameter="{Binding ElementName=InspectionManagementViewName}"
                     Template="{DynamicResource InterfaceButtonTemplate}"

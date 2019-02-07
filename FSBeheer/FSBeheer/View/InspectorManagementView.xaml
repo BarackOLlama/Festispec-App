@@ -15,7 +15,7 @@
     </Window.InputBindings>
     <StackPanel Margin="20">
         <StackPanel Name="spBackButton" HorizontalAlignment="Left">
-            <Button Content="Back"
+            <Button Content="Terug"
                     Command="{Binding BackHomeCommand}"
                     CommandParameter="{Binding ElementName=InspectorManagementViewName}"
                     Template="{DynamicResource InterfaceButtonTemplate}"/>

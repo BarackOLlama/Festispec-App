@@ -151,12 +151,12 @@ namespace FSBeheer.ViewModel
                 {
                     if (SelectedScheduleItems.Count == 1)
                     {
-                        MessageBox.Show("De geselecteerde item is van het type " + schedule.ScheduledString + " en mag niet worden verwijderd.");
+                        MessageBox.Show("Het geselecteerde item is van het type " + schedule.ScheduledString + " en mag niet worden verwijderd.");
                         return;
                     }
                     else
                     {
-                        MessageBox.Show("Een of meer van de geselecteerde items zijn van het type " + schedule.ScheduledString + " en mag niet worden verwijderd.");
+                        MessageBox.Show("Een of meer van de geselecteerde items zijn van het type " + schedule.ScheduledString + " en mogen niet worden verwijderd.");
                         return;
                     }
                 }
@@ -177,12 +177,36 @@ namespace FSBeheer.ViewModel
             }
         }
 
+        private bool ScheduleItemValid()
+        {
+            if(StartingDate < DateTime.Now || EndDate < DateTime.Now)
+            {
+                MessageBox.Show("U kunt geen verlof in het verleden opgeven.");
+                return false;
+            }
+
+            if(StartingDate > EndDate)
+            {
+                MessageBox.Show("De opgegeven einddatum is vroeger dan de opgegeven startdatum");
+                return false;
+            }
+            if((EndDate - StartingDate).Days > 28)
+            {
+                MessageBox.Show("U heeft een datumbereik van meer dan 28 dagen opgegeven. Verdeel uw invoer a.u.b. over twee of meer acties om lange verloftijden op te geven.");
+                return false;
+            }
+            return true;
+        }
+
         private void NewScheduleItem()
         {
             if (IsInternetConnected())
             {
-                _Context.ScheduleItemCrud.AddScheduleItemsByDateRange(StartingDate, EndDate, SelectedInspector);
-                GetScheduleItems();
+                if (ScheduleItemValid())
+                {
+                    _Context.ScheduleItemCrud.AddScheduleItemsByDateRange(StartingDate, EndDate, SelectedInspector);
+                    GetScheduleItems();
+                }
             }
             else
                 MessageBox.Show("U bent niet verbonden met het internet. Probeer het later opnieuw.");

@@ -6,7 +6,9 @@ using GalaSoft.MvvmLight.Command;
 using System;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 
 namespace FSBeheer.ViewModel
@@ -41,6 +43,7 @@ namespace FSBeheer.ViewModel
         public RelayCommand<Window> CloseWindowCommand { get; set; }
         public HomeViewModel(AccountVM account)
         {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             _context = new CustomFSContext();
             _account = account;
             AccountRole = _context.Roles.ToList().Where(e => e.Id == _account.RoleId).FirstOrDefault().Content;
