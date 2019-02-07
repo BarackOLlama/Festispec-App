@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace FSBeheer.View
 {
@@ -11,7 +12,7 @@ namespace FSBeheer.View
         public BaseView()
         {
             double DefaultFontSize = 12; //Default "small" FontSize value
-
+            this.Language = XmlLanguage.GetLanguage("nl-NL");
             var InterfaceButtonFactory = new FrameworkElementFactory(typeof(Button));
             InterfaceButtonFactory.SetValue(ContentProperty, new TemplateBindingExtension(ContentProperty));
             InterfaceButtonFactory.SetValue(Button.CommandProperty, new TemplateBindingExtension(Button.CommandProperty));
