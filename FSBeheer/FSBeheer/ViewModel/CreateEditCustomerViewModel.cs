@@ -157,6 +157,8 @@ namespace FSBeheer.ViewModel
                     {
                         Customer.StartingDate = DateTime.Now.Date;
                         _context.SaveChanges();
+                        _context.Contacts.RemoveRange(_context.Contacts.Where(c => c.Name == null));
+                        _context.SaveChanges();
                         window.Close();
 
                         Messenger.Default.Send(true, "UpdateCustomerList");
