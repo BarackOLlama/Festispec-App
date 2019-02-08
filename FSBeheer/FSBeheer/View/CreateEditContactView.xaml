@@ -48,7 +48,6 @@
             <StackPanel Height="120"></StackPanel>
             <DockPanel Name="spInterfaceButtons" HorizontalAlignment="Right" Margin="2">
                 <Button Content="Annuleer" CommandParameter="{Binding ElementName=CreateEditContactWindow}" Command="{Binding DiscardContactCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
-                <Button Content="Verwijder" CommandParameter="{Binding ElementName=CreateEditContactWindow}" Command="{Binding DeleteContactCommand}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
                 <Button Content="Accepteer" Command="{Binding SaveChangesContactCommand}" CommandParameter="{Binding ElementName=CreateEditContactWindow}" Template="{DynamicResource InterfaceButtonTemplate}"></Button>
             </DockPanel>
         </StackPanel>
