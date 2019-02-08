@@ -57,7 +57,7 @@ namespace FSBeheer.Crud
 
         public ObservableCollection<InspectorVM> GetAllInspectorsFilteredByAvailability(List<DateTime> dateRange) //Startdate and enddate of the inspection
         {
-            var inspectors = CustomFSContext.Inspectors.ToList().Select(i => new InspectorVM(i));
+            var inspectors = CustomFSContext.Inspectors.ToList().Where(i => i.IsDeleted == false).Select(i => new InspectorVM(i));
             var availableInspectors = new List<InspectorVM>();
             foreach (InspectorVM inspectorVM in inspectors)
             {
