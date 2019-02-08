@@ -66,16 +66,19 @@ namespace FSBeheer.ViewModel
             }
         }
 
-        public void SetContextInspectionId(CustomFSContext context, InspectionVM inspection)
+        public void SetContextInspectionId(CustomFSContext context, InspectionVM inspection, ObservableCollection<InspectorVM> availableInspectors)
         {
             _context = context;
 
             _selectedInspection = inspection;
-            AvailableInspectors = _context.InspectorCrud.GetAllInspectorsFilteredByAvailability(
-                new List<DateTime>{
-                _selectedInspection.InspectionDate.StartDate,
-                _selectedInspection.InspectionDate.EndDate
-            });
+            if (availableInspectors == null)
+                AvailableInspectors = _context.InspectorCrud.GetAllInspectorsFilteredByAvailability(
+                    new List<DateTime>{
+                    _selectedInspection.InspectionDate.StartDate,
+                    _selectedInspection.InspectionDate.EndDate
+                });
+            else
+                AvailableInspectors = availableInspectors;
             ChosenInspectors = inspection.Inspectors;
             RemovedInspectors = new ObservableCollection<InspectorVM>();
 
@@ -142,7 +145,7 @@ namespace FSBeheer.ViewModel
                     _selectedInspection.Inspectors = ChosenInspectors;
                     
                     window.Close();
-                    ObservableCollection<InspectorVM>[] list = { ChosenInspectors, RemovedInspectors };
+                    ObservableCollection<InspectorVM>[] list = { ChosenInspectors, RemovedInspectors, AvailableInspectors };
                     Messenger.Default.Send(list, "UpdateInspectorList");
                 //}
             }

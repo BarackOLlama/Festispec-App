@@ -36,6 +36,7 @@ namespace FSBeheer.ViewModel
         public string Title { get; set; }
         public ObservableCollection<InspectorVM> ChosenInspectors { get; set; }
         public ObservableCollection<InspectorVM> RemovedInspectors { get; set; }
+        public ObservableCollection<InspectorVM> AvailableInspectors { get; set; }
 
         [DllImport("wininet.dll")]
         private extern static bool InternetGetConnectedState(out int description, int reservedValue);
@@ -85,6 +86,7 @@ namespace FSBeheer.ViewModel
         {
             ChosenInspectors = ChosenAndRemovedInspectors[0];
             RemovedInspectors = ChosenAndRemovedInspectors[1];
+            AvailableInspectors = ChosenAndRemovedInspectors[2];
             RaisePropertyChanged(nameof(Inspection));
         }
 
@@ -212,7 +214,7 @@ namespace FSBeheer.ViewModel
         {
             if (IsInternetConnected())
             {
-                new AvailableInspectorView(_context, Inspection).Show();
+                new AvailableInspectorView(_context, Inspection, AvailableInspectors).Show();
             }
             else
             {
