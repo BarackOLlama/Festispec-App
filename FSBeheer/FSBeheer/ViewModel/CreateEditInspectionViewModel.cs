@@ -77,6 +77,9 @@ namespace FSBeheer.ViewModel
                 RemoveScheduleItemsAndInspectorsOfInspection();
                 Inspection.IsDeleted = true;
                 _context.SaveChanges();
+                _context.Events.RemoveRange(_context.Events.Where(e => e.Name == null));
+                _context.Customers.RemoveRange(_context.Customers.Where(c => c.Name == null));
+                _context.SaveChanges();
                 Messenger.Default.Send(true, "UpdateInspectionList");
                 window.Close();
             }
