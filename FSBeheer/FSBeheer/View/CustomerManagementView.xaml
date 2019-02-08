@@ -31,13 +31,13 @@
                     <StackPanel Margin="0,0,0,2">
                         <DataGrid AutoGenerateColumns="False" IsReadOnly="True" SelectedItem="{Binding SelectedCustomer, Mode=TwoWay}" 
                       ItemsSource="{Binding Customers}" Margin="0,6,0,0" BorderBrush="#FF979494"
-                      GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFF0E0E0" HeadersVisibility="Column">
+                      GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFF0E0E0" HeadersVisibility="Column" SelectionChanged="DataGrid_SelectionChanged">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Foreground="#FF1D1616" />
                                 <DataGridTextColumn Header="Naam" Binding="{Binding Name}" Width="*" />
                                 <DataGridTextColumn Header="Adres" Binding="{Binding Address}" Width="*" />
-                                <DataGridTextColumn Header="City" Binding="{Binding City}" Width="*" />
-                                <DataGridTextColumn Header="Starting date" Binding="{Binding StartingDate}" Width="*" />
+                                <DataGridTextColumn Header="Stad" Binding="{Binding City}" Width="*" />
+                                <DataGridTextColumn Header="Begindatum" Binding="{Binding StartingDate}" Width="*" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </StackPanel>
