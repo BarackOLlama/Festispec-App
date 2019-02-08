@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
         DataContext="{Binding CreateEditCustomer, Source={StaticResource Locator}}"
-        Title="CreateEditCustomerView" Height="450" Width="850" Background="White">
+        Title="Klant aanpassen/aanmaken" Height="450" Width="850" Background="White">
     <Window.InputBindings>
         <KeyBinding Command="{Binding DiscardCommand}" CommandParameter="{Binding ElementName=CreateEditWindow}" Key="Esc"/>
         <KeyBinding Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditWindow}" Key="F5"/>

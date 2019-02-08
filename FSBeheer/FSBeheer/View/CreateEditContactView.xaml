@@ -1,5 +1,4 @@
 ﻿<local:BaseView x:Class="FSBeheer.View.CreateEditContactView"
-
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,7 +7,7 @@
         x:Name="CreateEditContactWindow"
         mc:Ignorable="d"
         DataContext="{Binding CreateEditContact, Source={StaticResource Locator}}"
-        Title="CreateEditContactView" Height="400" Width="385">
+        Title="Contact aanmaken/aanpassen" Height="400" Width="385">
     <Window.InputBindings>
         <KeyBinding Command="{Binding DiscardContactCommand}" CommandParameter="{Binding ElementName=CreateEditContactWindow}" Key="Esc"/>
         <KeyBinding Command="{Binding SaveChangesContactCommand}" CommandParameter="{Binding ElementName=CreateEditContactWindow}" Key="F5"/>

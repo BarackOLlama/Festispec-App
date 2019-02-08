@@ -8,7 +8,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-        Title="CreateEditInspectionView" Height="750" Width="1000"
+        Title="Inspectie aanmaken/aanpassen" Height="750" Width="1000"
         DataContext="{Binding CreateEditInspection, Source={StaticResource Locator}}">
     <Window.InputBindings>
         <KeyBinding Command="{Binding CloseWindowCommand}" CommandParameter="{Binding ElementName=CreateEditInspectionWindow}" Key="Esc"/>

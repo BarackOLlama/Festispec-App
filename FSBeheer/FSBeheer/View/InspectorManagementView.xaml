@@ -5,8 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
-       
-        Title="InspectorManagementView" Height="450" Width="800"
+        Title="Inspecteur beheer" Height="450" Width="800"
         DataContext="{Binding InspectorManagement, Source={StaticResource Locator}}">
     <Window.InputBindings>
         <KeyBinding Command="{Binding BackHomeCommand}" CommandParameter="{Binding ElementName=InspectorManagementViewName}" Key="Esc"/>

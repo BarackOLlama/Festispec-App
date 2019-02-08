@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:FSBeheer.View"
         mc:Ignorable="d"
         DataContext="{Binding CreateEditInspector, Source={StaticResource Locator}}"
-        Title="CreateEditInspectorView" Height="440" Width="800" Background="White">
+        Title="Inspecteur aanmaken/aanpassen" Height="440" Width="800" Background="White">
     <Window.InputBindings>
         <KeyBinding Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditWindow}" Key="F5"/>
         <KeyBinding Command="{Binding SaveChangesCommand}" CommandParameter="{Binding ElementName=CreateEditWindow}" Gesture="CTRL+S"/>
